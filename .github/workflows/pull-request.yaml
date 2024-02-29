@@ -22,6 +22,14 @@ jobs:
       with:
         dotnet-version: '8.x.x'
 
+    - name: Cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+
     - name: Install dependencies
       run: dotnet restore
 
