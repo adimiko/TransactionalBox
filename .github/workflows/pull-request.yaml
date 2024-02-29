@@ -9,6 +9,8 @@ jobs:
 
   build:
 
+    name: Pull request
+
     runs-on: ubuntu-latest
 
     steps:
