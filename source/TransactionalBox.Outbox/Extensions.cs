@@ -17,6 +17,7 @@ namespace TransactionalBox.Outbox
 
             storageConfiguration(outboxStorageConfigurator);
 
+            services.AddSingleton<TopicFactory>();
             services.AddScoped<IOutboxSender, OutboxSender>();
 
             return transactionalBoxConfigurator;

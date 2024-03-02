@@ -7,9 +7,12 @@ namespace TransactionalBox.Outbox.Internals
     {
         private readonly IOutboxRepository _outbox;
 
-        public OutboxSender(IOutboxRepository outbox) 
+        private readonly TopicFactory _topicFactory;
+
+        public OutboxSender(IOutboxRepository outbox, TopicFactory topicFactory) 
         {
             _outbox = outbox;
+            _topicFactory = topicFactory;
         }
 
         public async Task Send<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : MessageBase
@@ -30,7 +33,7 @@ namespace TransactionalBox.Outbox.Internals
                 OccurredUtc = occurredUtc,
                 LockUtc = null,
                 ProcessedUtc = null,
-                Topic = receiver + "-" + message.GetType().Name,
+                Topic = _topicFactory.Create(receiver, message),
                 Payload = JsonSerializer.Serialize((dynamic)message),
             };
 
