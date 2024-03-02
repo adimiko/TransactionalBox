@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox
+﻿namespace TransactionalBox.Outbox.Internals
 {
     public sealed class OutboxMessage
     {

@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.EntityFramework", "source\TransactionalBox.Outbox.EntityFramework\TransactionalBox.Outbox.EntityFramework.csproj", "{36DBAFB0-B554-4730-8098-22898103B2EA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{D018E603-5AE9-4B1B-BF33-04EB0B5D6913}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.WebApi", "samples\TransactionalBox.Sample.WebApi\TransactionalBox.Sample.WebApi.csproj", "{0F2366C8-A646-4714-A884-3DE04348B45F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,10 @@ Global
 		{36DBAFB0-B554-4730-8098-22898103B2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36DBAFB0-B554-4730-8098-22898103B2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36DBAFB0-B554-4730-8098-22898103B2EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F2366C8-A646-4714-A884-3DE04348B45F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F2366C8-A646-4714-A884-3DE04348B45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F2366C8-A646-4714-A884-3DE04348B45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F2366C8-A646-4714-A884-3DE04348B45F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +54,7 @@ Global
 		{EB3E6211-3118-4D11-B108-F8508A0CD052} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{F86E46C4-F478-4B05-A187-2641AD14BF3A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{36DBAFB0-B554-4730-8098-22898103B2EA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{0F2366C8-A646-4714-A884-3DE04348B45F} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}
