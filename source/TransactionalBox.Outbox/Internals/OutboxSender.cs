@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using TransactionalBox.Outbox.Internals.Exceptions;
 
 namespace TransactionalBox.Outbox.Internals
 {
@@ -13,18 +14,19 @@ namespace TransactionalBox.Outbox.Internals
 
         public async Task Send<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : MessageBase
         {
-            //TODO own exceptions
-            ArgumentNullException.ThrowIfNull(message, nameof(message));
-            ArgumentException.ThrowIfNullOrWhiteSpace(receiver, nameof(receiver));
+            if (string.IsNullOrWhiteSpace(receiver)) 
+            {
+                throw new ReceiverCannotBeNullOrEmptyException();
+            }
 
             if (occurredUtc.Kind != DateTimeKind.Utc)
             {
-                throw new Exception("occurredUtc must be UTC");
+                throw new OccurredUtcMustBeUtcException();
             }
 
             var outboxMessage = new OutboxMessage
             {
-                Id = Guid.NewGuid(), //TODO sequential
+                Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = occurredUtc,
                 LockUtc = null,
                 ProcessedUtc = null,

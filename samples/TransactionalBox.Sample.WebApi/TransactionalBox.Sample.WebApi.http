@@ -1,6 +1,0 @@
-@TransactionalBox.Sample.WebApi_HostAddress = http://localhost:5036
-
-GET {{TransactionalBox.Sample.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
