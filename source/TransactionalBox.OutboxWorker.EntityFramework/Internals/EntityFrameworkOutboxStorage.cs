@@ -24,6 +24,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         public Task MarkAsProcessed(IEnumerable<OutboxMessage> messages)
         {
+            //TODO TimeProvider
             var dateTime = DateTime.UtcNow;
 
             foreach (var message in messages) 

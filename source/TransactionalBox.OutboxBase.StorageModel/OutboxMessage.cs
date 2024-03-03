@@ -2,14 +2,14 @@
 {
     public sealed class OutboxMessage
     {
-        public Guid Id { get; set; }
+        public required Guid Id { get; set; }
 
-        public DateTime OccurredUtc { get; set; }
+        public required DateTime OccurredUtc { get; set; }
 
         public DateTime? ProcessedUtc { get; set; }
 
-        public string Topic { get; set; }
+        public required string Topic { get; set; }
 
-        public string Payload { get; set; }
+        public required string Payload { get; set; }
     }
 }
