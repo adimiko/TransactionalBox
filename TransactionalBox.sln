@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWork
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Kafka", "source\TransactionalBox.OutboxWorker.Kafka\TransactionalBox.OutboxWorker.Kafka.csproj", "{30A59AE5-D808-449A-9303-7F737D5DBFAF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxBase.StorageModel", "source\TransactionalBox.OutboxBase.StorageModel\TransactionalBox.OutboxBase.StorageModel.csproj", "{37348987-DF18-470E-8C46-A0B448099BD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{30A59AE5-D808-449A-9303-7F737D5DBFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30A59AE5-D808-449A-9303-7F737D5DBFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30A59AE5-D808-449A-9303-7F737D5DBFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{289E2039-7A1E-48AE-AFB1-D8988C939C20} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{AC9F6100-6D94-4D39-8F99-682596CDAEF6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{30A59AE5-D808-449A-9303-7F737D5DBFAF} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{37348987-DF18-470E-8C46-A0B448099BD3} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

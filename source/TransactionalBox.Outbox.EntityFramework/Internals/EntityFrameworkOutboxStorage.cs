@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.Outbox.Internals;
+using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.Outbox.EntityFramework.Internals
 {
-    internal sealed class OutboxRepository : IOutboxRepository
+    internal sealed class EntityFrameworkOutboxStorage : IOutboxStorage
     {
         private readonly DbSet<OutboxMessage> _outbox;
 
-        public OutboxRepository(DbContext dbContext)
+        public EntityFrameworkOutboxStorage(DbContext dbContext)
         {
             _outbox = dbContext.Set<OutboxMessage>();
         }

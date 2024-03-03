@@ -14,6 +14,12 @@ namespace TransactionalBox.OutboxWorker
         {
             var services = configurator.Services;
 
+            var storage = new OutboxWorkerStorageConfigurator(services);
+            var transport = new OutboxWorkerTransportConfigurator(services);
+
+            storageConfiguration(storage);
+            transportConfiguration(transport);
+
             services.AddHostedService<OutboxProcessor>();
 
             return configurator;

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.OutboxBase.StorageModel\TransactionalBox.OutboxBase.StorageModel.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 

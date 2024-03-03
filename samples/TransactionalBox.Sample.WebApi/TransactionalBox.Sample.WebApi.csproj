@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Testcontainers.Kafka" />
     <PackageReference Include="Testcontainers.PostgreSql" />
   </ItemGroup>
 

@@ -13,7 +13,7 @@ namespace TransactionalBox.Outbox.EntityFramework
         {
             var services = outboxStorageConfigurator.Services;
 
-            services.AddScoped<IOutboxRepository, TransactionalBox.Outbox.EntityFramework.Internals.OutboxRepository>();
+            services.AddScoped<IOutboxStorage, TransactionalBox.Outbox.EntityFramework.Internals.EntityFrameworkOutboxStorage>();
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
             return outboxStorageConfigurator;

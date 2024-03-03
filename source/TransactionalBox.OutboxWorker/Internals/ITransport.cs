@@ -2,6 +2,6 @@
 {
     public interface ITransport
     {
-        Task Add(string message);
+        Task Add(string message, string topic);
     }
 }

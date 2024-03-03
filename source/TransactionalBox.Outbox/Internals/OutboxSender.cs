@@ -1,15 +1,16 @@
 ﻿using System.Text.Json;
 using TransactionalBox.Outbox.Internals.Exceptions;
+using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.Outbox.Internals
 {
     internal sealed class OutboxSender : IOutboxSender
     {
-        private readonly IOutboxRepository _outbox;
+        private readonly IOutboxStorage _outbox;
 
         private readonly TopicFactory _topicFactory;
 
-        public OutboxSender(IOutboxRepository outbox, TopicFactory topicFactory) 
+        public OutboxSender(IOutboxStorage outbox, TopicFactory topicFactory) 
         {
             _outbox = outbox;
             _topicFactory = topicFactory;
