@@ -4,7 +4,20 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageProjectUrl>https://transactionalbox.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adimiko/TransactionalBox</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>$(AssemblyName)</PackageTags>
+    <Title>$(AssemblyName)</Title>
+    <PackageIcon>small-logo.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\small-logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />

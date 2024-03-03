@@ -1,0 +1,26 @@
+name: Deployment of packages
+
+on:
+  release:
+    types: [published]
+    
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+
+    - name: Build
+      run: dotnet build -c Release
+
+    - name: Publish NuGet packacges
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: chmod +x ./.github/scripts/deploy-packages.sh && ./.github/scripts/deploy-packages.sh
+      shell: bash
