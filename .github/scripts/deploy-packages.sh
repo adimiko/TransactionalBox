@@ -9,7 +9,7 @@ do
     
     echo Deploying package:  ${dir##*/}
 
-    exec ./scripts/publish-package.sh  ${dir##*/} &
+    exec ./scripts/deploy-package.sh  ${dir##*/} &
     wait
 done
 
