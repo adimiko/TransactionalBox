@@ -21,6 +21,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.UnitTests", "tests\TransactionalBox.Outbox.UnitTests\TransactionalBox.Outbox.UnitTests.csproj", "{7934A882-94D0-4A2A-8965-D7CDE3808F8A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker", "source\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj", "{289E2039-7A1E-48AE-AFB1-D8988C939C20}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.EntityFramework", "source\TransactionalBox.OutboxWorker.EntityFramework\TransactionalBox.OutboxWorker.EntityFramework.csproj", "{AC9F6100-6D94-4D39-8F99-682596CDAEF6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Kafka", "source\TransactionalBox.OutboxWorker.Kafka\TransactionalBox.OutboxWorker.Kafka.csproj", "{30A59AE5-D808-449A-9303-7F737D5DBFAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxBase.StorageModel", "source\TransactionalBox.OutboxBase.StorageModel\TransactionalBox.OutboxBase.StorageModel.csproj", "{37348987-DF18-470E-8C46-A0B448099BD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +59,22 @@ Global
 		{7934A882-94D0-4A2A-8965-D7CDE3808F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7934A882-94D0-4A2A-8965-D7CDE3808F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7934A882-94D0-4A2A-8965-D7CDE3808F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{289E2039-7A1E-48AE-AFB1-D8988C939C20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{289E2039-7A1E-48AE-AFB1-D8988C939C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{289E2039-7A1E-48AE-AFB1-D8988C939C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{289E2039-7A1E-48AE-AFB1-D8988C939C20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC9F6100-6D94-4D39-8F99-682596CDAEF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC9F6100-6D94-4D39-8F99-682596CDAEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC9F6100-6D94-4D39-8F99-682596CDAEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9F6100-6D94-4D39-8F99-682596CDAEF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30A59AE5-D808-449A-9303-7F737D5DBFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A59AE5-D808-449A-9303-7F737D5DBFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A59AE5-D808-449A-9303-7F737D5DBFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A59AE5-D808-449A-9303-7F737D5DBFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37348987-DF18-470E-8C46-A0B448099BD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +86,10 @@ Global
 		{36DBAFB0-B554-4730-8098-22898103B2EA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{0F2366C8-A646-4714-A884-3DE04348B45F} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{7934A882-94D0-4A2A-8965-D7CDE3808F8A} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
+		{289E2039-7A1E-48AE-AFB1-D8988C939C20} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{AC9F6100-6D94-4D39-8F99-682596CDAEF6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{30A59AE5-D808-449A-9303-7F737D5DBFAF} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{37348987-DF18-470E-8C46-A0B448099BD3} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

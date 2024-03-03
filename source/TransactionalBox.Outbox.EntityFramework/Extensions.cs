@@ -8,12 +8,12 @@ namespace TransactionalBox.Outbox.EntityFramework
 {
     public static class Extensions
     {
-        public static IOutboxStorageConfigurator AddEntityFramework<TDbContext>(this IOutboxStorageConfigurator outboxStorageConfigurator)
+        public static IOutboxStorageConfigurator UseEntityFramework<TDbContext>(this IOutboxStorageConfigurator outboxStorageConfigurator)
             where TDbContext : DbContext
         {
             var services = outboxStorageConfigurator.Services;
 
-            services.AddScoped<IOutboxRepository, TransactionalBox.Outbox.EntityFramework.Internals.OutboxRepository>();
+            services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
             return outboxStorageConfigurator;

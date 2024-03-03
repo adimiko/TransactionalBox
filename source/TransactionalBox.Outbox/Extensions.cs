@@ -7,7 +7,7 @@ namespace TransactionalBox.Outbox
 {
     public static class Extensions
     {
-        public static ITransactionalBoxConfigurator AddOutbox(
+        public static ITransactionalBoxConfigurator UseOutbox(
             this ITransactionalBoxConfigurator transactionalBoxConfigurator,
             Action<IOutboxStorageConfigurator> storageConfiguration)
         {

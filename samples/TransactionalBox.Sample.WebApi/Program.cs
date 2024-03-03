@@ -1,18 +1,31 @@
 using Microsoft.EntityFrameworkCore;
+using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
 using TransactionalBox;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.EntityFramework;
 using TransactionalBox.Outbox.Internals;
+using TransactionalBox.OutboxBase.StorageModel;
+using TransactionalBox.OutboxWorker;
+using TransactionalBox.OutboxWorker.EntityFramework;
+using TransactionalBox.OutboxWorker.Kafka;
 using TransactionalBox.Sample.WebApi;
 
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
   .Build();
 
-await postgreSqlContainer.StartAsync();
+var kafkaContainer = new KafkaBuilder()
+  .WithImage("confluentinc/cp-kafka:6.2.10")
+  .Build();
+
+var postgresStartTask = postgreSqlContainer.StartAsync();
+var kafkaStartTask = kafkaContainer.StartAsync();
+
+await Task.WhenAll(postgresStartTask, kafkaStartTask);
 
 var connectionString = postgreSqlContainer.GetConnectionString();
+var bootstrapServers = kafkaContainer.GetBootstrapAddress();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +36,8 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionSt
 
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox(x => x.AddEntityFramework<SampleDbContext>());
+    x.UseOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
+    x.UseOutboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
 });
 
 var app = builder.Build();

@@ -1,15 +1,16 @@
 ﻿using System.Text.Json;
 using TransactionalBox.Outbox.Internals.Exceptions;
+using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.Outbox.Internals
 {
     internal sealed class OutboxSender : IOutboxSender
     {
-        private readonly IOutboxRepository _outbox;
+        private readonly IOutboxStorage _outbox;
 
         private readonly TopicFactory _topicFactory;
 
-        public OutboxSender(IOutboxRepository outbox, TopicFactory topicFactory) 
+        public OutboxSender(IOutboxStorage outbox, TopicFactory topicFactory) 
         {
             _outbox = outbox;
             _topicFactory = topicFactory;
@@ -31,7 +32,6 @@ namespace TransactionalBox.Outbox.Internals
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = occurredUtc,
-                LockUtc = null,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
                 Payload = JsonSerializer.Serialize((dynamic)message),
