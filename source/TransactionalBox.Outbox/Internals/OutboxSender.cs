@@ -31,7 +31,6 @@ namespace TransactionalBox.Outbox.Internals
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = occurredUtc,
-                LockUtc = null,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
                 Payload = JsonSerializer.Serialize((dynamic)message),

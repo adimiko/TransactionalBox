@@ -4,6 +4,9 @@ using TransactionalBox;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.EntityFramework;
 using TransactionalBox.Outbox.Internals;
+using TransactionalBox.OutboxWorker;
+using TransactionalBox.OutboxWorker.EntityFramework;
+using TransactionalBox.OutboxWorker.Kafka;
 using TransactionalBox.Sample.WebApi;
 
 var postgreSqlContainer = new PostgreSqlBuilder()
@@ -23,7 +26,8 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionSt
 
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox(x => x.AddEntityFramework<SampleDbContext>());
+    x.UseOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
+    x.UseOutboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka());
 });
 
 var app = builder.Build();
