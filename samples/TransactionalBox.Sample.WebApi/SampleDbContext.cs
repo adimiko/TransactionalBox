@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
+using TransactionalBox.InboxWorker.EntityFramework;
 using TransactionalBox.Outbox.EntityFramework;
 
 namespace TransactionalBox.Sample.WebApi
@@ -14,6 +15,7 @@ namespace TransactionalBox.Sample.WebApi
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.AddOutbox();
+            modelBuilder.AddInbox();
         }
     }
 }

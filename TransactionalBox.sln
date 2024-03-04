@@ -29,6 +29,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWork
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxBase.StorageModel", "source\TransactionalBox.OutboxBase.StorageModel\TransactionalBox.OutboxBase.StorageModel.csproj", "{37348987-DF18-470E-8C46-A0B448099BD3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker", "source\TransactionalBox.InboxWorker\TransactionalBox.InboxWorker.csproj", "{B04A8F8F-4673-4C45-93E7-67BDE2E1AB96}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.EntityFramework", "source\TransactionalBox.InboxWorker.EntityFramework\TransactionalBox.InboxWorker.EntityFramework.csproj", "{DAA24A23-5555-473E-8A43-2C69D2B0CF11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.Kafka", "source\TransactionalBox.InboxWorker.Kafka\TransactionalBox.InboxWorker.Kafka.csproj", "{DC84CB93-D2CB-4F26-9FF4-7FD3F10CCDEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxBase.StorageModel", "source\TransactionalBox.InboxBase.StorageModel\TransactionalBox.InboxBase.StorageModel.csproj", "{BCB52A1C-8C66-40EB-A6AB-F9B7630EA1DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +83,22 @@ Global
 		{37348987-DF18-470E-8C46-A0B448099BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37348987-DF18-470E-8C46-A0B448099BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37348987-DF18-470E-8C46-A0B448099BD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B04A8F8F-4673-4C45-93E7-67BDE2E1AB96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B04A8F8F-4673-4C45-93E7-67BDE2E1AB96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B04A8F8F-4673-4C45-93E7-67BDE2E1AB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B04A8F8F-4673-4C45-93E7-67BDE2E1AB96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA24A23-5555-473E-8A43-2C69D2B0CF11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA24A23-5555-473E-8A43-2C69D2B0CF11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA24A23-5555-473E-8A43-2C69D2B0CF11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA24A23-5555-473E-8A43-2C69D2B0CF11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC84CB93-D2CB-4F26-9FF4-7FD3F10CCDEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC84CB93-D2CB-4F26-9FF4-7FD3F10CCDEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC84CB93-D2CB-4F26-9FF4-7FD3F10CCDEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC84CB93-D2CB-4F26-9FF4-7FD3F10CCDEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCB52A1C-8C66-40EB-A6AB-F9B7630EA1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB52A1C-8C66-40EB-A6AB-F9B7630EA1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB52A1C-8C66-40EB-A6AB-F9B7630EA1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB52A1C-8C66-40EB-A6AB-F9B7630EA1DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +114,10 @@ Global
 		{AC9F6100-6D94-4D39-8F99-682596CDAEF6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{30A59AE5-D808-449A-9303-7F737D5DBFAF} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{37348987-DF18-470E-8C46-A0B448099BD3} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{B04A8F8F-4673-4C45-93E7-67BDE2E1AB96} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{DAA24A23-5555-473E-8A43-2C69D2B0CF11} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{DC84CB93-D2CB-4F26-9FF4-7FD3F10CCDEA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{BCB52A1C-8C66-40EB-A6AB-F9B7630EA1DE} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

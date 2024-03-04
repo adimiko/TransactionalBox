@@ -7,7 +7,7 @@ namespace TransactionalBox.OutboxWorker
 {
     public static class Extensions
     {
-        public static ITransactionalBoxConfigurator UseOutboxWorker(
+        public static ITransactionalBoxConfigurator AddOutboxWorker(
             this ITransactionalBoxConfigurator configurator,
             Action<IOutboxWorkerStorageConfigurator> storageConfiguration,
             Action<IOutboxWorkerTransportConfigurator> transportConfiguration)
