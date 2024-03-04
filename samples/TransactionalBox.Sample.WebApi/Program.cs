@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
 using TransactionalBox;
+using TransactionalBox.Inbox;
+using TransactionalBox.Inbox.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel;
 using TransactionalBox.InboxWorker;
 using TransactionalBox.InboxWorker.EntityFramework;
@@ -44,6 +46,8 @@ builder.Services.AddTransactionalBox(x =>
     x.AddOutboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
 
     x.AddInboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
+
+    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>());
 });
 
 var app = builder.Build();

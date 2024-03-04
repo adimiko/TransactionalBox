@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Pqc.Crypto.Lms;
-using TransactionalBox.InboxWorker.EntityFramework;
 using TransactionalBox.Outbox.EntityFramework;
+using TransactionalBox.Inbox.EntityFramework;
 
 namespace TransactionalBox.Sample.WebApi
 {

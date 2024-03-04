@@ -7,7 +7,7 @@ namespace TransactionalBox.InboxWorker
 {
     public static class Extensions
     {
-        public static void AddInboxWorker(
+        public static ITransactionalBoxConfigurator AddInboxWorker(
             this ITransactionalBoxConfigurator transactionalBoxConfigurator,
             Action<IInboxWorkerStorageConfigurator> storageConfiguration,
             Action<IInboxWorkerTransportConfigurator> transportConfiguration)
@@ -21,6 +21,8 @@ namespace TransactionalBox.InboxWorker
             transportConfiguration(transport);
 
             services.AddHostedService<InboxTransportProcessor>();
+
+            return transactionalBoxConfigurator;
         }
     }
 }
