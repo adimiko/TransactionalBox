@@ -2,9 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
 using TransactionalBox;
+using TransactionalBox.Inbox;
+using TransactionalBox.Inbox.EntityFramework;
+using TransactionalBox.InboxBase.StorageModel;
+using TransactionalBox.InboxWorker;
+using TransactionalBox.InboxWorker.EntityFramework;
+using TransactionalBox.InboxWorker.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.EntityFramework;
-using TransactionalBox.Outbox.Internals;
 using TransactionalBox.OutboxBase.StorageModel;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
@@ -36,8 +41,13 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionSt
 
 builder.Services.AddTransactionalBox(x =>
 {
-    x.UseOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
-    x.UseOutboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
+    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
+
+    x.AddOutboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
+
+    x.AddInboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
+
+    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>());
 });
 
 var app = builder.Build();
@@ -59,13 +69,20 @@ app.MapPost("/outbox", async (IOutboxSender outboxSender, DbContext dbContext) =
 {
     var message = new ExampleMessage();
 
-    await outboxSender.Send(message, "asd", DateTime.UtcNow);
+    await outboxSender.Send(message, "ModuleName", DateTime.UtcNow);
     await dbContext.SaveChangesAsync();
 });
 
 app.MapGet("/outbox", (DbContext dbContext) =>
 {
     var messages = dbContext.Set<OutboxMessage>().ToList();
+
+    return messages;
+});
+
+app.MapGet("/inbox", (DbContext dbContext) =>
+{
+    var messages = dbContext.Set<InboxMessage>().ToList();
 
     return messages;
 });
