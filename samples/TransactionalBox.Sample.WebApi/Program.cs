@@ -41,13 +41,11 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionSt
 
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
+    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
+     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
 
-    x.AddOutboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
-
-    x.AddInboxWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
-
-    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>());
+    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
+     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
 });
 
 var app = builder.Build();
@@ -82,7 +80,7 @@ app.MapGet("/outbox", (DbContext dbContext) =>
 
 app.MapGet("/inbox", (DbContext dbContext) =>
 {
-    var messages = dbContext.Set<InboxMessage>().ToList();
+    var messages = dbContext.Set<InboxMessageStorageModel>().ToList();
 
     return messages;
 });

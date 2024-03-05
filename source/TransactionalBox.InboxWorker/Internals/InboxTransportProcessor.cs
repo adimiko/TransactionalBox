@@ -27,7 +27,7 @@ namespace TransactionalBox.InboxWorker.Internals
                     await foreach (var message in _inboxWorkerTransport.GetMessage(stoppingToken))
                     {
                         //TODO
-                        var inboxMessage = new InboxMessage()
+                        var inboxMessage = new InboxMessageStorageModel()
                         {
                             Id = Guid.NewGuid(),
                             OccurredUtc = DateTime.UtcNow,

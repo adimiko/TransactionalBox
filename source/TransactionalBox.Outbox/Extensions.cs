@@ -2,12 +2,13 @@
 using TransactionalBox.Configurators;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
+using TransactionalBox.OutboxBase.DependencyBuilder;
 
 namespace TransactionalBox.Outbox
 {
     public static class Extensions
     {
-        public static ITransactionalBoxConfigurator AddOutbox(
+        public static IOutboxDependencyBuilder AddOutbox(
             this ITransactionalBoxConfigurator transactionalBoxConfigurator,
             Action<IOutboxStorageConfigurator> storageConfiguration)
         {
@@ -20,7 +21,7 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<TopicFactory>();
             services.AddScoped<IOutboxSender, OutboxSender>();
 
-            return transactionalBoxConfigurator;
+            return new OutboxDependencyBuilder(services);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Configurators;
+using TransactionalBox.OutboxBase.DependencyBuilder;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals;
 
@@ -7,12 +8,12 @@ namespace TransactionalBox.OutboxWorker
 {
     public static class Extensions
     {
-        public static ITransactionalBoxConfigurator AddOutboxWorker(
-            this ITransactionalBoxConfigurator configurator,
+        public static IOutboxDependencyBuilder WithWorker(
+            this IOutboxDependencyBuilder builder,
             Action<IOutboxWorkerStorageConfigurator> storageConfiguration,
             Action<IOutboxWorkerTransportConfigurator> transportConfiguration)
         {
-            var services = configurator.Services;
+            var services = builder.Services;
 
             var storage = new OutboxWorkerStorageConfigurator(services);
             var transport = new OutboxWorkerTransportConfigurator(services);
@@ -22,7 +23,7 @@ namespace TransactionalBox.OutboxWorker
 
             services.AddHostedService<OutboxProcessor>();
 
-            return configurator;
+            return builder;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Configurators;
+using TransactionalBox.InboxBase.DependencyBuilder;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Internals;
 
@@ -7,12 +7,12 @@ namespace TransactionalBox.InboxWorker
 {
     public static class Extensions
     {
-        public static ITransactionalBoxConfigurator AddInboxWorker(
-            this ITransactionalBoxConfigurator transactionalBoxConfigurator,
+        public static IInboxDependencyBuilder WithWorker(
+            this IInboxDependencyBuilder builder,
             Action<IInboxWorkerStorageConfigurator> storageConfiguration,
             Action<IInboxWorkerTransportConfigurator> transportConfiguration)
         {
-            var services = transactionalBoxConfigurator.Services;
+            var services = builder.Services;
 
             var storage = new InboxWorkerStorageConfigurator(services);
             var transport = new InboxWorkerTransportConfigurator(services);
@@ -22,7 +22,7 @@ namespace TransactionalBox.InboxWorker
 
             services.AddHostedService<InboxTransportProcessor>();
 
-            return transactionalBoxConfigurator;
+            return builder;
         }
     }
 }
