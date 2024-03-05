@@ -1,12 +1,13 @@
 ﻿using TransactionalBox.Configurators;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals;
+using TransactionalBox.InboxBase.DependencyBuilder;
 
 namespace TransactionalBox.Inbox
 {
     public static class Extensions
     {
-        public static ITransactionalBoxConfigurator AddInbox(
+        public static IInboxDependencyBuilder AddInbox(
             this ITransactionalBoxConfigurator configurator,
             Action<IInboxStorageConfigurator> storageConfiguration)
         {
@@ -16,7 +17,7 @@ namespace TransactionalBox.Inbox
 
             storageConfiguration(storage);
 
-            return configurator;
+            return new InboxDependencyBuilder(services);
         }
     }
 }

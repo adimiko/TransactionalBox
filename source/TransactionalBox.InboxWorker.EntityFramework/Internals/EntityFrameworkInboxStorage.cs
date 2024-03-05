@@ -9,15 +9,15 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
 
         private readonly DbContext _dbContext;
 
-        private readonly DbSet<InboxMessage> _inbox;
+        private readonly DbSet<InboxMessageStorageModel> _inbox;
 
         public EntityFrameworkInboxStorage(DbContext dbContext)
         {
             _dbContext = dbContext;
-            _inbox = dbContext.Set<InboxMessage>();
+            _inbox = dbContext.Set<InboxMessageStorageModel>();
         }
 
-        public async Task Add(InboxMessage message)
+        public async Task Add(InboxMessageStorageModel message)
         {
             await _inbox.AddAsync(message).AsTask();
 
