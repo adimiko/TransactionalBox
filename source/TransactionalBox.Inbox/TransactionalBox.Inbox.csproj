@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.InboxBase.DependencyBuilder\TransactionalBox.InboxBase.DependencyBuilder.csproj" />
+    <ProjectReference Include="..\TransactionalBox.InboxBase.StorageModel\TransactionalBox.InboxBase.StorageModel.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.EntityFramework.Internals;
+using TransactionalBox.Inbox.Internals;
 
 namespace TransactionalBox.Inbox.EntityFramework
 {
@@ -13,6 +14,7 @@ namespace TransactionalBox.Inbox.EntityFramework
             var services = storageConfigurator.Services;
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
+            services.AddScoped<IInboxStorage, InboxStorage>();
         }
 
         public static ModelBuilder AddInbox(this ModelBuilder modelBuilder)
