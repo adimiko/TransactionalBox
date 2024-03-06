@@ -31,7 +31,7 @@ namespace TransactionalBox.InboxWorker.Internals
                         {
                             Id = Guid.NewGuid(),
                             OccurredUtc = DateTime.UtcNow,
-                            Topic = "TEST",
+                            Topic = "xxx-ExampleMessage",
                             Payload = message,
                         };
 
@@ -44,7 +44,7 @@ namespace TransactionalBox.InboxWorker.Internals
                 catch(Exception ex)
                 {
                     //log
-                    await Task.Delay(5000);
+                    await Task.Delay(500);
                 }
             }
         }

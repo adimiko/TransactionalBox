@@ -34,7 +34,7 @@ namespace TransactionalBox.OutboxWorker.Internals
 
                     await outbox.MarkAsProcessed(messages);
 
-                    await Task.Delay(5000);
+                    await Task.Delay(500);
                 }
             }
 
