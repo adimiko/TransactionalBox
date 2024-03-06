@@ -51,10 +51,7 @@ namespace TransactionalBox.Inbox.Internals
 
                     var message = JsonSerializer.Deserialize(inboxMessage.Payload, type) as InboxMessageBase;
 
-                    //isProcessed = true (date is not required) or startProcessed
-
                     //TODO compliedLambda
-                    //TODO saveChanges by user (user manage transaction)
                     await (Task) handlerType
                         .GetMethod("Handle")?
                         .Invoke(handler, new object[] { message, stoppingToken });
