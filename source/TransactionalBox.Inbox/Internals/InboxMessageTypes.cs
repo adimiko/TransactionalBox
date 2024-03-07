@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace TransactionalBox.Inbox.Internals
+﻿namespace TransactionalBox.Inbox.Internals
 {
     internal sealed class InboxMessageTypes : IInboxMessageTypes
     {
@@ -12,12 +10,16 @@ namespace TransactionalBox.Inbox.Internals
         {
             foreach (Type type in inboxMessageHandlerTypes)
             {
-                //TODO get by interface type
-                var messageType = type.GetInterfaces().Single().GetGenericArguments()[0];
+                var handlerTypes = type
+                    .GetInterfaces()
+                    .Where(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IInboxMessageHandler<>));
 
-                var messageName = messageType.Name;
+                foreach (Type handlerType in handlerTypes)
+                {
+                    var messageType = handlerType.GetGenericArguments()[0];
 
-                _types.Add(messageName, messageType);
+                    _types.Add(messageType.Name, messageType);
+                }
             }
         }
     }

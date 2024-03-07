@@ -39,11 +39,7 @@ namespace TransactionalBox.Inbox.Internals
 
                     _inboxMessageTypes.Types.TryGetValue(messageTypeName, out var type);
 
-                    if (type is null)
-                    {
-                        //TODO
-                        throw new Exception("Message not exists");
-                    }
+                    // (Error case) TODO what when type does not exist
 
                     Type handlerType = typeof(IInboxMessageHandler<>).MakeGenericType(type);
 
@@ -51,7 +47,7 @@ namespace TransactionalBox.Inbox.Internals
 
                     var message = JsonSerializer.Deserialize(inboxMessage.Payload, type) as InboxMessageBase;
 
-                    //TODO compliedLambda
+                    //TODO (Performance) when program start below code can be compiled to lambda expresion
                     await (Task) handlerType
                         .GetMethod("Handle")?
                         .Invoke(handler, new object[] { message, stoppingToken });
