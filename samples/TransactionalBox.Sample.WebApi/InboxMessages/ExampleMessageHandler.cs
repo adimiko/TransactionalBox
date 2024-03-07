@@ -13,7 +13,8 @@ namespace TransactionalBox.Sample.WebApi.InboxMessages
 
         public async Task Handle(ExampleMessage message, CancellationToken cancellationToken)
         {
-            //TODO
+            // Logic
+            // TODO config AutoSaveChanges = false (default)
             await _context.SaveChangesAsync();
         }
     }
