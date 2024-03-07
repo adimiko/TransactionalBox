@@ -18,11 +18,9 @@ namespace TransactionalBox.Outbox.EntityFramework
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
         }
 
-        public static ModelBuilder AddOutbox(this ModelBuilder modelBuilder)
+        public static void AddOutbox(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfiguration());
-
-            return modelBuilder;
         }
     }
 }
