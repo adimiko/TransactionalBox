@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.InboxBase.StorageModel
 {
-    public sealed class InboxMessageStorageModel
+    public sealed class InboxMessage
     {
         public required Guid Id { get; set; }
 

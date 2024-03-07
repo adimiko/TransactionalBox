@@ -80,7 +80,7 @@ app.MapGet("/outbox", (DbContext dbContext) =>
 
 app.MapGet("/inbox", (DbContext dbContext) =>
 {
-    var messages = dbContext.Set<InboxMessageStorageModel>().ToList();
+    var messages = dbContext.Set<InboxMessage>().ToList();
 
     return messages;
 });

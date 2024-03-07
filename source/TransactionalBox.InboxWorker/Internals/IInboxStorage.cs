@@ -4,6 +4,6 @@ namespace TransactionalBox.InboxWorker.Internals
 {
     public interface IInboxStorage
     {
-        Task Add(InboxMessageStorageModel message);
+        Task Add(InboxMessage message);
     }
 }
