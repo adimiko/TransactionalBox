@@ -18,7 +18,7 @@ namespace TransactionalBox.OutboxWorker.Kafka.Internals
             {
                 var result = await producer.ProduceAsync(topic, new Message<Null, string> { Value = message });
 
-                //TODO check result
+                //TODO (Processing) #26 
             }
         }
     }
