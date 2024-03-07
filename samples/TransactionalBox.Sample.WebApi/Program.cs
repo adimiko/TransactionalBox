@@ -42,7 +42,7 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionSt
 builder.Services.AddTransactionalBox(x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
+     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
      .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));

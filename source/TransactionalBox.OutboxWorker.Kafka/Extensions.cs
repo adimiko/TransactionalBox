@@ -4,6 +4,7 @@ using System.Net;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals;
 using TransactionalBox.OutboxWorker.Kafka.Internals;
+using TransactionalBox.OutboxWorker.Kafka.Settings;
 
 namespace TransactionalBox.OutboxWorker.Kafka
 {
@@ -11,13 +12,16 @@ namespace TransactionalBox.OutboxWorker.Kafka
     {
         public static void UseKafka(
             this IOutboxWorkerTransportConfigurator outboxWorkerTransportConfigurator,
-            string bootstrapServers)
+            Action<OutboxWorkerKafkaSettings> settingsConfiguration)
         {
             var services = outboxWorkerTransportConfigurator.Services;
+            var settings = new OutboxWorkerKafkaSettings();
+
+            settingsConfiguration(settings);
 
             ProducerConfig config = new ProducerConfig()
             {
-                BootstrapServers = bootstrapServers,
+                BootstrapServers = settings.BootstrapServers,
                 ClientId = Dns.GetHostName(), // TODO (HostNameService) #25
             };
 
