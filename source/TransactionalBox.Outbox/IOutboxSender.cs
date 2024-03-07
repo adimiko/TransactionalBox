@@ -2,6 +2,7 @@
 {
     public interface IOutboxSender
     {
-        Task Send<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : MessageBase;
+        Task Send<TOutboxMessageBase>(TOutboxMessageBase message, string receiver, DateTime occurredUtc)
+            where TOutboxMessageBase : OutboxMessageBase;
     }
 }

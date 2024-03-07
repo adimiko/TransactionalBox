@@ -16,7 +16,7 @@ namespace TransactionalBox.Outbox.Internals
             _topicFactory = topicFactory;
         }
 
-        public async Task Send<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : MessageBase
+        public async Task Send<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : OutboxMessageBase
         {
             if (string.IsNullOrWhiteSpace(receiver)) 
             {
