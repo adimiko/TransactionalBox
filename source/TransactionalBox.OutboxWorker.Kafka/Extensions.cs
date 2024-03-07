@@ -18,7 +18,7 @@ namespace TransactionalBox.OutboxWorker.Kafka
             ProducerConfig config = new ProducerConfig()
             {
                 BootstrapServers = bootstrapServers,
-                ClientId = Dns.GetHostName(),
+                ClientId = Dns.GetHostName(), // TODO (HostNameService) #25
             };
 
             services.AddSingleton(config);
