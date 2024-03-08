@@ -45,9 +45,10 @@ namespace TransactionalBox.Inbox.Internals
 
                     var handler = scope.ServiceProvider.GetRequiredService(handlerType);
 
+                    //TODO #27
                     var message = JsonSerializer.Deserialize(inboxMessage.Payload, type) as InboxMessageBase;
 
-                    //TODO (Performance) when program start below code can be compiled to lambda expresion
+                    //TODO #39 (Performance) when program start below code can be compiled to lambda expresion
                     await (Task) handlerType
                         .GetMethod("Handle")?
                         .Invoke(handler, new object[] { message, stoppingToken });

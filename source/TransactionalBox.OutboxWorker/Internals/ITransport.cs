@@ -1,7 +1,9 @@
-﻿namespace TransactionalBox.OutboxWorker.Internals
+﻿using TransactionalBox.OutboxBase.StorageModel;
+
+namespace TransactionalBox.OutboxWorker.Internals
 {
     public interface ITransport
     {
-        Task Add(string message, string topic);
+        Task Add(OutboxMessage message);
     }
 }

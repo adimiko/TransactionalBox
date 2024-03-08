@@ -1,4 +1,6 @@
 ﻿using Confluent.Kafka;
+using System.Text.Json;
+using TransactionalBox.OutboxBase.StorageModel;
 using TransactionalBox.OutboxWorker.Internals;
 
 namespace TransactionalBox.OutboxWorker.Kafka.Internals
@@ -12,11 +14,14 @@ namespace TransactionalBox.OutboxWorker.Kafka.Internals
             _config = config;
         }
 
-        public async Task Add(string message, string topic)
+        public async Task Add(OutboxMessage message)
         {
             using (var producer = new ProducerBuilder<Null, String>(_config).Build())
             {
-                var result = await producer.ProduceAsync(topic, new Message<Null, string> { Value = message });
+                //TODO #27
+                var value = JsonSerializer.Serialize(message);
+
+                var result = await producer.ProduceAsync(message.Topic, new Message<Null, string> { Value = value });
 
                 //TODO (Processing) #26 
             }

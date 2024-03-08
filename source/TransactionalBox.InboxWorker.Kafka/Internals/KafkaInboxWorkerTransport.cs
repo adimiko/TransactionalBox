@@ -1,4 +1,6 @@
 ﻿using Confluent.Kafka;
+using System.Text.Json;
+using TransactionalBox.InboxBase.StorageModel;
 using TransactionalBox.InboxWorker.Internals;
 
 namespace TransactionalBox.InboxWorker.Kafka.Internals
@@ -12,17 +14,19 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
             _config = config;
         }
 
-        public async IAsyncEnumerable<string> GetMessage(CancellationToken cancellationToken)
+        public async IAsyncEnumerable<InboxMessage> GetMessage(CancellationToken cancellationToken)
         {
             using (var consumer = new ConsumerBuilder<Ignore, string>(_config).Build())
             {
+                //TODO #28
                 consumer.Subscribe("ModuleName-ExampleMessage");
 
                 do
                 {
                     var result = consumer.Consume();
-                    
-                    var message = result.Message.Value;
+
+                    //TODO #27
+                    var message = JsonSerializer.Deserialize<InboxMessage>(result.Message.Value);
 
                     yield return message;
 
