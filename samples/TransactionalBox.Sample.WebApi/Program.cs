@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
@@ -63,22 +64,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/outbox", async (IOutboxSender outboxSender, DbContext dbContext) =>
+app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutboxSender outboxSender, DbContext dbContext) =>
 {
-    var message = new ExampleMessage();
-
     await outboxSender.Send(message, "ModuleName", DateTime.UtcNow);
     await dbContext.SaveChangesAsync();
 });
 
-app.MapGet("/outbox", (DbContext dbContext) =>
+app.MapGet("/get-messages-from-outbox", (DbContext dbContext) =>
 {
     var messages = dbContext.Set<OutboxMessage>().ToList();
 
     return messages;
 });
 
-app.MapGet("/inbox", (DbContext dbContext) =>
+app.MapGet("/get-messages-from-inbox", (DbContext dbContext) =>
 {
     var messages = dbContext.Set<InboxMessage>().ToList();
 
