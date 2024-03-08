@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Configurators;
 using TransactionalBox.Internals;
+using TransactionalBox.Settings;
 
 namespace TransactionalBox
 {
@@ -8,11 +9,18 @@ namespace TransactionalBox
     {
         public static IServiceCollection AddTransactionalBox(
             this IServiceCollection services,
-            Action<ITransactionalBoxConfigurator> configure)
+            Action<ITransactionalBoxConfigurator> configuration,
+            Action<TransactionalBoxSettings> settingsConfiguration)
         {
             var configuratior = new TransactionalBoxConfigurator(services);
 
-            configure(configuratior);
+            var settings = new TransactionalBoxSettings();
+
+            configuration(configuratior);
+
+            settingsConfiguration(settings);
+
+            services.AddSingleton<ITransactionalBoxSettings>(settings);
 
             return services;
         }

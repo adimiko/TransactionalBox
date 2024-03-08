@@ -7,16 +7,18 @@ namespace TransactionalBox.OutboxWorker.Kafka.Internals
 {
     internal sealed class KafkaTransport : ITransport
     {
-        private readonly ProducerConfig _config;
+        private readonly KafkaConfigFactory _configFactory;
 
-        public KafkaTransport(ProducerConfig config) 
+        public KafkaTransport(KafkaConfigFactory configFactory) 
         {
-            _config = config;
+            _configFactory = configFactory;
         }
 
         public async Task Add(OutboxMessage message)
         {
-            using (var producer = new ProducerBuilder<Null, String>(_config).Build())
+            var config = _configFactory.Create();
+
+            using (var producer = new ProducerBuilder<Null, String>(config).Build())
             {
                 //TODO #27
                 var value = JsonSerializer.Serialize(message);

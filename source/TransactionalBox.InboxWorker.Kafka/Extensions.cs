@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.InboxWorker.Kafka.Internals;
+using TransactionalBox.InboxWorker.Kafka.Settings;
 
 namespace TransactionalBox.InboxWorker.Kafka
 {
@@ -10,20 +11,18 @@ namespace TransactionalBox.InboxWorker.Kafka
     {
         public static void UseKafka(
             this IInboxWorkerTransportConfigurator inboxWorkerTransportConfigurator,
-            string bootstrapServers)
+            Action<InboxWorkerKafkaSettings> settingsConfiguration = null)
         {
             var services = inboxWorkerTransportConfigurator.Services;
+            var settings = new InboxWorkerKafkaSettings();
 
-            var config = new ConsumerConfig()
+            if (settingsConfiguration is not null) 
             {
-                GroupId = "ModuleName", //TODO ServiceNameProvider #28
-                BootstrapServers = bootstrapServers,
-                AutoOffsetReset = AutoOffsetReset.Earliest,
-                EnableAutoCommit = false,
-            };
+                settingsConfiguration(settings);
+            }
 
-            services.AddSingleton(config);
-
+            services.AddSingleton<IInboxWorkerKafkaSettings>(settings);
+            services.AddSingleton<KafkaConfigFactory>();
             services.AddSingleton<IInboxWorkerTransport, KafkaInboxWorkerTransport>();
         }
     }

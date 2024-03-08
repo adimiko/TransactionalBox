@@ -25,8 +25,8 @@ namespace TransactionalBox.OutboxWorker.Kafka
                 ClientId = Dns.GetHostName(), // TODO (HostNameService) #25
             };
 
-            services.AddSingleton(config);
-
+            services.AddSingleton<IOutboxWorkerKafkaSettings>(settings);
+            services.AddSingleton<KafkaConfigFactory>();
             services.AddScoped<ITransport, KafkaTransport>();
         }
     }

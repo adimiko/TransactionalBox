@@ -40,14 +40,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionString));
 
-builder.Services.AddTransactionalBox(x =>
+builder.Services.AddTransactionalBox(
+x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
      .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(bootstrapServers));
-});
+     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
+},
+settings => settings.ServiceName = "Registrations");
 
 var app = builder.Build();
 
@@ -68,7 +70,7 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
 {
     await outbox.Add(message, m =>
     {
-        m.Receiver = "ModuleName";
+        m.Receiver = "Registrations";
         m.OccurredUtc = DateTime.UtcNow;
     });
 
