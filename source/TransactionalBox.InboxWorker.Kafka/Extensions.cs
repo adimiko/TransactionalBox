@@ -16,7 +16,7 @@ namespace TransactionalBox.InboxWorker.Kafka
 
             var config = new ConsumerConfig()
             {
-                GroupId = "ModuleName", //TODO
+                GroupId = "ModuleName", //TODO ServiceNameProvider #28
                 BootstrapServers = bootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest,
                 EnableAutoCommit = false,
@@ -24,7 +24,6 @@ namespace TransactionalBox.InboxWorker.Kafka
 
             services.AddSingleton(config);
 
-            //TODO Singleton ?
             services.AddSingleton<IInboxWorkerTransport, KafkaInboxWorkerTransport>();
         }
     }

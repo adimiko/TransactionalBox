@@ -24,17 +24,8 @@ namespace TransactionalBox.InboxWorker.Internals
             {
                 try
                 {
-                    await foreach (var message in _inboxWorkerTransport.GetMessage(stoppingToken))
+                    await foreach (var inboxMessage in _inboxWorkerTransport.GetMessage(stoppingToken))
                     {
-                        //TODO
-                        var inboxMessage = new InboxMessageStorageModel()
-                        {
-                            Id = Guid.NewGuid(),
-                            OccurredUtc = DateTime.UtcNow,
-                            Topic = "xxx-ExampleMessage",
-                            Payload = message,
-                        };
-
                         using (var scope = _serviceProvider.CreateScope())
                         {
                             await scope.ServiceProvider.GetRequiredService<IInboxStorage>().Add(inboxMessage);

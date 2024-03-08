@@ -4,11 +4,11 @@
     {
         private const char _separator = '-';
 
-        public string Create<TMessage>(string moduleName, TMessage message) where TMessage : MessageBase
+        public string Create<TMessage>(string serviceName, TMessage message) where TMessage : IOutboxMessage
         {
             var messageType = message.GetType().Name;
 
-            var topic = moduleName + _separator + messageType;
+            var topic = serviceName + _separator + messageType;
 
             return topic;
         }

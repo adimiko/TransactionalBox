@@ -29,7 +29,7 @@ namespace TransactionalBox.OutboxWorker.Internals
 
                     foreach (var message in messages) 
                     {
-                        await transport.Add(message.Payload, message.Topic);
+                        await transport.Add(message);
                     }
 
                     await outbox.MarkAsProcessed(messages);

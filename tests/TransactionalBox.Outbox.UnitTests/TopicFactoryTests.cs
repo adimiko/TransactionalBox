@@ -12,15 +12,15 @@ namespace TransactionalBox.Outbox.UnitTests
         public void TopicFactoryTest()
         {
             // Arrange
-            const string moduleName = "ModuleName";
+            const string serviceName = "ModuleName";
             const char separator = '-';
             var message = new TestMessage();
 
             // Act
-            var actualTopic = _topicFactory.Create(moduleName, message);
+            var actualTopic = _topicFactory.Create(serviceName, message);
 
             // Assert
-            var expectedTopic = moduleName + separator + "TestMessage";
+            var expectedTopic = serviceName + separator + "TestMessage";
 
             Assert.Equal(expectedTopic, actualTopic);
         }

@@ -1,7 +1,9 @@
-﻿namespace TransactionalBox.InboxWorker.Internals
+﻿using TransactionalBox.InboxBase.StorageModel;
+
+namespace TransactionalBox.InboxWorker.Internals
 {
     public interface IInboxWorkerTransport
     {
-        IAsyncEnumerable<string> GetMessage(CancellationToken cancellationToken);
+        IAsyncEnumerable<InboxMessage> GetMessage(CancellationToken cancellationToken);
     }
 }

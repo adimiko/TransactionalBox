@@ -13,9 +13,9 @@ namespace TransactionalBox.Inbox.EntityFramework.Internals
             _dbContext = dbContext;
         }
 
-        public async Task<InboxMessageStorageModel?> GetMessage()
+        public async Task<InboxMessage?> GetMessage()
         {
-            var message = await _dbContext.Set<InboxMessageStorageModel>()
+            var message = await _dbContext.Set<InboxMessage>()
                 .Where(x => !x.IsProcessed)
                 .OrderBy(x => x.OccurredUtc)
                 .FirstOrDefaultAsync();

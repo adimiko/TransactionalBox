@@ -17,11 +17,9 @@ namespace TransactionalBox.Inbox.EntityFramework
             services.AddScoped<IInboxStorage, InboxStorage>();
         }
 
-        public static ModelBuilder AddInbox(this ModelBuilder modelBuilder)
+        public static void AddInbox(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new InboxMessageEntityTypeConfiguration());
-
-            return modelBuilder;
         }
     }
 }

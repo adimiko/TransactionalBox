@@ -4,6 +4,6 @@ namespace TransactionalBox.Inbox.Internals
 {
     public interface IInboxStorage
     {
-        Task<InboxMessageStorageModel?> GetMessage();
+        Task<InboxMessage?> GetMessage();
     }
 }
