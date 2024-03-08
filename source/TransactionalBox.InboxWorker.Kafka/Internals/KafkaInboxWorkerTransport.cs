@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using TransactionalBox.InboxBase.StorageModel;
 using TransactionalBox.InboxWorker.Internals;
@@ -14,7 +15,7 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
             _config = config;
         }
 
-        public async IAsyncEnumerable<InboxMessage> GetMessage(CancellationToken cancellationToken)
+        public async IAsyncEnumerable<InboxMessage> GetMessage([EnumeratorCancellation] CancellationToken cancellationToken)
         {
             using (var consumer = new ConsumerBuilder<Ignore, string>(_config).Build())
             {
@@ -36,6 +37,8 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
 
                 consumer.Close();
             }
+
+            await Task.CompletedTask;
         }
     }
 }
