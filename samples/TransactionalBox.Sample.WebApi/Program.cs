@@ -64,9 +64,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutboxSender outboxSender, DbContext dbContext) =>
+app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
-    await outboxSender.Send(message, "ModuleName", DateTime.UtcNow);
+    await outbox.Add(message, "ModuleName", DateTime.UtcNow);
     await dbContext.SaveChangesAsync();
 });
 

@@ -4,19 +4,19 @@ using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.Outbox.Internals
 {
-    internal sealed class OutboxSender : IOutboxSender
+    internal sealed class InternalOutbox : IOutbox
     {
         private readonly IOutboxStorage _outbox;
 
         private readonly TopicFactory _topicFactory;
 
-        public OutboxSender(IOutboxStorage outbox, TopicFactory topicFactory) 
+        public InternalOutbox(IOutboxStorage outbox, TopicFactory topicFactory) 
         {
             _outbox = outbox;
             _topicFactory = topicFactory;
         }
 
-        public async Task Send<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : OutboxMessageBase
+        public async Task Add<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : OutboxMessageBase
         {
             if (string.IsNullOrWhiteSpace(receiver)) 
             {
