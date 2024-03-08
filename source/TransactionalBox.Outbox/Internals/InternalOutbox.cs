@@ -19,7 +19,7 @@ namespace TransactionalBox.Outbox.Internals
         }
 
         public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
-            where TOutboxMessage : IOutboxMessage
+            where TOutboxMessage : class, IOutboxMessage
         {
             var metadata = new OutboxMessageMetadata();
 

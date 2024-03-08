@@ -3,6 +3,6 @@
     public interface IOutbox
     {
         Task Add<TOutboxMessage>(TOutboxMessage message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
-            where TOutboxMessage : IOutboxMessage;
+            where TOutboxMessage : class, IOutboxMessage;
     }
 }
