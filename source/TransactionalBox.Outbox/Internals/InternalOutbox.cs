@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Exceptions;
 using TransactionalBox.OutboxBase.StorageModel;
 
@@ -6,14 +7,18 @@ namespace TransactionalBox.Outbox.Internals
 {
     internal sealed class InternalOutbox : IOutbox
     {
+        private readonly ITransactionalBoxSettings _transactionalBoxSettings;
+
         private readonly IOutboxStorage _outboxStorage;
 
         private readonly TopicFactory _topicFactory;
 
         public InternalOutbox(
+            ITransactionalBoxSettings transactionalBoxSettings,
             IOutboxStorage outbox,
             TopicFactory topicFactory) 
         {
+            _transactionalBoxSettings = transactionalBoxSettings;
             _outboxStorage = outbox;
             _topicFactory = topicFactory;
         }
@@ -32,7 +37,7 @@ namespace TransactionalBox.Outbox.Internals
 
             if (receiver is null)
             {
-                receiver = "ModuleName"; //TODO ServiceNameProvider
+                receiver = _transactionalBoxSettings.ServiceName;
             }
 
             var outboxMessage = new OutboxMessage

@@ -3,24 +3,32 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using TransactionalBox.InboxBase.StorageModel;
 using TransactionalBox.InboxWorker.Internals;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.Kafka.Internals
 {
     internal sealed class KafkaInboxWorkerTransport : IInboxWorkerTransport
     {
-        private readonly ConsumerConfig _config;
+        private readonly ITransactionalBoxSettings _transactionalBoxSettings;
 
-        public KafkaInboxWorkerTransport(ConsumerConfig config) 
+        private readonly KafkaConfigFactory _configFactory;
+
+        public KafkaInboxWorkerTransport(
+            ITransactionalBoxSettings transactionalBoxSettings,
+            KafkaConfigFactory configFactory) 
         {
-            _config = config;
+            _transactionalBoxSettings = transactionalBoxSettings;
+            _configFactory = configFactory;
         }
 
         public async IAsyncEnumerable<InboxMessage> GetMessage([EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            using (var consumer = new ConsumerBuilder<Ignore, string>(_config).Build())
+            var config = _configFactory.Create();
+
+            using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             {
-                //TODO #28
-                consumer.Subscribe("ModuleName-ExampleMessage");
+                //TODO #41
+                consumer.Subscribe($"{_transactionalBoxSettings.ServiceName}-ExampleMessage");
 
                 do
                 {
