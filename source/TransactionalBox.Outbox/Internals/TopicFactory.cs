@@ -4,7 +4,7 @@
     {
         private const char _separator = '-';
 
-        public string Create<TMessage>(string serviceName, TMessage message) where TMessage : OutboxMessageBase
+        public string Create<TMessage>(string serviceName, TMessage message) where TMessage : IOutboxMessage
         {
             var messageType = message.GetType().Name;
 

@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Sample.WebApi
 {
-    public sealed class ExampleMessage : OutboxMessageBase
+    public sealed class ExampleMessage : IOutboxMessage
     {
         public string Name { get; set; } = "Adrian";
 

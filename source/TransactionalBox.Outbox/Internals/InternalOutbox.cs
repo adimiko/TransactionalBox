@@ -18,8 +18,8 @@ namespace TransactionalBox.Outbox.Internals
             _topicFactory = topicFactory;
         }
 
-        public async Task Add<TOutboxMessageBase>(TOutboxMessageBase message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
-            where TOutboxMessageBase : OutboxMessageBase
+        public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
+            where TOutboxMessage : IOutboxMessage
         {
             var metadata = new OutboxMessageMetadata();
 

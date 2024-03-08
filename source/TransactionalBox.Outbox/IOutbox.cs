@@ -2,7 +2,7 @@
 {
     public interface IOutbox
     {
-        Task Add<TOutboxMessageBase>(TOutboxMessageBase message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
-            where TOutboxMessageBase : OutboxMessageBase;
+        Task Add<TOutboxMessage>(TOutboxMessage message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
+            where TOutboxMessage : IOutboxMessage;
     }
 }
