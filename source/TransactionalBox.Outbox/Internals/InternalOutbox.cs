@@ -6,38 +6,45 @@ namespace TransactionalBox.Outbox.Internals
 {
     internal sealed class InternalOutbox : IOutbox
     {
-        private readonly IOutboxStorage _outbox;
+        private readonly IOutboxStorage _outboxStorage;
 
         private readonly TopicFactory _topicFactory;
 
-        public InternalOutbox(IOutboxStorage outbox, TopicFactory topicFactory) 
+        public InternalOutbox(
+            IOutboxStorage outbox,
+            TopicFactory topicFactory) 
         {
-            _outbox = outbox;
+            _outboxStorage = outbox;
             _topicFactory = topicFactory;
         }
 
-        public async Task Add<TMessage>(TMessage message, string receiver, DateTime occurredUtc) where TMessage : OutboxMessageBase
+        public async Task Add<TOutboxMessageBase>(TOutboxMessageBase message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
+            where TOutboxMessageBase : OutboxMessageBase
         {
-            if (string.IsNullOrWhiteSpace(receiver)) 
-            {
-                throw new ReceiverCannotBeNullOrEmptyException();
-            }
+            var metadata = new OutboxMessageMetadata();
 
-            if (occurredUtc.Kind != DateTimeKind.Utc)
+            if (metadata.OccurredUtc.Kind != DateTimeKind.Utc)
             {
                 throw new OccurredUtcMustBeUtcException();
+            }
+
+            var receiver = metadata.Receiver;
+
+            if (receiver is null)
+            {
+                receiver = "ModuleName"; //TODO ServiceNameProvider
             }
 
             var outboxMessage = new OutboxMessage
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
-                OccurredUtc = occurredUtc,
+                OccurredUtc = metadata.OccurredUtc,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
                 Payload = JsonSerializer.Serialize((dynamic)message), //TODO #27
             };
 
-            await _outbox.Add(outboxMessage);
+            await _outboxStorage.Add(outboxMessage);
         }
     }
 }
