@@ -9,5 +9,5 @@ Ensures eventual consistency when modules need to communicate with each other ov
 
 Examples of problems that occur during network communication:
 - lost messages
-- the same message was processed again
-- unavailable component
+- the same messages were processed again
+- unavailable services
