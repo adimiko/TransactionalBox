@@ -8,12 +8,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<PackageProjectUrl>https://transactionalbox.com</PackageProjectUrl>
-	<RepositoryUrl>https://github.com/adimiko/TransactionalBox</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-	<PackageTags>$(AssemblyName)</PackageTags>
-	<Title>$(AssemblyName)</Title>
-	<PackageIcon>small-logo.png</PackageIcon>
+    <PackageProjectUrl>https://transactionalbox.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adimiko/TransactionalBox</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>$(AssemblyName)</PackageTags>
+    <Title>$(AssemblyName)</Title>
+    <PackageIcon>small-logo.png</PackageIcon>
+    <Description>Outbox and Inbox Pattern in .NET</Description>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,5 +29,5 @@
   	<ItemGroup>
 		<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
 	</ItemGroup>
-    
+
 </Project>
