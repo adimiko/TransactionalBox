@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.EntityFramework.Internals;
 using TransactionalBox.Outbox.Internals;
-using TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals;
 
 namespace TransactionalBox.Outbox.EntityFramework
 {
@@ -17,11 +16,6 @@ namespace TransactionalBox.Outbox.EntityFramework
             services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
-        }
-
-        public static void AddOutbox(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfiguration());
         }
     }
 }
