@@ -4,7 +4,7 @@
     {
         public string? Receiver { get; set; } = null;
 
-        public DateTime OccurredUtc { get; set; } = DateTime.UtcNow; //TODO TimeProvider
+        public DateTime OccurredUtc { get; set; } = TimeProvider.System.GetUtcNow().UtcDateTime;
 
         internal OutboxMessageMetadata() { }
 

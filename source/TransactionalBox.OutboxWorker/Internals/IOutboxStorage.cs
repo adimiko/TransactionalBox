@@ -6,6 +6,6 @@ namespace TransactionalBox.OutboxWorker.Internals
     {
         Task<IEnumerable<OutboxMessage>> GetMessages();
 
-        Task MarkAsProcessed(IEnumerable<OutboxMessage> messages);
+        Task MarkAsProcessed(IEnumerable<OutboxMessage> messages, DateTime processedUtc);
     }
 }
