@@ -1,9 +1,8 @@
-# TransactionalBox
-
 <div align="center">
-    <img src="assets/logo.png" width="500">
+    <img src="assets/rounded-social-logo.png">
 </div>
 
+# Transactional Box
 TransactionalBox is an implementation of the outbox and inbox pattern in .NET.   
 Ensures eventual consistency when modules need to communicate with each other over the network.
 
