@@ -60,6 +60,17 @@ Examples of problems that occur during network communication:
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages
 
+## Run Sample
+> [!NOTE]
+> Docker is required.
+
+Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the `TransactionalBox.Sample.WebApi` as startup and then run. You should see the following view.
+
+<div align="center">
+    <img src="assets/samples/web-api-sample.png">
+</div>
+
+Have fun :smiley:!
 
 ## Architecture
 The transactional box consists of four basic components.
