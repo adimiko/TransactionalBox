@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using TransactionalBox.InboxBase.StorageModel;
 
-namespace TransactionalBox.InboxWorker.EntityFramework.Internals
+namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
 {
     internal sealed class InboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<InboxMessage>
     {
@@ -10,7 +9,7 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.OccurredUtc);
-            builder.Property(x => x.IsProcessed);
+            builder.Property(x => x.IsProcessed).IsConcurrencyToken();
             builder.Property(x => x.Topic);
             builder.Property(x => x.Payload);
         }
