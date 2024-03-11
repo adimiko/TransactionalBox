@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="TransactionalBox.Outbox.EntityFramework" />
+		<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.EntityFramework" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.OutboxBase.StorageModel\TransactionalBox.OutboxBase.StorageModel.csproj" />
+  </ItemGroup>
+
+</Project>
