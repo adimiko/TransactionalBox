@@ -22,14 +22,11 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             return messages;
         }
 
-        public Task MarkAsProcessed(IEnumerable<OutboxMessage> messages)
+        public Task MarkAsProcessed(IEnumerable<OutboxMessage> messages, DateTime processedUtc)
         {
-            //TODO TimeProvider
-            var dateTime = DateTime.UtcNow;
-
             foreach (var message in messages) 
             {
-                message.ProcessedUtc = dateTime;
+                message.ProcessedUtc = processedUtc;
             }
 
             return _dbContext.SaveChangesAsync();

@@ -6,14 +6,18 @@ namespace TransactionalBox.OutboxWorker.Internals
 {
     internal sealed class OutboxProcessor : BackgroundService
     {
+        private readonly ISystemClock _systemClock;
+
         private readonly ITransactionalBoxLogger _logger;
 
         private readonly IServiceProvider _serviceProvider;
 
         public OutboxProcessor(
+            ISystemClock systemClock,
             ITransactionalBoxLogger logger,
             IServiceProvider serviceProvider) 
         {
+            _systemClock = systemClock;
             _logger = logger;
             _serviceProvider = serviceProvider;
         }
@@ -38,11 +42,11 @@ namespace TransactionalBox.OutboxWorker.Internals
                         await transport.Add(message);
                     }
 
-                    await outbox.MarkAsProcessed(messages);
+                    await outbox.MarkAsProcessed(messages, _systemClock.UtcNow);
 
                     _logger.Information("TEST LOG");
 
-                    await Task.Delay(500);
+                    await Task.Delay(TimeSpan.FromMicroseconds(500), _systemClock.TimeProvider, stoppingToken);
                 }
             }
 

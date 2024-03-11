@@ -13,12 +13,14 @@ namespace TransactionalBox
             Action<TransactionalBoxSettings> settingsConfiguration)
         {
             var configuratior = new TransactionalBoxConfigurator(services);
-
             var settings = new TransactionalBoxSettings();
 
             configuration(configuratior);
 
             settingsConfiguration(settings);
+
+            services.AddSingleton(TimeProvider.System);
+            services.AddSingleton<ISystemClock, SystemClock>();
 
             services.AddSingleton<ITransactionalBoxSettings>(settings);
 
