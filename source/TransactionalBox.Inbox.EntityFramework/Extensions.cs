@@ -16,10 +16,5 @@ namespace TransactionalBox.Inbox.EntityFramework
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
             services.AddScoped<IInboxStorage, InboxStorage>();
         }
-
-        public static void AddInbox(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new InboxMessageEntityTypeConfiguration());
-        }
     }
 }

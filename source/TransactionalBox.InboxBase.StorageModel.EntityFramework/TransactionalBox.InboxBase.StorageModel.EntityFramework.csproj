@@ -5,9 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.InboxBase.StorageModel.EntityFramework\TransactionalBox.InboxBase.StorageModel.EntityFramework.csproj" />
     <ProjectReference Include="..\TransactionalBox.InboxBase.StorageModel\TransactionalBox.InboxBase.StorageModel.csproj" />
-    <ProjectReference Include="..\TransactionalBox.InboxWorker\TransactionalBox.InboxWorker.csproj" />
   </ItemGroup>
 
 </Project>
