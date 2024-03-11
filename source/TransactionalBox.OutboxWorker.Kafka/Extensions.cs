@@ -19,12 +19,6 @@ namespace TransactionalBox.OutboxWorker.Kafka
 
             settingsConfiguration(settings);
 
-            ProducerConfig config = new ProducerConfig()
-            {
-                BootstrapServers = settings.BootstrapServers,
-                ClientId = Dns.GetHostName(), // TODO (HostNameService) #25
-            };
-
             services.AddSingleton<IOutboxWorkerKafkaSettings>(settings);
             services.AddSingleton<KafkaConfigFactory>();
             services.AddScoped<ITransport, KafkaTransport>();
