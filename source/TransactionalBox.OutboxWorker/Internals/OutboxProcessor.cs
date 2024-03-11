@@ -1,14 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {
     internal sealed class OutboxProcessor : BackgroundService
     {
+        private readonly ITransactionalBoxLogger _logger;
+
         private readonly IServiceProvider _serviceProvider;
 
-        public OutboxProcessor(IServiceProvider serviceProvider) 
+        public OutboxProcessor(
+            ITransactionalBoxLogger logger,
+            IServiceProvider serviceProvider) 
         {
+            _logger = logger;
             _serviceProvider = serviceProvider;
         }
 
@@ -33,6 +39,8 @@ namespace TransactionalBox.OutboxWorker.Internals
                     }
 
                     await outbox.MarkAsProcessed(messages);
+
+                    _logger.Information("TEST LOG");
 
                     await Task.Delay(500);
                 }
