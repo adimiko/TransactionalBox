@@ -79,23 +79,23 @@ The following diagrams show the basic flow (omits details).
 ### Outbox
 Outbox is responsible for adding messages to the storage.
 <div align="center">
-    <img src="assets/diagrams/outbox.svg">
+    <img src="assets/diagrams/diagram-outbox.png">
 </div>
 
 ### Outbox Worker
 Outbox worker is responsible for getting the messages from storage and adding them to the transport.
 <div align="center">
-    <img src="assets/diagrams/outbox-worker.svg">
+    <img src="assets/diagrams/diagram-outbox-worker.png">
 </div>
 
 ### Inbox Worker
 Inbox worker is responsible for getting messages from transport and adding them to the storage.
 <div align="center">
-    <img src="assets/diagrams/inbox-worker.svg">
+    <img src="assets/diagrams/diagram-inbox-worker.png">
 </div>
 
 ### Inbox 
 Inbox is responsible for processing messages from the storage.
 <div align="center">
-    <img src="assets/diagrams/inbox.svg">
+    <img src="assets/diagrams/diagram-inbox.png">
 </div>
