@@ -1,10 +1,12 @@
 ﻿using Confluent.Kafka;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.OutboxWorker.Kafka.Internals
 {
@@ -14,7 +16,8 @@ namespace TransactionalBox.OutboxWorker.Kafka.Internals
 
         private ProducerConfig? _config = null;
 
-        public KafkaConfigFactory(IOutboxWorkerKafkaSettings outboxWorkerKafkaSettings) 
+        public KafkaConfigFactory(
+            IOutboxWorkerKafkaSettings outboxWorkerKafkaSettings) 
         {
             _outboxWorkerKafkaSettings = outboxWorkerKafkaSettings;
         }
@@ -29,7 +32,6 @@ namespace TransactionalBox.OutboxWorker.Kafka.Internals
             _config = new ProducerConfig()
             {
                 BootstrapServers = _outboxWorkerKafkaSettings.BootstrapServers,
-                ClientId = Dns.GetHostName(), // TODO (HostNameService) #25
             };
 
             return _config;
