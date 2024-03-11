@@ -12,6 +12,54 @@ Examples of problems that occur during network communication:
 - the same messages were processed again
 - unavailable services
 
+## Features
+#### Actions
+- [x] Add a message to send to the outbox
+- [ ] Add a message to publish to the outbox
+- [x] Get messages from outbox and add them to transport
+- [x] Get a message from transport and add them to the inbox
+- [x] Get a message from inbox and process it
+
+#### Storage
+- [x] Support for Entity Framework
+    - [x] Support for EF Migrations
+    - [x] Support for EF Database Providers
+- [ ] Support for InMemory
+- [ ] Support for PostgreSQL
+- [ ] Support for Microsoft SQL Server
+- [ ] Support for MySQL
+- [ ] Support for MongoDB
+
+#### Transport
+- [x] Support for Apache Kafka
+- [ ] Support for InMemory
+- [ ] Supprot for HTTP
+- [ ] Support for RabbitMQ
+- [ ] Support for Iggy
+- [ ] Supprot for gRPC
+
+#### Scalability & Fault Tolerance
+- [ ] Support for multiple outbox worker instances
+- [ ] Support for multiple inbox worker instances
+- [ ] Support for multiple inbox instances
+- [ ] Standalone outbox worker
+- [ ] Standalone inbox worker
+
+#### Maintenecne
+- [ ] Remove processed messages from the outbox
+- [ ] Remove processed messages from the inbox
+- [ ] Archive processed messages from the outbox
+- [ ] Archive processed messages from the inbox
+- [ ] Correlation ID
+
+#### Other
+- [x] Modular package architecture
+- [x] Support for TimeProvider
+- [x] Unordered messages
+- [ ] Message streaming
+- [ ] Package configuration using appsetings.json
+- [ ] Idempotent messages
+
 
 ## Architecture
 The transactional box consists of four basic components.
