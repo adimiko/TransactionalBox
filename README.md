@@ -2,8 +2,19 @@
     <img src="assets/rounded-social-logo.png">
 </div>
 
-# Transactional Box
-TransactionalBox is an implementation of the outbox and inbox pattern in .NET.   
+<div align="center">
+
+[![🚧 - Under Development](https://img.shields.io/badge/🚧-Under_Development-orange)](https://)
+![Licence - MIT](https://img.shields.io/badge/Licence-MIT-2ea44f)
+[![Documentation](https://img.shields.io/badge/Documentation-2ea44f?logo=googledocs&logoColor=white)](https://transactionalbox.com/)
+[![Nugets](https://img.shields.io/badge/Nugets-2ea44f?logo=nuget)](https://www.nuget.org/packages?q=TransactionalBox)
+[![Linkedin](https://img.shields.io/badge/Linkedin-2ea44f?logo=linkedin)](https://www.linkedin.com/in/adimiko/)
+
+</div>
+
+:star: - The star motivates me a lot!   
+
+`TransactionalBox` is an implementation of the outbox and inbox pattern in .NET.   
 Ensures eventual consistency when modules need to communicate with each other over the network.
 
 Examples of problems that occur during network communication:
@@ -11,7 +22,7 @@ Examples of problems that occur during network communication:
 - the same messages were processed again
 - unavailable services
 
-## Features
+## ✨ Features
 #### Actions
 - [x] Add a message to send to the outbox
 - [ ] Add a message to publish to the outbox
@@ -43,6 +54,14 @@ Examples of problems that occur during network communication:
 - [ ] Support for multiple inbox instances
 - [ ] Standalone outbox worker
 - [ ] Standalone inbox worker
+- [ ] Error handling in background services
+
+#### Observability
+- [ ] Support for OpenTelemetry
+- [ ] Outbox size
+- [ ] Inbox size
+- [ ] Message failure rate
+- [ ] Message delivery latency
 
 #### Maintenecne
 - [ ] Remove processed messages from the outbox
@@ -59,7 +78,7 @@ Examples of problems that occur during network communication:
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages
 
-## Run Sample
+## :clapper: Run Sample
 > [!NOTE]
 > Docker is required.
 
@@ -71,7 +90,7 @@ Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the 
 
 Have fun :smiley:!
 
-## Architecture
+## :european_castle: Architecture
 The transactional box consists of four basic components.
 The following diagrams show the basic flow (omits details).
 
