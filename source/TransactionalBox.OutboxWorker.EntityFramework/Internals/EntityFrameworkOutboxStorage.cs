@@ -36,9 +36,9 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         public Task MarkAsProcessed(IEnumerable<OutboxMessage> messages, DateTime processedUtc)
         {
             var ids = messages.Select(x => x.Id);
-
+            
             return _outboxMessages
-                    .Where(x => ids.Contains(x.Id))
+                    .Where(x => x.ProcessedUtc == null && ids.Contains(x.Id))
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(x => x.ProcessedUtc, processedUtc));
         }
