@@ -15,21 +15,31 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMessages()
+        public async Task<IEnumerable<OutboxMessage>> GetMessages(int packageSize, DateTime nowUtc, DateTime lockUtc, string machineName)
         {
-            var messages = await _outboxMessages.Where(x => x.ProcessedUtc == null).ToListAsync();
+            await _outboxMessages
+                .OrderBy(x => x.OccurredUtc)
+                .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                .Take(packageSize)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(x => x.LockUtc, lockUtc)
+                    .SetProperty(x => x.MachineName, machineName));
+
+            var messages = await _outboxMessages
+                .Where(x => x.ProcessedUtc == null && x.MachineName == machineName)
+                .ToListAsync();
 
             return messages;
         }
 
         public Task MarkAsProcessed(IEnumerable<OutboxMessage> messages, DateTime processedUtc)
         {
-            foreach (var message in messages) 
-            {
-                message.ProcessedUtc = processedUtc;
-            }
+            var ids = messages.Select(x => x.Id);
 
-            return _dbContext.SaveChangesAsync();
+            return _outboxMessages
+                    .Where(x => ids.Contains(x.Id))
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(x => x.ProcessedUtc, processedUtc));
         }
     }
 }

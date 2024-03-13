@@ -8,16 +8,20 @@ namespace TransactionalBox.OutboxWorker.Internals
     {
         private readonly ISystemClock _systemClock;
 
+        private readonly IHostMachine _hostMachine;
+
         private readonly ITransactionalBoxLogger _logger;
 
         private readonly IServiceProvider _serviceProvider;
 
         public OutboxProcessor(
             ISystemClock systemClock,
+            IHostMachine hostMachine,
             ITransactionalBoxLogger logger,
             IServiceProvider serviceProvider) 
         {
             _systemClock = systemClock;
+            _hostMachine = hostMachine;
             _logger = logger;
             _serviceProvider = serviceProvider;
         }
@@ -32,17 +36,24 @@ namespace TransactionalBox.OutboxWorker.Internals
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var outbox = scope.ServiceProvider.GetRequiredService<IOutboxStorage>();
+                    var outboxStorage = scope.ServiceProvider.GetRequiredService<IOutboxStorage>();
                     var transport = scope.ServiceProvider.GetRequiredService<ITransport>();
+                    
+                    var machineName = _hostMachine.Name;
+                    var lockTimeout = TimeSpan.FromSeconds(15); // TODO settings
+                    var packageSize = 1000;  // TODO settings
 
-                    var messages = await outbox.GetMessages();
+                    var nowUtc = _systemClock.UtcNow;
+                    var lockUtc = nowUtc + lockTimeout;
+
+                    var messages = await outboxStorage.GetMessages(packageSize, nowUtc, lockUtc, machineName);
 
                     foreach (var message in messages) 
                     {
                         await transport.Add(message);
                     }
 
-                    await outbox.MarkAsProcessed(messages, _systemClock.UtcNow);
+                    await outboxStorage.MarkAsProcessed(messages, _systemClock.UtcNow);
 
                     _logger.Information("TEST LOG");
 
