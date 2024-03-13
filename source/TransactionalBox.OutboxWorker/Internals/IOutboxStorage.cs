@@ -4,7 +4,7 @@ namespace TransactionalBox.OutboxWorker.Internals
 {
     public interface IOutboxStorage
     {
-        Task<IEnumerable<OutboxMessage>> GetMessages(int packageSize, DateTime nowUtc, DateTime lockUtc, string machineName);
+        Task<IEnumerable<OutboxMessage>> GetMessages(int batchSize, DateTime nowUtc, DateTime lockUtc, string machineName);
 
         Task MarkAsProcessed(IEnumerable<OutboxMessage> messages, DateTime processedUtc);
     }

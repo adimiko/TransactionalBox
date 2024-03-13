@@ -15,12 +15,13 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMessages(int packageSize, DateTime nowUtc, DateTime lockUtc, string machineName)
+        public async Task<IEnumerable<OutboxMessage>> GetMessages(int batchSize, DateTime nowUtc, DateTime lockUtc, string machineName)
         {
+            //TODO (Check) Is update from select (without any hints) okay for a race condition ?
             await _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
                 .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
-                .Take(packageSize)
+                .Take(batchSize)
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(x => x.LockUtc, lockUtc)
                     .SetProperty(x => x.MachineName, machineName));

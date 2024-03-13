@@ -8,22 +8,26 @@ namespace TransactionalBox.OutboxWorker.Internals
     {
         private readonly ISystemClock _systemClock;
 
-        private readonly IHostMachine _hostMachine;
+        private readonly IEnvironmentContext _environmentContext;
 
         private readonly ITransactionalBoxLogger _logger;
 
         private readonly IServiceProvider _serviceProvider;
 
+        private readonly IOutboxWorkerSettings _settings;
+
         public OutboxProcessor(
             ISystemClock systemClock,
-            IHostMachine hostMachine,
+            IEnvironmentContext environmentContext,
             ITransactionalBoxLogger logger,
-            IServiceProvider serviceProvider) 
+            IServiceProvider serviceProvider,
+            IOutboxWorkerSettings settings) 
         {
             _systemClock = systemClock;
-            _hostMachine = hostMachine;
+            _environmentContext = environmentContext;
             _logger = logger;
             _serviceProvider = serviceProvider;
+            _settings = settings;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -32,21 +36,29 @@ namespace TransactionalBox.OutboxWorker.Internals
             //TODO log settings & enviroment (ProcessorCount etc.)
             //TODO error
 
+            //_logger.Information("Settings: {0}", _settings);
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var outboxStorage = scope.ServiceProvider.GetRequiredService<IOutboxStorage>();
                     var transport = scope.ServiceProvider.GetRequiredService<ITransport>();
-                    
-                    var machineName = _hostMachine.Name;
-                    var lockTimeout = TimeSpan.FromSeconds(15); // TODO settings
-                    var packageSize = 1000;  // TODO settings
 
                     var nowUtc = _systemClock.UtcNow;
-                    var lockUtc = nowUtc + lockTimeout;
+                    var lockUtc = nowUtc + _settings.LockTimeout;
 
-                    var messages = await outboxStorage.GetMessages(packageSize, nowUtc, lockUtc, machineName);
+                    var messages = await outboxStorage.GetMessages(_settings.BatchSize, nowUtc, lockUtc, _environmentContext.MachineName);
+
+                    var numberOfMessages = messages.Count();
+
+                    var isBatchEmpty = numberOfMessages == 0;
+
+                    if (isBatchEmpty)
+                    {
+                        await Task.Delay(_settings.DelayWhenBatchIsEmpty, _systemClock.TimeProvider, stoppingToken);
+                        continue;
+                    }
 
                     foreach (var message in messages) 
                     {
@@ -55,9 +67,14 @@ namespace TransactionalBox.OutboxWorker.Internals
 
                     await outboxStorage.MarkAsProcessed(messages, _systemClock.UtcNow);
 
-                    _logger.Information("TEST LOG");
+                    var isBatchNotFull = numberOfMessages < _settings.BatchSize;
 
-                    await Task.Delay(TimeSpan.FromMicroseconds(500), _systemClock.TimeProvider, stoppingToken);
+                    if (isBatchNotFull)
+                    {
+                        await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
+                    }
+
+                    _logger.Information("TEST LOG");
                 }
             }
 

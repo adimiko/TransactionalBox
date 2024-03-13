@@ -26,7 +26,7 @@ namespace TransactionalBox
 
             services.AddSingleton<ITransactionalBoxLogger, TransactionalBoxLogger>();
 
-            services.AddSingleton<IHostMachine, HostMachine>();
+            services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
 
             return services;
         }
