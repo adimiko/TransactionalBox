@@ -55,6 +55,7 @@ Examples of problems that occur during network communication:
 - [ ] Standalone outbox worker
 - [ ] Standalone inbox worker
 - [ ] Error handling in background services
+- [ ] Dead messages
 
 #### Observability
 - [ ] Support for OpenTelemetry
