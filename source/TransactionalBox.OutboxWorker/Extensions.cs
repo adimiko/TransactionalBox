@@ -12,7 +12,7 @@ namespace TransactionalBox.OutboxWorker
             this IOutboxDependencyBuilder builder,
             Action<IOutboxWorkerStorageConfigurator> storageConfiguration,
             Action<IOutboxWorkerTransportConfigurator> transportConfiguration,
-            Action<OutboxWorkerSettings> settingsConfiguration = null)
+            Action<OutboxWorkerSettings>? settingsConfiguration = null)
         {
             var services = builder.Services;
 
