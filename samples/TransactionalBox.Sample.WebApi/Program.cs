@@ -55,6 +55,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
+
     scope.ServiceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
 }
 
