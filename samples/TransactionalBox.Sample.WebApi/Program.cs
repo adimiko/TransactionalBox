@@ -11,6 +11,7 @@ using TransactionalBox.InboxWorker.EntityFramework;
 using TransactionalBox.InboxWorker.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.EntityFramework;
+using TransactionalBox.OutboxBase.StorageModel;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
 using TransactionalBox.OutboxWorker.Kafka;
@@ -54,7 +55,14 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    scope.ServiceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
+    try
+    {
+        scope.ServiceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
+    }
+    catch (Exception ex)
+    {
+        var x = ex;
+    }
 }
 
 if (app.Environment.IsDevelopment())

@@ -17,7 +17,5 @@ namespace TransactionalBox.Outbox.EntityFramework
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
         }
-
-        public static void AddOutbox(this ModelBuilder modelBuilder) => modelBuilder.AddOutbox();
     }
 }
