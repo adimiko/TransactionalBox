@@ -49,7 +49,7 @@ Examples of problems that occur during network communication:
 - [ ] Supprot for gRPC
 
 #### Scalability & Fault Tolerance
-- [ ] Support for multiple outbox worker instances
+- [x] Support for multiple outbox worker instances
 - [ ] Support for multiple inbox worker instances
 - [ ] Support for multiple inbox instances
 - [ ] Standalone outbox worker
