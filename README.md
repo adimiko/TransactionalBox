@@ -50,8 +50,14 @@ Examples of problems that occur during network communication:
 
 #### Scalability & Fault Tolerance
 - [x] Support for multiple outbox worker instances
+    - [x] Multiple instances of the same service 
+    - [ ] Multiple processes in the same service
 - [ ] Support for multiple inbox worker instances
+    - [ ] Multiple instances of the same service 
+    - [ ] Multiple processes in the same service
 - [ ] Support for multiple inbox instances
+    - [ ] Multiple instances of the same service 
+    - [ ] Multiple processes in the same service
 - [ ] Standalone outbox worker
 - [ ] Standalone inbox worker
 - [ ] Error handling in background services
