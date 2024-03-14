@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.OutboxWorker.Internals
 {
-    internal interface IOutboxWorkerSettings
+    internal interface IOutboxProcessorSettings
     {
         int BatchSize { get; }
 

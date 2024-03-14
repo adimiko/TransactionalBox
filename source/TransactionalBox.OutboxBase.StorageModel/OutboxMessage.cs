@@ -14,6 +14,6 @@
 
         public DateTime? ProcessedUtc { get; set; }
 
-        public string? MachineName { get; set; }
+        public string? ProcessId { get; set; }
     }
 }

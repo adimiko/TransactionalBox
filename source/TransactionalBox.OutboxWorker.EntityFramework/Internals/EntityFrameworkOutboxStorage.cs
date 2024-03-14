@@ -24,7 +24,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 .Take(batchSize)
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(x => x.LockUtc, lockUtc)
-                    .SetProperty(x => x.MachineName, machineName));
+                    .SetProperty(x => x.ProcessId, machineName));
 
             if (rowCount < 1)
             {
@@ -33,7 +33,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
             var messages = await _outboxMessages
                 .AsNoTracking()
-                .Where(x => x.ProcessedUtc == null && x.MachineName == machineName)
+                .Where(x => x.ProcessedUtc == null && x.ProcessId == machineName)
                 .ToListAsync();
 
             return messages;
