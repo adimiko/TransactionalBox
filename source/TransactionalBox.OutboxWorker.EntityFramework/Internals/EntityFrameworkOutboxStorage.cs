@@ -20,7 +20,9 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobExecutionId, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {
-            // (Database performance) Added mutex because Entity Framework does not support skipping locked rows
+            // (Database performance) 
+            // Added mutex because Entity Framework does not support skipping locked rows
+            // Moved queuing of operations from the database to the application
 
             _mutex.WaitOne();
 
