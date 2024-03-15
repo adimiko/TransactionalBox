@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using TransactionalBox.BackgroundServiceBase.Internals;
+﻿using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {
-    internal sealed class OutboxProcessor : BackgroundProcess
+    internal sealed class OutboxProcessor : Job
     {
         private readonly ISystemClock _systemClock;
 
@@ -13,79 +11,62 @@ namespace TransactionalBox.OutboxWorker.Internals
 
         private readonly ITransactionalBoxLogger _logger;
 
-        private readonly IServiceProvider _serviceProvider;
-
         private readonly IOutboxProcessorSettings _settings;
+
+        private readonly IOutboxStorage _outboxStorage;
+
+        private readonly ITransport _transport;
 
         public OutboxProcessor(
             ISystemClock systemClock,
             IEnvironmentContext environmentContext,
             ITransactionalBoxLogger logger,
-            IServiceProvider serviceProvider,
-            IOutboxProcessorSettings settings) 
+            IOutboxProcessorSettings settings,
+            IOutboxStorage outboxStorage,
+            ITransport transport) 
         {
             _systemClock = systemClock;
             _environmentContext = environmentContext;
             _logger = logger;
-            _serviceProvider = serviceProvider;
             _settings = settings;
+            _outboxStorage = outboxStorage;
+            _transport = transport;
         }
 
         protected override async Task Execute(string processId, CancellationToken stoppingToken)
         {
-            //TODO prepare
-            //TODO log settings & enviroment (ProcessorCount etc.)
-            //TODO error
+            var jobExecutionId = _environmentContext.MachineName + Guid.NewGuid();
 
-            //_logger.Information("Settings: {0}", _settings);
+            _logger.Information("Start job with id: {0}", jobExecutionId);
 
-            //TODO machineName and porcess ?
-            var machineNameWithProcessId = _environmentContext.MachineName + '-' + processId;
+            var nowUtc = _systemClock.UtcNow;
+            var lockUtc = nowUtc + _settings.LockTimeout;
 
-            _logger.Error($"!!!!!!Start {machineNameWithProcessId}");
+            var messages = await _outboxStorage.GetMessages(jobExecutionId, _settings.BatchSize, nowUtc, lockUtc);
 
-            while (!stoppingToken.IsCancellationRequested)
+            var numberOfMessages = messages.Count();
+
+            if (numberOfMessages == 0) // IsBatchEmpty
             {
-                using (var scope = _serviceProvider.CreateScope())
-                {
-                    var outboxStorage = scope.ServiceProvider.GetRequiredService<IOutboxStorage>();
-                    var transport = scope.ServiceProvider.GetRequiredService<ITransport>();
-
-                    var nowUtc = _systemClock.UtcNow;
-                    var lockUtc = nowUtc + _settings.LockTimeout;
-
-                    //TODO mutex
-                    var messages = await outboxStorage.GetMessages(_settings.BatchSize, nowUtc, lockUtc, machineNameWithProcessId);
-
-                    var numberOfMessages = messages.Count();
-
-                    var isBatchEmpty = numberOfMessages == 0;
-
-                    if (isBatchEmpty)
-                    {
-                        await Task.Delay(_settings.DelayWhenBatchIsEmpty, _systemClock.TimeProvider, stoppingToken);
-                        continue;
-                    }
-
-                    foreach (var message in messages) 
-                    {
-                        await transport.Add(message);
-                    }
-
-                    await outboxStorage.MarkAsProcessed(messages, _systemClock.UtcNow);
-
-                    var isBatchNotFull = numberOfMessages < _settings.BatchSize;
-
-                    if (isBatchNotFull)
-                    {
-                        await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
-                    }
-
-                    _logger.Information("TEST LOG");
-                }
+                await Task.Delay(_settings.DelayWhenBatchIsEmpty, _systemClock.TimeProvider, stoppingToken);
+                return;
             }
 
-            //TODO End
+            foreach (var message in messages)
+            {
+                await _transport.Add(message);
+            }
+
+            //TODO (ADR) get messages added to transport (with result success save to db) OR (All success or failed) 
+
+            await _outboxStorage.MarkAsProcessed(messages, _systemClock.UtcNow);
+
+            if (numberOfMessages < _settings.BatchSize) // IsBatchNotFull
+            {
+                await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
+            }
+
+            _logger.Information("End job with id: {0}", jobExecutionId);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.BackgroundServiceBase.Internals
 {
-    public abstract class BackgroundProcess
+    public abstract class Job
     {
         protected internal abstract Task Execute(string processId, CancellationToken stoppingToken);
     }

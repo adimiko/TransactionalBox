@@ -6,7 +6,10 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 {
     internal sealed class EntityFrameworkOutboxStorage : IOutboxStorage
     {
+        private static Mutex _mutex = new Mutex();
+
         private readonly DbContext _dbContext;
+
         private readonly DbSet<OutboxMessage> _outboxMessages;
 
         public EntityFrameworkOutboxStorage(DbContext dbContext) 
@@ -15,16 +18,21 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMessages(int batchSize, DateTime nowUtc, DateTime lockUtc, string machineName)
+        public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobExecutionId, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {
-            //TODO (Check) Is update from select (without any hints) okay for a race condition ?
+            // (Database performance) Added mutex because Entity Framework does not support skipping locked rows
+
+            _mutex.WaitOne();
+
             var rowCount = await _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
                 .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
                 .Take(batchSize)
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(x => x.LockUtc, lockUtc)
-                    .SetProperty(x => x.ProcessId, machineName));
+                    .SetProperty(x => x.JobExecutionId, jobExecutionId));
+
+            _mutex.ReleaseMutex();
 
             if (rowCount < 1)
             {
@@ -33,7 +41,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
             var messages = await _outboxMessages
                 .AsNoTracking()
-                .Where(x => x.ProcessedUtc == null && x.ProcessId == machineName)
+                .Where(x => x.ProcessedUtc == null && x.JobExecutionId == jobExecutionId)
                 .ToListAsync();
 
             return messages;

@@ -13,7 +13,7 @@ namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
             builder.Property(x => x.Payload).IsRequired();
             builder.Property(x => x.LockUtc);
             builder.Property(x => x.ProcessedUtc).IsConcurrencyToken();
-            builder.Property(x => x.ProcessId).HasMaxLength(254); //TODO
+            builder.Property(x => x.JobExecutionId).HasMaxLength(254); //TODO
         }
     }
 }

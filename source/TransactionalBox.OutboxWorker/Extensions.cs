@@ -36,7 +36,7 @@ namespace TransactionalBox.OutboxWorker
 
             services.AddHostedService<OutboxOrchestrator>();
 
-            services.AddSingleton<OutboxProcessor>();
+            services.AddScoped<OutboxProcessor>();
         }
     }
 }

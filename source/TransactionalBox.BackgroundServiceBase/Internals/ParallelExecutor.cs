@@ -12,7 +12,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
         }
 
         public IEnumerable<Task> Run<T>(int numberOfInstances, CancellationToken stoppingToken)
-            where T : BackgroundProcess
+            where T : Job
         {
             //TODO valid run the same processes
             List<Task> _tasks = new List<Task>();
@@ -22,7 +22,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
                 var processName = typeof(T).Name;
                 var processId = processName + i;
 
-                var task = Task.Run(() => _serviceProvider.GetRequiredService<T>().Execute(processId, stoppingToken));
+                var task = Task.Run(() => _serviceProvider.GetRequiredService<JobExecutor>().Execute<T>(processId, stoppingToken));
 
                 _tasks.Add(task);
             }
