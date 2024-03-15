@@ -14,7 +14,7 @@
 
 :star: - The star motivates me a lot!   
 
-`TransactionalBox` is an implementation of the outbox and inbox pattern in .NET.   
+**TransactionalBox** is an implementation of the outbox and inbox pattern in .NET.   
 Ensures eventual consistency when modules need to communicate with each other over the network.
 
 Examples of problems that occur during network communication:
@@ -124,3 +124,7 @@ Inbox is responsible for processing messages from the storage.
 <div align="center">
     <img src="assets/diagrams/diagram-inbox.png">
 </div>
+
+## :medal_sports: Competition '100commitow'
+The project is part of the competition [100 commitow](https://100commitow.pl).
+
