@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransactionalBox.BackgroundServiceBase.Internals;
+using TransactionalBox.Internals;
+using TransactionalBox.OutboxWorker.Internals.Jobs;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {
-    internal sealed class OutboxOrchestrator : BackgroundService
+    internal sealed class OutboxWorkerLauncher : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -12,14 +14,18 @@ namespace TransactionalBox.OutboxWorker.Internals
 
         private readonly IOutboxOrchestratorSettings _settings;
 
-        public OutboxOrchestrator(
+        private readonly ITransactionalBoxLogger _logger;
+
+        public OutboxWorkerLauncher(
             IServiceProvider serviceProvider,
             IParallelExecutor parallelExecutor,
-            IOutboxOrchestratorSettings settings) 
+            IOutboxOrchestratorSettings settings,
+            ITransactionalBoxLogger logger)
         {
             _serviceProvider = serviceProvider;
             _parallelExecutor = parallelExecutor;
             _settings = settings;
+            _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -28,14 +34,14 @@ namespace TransactionalBox.OutboxWorker.Internals
 
             try
             {
-                var tasks = _parallelExecutor.Run<OutboxProcessor>(_settings.NumberOfOutboxProcessor, stoppingToken);
+                var tasks = _parallelExecutor.Run<MessageProcessingJob>(_settings.NumberOfOutboxProcessor, stoppingToken);
 
                 await Task.WhenAll(tasks);
             }
             catch(OperationCanceledException) { }
             catch (Exception ex) 
             {
-                //TODO log
+                _logger.Error(ex, "Error");
             }
         }
     }

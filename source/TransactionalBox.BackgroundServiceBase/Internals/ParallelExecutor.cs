@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
 {
@@ -6,9 +7,18 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ParallelExecutor(IServiceProvider serviceProvider)
+        private readonly IEnvironmentContext _environmentContext;
+
+        private readonly JobIdGenerator _jobIdGenerator;
+
+        public ParallelExecutor(
+            IServiceProvider serviceProvider,
+            IEnvironmentContext environmentContext,
+            JobIdGenerator jobIdGenerator)
         {
             _serviceProvider = serviceProvider;
+            _environmentContext = environmentContext;
+            _jobIdGenerator = jobIdGenerator;
         }
 
         public IEnumerable<Task> Run<T>(int numberOfInstances, CancellationToken stoppingToken)
@@ -19,10 +29,9 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
 
             for (var i = 1; i <= numberOfInstances; i++)
             {
-                var processName = typeof(T).Name;
-                var processId = processName + i;
+                var jobId = _jobIdGenerator.GetId(_environmentContext.MachineName, typeof(T).Name, i);
 
-                var task = Task.Run(() => _serviceProvider.GetRequiredService<JobExecutor>().Execute<T>(processId, stoppingToken));
+                var task = Task.Run(() => _serviceProvider.GetRequiredService<JobExecutor>().Execute<T>(jobId, stoppingToken));
 
                 _tasks.Add(task);
             }

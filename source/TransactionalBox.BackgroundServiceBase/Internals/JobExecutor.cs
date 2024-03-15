@@ -12,7 +12,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
             _serviceProvider = serviceProvider;
         }
 
-        internal async Task Execute<T>(string processId, CancellationToken stoppingToken)
+        internal async Task Execute<T>(string jobId, CancellationToken stoppingToken)
             where T : Job
         {
             //TODO prepare
@@ -25,7 +25,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
             {
                 using (var scope = _serviceProvider.CreateScope()) 
                 {
-                    await scope.ServiceProvider.GetRequiredService<T>().Execute("1", stoppingToken);//TODO id
+                    await scope.ServiceProvider.GetRequiredService<T>().Execute(jobId, stoppingToken);
                 }
             }
 

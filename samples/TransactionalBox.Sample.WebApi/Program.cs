@@ -44,7 +44,7 @@ builder.Services.AddTransactionalBox(
 x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.NumberOfOutboxProcessor = 10);
+     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.NumberOfOutboxProcessor = 1);
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
      .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
@@ -69,11 +69,14 @@ app.UseHttpsRedirection();
 
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
-    await outbox.Add(message, m =>
+    for(var i = 0; i < 1000; i++)
     {
-        m.Receiver = "Registrations";
-        m.OccurredUtc = DateTime.UtcNow;
-    });
+        await outbox.Add(message, m =>
+        {
+            m.Receiver = "Registrations";
+            m.OccurredUtc = DateTime.UtcNow;
+        });
+    }
 
     await dbContext.SaveChangesAsync();
 });

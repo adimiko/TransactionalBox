@@ -7,6 +7,8 @@ namespace TransactionalBox.BackgroundServiceBase
     {
         public static IServiceCollection AddBackgroundServiceBase(this IServiceCollection services) 
         {
+            services.AddSingleton<JobIdGenerator>();
+            services.AddSingleton<JobExecutor>();
             services.AddSingleton<IParallelExecutor, ParallelExecutor>();
 
             return services;

@@ -3,6 +3,7 @@ using TransactionalBox.BackgroundServiceBase;
 using TransactionalBox.OutboxBase.DependencyBuilder;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals;
+using TransactionalBox.OutboxWorker.Internals.Jobs;
 using TransactionalBox.OutboxWorker.Settings;
 
 namespace TransactionalBox.OutboxWorker
@@ -34,9 +35,9 @@ namespace TransactionalBox.OutboxWorker
             services.AddSingleton<IOutboxProcessorSettings>(settings);
             services.AddSingleton<IOutboxOrchestratorSettings>(settings);
 
-            services.AddHostedService<OutboxOrchestrator>();
+            services.AddHostedService<OutboxWorkerLauncher>();
 
-            services.AddScoped<OutboxProcessor>();
+            services.AddScoped<MessageProcessingJob>();
         }
     }
 }

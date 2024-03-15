@@ -18,13 +18,13 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobExecutionId, int batchSize, DateTime nowUtc, DateTime lockUtc)
+        public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobId, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {
             // (Database performance) 
             // Added mutex because Entity Framework does not support skipping locked rows
             // Moved queuing of operations from the database to the application
 
-            _mutex.WaitOne();
+            //_mutex.WaitOne();
 
             var rowCount = await _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
@@ -32,9 +32,9 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 .Take(batchSize)
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(x => x.LockUtc, lockUtc)
-                    .SetProperty(x => x.JobExecutionId, jobExecutionId));
+                    .SetProperty(x => x.JobId, jobId));
 
-            _mutex.ReleaseMutex();
+            //_mutex.ReleaseMutex();
 
             if (rowCount < 1)
             {
@@ -43,7 +43,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
             var messages = await _outboxMessages
                 .AsNoTracking()
-                .Where(x => x.ProcessedUtc == null && x.JobExecutionId == jobExecutionId)
+                .Where(x => x.ProcessedUtc == null && x.JobId == jobId)
                 .ToListAsync();
 
             return messages;

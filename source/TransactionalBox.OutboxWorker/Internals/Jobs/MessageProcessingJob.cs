@@ -1,13 +1,11 @@
 ﻿using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.Internals;
 
-namespace TransactionalBox.OutboxWorker.Internals
+namespace TransactionalBox.OutboxWorker.Internals.Jobs
 {
-    internal sealed class OutboxProcessor : Job
+    internal sealed class MessageProcessingJob : Job
     {
         private readonly ISystemClock _systemClock;
-
-        private readonly IEnvironmentContext _environmentContext;
 
         private readonly ITransactionalBoxLogger _logger;
 
@@ -17,32 +15,28 @@ namespace TransactionalBox.OutboxWorker.Internals
 
         private readonly ITransport _transport;
 
-        public OutboxProcessor(
+        public MessageProcessingJob(
             ISystemClock systemClock,
-            IEnvironmentContext environmentContext,
             ITransactionalBoxLogger logger,
             IOutboxProcessorSettings settings,
             IOutboxStorage outboxStorage,
-            ITransport transport) 
+            ITransport transport)
         {
             _systemClock = systemClock;
-            _environmentContext = environmentContext;
             _logger = logger;
             _settings = settings;
             _outboxStorage = outboxStorage;
             _transport = transport;
         }
 
-        protected override async Task Execute(string processId, CancellationToken stoppingToken)
+        protected override async Task Execute(string jobId, CancellationToken stoppingToken)
         {
-            var jobExecutionId = _environmentContext.MachineName + Guid.NewGuid();
-
-            _logger.Information("Start job with id: {0}", jobExecutionId);
+            _logger.Information("Start job with id: {0}", jobId);
 
             var nowUtc = _systemClock.UtcNow;
             var lockUtc = nowUtc + _settings.LockTimeout;
 
-            var messages = await _outboxStorage.GetMessages(jobExecutionId, _settings.BatchSize, nowUtc, lockUtc);
+            var messages = await _outboxStorage.GetMessages(jobId, _settings.BatchSize, nowUtc, lockUtc);
 
             var numberOfMessages = messages.Count();
 
@@ -66,7 +60,7 @@ namespace TransactionalBox.OutboxWorker.Internals
                 await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
             }
 
-            _logger.Information("End job with id: {0}", jobExecutionId);
+            _logger.Information("End job with id: {0}", jobId);
         }
     }
 }
