@@ -1,8 +1,8 @@
 ﻿namespace TransactionalBox.BackgroundServiceBase.Internals
 {
+    //TODO internal
     public interface IParallelExecutor
     {
-        IEnumerable<Task> Run<T>(int numberOfInstances, CancellationToken stoppingToken)
-            where T : Job;
+        IEnumerable<Task> Run(Type jobType, int numberOfInstances, CancellationToken stoppingToken);
     }
 }

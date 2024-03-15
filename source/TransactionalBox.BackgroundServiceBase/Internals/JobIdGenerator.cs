@@ -7,7 +7,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
     {
         public string GetId(string machineName, string jobName, int instanceId)
         {
-            return machineName + jobName + instanceId;
+            return machineName + '-' + jobName + instanceId + Guid.NewGuid();
         }
     }
 }

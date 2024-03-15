@@ -21,23 +21,21 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
             _jobIdGenerator = jobIdGenerator;
         }
 
-        public IEnumerable<Task> Run<T>(int numberOfInstances, CancellationToken stoppingToken)
-            where T : Job
+        public IEnumerable<Task> Run(Type jobType, int numberOfInstances, CancellationToken stoppingToken)
         {
             //TODO valid run the same processes
             List<Task> _tasks = new List<Task>();
 
             for (var i = 1; i <= numberOfInstances; i++)
             {
-                var jobId = _jobIdGenerator.GetId(_environmentContext.MachineName, typeof(T).Name, i);
+                var jobId = _jobIdGenerator.GetId(_environmentContext.MachineName, jobType.Name, i);
 
-                var task = Task.Run(() => _serviceProvider.GetRequiredService<JobExecutor>().Execute<T>(jobId, stoppingToken));
+                var task = Task.Run(() => _serviceProvider.GetRequiredService<JobExecutor>().Execute(jobType, jobId, stoppingToken));
 
                 _tasks.Add(task);
             }
 
             return _tasks;
         }
-
     }
 }

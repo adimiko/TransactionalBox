@@ -31,12 +31,14 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         protected override async Task Execute(string jobId, CancellationToken stoppingToken)
         {
-            _logger.Information("Start job with id: {0}", jobId);
+            var currentJobId = jobId + Guid.NewGuid();
+
+            _logger.Information("Start job with id: {0}", currentJobId);
 
             var nowUtc = _systemClock.UtcNow;
             var lockUtc = nowUtc + _settings.LockTimeout;
 
-            var messages = await _outboxStorage.GetMessages(jobId, _settings.BatchSize, nowUtc, lockUtc);
+            var messages = await _outboxStorage.GetMessages(currentJobId, _settings.BatchSize, nowUtc, lockUtc);
 
             var numberOfMessages = messages.Count();
 
@@ -53,14 +55,14 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
             //TODO (ADR) get messages added to transport (with result success save to db) OR (All success or failed) 
 
-            await _outboxStorage.MarkAsProcessed(messages, _systemClock.UtcNow);
+            await _outboxStorage.MarkAsProcessed(currentJobId, _systemClock.UtcNow);
 
             if (numberOfMessages < _settings.BatchSize) // IsBatchNotFull
             {
                 await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
             }
 
-            _logger.Information("End job with id: {0}", jobId);
+            _logger.Information("End job with id: {0}", currentJobId);
         }
     }
 }

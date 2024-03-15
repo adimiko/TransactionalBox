@@ -26,13 +26,20 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
             //_mutex.WaitOne();
 
-            var rowCount = await _outboxMessages
-                .OrderBy(x => x.OccurredUtc)
-                .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
-                .Take(batchSize)
-                .ExecuteUpdateAsync(setters => setters
-                    .SetProperty(x => x.LockUtc, lockUtc)
-                    .SetProperty(x => x.JobId, jobId));
+            int rowCount;
+
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync(System.Data.IsolationLevel.RepeatableRead))
+            {
+                rowCount = await _outboxMessages
+                    .OrderBy(x => x.OccurredUtc)
+                    .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                    .Take(batchSize)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(x => x.LockUtc, lockUtc)
+                        .SetProperty(x => x.JobId, jobId));
+
+                await transaction.CommitAsync();
+            }
 
             //_mutex.ReleaseMutex();
 
@@ -49,14 +56,11 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             return messages;
         }
 
-        public Task MarkAsProcessed(IEnumerable<OutboxMessage> messages, DateTime processedUtc)
-        {
-            var ids = messages.Select(x => x.Id);
-            
+        public Task MarkAsProcessed(string jobId, DateTime processedUtc)
+        {            
             return _outboxMessages
-                    .Where(x => x.ProcessedUtc == null && ids.Contains(x.Id))
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(x => x.ProcessedUtc, processedUtc));
+                    .Where(x => x.ProcessedUtc == null && x.JobId == jobId)
+                    .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.ProcessedUtc, processedUtc));
         }
     }
 }

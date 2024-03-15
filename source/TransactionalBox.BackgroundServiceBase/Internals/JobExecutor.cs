@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
 {
@@ -7,29 +8,39 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public JobExecutor(IServiceProvider serviceProvider) 
+        private readonly ITransactionalBoxLogger _logger;
+
+        public JobExecutor(
+            IServiceProvider serviceProvider,
+            ITransactionalBoxLogger logger) 
         {
             _serviceProvider = serviceProvider;
+            _logger = logger;
         }
 
-        internal async Task Execute<T>(string jobId, CancellationToken stoppingToken)
-            where T : Job
+        internal async Task Execute(Type jobType, string jobId, CancellationToken stoppingToken)
         {
             //TODO prepare
             //TODO log settings & enviroment (ProcessorCount etc.)
             //TODO error
 
             //_logger.Information("Settings: {0}", _settings);
-
-            while (!stoppingToken.IsCancellationRequested) 
+            try
             {
-                using (var scope = _serviceProvider.CreateScope()) 
+                while (!stoppingToken.IsCancellationRequested)
                 {
-                    await scope.ServiceProvider.GetRequiredService<T>().Execute(jobId, stoppingToken);
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
+
+                        await job.Execute(jobId, stoppingToken);
+                    }
                 }
             }
-
-            //TODO end
+            catch (Exception ex) 
+            {
+                _logger.Error(ex, "Error");
+            }
         }
 
     }
