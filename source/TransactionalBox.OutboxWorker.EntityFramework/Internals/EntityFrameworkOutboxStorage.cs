@@ -26,7 +26,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         {
             int rowCount = 0;
 
-            await _distributedLock.Acquire();
+            await _distributedLock.Acquire(jobId);
 
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {

@@ -6,6 +6,8 @@
 
         public DateTime ExpirationUtc { get; set; }
 
+        public string? JobExecutorId { get; set; }
+
         public bool IsReleased { get; set; } = false;
     }
 }

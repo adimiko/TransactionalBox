@@ -21,10 +21,12 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private OutboxLock? _outboxLock = null;
 
-        private TimeSpan _timeout = TimeSpan.FromSeconds(15);
+        private TimeSpan _timeout = TimeSpan.FromMinutes(15);
 
-        public async Task<EntityFrameworkOutboxLockStorage> Acquire()
+        public async Task<EntityFrameworkOutboxLockStorage> Acquire(string jobId)
         {
+            const string jobExecutorId = "10";
+
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
             await AddOutboxLockIfNotExist();
@@ -37,13 +39,13 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 {
                     var now = DateTime.UtcNow;
 
-                    _outboxLock = await outboxLockStorage.SingleOrDefaultAsync(x => x.IsReleased || x.ExpirationUtc <= now);
+                    _outboxLock = await outboxLockStorage.SingleOrDefaultAsync(x =>  x.IsReleased || x.ExpirationUtc <= now || x.JobExecutorId == jobExecutorId);
 
                     if (_outboxLock is not null)
                     {
                         rowCount = await outboxLockStorage
                         .Where(x => x.ExpirationUtc == _outboxLock.ExpirationUtc) //ExpirationUtc is ConcurrencyToken
-                        .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, false).SetProperty(x => x.ExpirationUtc, now + _timeout));
+                        .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, false).SetProperty(x => x.ExpirationUtc, now + _timeout).SetProperty(x => x.JobExecutorId, jobExecutorId));
                     }
 
                     await transaction.CommitAsync();

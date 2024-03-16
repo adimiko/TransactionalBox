@@ -95,4 +95,11 @@ app.MapGet("/get-messages-from-inbox", (DbContext dbContext) =>
     return messages;
 });
 
+app.MapGet("/locks", (DbContext dbContext) =>
+{
+    var messages = dbContext.Set<OutboxLock>().ToList();
+
+    return messages;
+});
+
 app.Run();
