@@ -23,10 +23,8 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private TimeSpan _timeout = TimeSpan.FromMinutes(15);
 
-        public async Task<EntityFrameworkOutboxLockStorage> Acquire(string jobId)
+        public async Task<EntityFrameworkOutboxLockStorage> Acquire(string jobExecutorId)
         {
-            const string jobExecutorId = "10";
-
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
             await AddOutboxLockIfNotExist();

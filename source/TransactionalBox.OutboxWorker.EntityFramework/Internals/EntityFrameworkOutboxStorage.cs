@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
+using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.OutboxBase.StorageModel;
 using TransactionalBox.OutboxWorker.Internals;
 
@@ -13,20 +14,24 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private readonly EntityFrameworkOutboxLockStorage _distributedLock;
 
+        private readonly IJobExecutionContext _jobExecutionContext;
+
         public EntityFrameworkOutboxStorage(
             DbContext dbContext,
-            EntityFrameworkOutboxLockStorage frameworkOutboxLockStorage) 
+            EntityFrameworkOutboxLockStorage frameworkOutboxLockStorage,
+            IJobExecutionContext jobExecutionContext) 
         {
             _dbContext = dbContext;
             _outboxMessages = dbContext.Set<OutboxMessage>();
             _distributedLock = frameworkOutboxLockStorage;
+            _jobExecutionContext = jobExecutionContext;
         }
-
+        //TODO MarkToProcess
         public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobId, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {
             int rowCount = 0;
 
-            await _distributedLock.Acquire(jobId);
+            await _distributedLock.Acquire(_jobExecutionContext.JobExecutiorId);
 
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {

@@ -1,4 +1,5 @@
 ﻿using TransactionalBox.BackgroundServiceBase.Internals;
+using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.OutboxWorker.Internals.Jobs
@@ -15,23 +16,27 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         private readonly ITransport _transport;
 
+        private readonly IJobExecutionContext _jobExecutionContext;
+
         public MessageProcessingJob(
             ISystemClock systemClock,
             ITransactionalBoxLogger logger,
             IOutboxProcessorSettings settings,
             IOutboxStorage outboxStorage,
-            ITransport transport)
+            ITransport transport,
+            IJobExecutionContext jobExecutionContext)
         {
             _systemClock = systemClock;
             _logger = logger;
             _settings = settings;
             _outboxStorage = outboxStorage;
             _transport = transport;
+            _jobExecutionContext = jobExecutionContext;
         }
 
         protected override async Task Execute(string jobId, CancellationToken stoppingToken)
         {
-            var currentJobId = jobId + Guid.NewGuid();
+            var currentJobId = _jobExecutionContext.JobId;
 
             _logger.Information("Start job with id: {0}", currentJobId);
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
@@ -25,12 +26,17 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
             //TODO error
 
             //_logger.Information("Settings: {0}", _settings);
+
+
             try
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     using (var scope = _serviceProvider.CreateScope())
                     {
+                        scope.ServiceProvider.GetRequiredService<IJobExecutorIdExecutionContextConstructor>().JobExecutiorId = jobId;
+                        scope.ServiceProvider.GetRequiredService<IJobIdExecutionContextConstructor>().JobId = jobId + Guid.NewGuid(); //TODO
+
                         Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
 
                         await job.Execute(jobId, stoppingToken);
