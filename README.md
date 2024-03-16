@@ -69,6 +69,8 @@ Examples of problems that occur during network communication:
 - [ ] Inbox size
 - [ ] Message failure rate
 - [ ] Message delivery latency
+- [ ] Number of duplicated messages
+- [ ] Message duplication rate
 
 #### Maintenecne
 - [ ] Remove processed messages from the outbox
