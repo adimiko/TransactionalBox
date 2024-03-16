@@ -14,6 +14,7 @@
 
         public DateTime? ProcessedUtc { get; set; }
 
-        public string? MachineName { get; set; }
+        public string? JobId { get; set; } //TODO sequence based on timestamp + machineName + processId
+
     }
 }

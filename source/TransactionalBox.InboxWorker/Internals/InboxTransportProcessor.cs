@@ -28,6 +28,7 @@ namespace TransactionalBox.InboxWorker.Internals
                     {
                         using (var scope = _serviceProvider.CreateScope())
                         {
+                            //TODO check in storage does message exist
                             await scope.ServiceProvider.GetRequiredService<IInboxStorage>().Add(inboxMessage);
                         }
                     }

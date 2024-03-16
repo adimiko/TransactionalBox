@@ -7,6 +7,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
     internal sealed class EntityFrameworkOutboxStorage : IOutboxStorage
     {
         private readonly DbContext _dbContext;
+
         private readonly DbSet<OutboxMessage> _outboxMessages;
 
         public EntityFrameworkOutboxStorage(DbContext dbContext) 
@@ -15,16 +16,15 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMessages(int batchSize, DateTime nowUtc, DateTime lockUtc, string machineName)
+        public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobId, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {
-            //TODO (Check) Is update from select (without any hints) okay for a race condition ?
             var rowCount = await _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
                 .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
                 .Take(batchSize)
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(x => x.LockUtc, lockUtc)
-                    .SetProperty(x => x.MachineName, machineName));
+                    .SetProperty(x => x.JobId, jobId));
 
             if (rowCount < 1)
             {
@@ -33,20 +33,17 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
             var messages = await _outboxMessages
                 .AsNoTracking()
-                .Where(x => x.ProcessedUtc == null && x.MachineName == machineName)
+                .Where(x => x.ProcessedUtc == null && x.JobId == jobId)
                 .ToListAsync();
 
             return messages;
         }
 
-        public Task MarkAsProcessed(IEnumerable<OutboxMessage> messages, DateTime processedUtc)
-        {
-            var ids = messages.Select(x => x.Id);
-            
+        public Task MarkAsProcessed(string jobId, DateTime processedUtc)
+        {            
             return _outboxMessages
-                    .Where(x => x.ProcessedUtc == null && ids.Contains(x.Id))
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(x => x.ProcessedUtc, processedUtc));
+                    .Where(x => x.ProcessedUtc == null && x.JobId == jobId)
+                    .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.ProcessedUtc, processedUtc));
         }
     }
 }
