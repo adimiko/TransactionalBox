@@ -6,8 +6,6 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 {
     internal sealed class EntityFrameworkOutboxStorage : IOutboxStorage
     {
-        private static Mutex _mutex = new Mutex();
-
         private readonly DbContext _dbContext;
 
         private readonly DbSet<OutboxMessage> _outboxMessages;
@@ -20,28 +18,13 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobId, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {
-            // (Database performance) 
-            // Added mutex because Entity Framework does not support skipping locked rows
-            // Moved queuing of operations from the database to the application
-
-            //_mutex.WaitOne();
-
-            int rowCount;
-
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync(System.Data.IsolationLevel.RepeatableRead))
-            {
-                rowCount = await _outboxMessages
-                    .OrderBy(x => x.OccurredUtc)
-                    .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
-                    .Take(batchSize)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(x => x.LockUtc, lockUtc)
-                        .SetProperty(x => x.JobId, jobId));
-
-                await transaction.CommitAsync();
-            }
-
-            //_mutex.ReleaseMutex();
+            var rowCount = await _outboxMessages
+                .OrderBy(x => x.OccurredUtc)
+                .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                .Take(batchSize)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(x => x.LockUtc, lockUtc)
+                    .SetProperty(x => x.JobId, jobId));
 
             if (rowCount < 1)
             {
