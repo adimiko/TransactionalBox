@@ -1,9 +1,11 @@
-﻿namespace TransactionalBox.BackgroundServiceBase.Internals.Context
+﻿using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
+
+namespace TransactionalBox.BackgroundServiceBase.Internals.Context
 {
     public interface IJobExecutionContextConstructor
     {
-        string JobId { set; }
+        JobId JobId { set; }
 
-        string JobExecutiorId { set; }
+        string JobExecutorId { set; }
     }
 }

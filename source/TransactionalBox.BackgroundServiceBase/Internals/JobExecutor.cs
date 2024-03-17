@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
+using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
@@ -27,6 +28,8 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
 
             //_logger.Information("Settings: {0}", _settings);
 
+            var jobExecutorId = Guid.NewGuid(); //TODO
+
 
             try
             {
@@ -36,12 +39,12 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
                     {
                         var jobExecutionContextConstructor = scope.ServiceProvider.GetRequiredService<IJobExecutionContextConstructor>();
 
-                        jobExecutionContextConstructor.JobId = jobId;
-                        jobExecutionContextConstructor.JobExecutiorId = jobId + Guid.NewGuid();//TODO
+                        jobExecutionContextConstructor.JobId = new JobId(jobId);
+                        jobExecutionContextConstructor.JobExecutorId = jobExecutorId.ToString();//TODO
 
                         Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
 
-                        await job.Execute(jobId, stoppingToken);
+                        await job.Execute(stoppingToken);
                     }
                 }
             }

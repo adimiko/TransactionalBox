@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
+using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 using TransactionalBox.OutboxBase.StorageModel;
 using TransactionalBox.OutboxWorker.Internals;
 
@@ -27,11 +28,11 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _jobExecutionContext = jobExecutionContext;
         }
         //TODO MarkToProcess
-        public async Task<IEnumerable<OutboxMessage>> GetMessages(string jobId, int batchSize, DateTime nowUtc, DateTime lockUtc)
+        public async Task<IEnumerable<OutboxMessage>> GetMessages(JobId jobId, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {
             int rowCount = 0;
 
-            await _distributedLock.Acquire(_jobExecutionContext.JobExecutiorId);
+            await _distributedLock.Acquire(_jobExecutionContext.JobExecutorId);
 
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {
@@ -41,7 +42,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 .Take(batchSize)
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(x => x.LockUtc, lockUtc)
-                    .SetProperty(x => x.JobId, jobId));
+                    .SetProperty(x => x.JobId, jobId.ToString()));
 
                 await transaction.CommitAsync();
             }
@@ -55,18 +56,18 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
             var messages = await _outboxMessages
                 .AsNoTracking()
-                .Where(x => x.ProcessedUtc == null && x.JobId == jobId)
+                .Where(x => x.ProcessedUtc == null && x.JobId == jobId.ToString())
                 .ToListAsync();
 
             return messages;
         }
 
-        public async Task MarkAsProcessed(string jobId, DateTime processedUtc)
+        public async Task MarkAsProcessed(JobId jobId, DateTime processedUtc)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {
                 await _outboxMessages
-                    .Where(x => x.ProcessedUtc == null && x.JobId == jobId)
+                    .Where(x => x.ProcessedUtc == null && x.JobId == jobId.ToString())
                     .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.ProcessedUtc, processedUtc));
 
                 await transaction.CommitAsync();
