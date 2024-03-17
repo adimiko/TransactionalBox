@@ -32,7 +32,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         {
             int rowCount = 0;
 
-            await _distributedLock.Acquire(_jobExecutionContext.JobId.ToString());
+            await _distributedLock.Acquire(_jobExecutionContext.JobName);
 
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {

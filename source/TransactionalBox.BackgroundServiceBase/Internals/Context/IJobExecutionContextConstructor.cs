@@ -7,5 +7,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals.Context
         JobId JobId { set; }
 
         string JobExecutorId { set; }
+
+        string JobName { set; }
     }
 }

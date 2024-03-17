@@ -41,6 +41,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
 
                         jobExecutionContextConstructor.JobId = new JobId(jobId);
                         jobExecutionContextConstructor.JobExecutorId = jobExecutorId.ToString();//TODO
+                        jobExecutionContextConstructor.JobName = jobType.Name;
 
                         Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
 

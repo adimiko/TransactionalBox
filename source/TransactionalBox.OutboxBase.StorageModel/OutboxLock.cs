@@ -2,13 +2,11 @@
 {
     public sealed class OutboxLock
     {
-        public string Id { get; set; }
+        public string Key { get; set; }
 
-        public DateTime MomentOfAcquireUtc { get; set; }
+        public DateTime StartUtc { get; set; }
 
-        public DateTime ExpirationUtc { get; set; }
-
-        public string? JobId { get; set; }
+        public DateTime TimeoutUtc { get; set; }
 
         public int ConcurrencyToken { get;  set; }
 
