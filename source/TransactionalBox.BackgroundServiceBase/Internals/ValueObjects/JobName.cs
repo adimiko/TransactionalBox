@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.BackgroundServiceBase.Internals.ValueObjects
 {
-    public sealed record JobId(string Value)
+    public sealed record JobName(string Value)
     {
         public override string ToString() => Value;
     }

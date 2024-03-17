@@ -41,15 +41,15 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             var nowUtc = _systemClock.UtcNow;
             var lockUtc = nowUtc + _settings.LockTimeout;
 
-            var messages = await _outboxStorage.GetMessages(_jobExecutionContext.JobId, _settings.BatchSize, nowUtc, lockUtc);
-
-            var numberOfMessages = messages.Count();
+            var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, _settings.BatchSize, nowUtc, lockUtc);
 
             if (numberOfMessages == 0) // IsBatchEmpty
             {
                 await Task.Delay(_settings.DelayWhenBatchIsEmpty, _systemClock.TimeProvider, stoppingToken);
                 return;
             }
+
+            var messages = await _outboxStorage.GetMessages(_jobExecutionContext.JobId);
 
             foreach (var message in messages)
             {
