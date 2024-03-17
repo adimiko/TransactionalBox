@@ -17,11 +17,11 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         // TODO log when lock is acquire and released (Distributed lock)
         // TODO InMemory lock SemaphoreSlim(1,1)
         // TODO log when lock is WaitOne and Released SemaphoreSlim(1,1)
-        private OutboxLock? _outboxLock = null;
+        private OutboxLock? _newLock = null;
 
         private TimeSpan _timeout = TimeSpan.FromMinutes(15);
 
-        public async Task<EntityFrameworkOutboxLockStorage> Acquire(string key) //TODO strong ID ?
+        public async Task Acquire(string key) //TODO strong ID ?
         {
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
@@ -33,42 +33,46 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
             do
             {
+                bool doesPreviousLockExist = false; //rename
+
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
                 {
                     var now = DateTime.UtcNow;
 
-                    _outboxLock = await outboxLockStorage.SingleOrDefaultAsync(x => x.Key == key && (x.IsReleased || x.TimeoutUtc <= now));
+                    var previousLock = await outboxLockStorage
+                        .AsNoTracking()
+                        .SingleOrDefaultAsync(x => x.Key == key && (x.IsReleased || x.TimeoutUtc <= now));
 
-                    if (_outboxLock is not null)
+                    doesPreviousLockExist = previousLock is not null;
+
+                    if (doesPreviousLockExist)
                     {
-                        var lastConcurencyToken = _outboxLock.ConcurrencyToken;
-
-                        _outboxLock.GenerateNewConcurrencyToken();
+                        _newLock = previousLock.CreateNewLock(now, _timeout);
 
                         rowCount = await outboxLockStorage
-                        .Where(x => x.ConcurrencyToken == lastConcurencyToken)
+                        .Where(x => x.Key == key && x.ConcurrencyToken == previousLock.ConcurrencyToken)
                         .ExecuteUpdateAsync(x => x
-                        .SetProperty(x => x.IsReleased, false)
-                        .SetProperty(x => x.StartUtc, now)
-                        .SetProperty(x => x.TimeoutUtc, now + _timeout)
-                        .SetProperty(x => x.ConcurrencyToken, _outboxLock.ConcurrencyToken));
+                        .SetProperty(x => x.IsReleased, _newLock.IsReleased)
+                        .SetProperty(x => x.StartUtc, _newLock.StartUtc)
+                        .SetProperty(x => x.TimeoutUtc, _newLock.TimeoutUtc)
+                        .SetProperty(x => x.ConcurrencyToken, _newLock.ConcurrencyToken));
                     }
 
                     await transaction.CommitAsync();
                 }
 
-                if (_outboxLock is null)
+                if (!doesPreviousLockExist)
                 {
                     await Task.Delay(50);//TODO (startDate of lock + job avg time) = potentialReleaseDateTime  <- potentialReleaseDateTime - now  = delay
                 }
             }
             while (rowCount < 1);
-
-            return this;
         }
 
         public async Task Release()
         {
+            _newLock.Release();
+
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
             var rowCount = 0;
@@ -76,10 +80,10 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {
                 rowCount = await outboxLockStorage
-                    .Where(x => x.Key == _outboxLock.Key && x.ConcurrencyToken == _outboxLock.ConcurrencyToken)
-                    .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, true));
+                    .Where(x => x.Key == _newLock.Key && x.ConcurrencyToken == _newLock.ConcurrencyToken)
+                    .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, _newLock.IsReleased));
 
-                transaction.Commit();
+                await transaction.CommitAsync();
             }
 
             if (rowCount < 1) 
@@ -92,19 +96,12 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         {
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
-            // SemaphoreSlim(1,1) and lock name
-            if (!await outboxLockStorage.AnyAsync())
+            // SemaphoreSlim(1,1)
+            if (!await outboxLockStorage.AnyAsync(x => x.Key == key))
             {
                 try
                 {
-                    var outboxLock = new OutboxLock()
-                    {
-                        Key = key,
-                        StartUtc = DateTime.UtcNow, //TODO
-                        TimeoutUtc = DateTime.UtcNow, //TODO
-                        ConcurrencyToken = 0,
-                        IsReleased = true,
-                    };
+                    var outboxLock = OutboxLock.CreateFirstLock(key, DateTime.UtcNow, DateTime.UtcNow); //TODO only key
 
                     await outboxLockStorage.AddAsync(outboxLock);
                     await _dbContext.SaveChangesAsync();
