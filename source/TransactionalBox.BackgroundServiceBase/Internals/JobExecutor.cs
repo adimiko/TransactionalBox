@@ -34,8 +34,10 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
                 {
                     using (var scope = _serviceProvider.CreateScope())
                     {
-                        scope.ServiceProvider.GetRequiredService<IJobExecutorIdExecutionContextConstructor>().JobExecutiorId = jobId;
-                        scope.ServiceProvider.GetRequiredService<IJobIdExecutionContextConstructor>().JobId = jobId + Guid.NewGuid(); //TODO
+                        var jobExecutionContextConstructor = scope.ServiceProvider.GetRequiredService<IJobExecutionContextConstructor>();
+
+                        jobExecutionContextConstructor.JobId = jobId;
+                        jobExecutionContextConstructor.JobExecutiorId = jobId + Guid.NewGuid();//TODO
 
                         Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
 

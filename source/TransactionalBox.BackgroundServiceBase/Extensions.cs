@@ -14,8 +14,7 @@ namespace TransactionalBox.BackgroundServiceBase
 
             services.AddScoped<JobExecutionContext>();
             services.AddScoped<IJobExecutionContext>(sp => sp.GetRequiredService<JobExecutionContext>());
-            services.AddScoped<IJobExecutorIdExecutionContextConstructor>(sp => sp.GetRequiredService<JobExecutionContext>());
-            services.AddScoped<IJobIdExecutionContextConstructor>(sp => sp.GetRequiredService<JobExecutionContext>());
+            services.AddScoped<IJobExecutionContextConstructor>(sp => sp.GetRequiredService<JobExecutionContext>());
 
             return services;
         }
