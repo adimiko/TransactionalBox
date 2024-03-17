@@ -14,11 +14,11 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private readonly DbSet<OutboxMessage> _outboxMessages;
 
-        private readonly EntityFrameworkOutboxLockStorage _distributedLock;
+        private readonly EntityFrameworkOutboxDistributedLockStorage _distributedLock;
 
         public EntityFrameworkOutboxStorage(
             DbContext dbContext,
-            EntityFrameworkOutboxLockStorage frameworkOutboxLockStorage) 
+            EntityFrameworkOutboxDistributedLockStorage frameworkOutboxLockStorage) 
         {
             _dbContext = dbContext;
             _outboxMessages = dbContext.Set<OutboxMessage>();

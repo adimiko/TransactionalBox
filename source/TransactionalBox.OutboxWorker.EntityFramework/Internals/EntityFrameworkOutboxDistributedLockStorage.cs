@@ -4,11 +4,11 @@ using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 {
-    internal sealed class EntityFrameworkOutboxLockStorage
+    internal sealed class EntityFrameworkOutboxDistributedLockStorage
     {
         private readonly DbContext _dbContext;
 
-        public EntityFrameworkOutboxLockStorage(DbContext dbContext) 
+        public EntityFrameworkOutboxDistributedLockStorage(DbContext dbContext) 
         {
             _dbContext = dbContext;
         }
