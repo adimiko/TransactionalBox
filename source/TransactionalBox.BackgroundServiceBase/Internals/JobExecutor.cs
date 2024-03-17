@@ -5,7 +5,6 @@ using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
 {
-    //TODO internal
     internal sealed class JobExecutor
     {
         private readonly IServiceProvider _serviceProvider;

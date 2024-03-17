@@ -56,8 +56,6 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
                 await _transport.Add(message);
             }
 
-            //TODO (ADR) get messages added to transport (with result success save to db) OR (All success or failed) 
-
             await _outboxStorage.MarkAsProcessed(_jobExecutionContext.JobId, _systemClock.UtcNow);
 
             if (numberOfMessages < _settings.BatchSize) // IsBatchNotFull
