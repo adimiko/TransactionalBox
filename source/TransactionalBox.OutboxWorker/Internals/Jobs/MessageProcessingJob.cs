@@ -49,7 +49,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
                 return;
             }
 
-            var messages = await _outboxStorage.GetMessages(_jobExecutionContext.JobId);
+            var messages = await _outboxStorage.GetMarkedMessages(_jobExecutionContext.JobId);
 
             foreach (var message in messages)
             {

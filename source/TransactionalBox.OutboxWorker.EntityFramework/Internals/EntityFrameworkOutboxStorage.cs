@@ -48,7 +48,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             return rowCount;
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMessages(JobId jobId)
+        public async Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId)
         {
             IEnumerable<OutboxMessage> messages;
 
