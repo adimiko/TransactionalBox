@@ -42,12 +42,13 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                     {
                         var lastConcurencyToken = _outboxLock.ConcurrencyToken;
 
-                        _outboxLock.ConcurrencyToken++;
+                        _outboxLock.GenerateNewConcurrencyToken();
 
                         rowCount = await outboxLockStorage
                         .Where(x => x.ConcurrencyToken == lastConcurencyToken)
                         .ExecuteUpdateAsync(x => x
                         .SetProperty(x => x.IsReleased, false)
+                        .SetProperty(x => x.MomentOfAcquireUtc, now)
                         .SetProperty(x => x.ExpirationUtc, now + _timeout)
                         .SetProperty(x => x.JobExecutorId, jobExecutorId)
                         .SetProperty(x => x.ConcurrencyToken, _outboxLock.ConcurrencyToken));
@@ -91,6 +92,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         {
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
+            // SemaphoreSlim(1,1) and lock name
             if (!await outboxLockStorage.AnyAsync())
             {
                 try
@@ -98,8 +100,9 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                     var outboxLock = new OutboxLock()
                     {
                         Id = "OutboxLock",
+                        MomentOfAcquireUtc = DateTime.UtcNow, //TODO
                         ExpirationUtc = DateTime.UtcNow, //TODO
-                        ConcurrencyToken = -9999999999999999, //Problem with long.MinValue
+                        ConcurrencyToken = 0,
                         IsReleased = true,
                     };
 
