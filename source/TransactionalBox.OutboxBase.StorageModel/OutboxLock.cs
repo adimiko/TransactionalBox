@@ -8,6 +8,8 @@
 
         public string? JobExecutorId { get; set; }
 
+        public long ConcurrencyToken { get; set; }
+
         public bool IsReleased { get; set; } = false;
     }
 }

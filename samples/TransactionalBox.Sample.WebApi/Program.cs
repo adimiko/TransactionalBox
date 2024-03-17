@@ -69,7 +69,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
-    for(var i = 0; i < 10; i++)
+    for(var i = 0; i < 100; i++)
     {
         await outbox.Add(message, m =>
         {

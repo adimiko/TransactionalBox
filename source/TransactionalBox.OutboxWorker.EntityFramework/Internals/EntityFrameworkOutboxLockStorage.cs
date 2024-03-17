@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
@@ -41,9 +35,17 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
                     if (_outboxLock is not null)
                     {
+                        var lastConcurencyToken = _outboxLock.ConcurrencyToken;
+
+                        _outboxLock.ConcurrencyToken++;
+
                         rowCount = await outboxLockStorage
-                        .Where(x => x.ExpirationUtc == _outboxLock.ExpirationUtc) //ExpirationUtc is ConcurrencyToken
-                        .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, false).SetProperty(x => x.ExpirationUtc, now + _timeout).SetProperty(x => x.JobExecutorId, jobExecutorId));
+                        .Where(x => x.ConcurrencyToken == lastConcurencyToken)
+                        .ExecuteUpdateAsync(x => x
+                        .SetProperty(x => x.IsReleased, false)
+                        .SetProperty(x => x.ExpirationUtc, now + _timeout)
+                        .SetProperty(x => x.JobExecutorId, jobExecutorId)
+                        .SetProperty(x => x.ConcurrencyToken, _outboxLock.ConcurrencyToken));
                     }
 
                     await transaction.CommitAsync();
@@ -68,7 +70,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {
                 rowCount = await outboxLockStorage
-                    .Where(x => x.ExpirationUtc == _outboxLock.ExpirationUtc)
+                    .Where(x => x.ConcurrencyToken == _outboxLock.ConcurrencyToken)
                     .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, true));
 
                 transaction.Commit();
@@ -92,6 +94,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                     {
                         Id = "OutboxLock",
                         ExpirationUtc = DateTime.UtcNow, //TODO
+                        ConcurrencyToken = -9999999999999999, //Problem with long.MinValue
                         IsReleased = true,
                     };
 
