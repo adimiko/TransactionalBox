@@ -10,7 +10,7 @@ namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
             builder.HasKey(x => x.Id);
             builder.Property(x => x.MomentOfAcquireUtc);
             builder.Property(x => x.ExpirationUtc);
-            builder.Property(x => x.JobExecutorId);
+            builder.Property(x => x.JobId);
             builder.Property(x => x.ConcurrencyToken);
             builder.Property(x => x.IsReleased);
         }

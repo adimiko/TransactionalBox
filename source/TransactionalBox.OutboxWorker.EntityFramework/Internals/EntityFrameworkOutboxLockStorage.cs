@@ -20,7 +20,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private TimeSpan _timeout = TimeSpan.FromMinutes(15);
 
-        public async Task<EntityFrameworkOutboxLockStorage> Acquire(string jobExecutorId)
+        public async Task<EntityFrameworkOutboxLockStorage> Acquire(string jobId) //TODO strong ID ?
         {
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
@@ -36,7 +36,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 {
                     var now = DateTime.UtcNow;
 
-                    _outboxLock = await outboxLockStorage.SingleOrDefaultAsync(x =>  x.IsReleased || x.ExpirationUtc <= now || x.JobExecutorId == jobExecutorId);
+                    _outboxLock = await outboxLockStorage.SingleOrDefaultAsync(x =>  x.IsReleased || x.ExpirationUtc <= now || x.JobId == jobId);
 
                     if (_outboxLock is not null)
                     {
@@ -50,7 +50,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                         .SetProperty(x => x.IsReleased, false)
                         .SetProperty(x => x.MomentOfAcquireUtc, now)
                         .SetProperty(x => x.ExpirationUtc, now + _timeout)
-                        .SetProperty(x => x.JobExecutorId, jobExecutorId)
+                        .SetProperty(x => x.JobId, jobId)
                         .SetProperty(x => x.ConcurrencyToken, _outboxLock.ConcurrencyToken));
                     }
 
@@ -59,7 +59,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
                 if (_outboxLock is null)
                 {
-                    await Task.Delay(250);
+                    await Task.Delay(50);//TODO (startDate of lock + job avg time) = potentialReleaseDateTime  <- potentialReleaseDateTime - now  = delay
                 }
             }
             while (rowCount < 1);

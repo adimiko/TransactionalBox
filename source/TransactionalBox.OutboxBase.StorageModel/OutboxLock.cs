@@ -8,7 +8,7 @@
 
         public DateTime ExpirationUtc { get; set; }
 
-        public string? JobExecutorId { get; set; }
+        public string? JobId { get; set; }
 
         public int ConcurrencyToken { get;  set; }
 
