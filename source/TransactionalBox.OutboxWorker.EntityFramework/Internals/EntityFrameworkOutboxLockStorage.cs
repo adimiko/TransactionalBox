@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Data;
 using TransactionalBox.OutboxBase.StorageModel;
 
@@ -21,7 +20,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private TimeSpan _timeout = TimeSpan.FromMinutes(15);
 
-        public async Task Acquire(string key) //TODO strong ID ?
+        public async Task Acquire(string key)
         {
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
@@ -63,7 +62,8 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
                 if (!doesPreviousLockExist)
                 {
-                    await Task.Delay(50);//TODO (startDate of lock + job avg time) = potentialReleaseDateTime  <- potentialReleaseDateTime - now  = delay
+                    //TODO (startDate of lock + job avg time) = potentialReleaseDateTime  <- potentialReleaseDateTime - now  = delay
+                    await Task.Delay(50);
                 }
             }
             while (rowCount < 1);
