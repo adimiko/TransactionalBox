@@ -1,11 +1,14 @@
-﻿using TransactionalBox.OutboxBase.StorageModel;
+﻿using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
+using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {
     public interface IOutboxStorage
     {
-        Task<IEnumerable<OutboxMessage>> GetMessages(string jobId, int batchSize, DateTime nowUtc, DateTime lockUtc);
+        Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, DateTime lockUtc);
 
-        Task MarkAsProcessed(string jobId, DateTime processedUtc);
+        Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId);
+
+        Task MarkAsProcessed(JobId jobId, DateTime processedUtc);
     }
 }

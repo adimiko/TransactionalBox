@@ -69,7 +69,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
-    for(var i = 0; i < 10; i++)
+    for(var i = 0; i < 100; i++)
     {
         await outbox.Add(message, m =>
         {
@@ -91,6 +91,13 @@ app.MapGet("/get-messages-from-outbox", (DbContext dbContext) =>
 app.MapGet("/get-messages-from-inbox", (DbContext dbContext) =>
 {
     var messages = dbContext.Set<InboxMessage>().ToList();
+
+    return messages;
+});
+
+app.MapGet("/locks", (DbContext dbContext) =>
+{
+    var messages = dbContext.Set<OutboxLock>().ToList();
 
     return messages;
 });

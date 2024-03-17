@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Runtime;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals

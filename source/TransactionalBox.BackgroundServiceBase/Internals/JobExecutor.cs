@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.BackgroundServiceBase.Internals.Context;
+using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
 {
-    //TODO internal
     internal sealed class JobExecutor
     {
         private readonly IServiceProvider _serviceProvider;
@@ -25,15 +26,25 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
             //TODO error
 
             //_logger.Information("Settings: {0}", _settings);
+
+            var jobExecutorId = Guid.NewGuid(); //TODO
+
+
             try
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     using (var scope = _serviceProvider.CreateScope())
                     {
+                        var jobExecutionContextConstructor = scope.ServiceProvider.GetRequiredService<IJobExecutionContextConstructor>();
+
+                        jobExecutionContextConstructor.JobId = new JobId(jobId);
+                        jobExecutionContextConstructor.JobExecutorId = jobExecutorId.ToString();//TODO
+                        jobExecutionContextConstructor.JobName = new JobName(jobType.Name);
+
                         Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
 
-                        await job.Execute(jobId, stoppingToken);
+                        await job.Execute(stoppingToken);
                     }
                 }
             }

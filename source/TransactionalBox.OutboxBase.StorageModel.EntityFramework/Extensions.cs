@@ -8,6 +8,7 @@ namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework
         public static void AddOutbox(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new OutboxLockEntityTypeConfiguration());
         }
     }
 }
