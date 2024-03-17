@@ -13,6 +13,9 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _dbContext = dbContext;
         }
 
+        // TODO log when lock is acquire and released (Distributed lock)
+        // TODO InMemory lock SemaphoreSlim(1,1)
+        // TODO log when lock is WaitOne and Released SemaphoreSlim(1,1)
         private OutboxLock? _outboxLock = null;
 
         private TimeSpan _timeout = TimeSpan.FromMinutes(15);
@@ -21,6 +24,8 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         {
             var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
+            //TODO only when first start
+            //TODO InMemory lock :)
             await AddOutboxLockIfNotExist();
 
             int rowCount = 0;
