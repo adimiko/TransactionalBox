@@ -31,13 +31,10 @@ Examples of problems that occur during network communication:
 - [x] Get a message from inbox and process it
 
 #### Storage
-- [x] Support for Entity Framework
-    - [x] Support for EF Migrations
-    - [x] Support for EF Database Providers
+- [x] Support for Entity Framework (Relational)
+    - [x] Migrations
+    - [X] Distributed Lock (Optimistic Concurency Control)
 - [ ] Support for InMemory
-- [ ] Support for PostgreSQL
-- [ ] Support for Microsoft SQL Server
-- [ ] Support for MySQL
 - [ ] Support for MongoDB
 
 #### Transport
