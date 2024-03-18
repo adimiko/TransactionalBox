@@ -21,7 +21,7 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
             _configFactory = configFactory;
         }
 
-        public async IAsyncEnumerable<InboxMessage> GetMessage([EnumeratorCancellation] CancellationToken cancellationToken)
+        public async IAsyncEnumerable<IEnumerable<InboxMessage>> GetMessages([EnumeratorCancellation] CancellationToken cancellationToken)
         {
             var config = _configFactory.Create();
 
@@ -35,9 +35,9 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
                     var result = consumer.Consume();
 
                     //TODO #27
-                    var message = JsonSerializer.Deserialize<InboxMessage>(result.Message.Value);
+                    var messages = JsonSerializer.Deserialize<IEnumerable<InboxMessage>>(result.Message.Value);
 
-                    yield return message;
+                    yield return messages;
 
                     consumer.Commit(result);
                 }

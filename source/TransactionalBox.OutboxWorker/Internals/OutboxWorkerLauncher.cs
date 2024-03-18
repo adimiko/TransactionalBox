@@ -1,4 +1,5 @@
 ﻿using TransactionalBox.BackgroundServiceBase.Internals;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
 
 namespace TransactionalBox.OutboxWorker.Internals
@@ -10,7 +11,7 @@ namespace TransactionalBox.OutboxWorker.Internals
             IOutboxOrchestratorSettings settings) 
             : base(serviceProvider)
         {
-            Launch<MessageProcessingJob>(settings.NumberOfOutboxProcessor);
+            Launch<AddMessagesToTransport>(settings.NumberOfOutboxProcessor);
         }
     }
 }

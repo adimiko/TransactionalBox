@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.OutboxWorker.Configurators;
 
-namespace TransactionalBox.OutboxWorker.Internals
+namespace TransactionalBox.OutboxWorker.Internals.Configurators
 {
     internal sealed class OutboxWorkerTransportConfigurator : IOutboxWorkerTransportConfigurator
     {

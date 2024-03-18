@@ -71,6 +71,7 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
 {
     for(var i = 0; i < 100; i++)
     {
+        //TODO AddRange
         await outbox.Add(message, m =>
         {
             m.Receiver = "Registrations";
@@ -81,25 +82,25 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
     await dbContext.SaveChangesAsync();
 });
 
-app.MapGet("/get-messages-from-outbox", (DbContext dbContext) =>
+app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
 {
-    var messages = dbContext.Set<OutboxMessage>().ToList();
+    var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
 
     return messages;
 });
 
-app.MapGet("/get-messages-from-inbox", (DbContext dbContext) =>
+app.MapGet("/get-messages-from-inbox", async (DbContext dbContext) =>
 {
-    var messages = dbContext.Set<InboxMessage>().ToList();
+    var messages = await dbContext.Set<InboxMessage>().AsNoTracking().ToListAsync();
 
     return messages;
 });
 
-app.MapGet("/locks", (DbContext dbContext) =>
+app.MapGet("/locks", async (DbContext dbContext) =>
 {
-    var messages = dbContext.Set<OutboxLock>().ToList();
+    var locks = await dbContext.Set<OutboxLock>().AsNoTracking().ToListAsync();
 
-    return messages;
+    return locks;
 });
 
 app.Run();

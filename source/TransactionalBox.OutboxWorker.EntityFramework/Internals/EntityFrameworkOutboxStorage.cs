@@ -2,7 +2,7 @@
 using System.Data;
 using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 using TransactionalBox.OutboxBase.StorageModel;
-using TransactionalBox.OutboxWorker.Internals;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 {

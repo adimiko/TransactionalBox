@@ -8,7 +8,7 @@
 
         public required string Topic { get; set; }
 
-        public required string Payload { get; set; }
+        public required string Data { get; set; }
 
         public DateTime? LockUtc { get; set; }
 

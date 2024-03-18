@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.OutboxWorker.Internals
+﻿namespace TransactionalBox.OutboxWorker.Internals.Contracts
 {
     internal interface IOutboxOrchestratorSettings
     {

@@ -23,18 +23,18 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
             _inbox = dbContext.Set<InboxMessage>();
         }
 
-        public async Task Add(InboxMessage message) //TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
+        public async Task AddRange(IEnumerable<InboxMessage> messages) //TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
         {
             try
             {
-                await _inbox.AddAsync(message).AsTask();
+                await _inbox.AddRangeAsync(messages);
 
                 await _dbContext.SaveChangesAsync();
             }
             //TODO Add a better check
             catch (DbUpdateException dbUpdateException) when (dbUpdateException.InnerException != null && dbUpdateException.InnerException.Message.Contains("duplicate key"))
             {
-                _logger.Warning("Detected duplicate message with id: {id}", message.Id);
+                _logger.Warning("Detected duplicate message with id: {id}", messages.First().Id); //TODO
             }
         }
     }

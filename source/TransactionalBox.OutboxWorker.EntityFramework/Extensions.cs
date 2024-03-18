@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.EntityFramework.Internals;
-using TransactionalBox.OutboxWorker.Internals;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.EntityFramework
 {

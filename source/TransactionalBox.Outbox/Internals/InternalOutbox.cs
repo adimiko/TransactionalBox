@@ -46,7 +46,7 @@ namespace TransactionalBox.Outbox.Internals
                 OccurredUtc = metadata.OccurredUtc,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
-                Payload = JsonSerializer.Serialize((dynamic)message), //TODO #27
+                Data = JsonSerializer.Serialize((dynamic)message), //TODO #27
             };
 
             await _outboxStorage.Add(outboxMessage);

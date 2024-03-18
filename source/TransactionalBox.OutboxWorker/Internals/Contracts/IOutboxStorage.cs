@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 using TransactionalBox.OutboxBase.StorageModel;
 
-namespace TransactionalBox.OutboxWorker.Internals
+namespace TransactionalBox.OutboxWorker.Internals.Contracts
 {
     public interface IOutboxStorage
     {

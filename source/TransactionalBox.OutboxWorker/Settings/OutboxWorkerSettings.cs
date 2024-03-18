@@ -1,10 +1,10 @@
-﻿using TransactionalBox.OutboxWorker.Internals;
+﻿using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Settings
 {
     public sealed class OutboxWorkerSettings : IOutboxProcessorSettings, IOutboxOrchestratorSettings
     {
-        public int BatchSize { get; set; } = 10;
+        public int BatchSize { get; set; } = 5000;
 
         public int NumberOfOutboxProcessor { get; set; } = 2;
 
