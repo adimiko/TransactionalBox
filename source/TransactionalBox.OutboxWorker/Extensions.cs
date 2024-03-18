@@ -3,6 +3,8 @@ using TransactionalBox.BackgroundServiceBase;
 using TransactionalBox.OutboxBase.DependencyBuilder;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals;
+using TransactionalBox.OutboxWorker.Internals.Configurators;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
 using TransactionalBox.OutboxWorker.Settings;
 

@@ -1,4 +1,4 @@
-﻿using TransactionalBox.OutboxWorker.Internals;
+﻿using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Settings
 {

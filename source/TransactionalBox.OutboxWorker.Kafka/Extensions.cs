@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.OutboxWorker.Internals;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Kafka.Internals;
 using TransactionalBox.OutboxWorker.Kafka.Settings;
 

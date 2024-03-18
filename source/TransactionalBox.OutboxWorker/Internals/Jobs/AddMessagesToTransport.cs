@@ -1,6 +1,7 @@
 ﻿using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Internals;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Internals.Jobs
 {
