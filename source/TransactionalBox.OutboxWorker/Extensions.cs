@@ -36,6 +36,7 @@ namespace TransactionalBox.OutboxWorker
 
             services.AddSingleton<IOutboxProcessorSettings>(settings);
             services.AddSingleton<IOutboxOrchestratorSettings>(settings);
+            services.AddSingleton<TransportMessageFactory>();
 
             services.AddHostedService<OutboxWorkerLauncher>();
 

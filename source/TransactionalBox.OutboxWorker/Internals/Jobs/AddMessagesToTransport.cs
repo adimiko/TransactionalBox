@@ -1,4 +1,5 @@
-﻿using TransactionalBox.BackgroundServiceBase.Internals;
+﻿using System.Text.Json;
+using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
@@ -19,13 +20,16 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         private readonly IJobExecutionContext _jobExecutionContext;
 
+        private readonly TransportMessageFactory _transportMessageFactory;
+
         public AddMessagesToTransport(
             ISystemClock systemClock,
             ITransactionalBoxLogger logger,
             IOutboxProcessorSettings settings,
             IOutboxStorage outboxStorage,
             ITransport transport,
-            IJobExecutionContext jobExecutionContext)
+            IJobExecutionContext jobExecutionContext,
+            TransportMessageFactory transportMessageFactory)
         {
             _systemClock = systemClock;
             _logger = logger;
@@ -33,6 +37,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             _outboxStorage = outboxStorage;
             _transport = transport;
             _jobExecutionContext = jobExecutionContext;
+            _transportMessageFactory = transportMessageFactory;
         }
 
         protected override async Task Execute(CancellationToken stoppingToken)
@@ -52,9 +57,16 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
             var messages = await _outboxStorage.GetMarkedMessages(_jobExecutionContext.JobId);
 
-            // convert messages to multiple topics
-            // groupby topic and then send
-            await _transport.AddRange(messages);
+            var transportMessages = _transportMessageFactory.Create(messages);
+
+            var transportResult = await _transport.Add(transportMessages);
+
+            if (transportResult == TransportResult.Failure)
+            {
+                //TODO log
+                //TODO Circular Breaker ?
+                return;
+            }
 
             await _outboxStorage.MarkAsProcessed(_jobExecutionContext.JobId, _systemClock.UtcNow);
 
