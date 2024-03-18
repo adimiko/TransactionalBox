@@ -24,12 +24,12 @@ namespace TransactionalBox.InboxWorker.Internals
             {
                 try
                 {
-                    await foreach (var inboxMessage in _inboxWorkerTransport.GetMessage(stoppingToken))
+                    await foreach (var inboxMessages in _inboxWorkerTransport.GetMessages(stoppingToken))
                     {
                         using (var scope = _serviceProvider.CreateScope())
                         {
                             //TODO check in storage does message exist
-                            await scope.ServiceProvider.GetRequiredService<IInboxStorage>().Add(inboxMessage);
+                            await scope.ServiceProvider.GetRequiredService<IInboxStorage>().AddRange(inboxMessages);
                         }
                     }
                 }

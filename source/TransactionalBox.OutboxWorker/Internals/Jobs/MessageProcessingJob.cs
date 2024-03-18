@@ -51,10 +51,9 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
             var messages = await _outboxStorage.GetMarkedMessages(_jobExecutionContext.JobId);
 
-            foreach (var message in messages)
-            {
-                await _transport.Add(message);
-            }
+            // convert messages to multiple topics
+            // groupby topic and then send
+            await _transport.AddRange(messages);
 
             await _outboxStorage.MarkAsProcessed(_jobExecutionContext.JobId, _systemClock.UtcNow);
 

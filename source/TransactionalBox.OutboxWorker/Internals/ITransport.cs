@@ -4,6 +4,6 @@ namespace TransactionalBox.OutboxWorker.Internals
 {
     public interface ITransport
     {
-        Task Add(OutboxMessage message);
+        Task AddRange(IEnumerable<OutboxMessage> messages);
     }
 }

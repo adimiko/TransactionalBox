@@ -4,6 +4,6 @@ namespace TransactionalBox.InboxWorker.Internals
 {
     public interface IInboxStorage
     {
-        Task Add(InboxMessage message);
+        Task AddRange(IEnumerable<InboxMessage> messages);
     }
 }

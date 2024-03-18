@@ -14,16 +14,18 @@ namespace TransactionalBox.OutboxWorker.Kafka.Internals
             _configFactory = configFactory;
         }
 
-        public async Task Add(OutboxMessage message)
+        public async Task AddRange(IEnumerable<OutboxMessage> messages)
         {
             var config = _configFactory.Create();
 
             using (var producer = new ProducerBuilder<Null, String>(config).Build())
             {
                 //TODO #27
-                var value = JsonSerializer.Serialize(message);
+                var value = JsonSerializer.Serialize(messages);
 
-                var result = await producer.ProduceAsync(message.Topic, new Message<Null, string> { Value = value });
+                //TODO multiple topics
+                //TODO order by Topic then order by OccurredUtc
+                var result = await producer.ProduceAsync(messages.First().Topic, new Message<Null, string> { Value = value });
 
                 //TODO throw exception
                 //TODO (Processing) #26 
