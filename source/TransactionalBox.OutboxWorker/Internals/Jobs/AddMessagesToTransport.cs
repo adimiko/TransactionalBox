@@ -4,7 +4,7 @@ using TransactionalBox.Internals;
 
 namespace TransactionalBox.OutboxWorker.Internals.Jobs
 {
-    internal sealed class MessageProcessingJob : Job
+    internal sealed class AddMessagesToTransport : Job
     {
         private readonly ISystemClock _systemClock;
 
@@ -18,7 +18,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         private readonly IJobExecutionContext _jobExecutionContext;
 
-        public MessageProcessingJob(
+        public AddMessagesToTransport(
             ISystemClock systemClock,
             ITransactionalBoxLogger logger,
             IOutboxProcessorSettings settings,

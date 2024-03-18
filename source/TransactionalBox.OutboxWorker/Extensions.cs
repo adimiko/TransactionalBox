@@ -37,7 +37,7 @@ namespace TransactionalBox.OutboxWorker
 
             services.AddHostedService<OutboxWorkerLauncher>();
 
-            services.AddScoped<MessageProcessingJob>();
+            services.AddScoped<AddMessagesToTransport>();
         }
     }
 }
