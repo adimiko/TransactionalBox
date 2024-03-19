@@ -12,7 +12,9 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
 
         private readonly DbContext _dbContext;
 
-        private readonly DbSet<InboxMessage> _inbox;
+        private readonly DbSet<InboxMessage> _inboxMessages;
+
+        private readonly DbSet<IdempotentInboxMessage> _idempotentInboxMessages;
 
         public EntityFrameworkInboxStorage(
             ITransactionalBoxLogger logger,
@@ -20,14 +22,25 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
         {
             _logger = logger;
             _dbContext = dbContext;
-            _inbox = dbContext.Set<InboxMessage>();
+            _inboxMessages = dbContext.Set<InboxMessage>();
+            _idempotentInboxMessages = _dbContext.Set<IdempotentInboxMessage>();
         }
 
-        public async Task AddRange(IEnumerable<InboxMessage> messages) //TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
+        public async Task AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc) //TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
         {
+            //TODO create models with created AddedUtc
+            foreach (var message in messages) 
+            {
+                message.AddedUtc = nowUtc;
+            }
+
+            var idempotentMessages = messages.Select(x => IdempotentInboxMessage.CreateBasedOnInboxMessage(x));
+
             try
             {
-                await _inbox.AddRangeAsync(messages);
+                await _idempotentInboxMessages.AddRangeAsync(idempotentMessages);
+
+                await _inboxMessages.AddRangeAsync(messages);
 
                 await _dbContext.SaveChangesAsync();
             }
@@ -35,6 +48,8 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
             catch (DbUpdateException dbUpdateException) when (dbUpdateException.InnerException != null && dbUpdateException.InnerException.Message.Contains("duplicate key"))
             {
                 _logger.Warning("Detected duplicate message with id: {id}", messages.First().Id); //TODO
+
+                //TODO split into multiple insert with diff transactions
             }
         }
     }

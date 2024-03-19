@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransactionalBox.InboxBase.StorageModel;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.Internals
 {
@@ -10,16 +11,21 @@ namespace TransactionalBox.InboxWorker.Internals
 
         private readonly IInboxWorkerTransport _inboxWorkerTransport;
 
+        private readonly ISystemClock _systemClock;
+
         public InboxTransportProcessor(
             IInboxWorkerTransport inboxWorkerTransport,
-            IServiceProvider serviceProvider) 
+            IServiceProvider serviceProvider,
+            ISystemClock systemClock) 
         {
             _inboxWorkerTransport = inboxWorkerTransport;
             _serviceProvider = serviceProvider;
+            _systemClock = systemClock;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var x = _systemClock.UtcNow;
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
@@ -29,7 +35,8 @@ namespace TransactionalBox.InboxWorker.Internals
                         using (var scope = _serviceProvider.CreateScope())
                         {
                             //TODO check in storage does message exist
-                            await scope.ServiceProvider.GetRequiredService<IInboxStorage>().AddRange(inboxMessages);
+                            var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxStorage>();
+                            await inboxStorage.AddRange(inboxMessages, _systemClock.UtcNow);
                         }
                     }
                 }

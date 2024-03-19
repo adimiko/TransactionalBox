@@ -4,6 +4,6 @@ namespace TransactionalBox.InboxWorker.Internals
 {
     public interface IInboxStorage
     {
-        Task AddRange(IEnumerable<InboxMessage> messages);
+        Task AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc);
     }
 }
