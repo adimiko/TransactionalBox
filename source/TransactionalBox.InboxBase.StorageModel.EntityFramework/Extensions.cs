@@ -8,6 +8,7 @@ namespace TransactionalBox.InboxBase.StorageModel.EntityFramework
         public static void AddInbox(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new InboxMessageEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new IdempotentInboxMessageEntityTypeConfiguration());
         }
     }
 }

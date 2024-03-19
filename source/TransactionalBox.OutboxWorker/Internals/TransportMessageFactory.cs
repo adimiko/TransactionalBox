@@ -30,7 +30,7 @@ namespace TransactionalBox.OutboxWorker.Internals
             {
                 var messages = groupedOutboxMessagesWithTheSameTopic.Messages;
                 //TODO #27
-                var payload = JsonSerializer.Serialize(messages); //TODO not all values from outboxMessage (convert to some new object)
+                //var payload = JsonSerializer.Serialize(messages); //TODO not all values from outboxMessage (convert to some new object)
 
                 //TODO if serialized value is bigger that limit, split to 2 transport message
 
