@@ -98,7 +98,7 @@ app.MapGet("/get-messages-from-inbox", async (DbContext dbContext) =>
 
 app.MapGet("/get-idempotent-messages-from-inbox", async (DbContext dbContext) =>
 {
-    var messages = await dbContext.Set<IdempotentInboxMessage>().AsNoTracking().ToListAsync();
+    var messages = await dbContext.Set<IdempotentInboxKey>().AsNoTracking().ToListAsync();
 
     return messages;
 });

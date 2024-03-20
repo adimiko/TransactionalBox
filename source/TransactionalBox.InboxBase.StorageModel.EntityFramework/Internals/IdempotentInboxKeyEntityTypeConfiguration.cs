@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
 {
-    internal class IdempotentInboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<IdempotentInboxMessage>
+    internal class IdempotentInboxKeyEntityTypeConfiguration : IEntityTypeConfiguration<IdempotentInboxKey>
     {
-        public void Configure(EntityTypeBuilder<IdempotentInboxMessage> builder)
+        public void Configure(EntityTypeBuilder<IdempotentInboxKey> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.AddedUtc);

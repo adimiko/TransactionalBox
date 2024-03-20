@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using System.Data;
 using TransactionalBox.InboxBase.StorageModel;
 using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.Internals;
@@ -14,7 +14,7 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
 
         private readonly DbSet<InboxMessage> _inboxMessages;
 
-        private readonly DbSet<IdempotentInboxMessage> _idempotentInboxMessages;
+        private readonly DbSet<IdempotentInboxKey> _idempotentInboxekeys;
 
         public EntityFrameworkInboxStorage(
             ITransactionalBoxLogger logger,
@@ -23,33 +23,51 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
             _logger = logger;
             _dbContext = dbContext;
             _inboxMessages = dbContext.Set<InboxMessage>();
-            _idempotentInboxMessages = _dbContext.Set<IdempotentInboxMessage>();
+            _idempotentInboxekeys = _dbContext.Set<IdempotentInboxKey>();
         }
 
-        public async Task AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc) //TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
+        public async Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages)
         {
+            //TODO input ready id
+            var ids = messages.Select(x => x.Id);
+
+            var idempotentInboxKeys = await _idempotentInboxekeys
+                        .AsNoTracking()
+                        .Where(x => ids.Contains(x.Id))
+                        .ToListAsync();
+
+            return idempotentInboxKeys;
+        }
+
+        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc) //TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
+        {
+
+            var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
+
+            //TODO result with duplicated messages and log id in inbox-Worker
+
             //TODO create models with created AddedUtc
             foreach (var message in messages) 
             {
                 message.AddedUtc = nowUtc;
             }
 
-            var idempotentMessages = messages.Select(x => IdempotentInboxMessage.CreateBasedOnInboxMessage(x));
+            var idempotentMessages = messages.Select(x => IdempotentInboxKey.CreateBasedOnInboxMessage(x));
 
             try
             {
-                await _idempotentInboxMessages.AddRangeAsync(idempotentMessages);
+                await _idempotentInboxekeys.AddRangeAsync(idempotentMessages);
 
                 await _inboxMessages.AddRangeAsync(messages);
 
                 await _dbContext.SaveChangesAsync();
+
+                return AddRangeToInboxStorageResult.Success;
             }
             //TODO Add a better check
             catch (DbUpdateException dbUpdateException) when (dbUpdateException.InnerException != null && dbUpdateException.InnerException.Message.Contains("duplicate key"))
             {
-                _logger.Warning("Detected duplicate message with id: {id}", messages.First().Id); //TODO
-
-                //TODO split into multiple insert with diff transactions
+                return AddRangeToInboxStorageResult.Failure;
             }
         }
     }
