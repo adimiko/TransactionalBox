@@ -25,7 +25,6 @@ namespace TransactionalBox.InboxWorker.Internals
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var x = _systemClock.UtcNow;
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
@@ -36,7 +35,39 @@ namespace TransactionalBox.InboxWorker.Internals
                         {
                             //TODO check in storage does message exist
                             var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxStorage>();
-                            await inboxStorage.AddRange(inboxMessages, _systemClock.UtcNow);
+
+                            var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages);
+
+                            if (!existIdempotentInboxKeys.Any())
+                            {
+                                var result = await inboxStorage.AddRange(inboxMessages, _systemClock.UtcNow);
+
+                                if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
+                                {
+                                    return;
+                                }
+                            }
+
+                            AddRangeToInboxStorageResult result1;
+                            //int numberOfInboxMessages = inboxMessages.Count(); maxRetry then throw error
+
+                            do
+                            {
+                                var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
+
+                                existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages);
+
+                                var existIds = existIdempotentInboxKeys.Select(x => x.Id);
+
+                                var duplicatedIds = inboxMessages.Where(x => existIds.Contains(x.Id)).Select(x => x.Id);
+
+                                //TODO log duplicatedIds as Warning
+
+                                var inboxMessagesToSave = inboxMessages.Where(x => existIds.Contains(x.Id));
+
+                                result1 = await inboxStorage.AddRange(inboxMessages, _systemClock.UtcNow);
+                            }
+                            while (result1 == AddRangeToInboxStorageResult.Success);
                         }
                     }
                 }

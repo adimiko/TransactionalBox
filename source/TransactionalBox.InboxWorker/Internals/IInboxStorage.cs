@@ -4,6 +4,8 @@ namespace TransactionalBox.InboxWorker.Internals
 {
     public interface IInboxStorage
     {
-        Task AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc);
+        Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages);
+
+        Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc);
     }
 }
