@@ -2,6 +2,7 @@
 using System.Data;
 using TransactionalBox.InboxBase.StorageModel;
 using TransactionalBox.InboxWorker.Internals;
+using TransactionalBox.InboxWorker.Internals.Contracts;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.EntityFramework.Internals

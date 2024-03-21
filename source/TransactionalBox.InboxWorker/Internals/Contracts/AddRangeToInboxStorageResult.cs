@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.InboxWorker.Internals
+﻿namespace TransactionalBox.InboxWorker.Internals.Contracts
 {
     public enum AddRangeToInboxStorageResult
     {

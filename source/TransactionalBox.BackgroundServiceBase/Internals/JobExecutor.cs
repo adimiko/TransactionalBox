@@ -29,10 +29,9 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
 
             var jobExecutorId = Guid.NewGuid(); //TODO
 
-
-            try
+            while (!stoppingToken.IsCancellationRequested)
             {
-                while (!stoppingToken.IsCancellationRequested)
+                try
                 {
                     using (var scope = _serviceProvider.CreateScope())
                     {
@@ -47,12 +46,12 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
                         await job.Execute(stoppingToken);
                     }
                 }
-            }
-            catch (Exception ex) 
-            {
-                _logger.Error(ex, "Error");
+                catch (Exception ex)
+                {
+                    //TODO log unknow topic warning
+                    _logger.Error(ex, "Error");
+                }
             }
         }
-
     }
 }

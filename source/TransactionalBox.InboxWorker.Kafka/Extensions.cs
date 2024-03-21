@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.InboxWorker.Configurators;
-using TransactionalBox.InboxWorker.Internals;
+using TransactionalBox.InboxWorker.Internals.Contracts;
 using TransactionalBox.InboxWorker.Kafka.Internals;
 using TransactionalBox.InboxWorker.Kafka.Settings;
 
