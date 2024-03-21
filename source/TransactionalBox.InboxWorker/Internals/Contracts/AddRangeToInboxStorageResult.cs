@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.InboxWorker.Internals.Contracts
 {
-    public enum AddRangeToInboxStorageResult
+    internal enum AddRangeToInboxStorageResult
     {
         Success,
         Failure
