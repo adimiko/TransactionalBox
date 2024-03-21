@@ -2,11 +2,11 @@
 
 namespace TransactionalBox.InboxWorker.Internals
 {
-    public sealed record DuplicatedInboxKey
+    internal sealed record DuplicatedInboxKey
     {
-        public Guid Id { get; }
+        internal Guid Id { get; }
 
-        public DuplicatedInboxKey(IdempotentInboxKey inboxMessage)
+        internal DuplicatedInboxKey(IdempotentInboxKey inboxMessage)
         {
             Id = inboxMessage.Id;
         }

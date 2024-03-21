@@ -4,6 +4,6 @@ namespace TransactionalBox.InboxWorker.Configurators
 {
     public interface IInboxWorkerTransportConfigurator
     {
-        IServiceCollection Services { get; }
+        internal IServiceCollection Services { get; }
     }
 }
