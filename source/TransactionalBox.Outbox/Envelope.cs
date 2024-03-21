@@ -1,12 +1,12 @@
 ﻿namespace TransactionalBox.Outbox
 {
-    public sealed class OutboxMessageMetadata
+    public sealed class Envelope
     {
         public string? Receiver { get; set; } = null;
 
         public DateTime OccurredUtc { get; set; } = TimeProvider.System.GetUtcNow().UtcDateTime;
 
-        internal OutboxMessageMetadata() { }
+        internal Envelope() { }
 
         //TODO map to DbMetadata
     }

@@ -23,10 +23,10 @@ namespace TransactionalBox.Outbox.Internals
             _topicFactory = topicFactory;
         }
 
-        public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<OutboxMessageMetadata>? metadataConfiguration = null)
+        public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? metadataConfiguration = null)
             where TOutboxMessage : class, IOutboxMessage
         {
-            var metadata = new OutboxMessageMetadata();
+            var metadata = new Envelope();
 
             if (metadata.OccurredUtc.Kind != DateTimeKind.Utc)
             {

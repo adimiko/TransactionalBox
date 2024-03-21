@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Outbox.Internals
 {
-    public interface IOutboxStorage
+    internal interface IOutboxStorage
     {
         Task Add(OutboxMessage message);
     }
