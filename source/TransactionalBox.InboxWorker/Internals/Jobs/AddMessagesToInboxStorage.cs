@@ -34,7 +34,6 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    //TODO check in storage does message exist
                     var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxStorage>();
 
                     var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages);
