@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.OutboxWorker.Internals.Contracts
 {
-    public enum TransportResult
+    internal enum TransportResult
     {
         Success,
         Failure

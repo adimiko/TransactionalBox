@@ -3,7 +3,7 @@ using TransactionalBox.OutboxBase.StorageModel;
 
 namespace TransactionalBox.OutboxWorker.Internals.Contracts
 {
-    public interface IOutboxStorage
+    internal interface IOutboxStorage
     {
         Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, DateTime lockUtc);
 

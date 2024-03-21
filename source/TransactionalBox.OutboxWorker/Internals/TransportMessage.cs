@@ -1,9 +1,9 @@
 ﻿namespace TransactionalBox.OutboxWorker.Internals
 {
-    public sealed class TransportMessage
+    internal sealed class TransportMessage
     {
-        public required string Topic { get; init; }
+        internal required string Topic { get; init; }
 
-        public required string Payload { get; init; }
+        internal required string Payload { get; init; }
     }
 }
