@@ -4,6 +4,6 @@ namespace TransactionalBox.Inbox.Configurators
 {
     public interface IInboxStorageConfigurator
     {
-        IServiceCollection Services { get; }
+        internal IServiceCollection Services { get; }
     }
 }

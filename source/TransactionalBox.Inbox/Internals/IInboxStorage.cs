@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Inbox.Internals
 {
-    public interface IInboxStorage
+    internal interface IInboxStorage
     {
         Task<InboxMessage?> GetMessage();
     }
