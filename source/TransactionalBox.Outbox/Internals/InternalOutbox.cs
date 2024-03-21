@@ -23,17 +23,17 @@ namespace TransactionalBox.Outbox.Internals
             _topicFactory = topicFactory;
         }
 
-        public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? metadataConfiguration = null)
+        public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
             where TOutboxMessage : class, IOutboxMessage
         {
-            var metadata = new Envelope();
+            var envelope = new Envelope();
 
-            if (metadata.OccurredUtc.Kind != DateTimeKind.Utc)
+            if (envelope.OccurredUtc.Kind != DateTimeKind.Utc)
             {
                 throw new OccurredUtcMustBeUtcException();
             }
 
-            var receiver = metadata.Receiver;
+            var receiver = envelope.Receiver;
 
             if (receiver is null)
             {
@@ -43,7 +43,7 @@ namespace TransactionalBox.Outbox.Internals
             var outboxMessage = new OutboxMessage
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
-                OccurredUtc = metadata.OccurredUtc,
+                OccurredUtc = envelope.OccurredUtc,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
                 Data = JsonSerializer.Serialize((dynamic)message), //TODO #27
