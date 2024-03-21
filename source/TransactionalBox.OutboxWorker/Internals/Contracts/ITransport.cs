@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.OutboxWorker.Internals.Contracts
 {
-    public interface ITransport
+    internal interface ITransport
     {
         Task<TransportResult> Add(IEnumerable<TransportMessage> transportMessages);
     }

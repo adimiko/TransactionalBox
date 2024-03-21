@@ -16,7 +16,6 @@ using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
 using TransactionalBox.OutboxWorker.Kafka;
 using TransactionalBox.Sample.WebApi;
-
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
   .Build();

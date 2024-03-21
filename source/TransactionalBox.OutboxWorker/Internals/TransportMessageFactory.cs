@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using TransactionalBox.OutboxBase.StorageModel;
-using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {

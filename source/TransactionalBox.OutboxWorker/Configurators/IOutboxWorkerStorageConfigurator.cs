@@ -4,6 +4,6 @@ namespace TransactionalBox.OutboxWorker.Configurators
 {
     public interface IOutboxWorkerStorageConfigurator
     {
-        IServiceCollection Services { get; }
+        internal IServiceCollection Services { get; }
     }
 }
