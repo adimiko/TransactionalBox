@@ -11,9 +11,9 @@
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 
-    <ItemGroup>
-		<InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
-		<InternalsVisibleTo Include="$(AssemblyName).Kafka" />
-	</ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
+    <InternalsVisibleTo Include="$(AssemblyName).Kafka" />
+  </ItemGroup>
 
 </Project>
