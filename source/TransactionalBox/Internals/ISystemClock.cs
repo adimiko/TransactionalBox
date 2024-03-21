@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Internals
 {
-    public interface ISystemClock
+    internal interface ISystemClock
     {
         DateTime UtcNow { get; }
 

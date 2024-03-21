@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Internals
 {
-    public interface IEnvironmentContext
+    internal interface IEnvironmentContext
     {
         string MachineName { get; }
     }
