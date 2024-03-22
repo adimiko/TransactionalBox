@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using TransactionalBox.InboxBase.StorageModel;
+using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Internals.Contracts;
 using TransactionalBox.Internals;
 

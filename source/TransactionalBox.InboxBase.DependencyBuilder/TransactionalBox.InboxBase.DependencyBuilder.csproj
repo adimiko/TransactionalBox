@@ -3,5 +3,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
-
+	
+  <ItemGroup>
+    <InternalsVisibleTo Include="TransactionalBox.Inbox" />
+    <InternalsVisibleTo Include="TransactionalBox.InboxWorker" />
+  </ItemGroup>
 </Project>
