@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using TransactionalBox.OutboxBase.StorageModel;
+using TransactionalBox.OutboxBase.StorageModel.Internals;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {

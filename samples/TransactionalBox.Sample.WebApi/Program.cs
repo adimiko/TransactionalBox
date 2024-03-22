@@ -11,7 +11,7 @@ using TransactionalBox.InboxWorker.EntityFramework;
 using TransactionalBox.InboxWorker.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.EntityFramework;
-using TransactionalBox.OutboxBase.StorageModel;
+using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
 using TransactionalBox.OutboxWorker.Kafka;

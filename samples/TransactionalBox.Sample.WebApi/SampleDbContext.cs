@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.OutboxBase.StorageModel.EntityFramework;
+using TransactionalBox.Outbox.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel.EntityFramework;
 
 namespace TransactionalBox.Sample.WebApi

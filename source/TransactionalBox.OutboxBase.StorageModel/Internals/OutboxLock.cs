@@ -1,8 +1,8 @@
-﻿using TransactionalBox.OutboxBase.StorageModel.Exceptions;
+﻿using TransactionalBox.OutboxBase.StorageModel.Internals.Exceptions;
 
-namespace TransactionalBox.OutboxBase.StorageModel
+namespace TransactionalBox.OutboxBase.StorageModel.Internals
 {
-    public sealed class OutboxLock
+    internal sealed class OutboxLock
     {
         public string Key { get; private set; }
 
@@ -46,7 +46,7 @@ namespace TransactionalBox.OutboxBase.StorageModel
 
         public void Release()
         {
-            if (IsReleased) 
+            if (IsReleased)
             {
                 throw new LockHasAlreadyBeenReleasedException(Key);
             }

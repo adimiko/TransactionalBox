@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
-using TransactionalBox.OutboxBase.StorageModel;
+using TransactionalBox.OutboxBase.StorageModel.Internals;
 
 namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 {

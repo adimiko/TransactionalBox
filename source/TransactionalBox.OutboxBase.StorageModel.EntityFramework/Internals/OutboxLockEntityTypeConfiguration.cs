@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TransactionalBox.OutboxBase.StorageModel.Internals;
 
 namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
 {
-    internal class OutboxLockEntityTypeConfiguration : IEntityTypeConfiguration<OutboxLock>
+    internal sealed class OutboxLockEntityTypeConfiguration : IEntityTypeConfiguration<OutboxLock>
     {
         public void Configure(EntityTypeBuilder<OutboxLock> builder)
         {
