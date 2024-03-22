@@ -21,16 +21,18 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
             _jobIdGenerator = jobIdGenerator;
         }
 
-        public IEnumerable<Task> Run(Type jobType, int numberOfInstances, CancellationToken stoppingToken)
+        public async Task<IEnumerable<Task>> Run(Type jobType, int numberOfInstances, CancellationToken stoppingToken)
         {
             //TODO valid run the same processes
             List<Task> _tasks = new List<Task>();
+
+            var serviceProvider = _serviceProvider;
 
             for (var i = 1; i <= numberOfInstances; i++)
             {
                 var jobId = _jobIdGenerator.GetId(_environmentContext.MachineName, jobType.Name, i);
 
-                var task = Task.Run(() => _serviceProvider.GetRequiredService<JobExecutor>().Execute(jobType, jobId, stoppingToken));
+                var task = await Task.Factory.StartNew(() => serviceProvider.GetRequiredService<JobExecutor>().Execute(jobType, jobId, stoppingToken), TaskCreationOptions.LongRunning);
 
                 _tasks.Add(task);
             }

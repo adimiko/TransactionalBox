@@ -32,7 +32,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
 
                 foreach(var settings in _jobLaunchSettings)
                 {
-                    var tasks = parallelExecutor.Run(settings.JobType, settings.NumberOfInstances, stoppingToken);
+                    var tasks = await parallelExecutor.Run(settings.JobType, settings.NumberOfInstances, stoppingToken);
 
                     startedTasks.AddRange(tasks);
                 }
