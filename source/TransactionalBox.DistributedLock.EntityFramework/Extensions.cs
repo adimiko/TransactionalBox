@@ -6,6 +6,7 @@ namespace TransactionalBox.DistributedLock.EntityFramework
 {
     public static class Extensions
     {
+        //TODO maybe some configurator ?
         public static IServiceCollection AddEntityFrameworkDistributedLock<T>(this IServiceCollection services)
             where T : Lock, new()
         {
