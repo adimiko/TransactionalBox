@@ -1,6 +1,6 @@
-﻿namespace TransactionalBox.InboxBase.StorageModel
+﻿namespace TransactionalBox.InboxBase.StorageModel.Internals
 {
-    public sealed class IdempotentInboxKey
+    internal sealed class IdempotentInboxKey
     {
         public Guid Id { get; }
 
@@ -8,7 +8,7 @@
 
         private IdempotentInboxKey() { }
 
-        private IdempotentInboxKey(Guid id, DateTime addedUtc) 
+        private IdempotentInboxKey(Guid id, DateTime addedUtc)
         {
             Id = id;
             AddedUtc = addedUtc;

@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals;
 
-namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework
+namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
 {
-    public static class Extensions
+    internal static class Extensions
     {
-        public static void AddOutbox(this ModelBuilder modelBuilder)
+        internal static void AddOutboxStorageModel(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OutboxLockEntityTypeConfiguration());

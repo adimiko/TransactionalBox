@@ -4,6 +4,6 @@ namespace TransactionalBox.InboxBase.DependencyBuilder
 {
     public interface IInboxDependencyBuilder
     {
-        IServiceCollection Services { get; }
+        internal IServiceCollection Services { get; }
     }
 }

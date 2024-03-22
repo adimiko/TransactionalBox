@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals;
 
-namespace TransactionalBox.InboxBase.StorageModel.EntityFramework
+namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
 {
-    public static class Extensions
+    internal static class Extensions
     {
-        public static void AddInbox(this ModelBuilder modelBuilder)
+        internal static void AddInboxStorageModel(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new InboxMessageEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new IdempotentInboxKeyEntityTypeConfiguration());

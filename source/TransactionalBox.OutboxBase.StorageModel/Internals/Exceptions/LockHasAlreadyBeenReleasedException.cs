@@ -1,10 +1,10 @@
 ﻿using TransactionalBox.Internals;
 
-namespace TransactionalBox.OutboxBase.StorageModel.Exceptions
+namespace TransactionalBox.OutboxBase.StorageModel.Internals.Exceptions
 {
     internal sealed class LockHasAlreadyBeenReleasedException : Exception //TODO own internal type
     {
-        internal LockHasAlreadyBeenReleasedException(string key) 
+        internal LockHasAlreadyBeenReleasedException(string key)
             : base("Key: " + key) { }
     }
 }

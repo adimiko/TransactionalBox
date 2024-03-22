@@ -2,4 +2,15 @@
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.Outbox" />
+	<InternalsVisibleTo Include="TransactionalBox.Outbox.EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker" />
+	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.EntityFramework" />
+	  
+	 <!--Samples-->
+	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
+  </ItemGroup>
 </Project>
