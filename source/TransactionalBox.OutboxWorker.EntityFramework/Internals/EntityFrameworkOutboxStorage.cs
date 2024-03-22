@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
 using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
+using TransactionalBox.DistributedLock;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 
@@ -14,15 +15,15 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private readonly DbSet<OutboxMessage> _outboxMessages;
 
-        private readonly EntityFrameworkOutboxDistributedLockStorage _distributedLock;
+        private readonly IDistributedLock<OutboxDistributedLock> _distributedLock;
 
         public EntityFrameworkOutboxStorage(
             DbContext dbContext,
-            EntityFrameworkOutboxDistributedLockStorage frameworkOutboxLockStorage) 
+            IDistributedLock<OutboxDistributedLock> distributedLock) 
         {
             _dbContext = dbContext;
             _outboxMessages = dbContext.Set<OutboxMessage>();
-            _distributedLock = frameworkOutboxLockStorage;
+            _distributedLock = distributedLock;
         }
         public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, DateTime lockUtc)
         {

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TransactionalBox.OutboxBase.StorageModel.Internals;
+using TransactionalBox.DistributedLock.EntityFramework;
 
 namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
 {
@@ -7,7 +9,7 @@ namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
         internal static void AddOutboxStorageModel(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new OutboxLockEntityTypeConfiguration());
+            modelBuilder.AddDistributedLock<OutboxDistributedLock>();
         }
     }
 }
