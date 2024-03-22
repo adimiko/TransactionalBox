@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Internals
 {
-    public abstract class TransactionalBoxException : Exception
+    internal abstract class TransactionalBoxException : Exception
     {
         protected TransactionalBoxException()
             : base() { }

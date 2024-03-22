@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Internals
 {
-    public interface ITransactionalBoxSettings
+    internal interface ITransactionalBoxSettings
     {
         string ServiceName { get; }
     }

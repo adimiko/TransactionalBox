@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Internals
 {
-    public interface ITransactionalBoxLogger
+    internal interface ITransactionalBoxLogger
     {
         void Critical(string? message, params object?[] args);
 

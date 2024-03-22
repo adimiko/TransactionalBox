@@ -4,6 +4,6 @@ namespace TransactionalBox.Configurators
 {
     public interface ITransactionalBoxConfigurator
     {
-        IServiceCollection Services { get; }
+        internal IServiceCollection Services { get; }
     }
 }

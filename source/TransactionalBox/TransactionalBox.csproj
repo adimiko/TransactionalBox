@@ -5,5 +5,20 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Scrutor" />
   </ItemGroup>
+	
+  <ItemGroup>
+	<!--TODO remove later InternalVisibleTo for EntityFramework and Kafka-->
+	  
+    <InternalsVisibleTo Include="$(AssemblyName).Outbox" />
+	<InternalsVisibleTo Include="$(AssemblyName).OutboxWorker" />
+	<InternalsVisibleTo Include="$(AssemblyName).OutboxWorker.EntityFramework" />  
+	<InternalsVisibleTo Include="$(AssemblyName).OutboxWorker.Kafka" />
+	  
+	<InternalsVisibleTo Include="$(AssemblyName).Inbox" />
+	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker" />
+	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker.EntityFramework" />  
+	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker.Kafka" />
 
+    <InternalsVisibleTo Include="$(AssemblyName).BackgroundServiceBase" /> <!--TODO remove later-->
+  </ItemGroup>
 </Project>
