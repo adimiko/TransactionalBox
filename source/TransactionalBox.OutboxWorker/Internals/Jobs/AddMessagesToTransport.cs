@@ -2,6 +2,7 @@
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
+using TransactionalBox.OutboxWorker.Internals.Loggers;
 
 namespace TransactionalBox.OutboxWorker.Internals.Jobs
 {
@@ -9,7 +10,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
     {
         private readonly ISystemClock _systemClock;
 
-        private readonly ITransactionalBoxLogger _logger;
+        private readonly IOutboxWorkerLogger<AddMessagesToTransport> _logger;
 
         private readonly IOutboxProcessorSettings _settings;
 
@@ -23,7 +24,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         public AddMessagesToTransport(
             ISystemClock systemClock,
-            ITransactionalBoxLogger logger,
+            IOutboxWorkerLogger<AddMessagesToTransport> logger,
             IOutboxProcessorSettings settings,
             IOutboxStorage outboxStorage,
             ITransport transport,
@@ -41,7 +42,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            _logger.Information("Start job with id: {0}", _jobExecutionContext.JobId.ToString());
+            //_logger.Information("Start job with id: {0}", _jobExecutionContext.JobId.ToString());
 
             var nowUtc = _systemClock.UtcNow;
             var lockUtc = nowUtc + _settings.LockTimeout;
@@ -64,6 +65,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             {
                 //TODO log
                 //TODO Circular Breaker ?
+                _logger.FailedToAddMessagesToTransport(); //TODO
                 return;
             }
 
@@ -74,7 +76,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
                 await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
             }
 
-            _logger.Information("End job with id: {0}", _jobExecutionContext.JobId);
+            //_logger.Information("End job with id: {0}", _jobExecutionContext.JobId);
         }
     }
 }

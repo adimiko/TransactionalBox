@@ -6,6 +6,7 @@ using TransactionalBox.OutboxWorker.Internals;
 using TransactionalBox.OutboxWorker.Internals.Configurators;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
+using TransactionalBox.OutboxWorker.Internals.Loggers;
 using TransactionalBox.OutboxWorker.Settings;
 
 namespace TransactionalBox.OutboxWorker
@@ -33,6 +34,8 @@ namespace TransactionalBox.OutboxWorker
             }
 
             services.AddBackgroundServiceBase();
+
+            services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
 
             services.AddSingleton<IOutboxProcessorSettings>(settings);
             services.AddSingleton<IOutboxOrchestratorSettings>(settings);
