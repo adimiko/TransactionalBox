@@ -104,7 +104,7 @@ app.MapGet("/get-idempotent-messages-from-inbox", async (DbContext dbContext) =>
 
 app.MapGet("/locks", async (DbContext dbContext) =>
 {
-    var locks = await dbContext.Set<OutboxLock>().AsNoTracking().ToListAsync();
+    var locks = await dbContext.Set<OutboxDistributedLock>().AsNoTracking().ToListAsync();
 
     return locks;
 });

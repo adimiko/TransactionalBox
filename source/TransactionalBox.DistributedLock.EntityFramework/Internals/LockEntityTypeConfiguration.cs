@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TransactionalBox.OutboxBase.StorageModel.Internals;
 
-namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
+namespace TransactionalBox.DistributedLock.EntityFramework.Internals
 {
-    internal sealed class OutboxLockEntityTypeConfiguration : IEntityTypeConfiguration<OutboxLock>
+    internal sealed class LockEntityTypeConfiguration<T> : IEntityTypeConfiguration<T>
+        where T : Lock
     {
-        public void Configure(EntityTypeBuilder<OutboxLock> builder)
+        public void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(x => x.Key);
             builder.Property(x => x.StartUtc);

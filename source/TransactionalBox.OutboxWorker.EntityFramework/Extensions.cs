@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.DistributedLock.EntityFramework;
+using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.EntityFramework.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
@@ -12,7 +14,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework
             var services = outboxWorkerStorageConfigurator.Services;
 
             services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
-            services.AddScoped<EntityFrameworkOutboxDistributedLockStorage>();
+            services.AddEntityFrameworkDistributedLock<OutboxDistributedLock>();
         }
     }
 }

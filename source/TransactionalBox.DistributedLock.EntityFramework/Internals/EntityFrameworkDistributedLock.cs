@@ -1,28 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
-using TransactionalBox.OutboxBase.StorageModel.Internals;
 
-namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
+namespace TransactionalBox.DistributedLock.EntityFramework.Internals
 {
-    internal sealed class EntityFrameworkOutboxDistributedLockStorage
+    internal sealed class EntityFrameworkDistributedLock<T> : IDistributedLock<T>
+        where T : Lock, new()
     {
         private readonly DbContext _dbContext;
 
-        public EntityFrameworkOutboxDistributedLockStorage(DbContext dbContext) 
+        private readonly DbSet<T> _lockStorage;
+
+        public EntityFrameworkDistributedLock(DbContext dbContext)
         {
             _dbContext = dbContext;
+            _lockStorage = dbContext.Set<T>();
         }
 
         // TODO log when lock is acquire and released (Distributed lock)
         // TODO InMemory lock SemaphoreSlim(1,1)
         // TODO log when lock is WaitOne and Released SemaphoreSlim(1,1)
-        private OutboxLock? _newLock = null;
+        private T? _newLock = null;
 
         private TimeSpan _timeout = TimeSpan.FromMinutes(15);
 
         public async Task Acquire(string key)
         {
-            var outboxLockStorage = _dbContext.Set<OutboxLock>();
 
             //TODO only when first start
             //TODO InMemory lock :)
@@ -38,7 +40,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 {
                     var now = DateTime.UtcNow;
 
-                    var previousLock = await outboxLockStorage
+                    var previousLock = await _lockStorage
                         .AsNoTracking()
                         .SingleOrDefaultAsync(x => x.Key == key && (x.IsReleased || x.TimeoutUtc <= now));
 
@@ -46,9 +48,9 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
                     if (doesPreviousLockExist)
                     {
-                        _newLock = previousLock.CreateNewLock(now, _timeout);
+                        _newLock = previousLock.CreateNewLock<T>(now, _timeout);
 
-                        rowCount = await outboxLockStorage
+                        rowCount = await _lockStorage
                         .Where(x => x.Key == key && x.ConcurrencyToken == previousLock.ConcurrencyToken)
                         .ExecuteUpdateAsync(x => x
                         .SetProperty(x => x.IsReleased, _newLock.IsReleased)
@@ -73,20 +75,18 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
         {
             _newLock.Release();
 
-            var outboxLockStorage = _dbContext.Set<OutboxLock>();
-
             var rowCount = 0;
 
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted))
             {
-                rowCount = await outboxLockStorage
+                rowCount = await _lockStorage
                     .Where(x => x.Key == _newLock.Key && x.ConcurrencyToken == _newLock.ConcurrencyToken)
                     .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, _newLock.IsReleased));
 
                 await transaction.CommitAsync();
             }
 
-            if (rowCount < 1) 
+            if (rowCount < 1)
             {
                 //TODO log
             }
@@ -94,16 +94,14 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
 
         private async Task AddOutboxLockIfNotExist(string key)
         {
-            var outboxLockStorage = _dbContext.Set<OutboxLock>();
-
             // SemaphoreSlim(1,1)
-            if (!await outboxLockStorage.AnyAsync(x => x.Key == key))
+            if (!await _lockStorage.AnyAsync(x => x.Key == key))
             {
                 try
                 {
-                    var outboxLock = OutboxLock.CreateFirstLock(key, DateTime.UtcNow, DateTime.UtcNow); //TODO only key
+                    var @lock = Lock.CreateFirstLock<T>(key, DateTime.UtcNow, DateTime.UtcNow); //TODO only key
 
-                    await outboxLockStorage.AddAsync(outboxLock);
+                    await _lockStorage.AddAsync(@lock);
                     await _dbContext.SaveChangesAsync();
                 }
                 catch (Exception ex)
