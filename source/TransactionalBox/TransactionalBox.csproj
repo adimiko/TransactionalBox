@@ -18,7 +18,5 @@
 	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker" />
 	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker.EntityFramework" />  
 	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker.Kafka" />
-
-    <InternalsVisibleTo Include="$(AssemblyName).BackgroundServiceBase" /> <!--TODO remove later-->
   </ItemGroup>
 </Project>

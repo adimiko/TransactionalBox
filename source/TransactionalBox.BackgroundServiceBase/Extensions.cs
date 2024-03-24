@@ -20,6 +20,8 @@ namespace TransactionalBox.BackgroundServiceBase
             services.AddSingleton(typeof(IJobExecutorLogger<>), typeof(JobExecutorLogger<>));
             services.AddSingleton(typeof(ILauncherLogger<>), typeof(LauncherLogger<>));
 
+            services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
+
             return services;
         }
     }
