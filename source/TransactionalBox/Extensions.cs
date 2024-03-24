@@ -19,10 +19,10 @@ namespace TransactionalBox
 
             settingsConfiguration(settings);
 
+            services.AddSingleton<IServiceContext>(new ServiceContext(settings.ServiceId, Guid.NewGuid().ToString()));
             services.AddSingleton(TimeProvider.System);
             services.AddSingleton<ISystemClock, SystemClock>();
 
-            services.AddSingleton<ITransactionalBoxSettings>(settings);
 
             return services;
         }

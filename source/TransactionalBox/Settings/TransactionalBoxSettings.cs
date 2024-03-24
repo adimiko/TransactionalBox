@@ -2,9 +2,9 @@
 
 namespace TransactionalBox.Settings
 {
-    public sealed class TransactionalBoxSettings : ITransactionalBoxSettings
+    public sealed class TransactionalBoxSettings
     {
-        public string ServiceName { get; set; }
+        public string ServiceId { get; set; }
 
         internal TransactionalBoxSettings() { }
     }

@@ -48,7 +48,7 @@ x =>
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
      .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
 },
-settings => settings.ServiceName = "Registrations");
+settings => settings.ServiceId = "Registrations");
 
 var app = builder.Build();
 
