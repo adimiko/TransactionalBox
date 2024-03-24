@@ -1,20 +1,22 @@
 ﻿using Confluent.Kafka;
+using TransactionalBox.InboxWorker.Internals.Contexts;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.Kafka.Internals
 {
     internal sealed class KafkaConfigFactory
     {
-        private readonly IServiceContext _serviceContext;
+        private readonly IInboxWorkerContext _inboxWorkerContext;
 
         private readonly IInboxWorkerKafkaSettings _inboxWorkerKafkaSettings;
 
         private ConsumerConfig? _config = null;
 
         public KafkaConfigFactory(
-            IServiceContext serviceContext,
+            IInboxWorkerContext inboxWorkerContext,
             IInboxWorkerKafkaSettings inboxWorkerKafkaSettings) 
         {
-            _serviceContext = serviceContext;
+            _inboxWorkerContext = inboxWorkerContext;
             _inboxWorkerKafkaSettings = inboxWorkerKafkaSettings;
         }
 
@@ -27,7 +29,7 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
 
             _config = new ConsumerConfig()
             {
-                GroupId = _serviceContext.Id,
+                GroupId = _inboxWorkerContext.Id,
                 BootstrapServers = _inboxWorkerKafkaSettings.BootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest,
                 EnableAutoCommit = false,

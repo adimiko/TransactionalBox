@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Configurators
+namespace TransactionalBox.Builders
 {
-    public interface ITransactionalBoxConfigurator
+    public interface ITransactionalBoxBuilder
     {
         internal IServiceCollection Services { get; }
     }

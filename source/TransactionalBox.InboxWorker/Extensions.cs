@@ -3,6 +3,7 @@ using TransactionalBox.InboxBase.DependencyBuilder;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.InboxWorker.Internals.Configurators;
+using TransactionalBox.InboxWorker.Internals.Contexts;
 using TransactionalBox.InboxWorker.Internals.Jobs;
 using TransactionalBox.InboxWorker.Internals.Settings;
 using TransactionalBox.InboxWorker.Settings;
@@ -35,6 +36,8 @@ namespace TransactionalBox.InboxWorker
 
             services.AddHostedService<InboxWorkerLauncher>();
             services.AddScoped<AddMessagesToInboxStorage>();
+
+            services.AddSingleton<IInboxWorkerContext,InboxWorkerContext>();
         }
     }
 }
