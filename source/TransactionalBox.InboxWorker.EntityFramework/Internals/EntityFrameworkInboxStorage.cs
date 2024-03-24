@@ -9,19 +9,14 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
 {
     internal sealed class EntityFrameworkInboxStorage : IInboxStorage
     {
-        private readonly ITransactionalBoxLogger _logger;
-
         private readonly DbContext _dbContext;
 
         private readonly DbSet<InboxMessage> _inboxMessages;
 
         private readonly DbSet<IdempotentInboxKey> _idempotentInboxekeys;
 
-        public EntityFrameworkInboxStorage(
-            ITransactionalBoxLogger logger,
-            DbContext dbContext)
+        public EntityFrameworkInboxStorage(DbContext dbContext)
         {
-            _logger = logger;
             _dbContext = dbContext;
             _inboxMessages = dbContext.Set<InboxMessage>();
             _idempotentInboxekeys = _dbContext.Set<IdempotentInboxKey>();
