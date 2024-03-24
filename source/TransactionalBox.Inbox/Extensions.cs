@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Configurators;
+using TransactionalBox.Builders;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals;
 using TransactionalBox.InboxBase.DependencyBuilder;
@@ -9,10 +9,10 @@ namespace TransactionalBox.Inbox
     public static class Extensions
     {
         public static IInboxDependencyBuilder AddInbox(
-            this ITransactionalBoxConfigurator configurator,
+            this ITransactionalBoxBuilder builder,
             Action<IInboxStorageConfigurator> storageConfiguration)
         {
-            var services = configurator.Services;
+            var services = builder.Services;
 
             var storage = new InboxStorageConfigurator(services);
 

@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Configurators;
+using TransactionalBox.Builders;
 
 namespace TransactionalBox.Internals
 {
-    internal sealed class TransactionalBoxConfigurator : ITransactionalBoxConfigurator
+    internal sealed class TransactionalBoxBuilder : ITransactionalBoxBuilder
     {
         public IServiceCollection Services { get; }
 
-        internal TransactionalBoxConfigurator(IServiceCollection services)
+        internal TransactionalBoxBuilder(IServiceCollection services)
         {
             Services = services;
         }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Configurators;
+using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
 using TransactionalBox.OutboxBase.DependencyBuilder;
@@ -9,10 +9,10 @@ namespace TransactionalBox.Outbox
     public static class Extensions
     {
         public static IOutboxDependencyBuilder AddOutbox(
-            this ITransactionalBoxConfigurator transactionalBoxConfigurator,
+            this ITransactionalBoxBuilder builder,
             Action<IOutboxStorageConfigurator> storageConfiguration)
         {
-            var services = transactionalBoxConfigurator.Services;
+            var services = builder.Services;
 
             var outboxStorageConfigurator = new OutboxStorageConfigurator(services);
 
