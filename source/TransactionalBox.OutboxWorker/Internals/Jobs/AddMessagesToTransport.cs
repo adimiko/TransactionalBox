@@ -73,6 +73,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
             if (numberOfMessages < _settings.BatchSize) // IsBatchNotFull
             {
+                //TODO BackgroundJob delay based on result ?
                 await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
             }
 
