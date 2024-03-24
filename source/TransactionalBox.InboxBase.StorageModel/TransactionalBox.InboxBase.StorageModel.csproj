@@ -6,8 +6,6 @@
 	<InternalsVisibleTo Include="TransactionalBox.InboxWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.InboxWorker.EntityFramework" />
 	 
-	  <!--TODO Remove later when create Transport Message in Inbox Worker-->
-	<InternalsVisibleTo Include="TransactionalBox.InboxWorker.Kafka" />
 	 <!--Samples-->
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
   </ItemGroup>

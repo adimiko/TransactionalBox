@@ -15,20 +15,17 @@ namespace TransactionalBox.OutboxWorker.Kafka.Internals
             _configFactory = configFactory;
         }
 
-        public async Task<TransportResult> Add(IEnumerable<TransportMessage> transportMessages)
+        public async Task<TransportResult> Add(string topic, byte[] payload)
         {
             var config = _configFactory.Create();
 
-            using (var producer = new ProducerBuilder<Null, String>(config).Build())
+            using (var producer = new ProducerBuilder<Null, byte[]>(config).Build())
             {
-                foreach (var transportMessage in transportMessages) 
+                var result = await producer.ProduceAsync(topic, new Message<Null, byte[]> { Value = payload });
+
+                if (result.Status != PersistenceStatus.Persisted)
                 {
-                    var result = await producer.ProduceAsync(transportMessage.Topic, new Message<Null, string> { Value = transportMessage.Payload });
-                    
-                    if (result.Status != PersistenceStatus.Persisted)
-                    {
-                        return TransportResult.Failure;
-                    }
+                    return TransportResult.Failure;
                 }
 
                 return TransportResult.Success;
