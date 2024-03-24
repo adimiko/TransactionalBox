@@ -7,5 +7,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals.Loggers
         void StartedJob(JobExecutorId jobExecutorId, JobName jobName, JobId jobId);
 
         void EndedJob(JobId jobId);
+
+        void UnexpectedError(Exception exception);
     }
 }

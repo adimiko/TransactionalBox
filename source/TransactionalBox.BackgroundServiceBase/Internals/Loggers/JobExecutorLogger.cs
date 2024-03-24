@@ -20,5 +20,9 @@ namespace TransactionalBox.BackgroundServiceBase.Internals.Loggers
         private static Action<ILogger, Guid, string, string, Exception?> _startedJob = LoggerMessage.Define<Guid, string, string>(LogLevel.Trace, 1, "Job executor '{jobExecutorId}' started '{jobName}' job '{jobId}'");
 
         public void StartedJob(JobExecutorId jobExecutorId, JobName jobName, JobId jobId) => _startedJob(_logger, jobExecutorId.Value, jobName.Value, jobId.Value, null);
+        
+        private static Action<ILogger, Exception?> _unexpectedException = LoggerMessage.Define(LogLevel.Error, 0, "Unexpected exception");
+
+        public void UnexpectedError(Exception exception) => _unexpectedException(_logger, exception);
     }
 }

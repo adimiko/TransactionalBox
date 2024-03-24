@@ -2,7 +2,6 @@
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.BackgroundServiceBase.Internals.Loggers;
 using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
-using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
 {
@@ -56,8 +55,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
                 }
                 catch (Exception ex)
                 {
-                    //TODO log unknow topic warning
-                    //TODO _logger.Error(ex, "Error");
+                    _logger.UnexpectedError(ex);
                 }
             }
         }
