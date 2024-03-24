@@ -80,6 +80,7 @@ Examples of problems that occur during network communication:
 - [x] Modular package architecture
 - [x] Support for TimeProvider
 - [x] Unordered messages
+- [X] Internal high-performance logging
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages
