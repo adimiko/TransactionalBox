@@ -3,21 +3,20 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Internals.Contracts;
-using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.Kafka.Internals
 {
     internal sealed class KafkaInboxWorkerTransport : IInboxWorkerTransport
     {
-        private readonly ITransactionalBoxSettings _transactionalBoxSettings;
+        private readonly IServiceContext _serviceContext;
 
         private readonly KafkaConfigFactory _configFactory;
 
         public KafkaInboxWorkerTransport(
-            ITransactionalBoxSettings transactionalBoxSettings,
+            IServiceContext serviceContext,
             KafkaConfigFactory configFactory) 
         {
-            _transactionalBoxSettings = transactionalBoxSettings;
+            _serviceContext = serviceContext;
             _configFactory = configFactory;
         }
 
@@ -28,7 +27,7 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
             using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             {
                 //TODO #41
-                consumer.Subscribe($"{_transactionalBoxSettings.ServiceName}-ExampleMessage");
+                consumer.Subscribe($"{_serviceContext.Id}-ExampleMessage");
 
                 do
                 {

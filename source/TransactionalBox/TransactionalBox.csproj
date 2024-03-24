@@ -7,18 +7,10 @@
   </ItemGroup>
 	
   <ItemGroup>
-	<!--TODO remove later InternalVisibleTo for EntityFramework and Kafka-->
-	  
+	<!--InternalVisibleTo only to 4 main components-->
     <InternalsVisibleTo Include="$(AssemblyName).Outbox" />
-	<InternalsVisibleTo Include="$(AssemblyName).OutboxWorker" />
-	<InternalsVisibleTo Include="$(AssemblyName).OutboxWorker.EntityFramework" />  
-	<InternalsVisibleTo Include="$(AssemblyName).OutboxWorker.Kafka" />
-	  
+	<InternalsVisibleTo Include="$(AssemblyName).OutboxWorker" />  
 	<InternalsVisibleTo Include="$(AssemblyName).Inbox" />
-	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker" />
-	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker.EntityFramework" />  
-	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker.Kafka" />
-
-    <InternalsVisibleTo Include="$(AssemblyName).BackgroundServiceBase" /> <!--TODO remove later-->
+	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker" /> 
   </ItemGroup>
 </Project>
