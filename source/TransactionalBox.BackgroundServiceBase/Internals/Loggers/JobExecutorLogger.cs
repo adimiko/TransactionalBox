@@ -1,15 +1,14 @@
-﻿
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals.Loggers
 {
-    internal sealed class BackgroundServiceBaseLogger<T> : IJobExecutorLogger<T>
+    internal sealed class JobExecutorLogger<T> : IJobExecutorLogger<T>
         where T : class
     {
         private readonly ILogger<T> _logger;
 
-        public BackgroundServiceBaseLogger(ILogger<T> logger) 
+        public JobExecutorLogger(ILogger<T> logger) 
         {
             _logger = logger;
         }

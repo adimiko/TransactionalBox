@@ -17,7 +17,8 @@ namespace TransactionalBox.BackgroundServiceBase
             services.AddScoped<IJobExecutionContext>(sp => sp.GetRequiredService<JobExecutionContext>());
             services.AddScoped<IJobExecutionContextConstructor>(sp => sp.GetRequiredService<JobExecutionContext>());
 
-            services.AddSingleton(typeof(IJobExecutorLogger<>), typeof(BackgroundServiceBaseLogger<>));
+            services.AddSingleton(typeof(IJobExecutorLogger<>), typeof(JobExecutorLogger<>));
+            services.AddSingleton(typeof(ILauncherLogger<>), typeof(LauncherLogger<>));
 
             return services;
         }

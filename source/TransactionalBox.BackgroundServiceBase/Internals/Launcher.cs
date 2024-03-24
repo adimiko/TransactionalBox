@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TransactionalBox.Internals;
+using TransactionalBox.BackgroundServiceBase.Internals.Loggers;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
 {
@@ -23,7 +23,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
         protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var parallelExecutor = _serviceProvider.GetRequiredService<IParallelExecutor>();
-            var logger = _serviceProvider.GetRequiredService<ITransactionalBoxLogger>();
+            var logger = _serviceProvider.GetRequiredService<ILauncherLogger<Launcher>>();
             //TODO log settings
 
             try
@@ -42,7 +42,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                logger.Error(ex, "Error");
+                logger.UnexpectedError(ex);
             }
         }
     }
