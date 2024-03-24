@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Exceptions;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 

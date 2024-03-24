@@ -1,6 +1,6 @@
-﻿namespace TransactionalBox
+﻿namespace TransactionalBox.Internals
 {
-    public interface IServiceContext
+    internal interface IServiceContext
     {
         string Id { get; } //TODO or int ?
 
