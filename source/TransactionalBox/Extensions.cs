@@ -24,8 +24,6 @@ namespace TransactionalBox
 
             services.AddSingleton<ITransactionalBoxSettings>(settings);
 
-            services.AddSingleton<ITransactionalBoxLogger, TransactionalBoxLogger>();
-
             services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
 
             return services;

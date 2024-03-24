@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Internals;
-
-namespace TransactionalBox.Outbox.Internals.Exceptions
+﻿namespace TransactionalBox.Outbox.Internals.Exceptions
 {
-    internal sealed class OccurredUtcMustBeUtcException : TransactionalBoxException;
+    internal sealed class OccurredUtcMustBeUtcException : OutboxException;
 }

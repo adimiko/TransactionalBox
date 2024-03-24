@@ -6,7 +6,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals.Context
     {
         public JobId JobId { get; set; }
 
-        public string JobExecutorId { get; set; }
+        public JobExecutorId JobExecutorId { get; set; }
 
         public JobName JobName { get; set; }
     }

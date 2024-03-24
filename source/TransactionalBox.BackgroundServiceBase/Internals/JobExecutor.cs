@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
+using TransactionalBox.BackgroundServiceBase.Internals.Loggers;
 using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
-using TransactionalBox.Internals;
 
 namespace TransactionalBox.BackgroundServiceBase.Internals
 {
@@ -9,11 +9,11 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly ITransactionalBoxLogger _logger;
+        private readonly IJobExecutorLogger<JobExecutor> _logger;
 
         public JobExecutor(
             IServiceProvider serviceProvider,
-            ITransactionalBoxLogger logger) 
+            IJobExecutorLogger<JobExecutor> logger) 
         {
             _serviceProvider = serviceProvider;
             _logger = logger;
@@ -27,7 +27,7 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
 
             //_logger.Information("Settings: {0}", _settings);
 
-            var jobExecutorId = Guid.NewGuid(); //TODO
+            var jobExecutorId = new JobExecutorId(Guid.NewGuid());
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -37,19 +37,25 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
                     {
                         var jobExecutionContextConstructor = scope.ServiceProvider.GetRequiredService<IJobExecutionContextConstructor>();
 
-                        jobExecutionContextConstructor.JobId = new JobId(jobId);
-                        jobExecutionContextConstructor.JobExecutorId = jobExecutorId.ToString();//TODO
-                        jobExecutionContextConstructor.JobName = new JobName(jobType.Name);
+                        var localJobId = new JobId(jobId);
+                        var jobName = new JobName(jobType.Name);
+
+                        jobExecutionContextConstructor.JobId = localJobId;
+                        jobExecutionContextConstructor.JobExecutorId = jobExecutorId;
+                        jobExecutionContextConstructor.JobName = jobName;
 
                         Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
 
+                        _logger.StartedJob(jobExecutorId, jobName, localJobId);
+
                         await job.Execute(stoppingToken);
+
+                        _logger.EndedJob(localJobId);
                     }
                 }
                 catch (Exception ex)
                 {
-                    //TODO log unknow topic warning
-                    _logger.Error(ex, "Error");
+                    _logger.UnexpectedError(ex);
                 }
             }
         }

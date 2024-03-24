@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
+using TransactionalBox.BackgroundServiceBase.Internals.Loggers;
 
 namespace TransactionalBox.BackgroundServiceBase
 {
@@ -15,6 +16,9 @@ namespace TransactionalBox.BackgroundServiceBase
             services.AddScoped<JobExecutionContext>();
             services.AddScoped<IJobExecutionContext>(sp => sp.GetRequiredService<JobExecutionContext>());
             services.AddScoped<IJobExecutionContextConstructor>(sp => sp.GetRequiredService<JobExecutionContext>());
+
+            services.AddSingleton(typeof(IJobExecutorLogger<>), typeof(JobExecutorLogger<>));
+            services.AddSingleton(typeof(ILauncherLogger<>), typeof(LauncherLogger<>));
 
             return services;
         }
