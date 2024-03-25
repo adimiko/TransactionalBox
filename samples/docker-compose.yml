@@ -1,15 +1,17 @@
 version: '3.4'
 
 networks:
-  app-tier:
+  outbox-network:
     driver: bridge
 
+  inbox-network:
+    driver: bridge
 services:
 
   transactionalbox.sample.outboxwithworker:
     image: ${DOCKER_REGISTRY-}transactionalboxsampleoutboxwithworker
     networks:
-      - app-tier
+      - outbox-network
     build:
       context: .
       dockerfile: TransactionalBox.Sample.OutboxWithWorker/Dockerfile
@@ -20,7 +22,7 @@ services:
   outbox.database:
     image: postgres:14.1-alpine
     networks:
-      - app-tier
+      - outbox-network
     hostname: postgres
     restart: always
     environment:
@@ -32,7 +34,7 @@ services:
   transactionalbox.sample.inboxwithworker:
     image: ${DOCKER_REGISTRY-}transactionalboxsampleinboxwithworker
     networks:
-      - app-tier
+      - inbox-network
     build:
       context: .
       dockerfile: TransactionalBox.Sample.InboxWithWorker/Dockerfile
@@ -43,7 +45,7 @@ services:
   inbox.database:
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      - app-tier
+      - inbox-network
     hostname: mssql
     restart: always
     environment:
@@ -56,7 +58,8 @@ services:
     image: 'bitnami/kafka:latest'
     hostname: kafka
     networks:
-      - app-tier
+      - outbox-network
+      - inbox-network
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker

@@ -28,6 +28,11 @@ namespace TransactionalBox.Outbox.Internals
         {
             var envelope = new Envelope();
 
+            if (envelopeConfiguration is not null)
+            {
+                envelopeConfiguration(envelope);
+            }
+
             if (envelope.OccurredUtc.Kind != DateTimeKind.Utc)
             {
                 throw new OccurredUtcMustBeUtcException();
