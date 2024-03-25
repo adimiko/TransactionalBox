@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.BackgroundServiceBase;
 using TransactionalBox.InboxBase.DependencyBuilder;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Internals;
@@ -31,6 +32,8 @@ namespace TransactionalBox.InboxWorker
             {
                 settingsConfiguration(settings);
             }
+
+            services.AddBackgroundServiceBase();
 
             services.AddSingleton<IInboxWorkerLauncherSettings>(settings);
 

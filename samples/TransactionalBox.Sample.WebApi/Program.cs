@@ -73,7 +73,7 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
         //TODO AddRange
         await outbox.Add(message, m =>
         {
-            m.Receiver = "Registrations";
+            m.Receiver = "ServiceWithInbox";
             m.OccurredUtc = DateTime.UtcNow;
         });
     }
