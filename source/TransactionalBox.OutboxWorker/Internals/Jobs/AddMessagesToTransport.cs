@@ -1,4 +1,5 @@
-﻿using TransactionalBox.BackgroundServiceBase.Internals;
+﻿using System.Text;
+using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
@@ -59,14 +60,19 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
             var transportMessages = _transportMessageFactory.Create(messages);
 
-            var transportResult = await _transport.Add(transportMessages);
-
-            if (transportResult == TransportResult.Failure)
+            foreach ( var message in transportMessages ) 
             {
-                //TODO log
-                //TODO Circular Breaker ?
-                _logger.FailedToAddMessagesToTransport(); //TODO
-                return;
+                var payload = Encoding.UTF8.GetBytes(message.Payload);
+
+                var transportResult = await _transport.Add(message.Topic, payload);
+
+                if (transportResult == TransportResult.Failure)
+                {
+                    //TODO log
+                    //TODO Circular Breaker ?
+                    _logger.FailedToAddMessagesToTransport(); //TODO
+                    return;
+                }
             }
 
             await _outboxStorage.MarkAsProcessed(_jobExecutionContext.JobId, _systemClock.UtcNow);

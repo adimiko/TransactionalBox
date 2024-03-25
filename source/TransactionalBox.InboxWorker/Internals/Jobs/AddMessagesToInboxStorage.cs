@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
 using TransactionalBox.BackgroundServiceBase.Internals;
+using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Internals.Contracts;
 using TransactionalBox.Internals;
 
@@ -25,10 +27,13 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            await foreach (var inboxMessages in _inboxWorkerTransport.GetMessages(stoppingToken))
+            await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(stoppingToken))
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
+                    //TODO #27
+                    var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessage>>(messagesFromTransport);
+
                     var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxStorage>();
 
                     var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages);
