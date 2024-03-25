@@ -1,0 +1,70 @@
+version: '3.4'
+
+networks:
+  outbox-network:
+    driver: bridge
+
+  inbox-network:
+    driver: bridge
+services:
+
+  transactionalbox.sample.outboxwithworker:
+    image: ${DOCKER_REGISTRY-}transactionalboxsampleoutboxwithworker
+    networks:
+      - outbox-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.Sample.OutboxWithWorker/Dockerfile
+    links:
+    - outbox.database
+    - kafka
+
+  outbox.database:
+    image: postgres:14.1-alpine
+    networks:
+      - outbox-network
+    hostname: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+
+  transactionalbox.sample.inboxwithworker:
+    image: ${DOCKER_REGISTRY-}transactionalboxsampleinboxwithworker
+    networks:
+      - inbox-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.Sample.InboxWithWorker/Dockerfile
+    depends_on:
+    - inbox.database
+    - kafka
+
+  inbox.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      - inbox-network
+    hostname: mssql
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Password123!@#"
+    ports:
+      - 1433:1433
+
+  kafka:
+    image: 'bitnami/kafka:latest'
+    hostname: kafka
+    networks:
+      - outbox-network
+      - inbox-network
+    environment:
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+

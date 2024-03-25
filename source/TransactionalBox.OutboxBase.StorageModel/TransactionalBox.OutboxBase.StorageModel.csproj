@@ -13,5 +13,6 @@
 	  
 	 <!--Samples-->
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
+	  <InternalsVisibleTo Include="TransactionalBox.Sample.OutboxWithWorker" />
   </ItemGroup>
 </Project>

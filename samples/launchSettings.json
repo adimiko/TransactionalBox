@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "transactionalbox.sample.outboxwithworker": "StartDebugging",
+        "transactionalbox.sample.inboxwithworker": "StartDebugging"
+      }
+    }
+  }
+}

@@ -8,5 +8,6 @@
 	 
 	 <!--Samples-->
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
+	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
   </ItemGroup>
 </Project>
