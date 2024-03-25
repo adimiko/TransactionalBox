@@ -43,8 +43,6 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            //_logger.Information("Start job with id: {0}", _jobExecutionContext.JobId.ToString());
-
             var nowUtc = _systemClock.UtcNow;
             var lockUtc = nowUtc + _settings.LockTimeout;
 
@@ -82,8 +80,6 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
                 //TODO BackgroundJob delay based on result ?
                 await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
             }
-
-            //_logger.Information("End job with id: {0}", _jobExecutionContext.JobId);
         }
     }
 }
