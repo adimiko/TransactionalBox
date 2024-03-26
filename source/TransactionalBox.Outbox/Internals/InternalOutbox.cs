@@ -56,5 +56,46 @@ namespace TransactionalBox.Outbox.Internals
 
             await _outboxStorage.Add(outboxMessage);
         }
+
+        public async Task AddRange<TOutboxMessage>(IEnumerable<TOutboxMessage> messages, Action<Envelope>? envelopeConfiguration)
+            where TOutboxMessage : class, IOutboxMessage
+        {
+            var envelope = new Envelope();
+
+            if (envelopeConfiguration is not null)
+            {
+                envelopeConfiguration(envelope);
+            }
+
+            if (envelope.OccurredUtc.Kind != DateTimeKind.Utc)
+            {
+                throw new OccurredUtcMustBeUtcException();
+            }
+
+            var receiver = envelope.Receiver;
+
+            if (receiver is null)
+            {
+                receiver = _serviceContext.Id;
+            }
+
+            var outboxMessages = new List<OutboxMessage>();
+
+            foreach (var message in messages) 
+            {
+                var outboxMessage = new OutboxMessage
+                {
+                    Id = Guid.NewGuid(), //TODO Sequential GUID #14
+                    OccurredUtc = envelope.OccurredUtc,
+                    ProcessedUtc = null,
+                    Topic = _topicFactory.Create(receiver, message),
+                    Data = JsonSerializer.Serialize(message), //TODO #27
+                };
+
+                outboxMessages.Add(outboxMessage);
+            }
+
+            await _outboxStorage.AddRange(outboxMessages);
+        }
     }
 }

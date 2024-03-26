@@ -68,15 +68,18 @@ app.UseHttpsRedirection();
 
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
-    for(var i = 0; i < 100; i++)
+    var messages = new List<ExampleMessage>();
+
+    for (var i = 0; i < 100; i++)
     {
-        //TODO AddRange
-        await outbox.Add(message, m =>
-        {
-            m.Receiver = "Registrations";
-            m.OccurredUtc = DateTime.UtcNow;
-        });
+        messages.Add(message);
     }
+
+    await outbox.AddRange(messages, m =>
+    {
+        m.Receiver = "Registrations";
+        m.OccurredUtc = DateTime.UtcNow;
+    });
 
     await dbContext.SaveChangesAsync();
 });
