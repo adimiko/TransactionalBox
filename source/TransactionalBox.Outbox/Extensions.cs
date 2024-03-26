@@ -2,6 +2,10 @@
 using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
+using TransactionalBox.Outbox.Internals.Configurators;
+using TransactionalBox.Outbox.Internals.Serializers;
+using TransactionalBox.Outbox.Serialization;
+using TransactionalBox.Outbox.Settings;
 using TransactionalBox.OutboxBase.DependencyBuilder;
 
 namespace TransactionalBox.Outbox
@@ -10,18 +14,36 @@ namespace TransactionalBox.Outbox
     {
         public static IOutboxDependencyBuilder AddOutbox(
             this ITransactionalBoxBuilder builder,
-            Action<IOutboxStorageConfigurator> storageConfiguration)
+            Action<IOutboxStorageConfigurator> configureStorage,
+            Action<OutboxSettings>? configureSettings = null)
         {
             var services = builder.Services;
 
-            var outboxStorageConfigurator = new OutboxStorageConfigurator(services);
+            var storage = new OutboxStorageConfigurator(services);
+            var serialization = new OutboxSerializationConfigurator(services);
+            var settings = new OutboxSettings();
 
-            storageConfiguration(outboxStorageConfigurator);
+            configureStorage(storage);
+
+            if (configureSettings is not null)
+            {
+                configureSettings(settings);
+            }
+
+            settings.ConfigureSerialization(serialization); //TODO maybe in settings some func to invoke Actions
 
             services.AddSingleton<TopicFactory>();
             services.AddScoped<IOutbox, InternalOutbox>();
 
             return new OutboxDependencyBuilder(services);
+        }
+
+        internal static void UseSystemTextJson(
+            this IOutboxSerializationConfigurator configurator) 
+        {
+            var services = configurator.Services;
+
+            services.AddSingleton<IOutboxSerializer, OutboxSerializer>();
         }
     }
 }

@@ -8,5 +8,6 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
+	<InternalsVisibleTo Include="$(AssemblyName).CustomSerializer" />
   </ItemGroup>
 </Project>
