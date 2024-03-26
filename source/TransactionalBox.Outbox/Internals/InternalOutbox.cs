@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Exceptions;
+using TransactionalBox.Outbox.Serialization;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 
 namespace TransactionalBox.Outbox.Internals
@@ -11,15 +12,19 @@ namespace TransactionalBox.Outbox.Internals
 
         private readonly IOutboxStorage _outboxStorage;
 
+        private readonly IOutboxSerializer _serializer;
+
         private readonly TopicFactory _topicFactory;
 
         public InternalOutbox(
             IServiceContext serviceContext,
             IOutboxStorage outbox,
+            IOutboxSerializer serializer,
             TopicFactory topicFactory) 
         {
             _serviceContext = serviceContext;
             _outboxStorage = outbox;
+            _serializer = serializer;
             _topicFactory = topicFactory;
         }
 
@@ -51,7 +56,7 @@ namespace TransactionalBox.Outbox.Internals
                 OccurredUtc = envelope.OccurredUtc,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
-                Data = JsonSerializer.Serialize(message), //TODO #27
+                Data = _serializer.Serialize(message),
             };
 
             await _outboxStorage.Add(outboxMessage);
@@ -89,7 +94,7 @@ namespace TransactionalBox.Outbox.Internals
                     OccurredUtc = envelope.OccurredUtc,
                     ProcessedUtc = null,
                     Topic = _topicFactory.Create(receiver, message),
-                    Data = JsonSerializer.Serialize(message), //TODO #27
+                    Data = _serializer.Serialize(message),
                 };
 
                 outboxMessages.Add(outboxMessage);
