@@ -19,16 +19,16 @@ namespace TransactionalBox.DistributedLock
         public static T CreateFirstLock<T>(
             string key,
             DateTime startUtc,
-            DateTime timeoutUtc)
+            TimeSpan timeout)
             where T : Lock, new()
         {
             return new T()
             {
                 Key = key,
                 ConcurrencyToken = 0,
-                IsReleased = false,
-                TimeoutUtc = timeoutUtc,
+                IsReleased = true,
                 StartUtc = startUtc,
+                TimeoutUtc = startUtc + timeout,
             };
         }
 

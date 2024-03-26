@@ -25,11 +25,13 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
             _distributedLock = distributedLock;
         }
-        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, DateTime lockUtc)
+        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, TimeSpan lockTimeout)
         {
             int rowCount = 0;
 
-            await _distributedLock.Acquire(jobName.ToString());
+            //TODO to outboxworker
+            //TODO
+            await _distributedLock.Acquire(jobName.ToString(), nowUtc, lockTimeout, TimeSpan.FromMicroseconds(50));
 
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
             {
@@ -38,7 +40,7 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
                 .Take(batchSize)
                 .ExecuteUpdateAsync(setters => setters
-                    .SetProperty(x => x.LockUtc, lockUtc)
+                    .SetProperty(x => x.LockUtc, nowUtc + lockTimeout)
                     .SetProperty(x => x.JobId, jobId.ToString()));
 
                 await transaction.CommitAsync();

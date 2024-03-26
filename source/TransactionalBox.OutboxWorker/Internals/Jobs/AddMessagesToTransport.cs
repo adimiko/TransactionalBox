@@ -46,9 +46,8 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             //_logger.Information("Start job with id: {0}", _jobExecutionContext.JobId.ToString());
 
             var nowUtc = _systemClock.UtcNow;
-            var lockUtc = nowUtc + _settings.LockTimeout;
 
-            var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, _settings.BatchSize, nowUtc, lockUtc);
+            var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, _settings.BatchSize, nowUtc, _settings.LockTimeout);
 
             if (numberOfMessages == 0) // IsBatchEmpty
             {

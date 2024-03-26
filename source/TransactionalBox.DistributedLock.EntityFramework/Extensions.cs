@@ -1,15 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.DistributedLock.Configurators;
 using TransactionalBox.DistributedLock.EntityFramework.Internals;
+using TransactionalBox.DistributedLock.Internals;
 
 namespace TransactionalBox.DistributedLock.EntityFramework
 {
     public static class Extensions
     {
-        public static IServiceCollection AddEntityFrameworkDistributedLock<T>(this IServiceCollection services)
-            where T : Lock, new()
+        public static IServiceCollection UseEntityFramework(
+            this IDistributedLockStorageConfigurator storageConfigurator)
         {
-            services.AddScoped<IDistributedLock<T>, EntityFrameworkDistributedLock<T>>();
+            var services = storageConfigurator.Services;
+
+            services.AddScoped<IDistributedLockStorage, EntityFrameworkDistributedLockStorage>();
 
             return services;
         }
