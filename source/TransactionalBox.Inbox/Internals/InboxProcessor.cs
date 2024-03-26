@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
+using TransactionalBox.Inbox.Deserialization;
 
 namespace TransactionalBox.Inbox.Internals
 {
@@ -8,13 +9,17 @@ namespace TransactionalBox.Inbox.Internals
     {
         private readonly IServiceProvider _serviceProvider;
 
+        private readonly IInboxDeserializer _deserializer;
+
         private readonly IInboxMessageTypes _inboxMessageTypes;
 
         public InboxProcessor(
             IServiceProvider serviceProvider,
+            IInboxDeserializer deserializer,
             IInboxMessageTypes inboxMessageTypes) 
         {
             _serviceProvider = serviceProvider;
+            _deserializer = deserializer;
             _inboxMessageTypes = inboxMessageTypes;
         }
 
@@ -46,7 +51,7 @@ namespace TransactionalBox.Inbox.Internals
                     var handler = scope.ServiceProvider.GetRequiredService(handlerType);
 
                     //TODO #27
-                    var message = JsonSerializer.Deserialize(inboxMessage.Data, type) as IInboxMessage;
+                    var message = _deserializer.Deserialize(inboxMessage.Data, type);
 
                     //TODO #39 (Performance) when program start below code can be compiled to lambda expresion
                     await (Task) handlerType
