@@ -14,8 +14,8 @@
 
 :star: - The star motivates me a lot!   
 
-**TransactionalBox** is an implementation of the outbox and inbox pattern in .NET.   
-Ensures eventual consistency when modules need to communicate with each other over the network.
+**TransactionalBox is a distributed implementation of the outbox and inbox pattern in .NET (scalability & fault tolerance).**   
+**Ensures eventual consistency when modules need to communicate with each other over the network.**
 
 Examples of problems that occur during network communication:
 - lost messages
