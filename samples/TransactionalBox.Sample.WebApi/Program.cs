@@ -43,7 +43,7 @@ builder.Services.AddTransactionalBox(
 x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.NumberOfOutboxProcessor = 1);
+     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.NumberOfOutboxProcessor = 10);
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
      .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
@@ -73,7 +73,7 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
         //TODO AddRange
         await outbox.Add(message, m =>
         {
-            m.Receiver = "ServiceWithInbox";
+            m.Receiver = "Registrations";
             m.OccurredUtc = DateTime.UtcNow;
         });
     }
