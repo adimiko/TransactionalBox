@@ -17,5 +17,10 @@ namespace TransactionalBox.Outbox.EntityFramework.Internals
         {
             return _outbox.AddAsync(message).AsTask();
         }
+
+        public Task AddRange(IEnumerable<OutboxMessage> messages)
+        {
+            return _outbox.AddRangeAsync(messages);
+        }
     }
 }
