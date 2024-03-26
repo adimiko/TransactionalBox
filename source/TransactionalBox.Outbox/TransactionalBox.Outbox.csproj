@@ -8,6 +8,6 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
-	<InternalsVisibleTo Include="$(AssemblyName).System.Text.Json" />
+	<InternalsVisibleTo Include="$(AssemblyName).CustomSerializer" />
   </ItemGroup>
 </Project>
