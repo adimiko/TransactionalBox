@@ -33,7 +33,7 @@ Examples of problems that occur during network communication:
 #### Storage
 - [x] Support for Entity Framework (Relational)
     - [x] Migrations
-    - [X] Distributed Lock (Optimistic Concurency Control)
+    - [X] Distributed Lock (Optimistic Concurency Control, Standalone Package)
 - [ ] Support for InMemory
 - [ ] Support for MongoDB
 
@@ -81,6 +81,7 @@ Examples of problems that occur during network communication:
 - [x] Support for TimeProvider
 - [x] Unordered messages
 - [X] Internal high-performance logging
+- [X] Ability to change implementation of outbox serializer and inbox deserializer
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages
