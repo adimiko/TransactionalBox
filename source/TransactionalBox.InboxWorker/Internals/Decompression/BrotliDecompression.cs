@@ -5,9 +5,9 @@ namespace TransactionalBox.InboxWorker.Internals.Decompression
 {
     internal sealed class BrotliDecompression : IDecompressionAlgorithm
     {
-        public byte[] Decompress(byte[] input)
+        public byte[] Decompress(byte[] data)
         {
-            using (MemoryStream memoryStreamInput = new MemoryStream(input))
+            using (MemoryStream memoryStreamInput = new MemoryStream(data))
             using (MemoryStream memoryStreamOutput = new MemoryStream())
             using (BrotliStream brotliStream = new BrotliStream(memoryStreamInput, CompressionMode.Decompress))
             {

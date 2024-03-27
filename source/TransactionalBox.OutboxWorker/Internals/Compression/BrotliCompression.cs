@@ -5,9 +5,9 @@ namespace TransactionalBox.OutboxWorker.Internals.Compression
 {
     internal sealed class BrotliCompression : ICompressionAlgorithm
     {
-        public byte[] Compress(byte[] input)
+        public byte[] Compress(byte[] data)
         {
-            using (MemoryStream memoryStreamInput = new MemoryStream(input))
+            using (MemoryStream memoryStreamInput = new MemoryStream(data))
             using (MemoryStream memoryStreamOutput = new MemoryStream())
             using (BrotliStream brotliStream = new BrotliStream(memoryStreamOutput, CompressionMode.Compress))
             {
