@@ -88,6 +88,7 @@ Examples of problems that occur during network communication:
 - [x] Messages compression and decompression
     - [X] Brotli (default)
     - [x] GZip
+    - [x] Custom algorithm (possibility of own implementation)
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages
