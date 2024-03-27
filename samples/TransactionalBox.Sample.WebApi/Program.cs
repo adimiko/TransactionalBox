@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO.Compression;
 using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
 using TransactionalBox;
@@ -8,12 +9,14 @@ using TransactionalBox.Inbox.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
 using TransactionalBox.InboxWorker.EntityFramework;
+using TransactionalBox.InboxWorker.GZipDecompression;
 using TransactionalBox.InboxWorker.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.EntityFramework;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
+using TransactionalBox.OutboxWorker.GZipCompression;
 using TransactionalBox.OutboxWorker.Kafka;
 using TransactionalBox.Sample.WebApi;
 var postgreSqlContainer = new PostgreSqlBuilder()
@@ -43,10 +46,23 @@ builder.Services.AddTransactionalBox(
 x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.NumberOfOutboxProcessor = 10);
+     .WithWorker(
+        storage => storage.UseEntityFramework(), 
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), 
+        settings =>
+     {
+         settings.NumberOfOutboxProcessor = 10;
+         settings.ConfigureCompressionAlgorithm = x => x.UseGZipCompression(x => x.CompressionLevel = CompressionLevel.Optimal);
+     });
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
+     .WithWorker(
+        storage => storage.UseEntityFramework(),
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        settings =>
+     {
+         settings.ConfigureDecompressionAlgorithm = x => x.UseGZipDecompression();
+     });
 },
 settings => settings.ServiceId = "Registrations");
 
