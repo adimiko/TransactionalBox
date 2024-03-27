@@ -7,5 +7,11 @@ namespace TransactionalBox.Inbox.Settings
         public Action<IInboxDeserializationConfigurator> ConfigureDeserialization { get; set; } = x => x.UseSystemTextJson();
 
         internal InboxSettings() { }
+
+        internal void Configure(
+            IInboxDeserializationConfigurator configurator) 
+        { 
+            ConfigureDeserialization(configurator);
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace TransactionalBox.Inbox
                 configureSettings(settings);
             }
 
-            settings.ConfigureDeserialization(serialization);
+            settings.Configure(serialization);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var allTypes = assemblies.SelectMany(x => x.GetTypes());
