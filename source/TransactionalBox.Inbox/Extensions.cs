@@ -1,7 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Builders;
 using TransactionalBox.Inbox.Configurators;
+using TransactionalBox.Inbox.Deserialization;
 using TransactionalBox.Inbox.Internals;
+using TransactionalBox.Inbox.Internals.Configurators;
+using TransactionalBox.Inbox.Internals.Deserializers;
+using TransactionalBox.Inbox.Settings;
 using TransactionalBox.InboxBase.DependencyBuilder;
 
 namespace TransactionalBox.Inbox
@@ -10,13 +14,23 @@ namespace TransactionalBox.Inbox
     {
         public static IInboxDependencyBuilder AddInbox(
             this ITransactionalBoxBuilder builder,
-            Action<IInboxStorageConfigurator> storageConfiguration)
+            Action<IInboxStorageConfigurator> storageConfiguration,
+            Action<InboxSettings>? configureSettings = null)
         {
             var services = builder.Services;
 
             var storage = new InboxStorageConfigurator(services);
+            var serialization = new InboxDeserializationConfigurator(services);
+            var settings = new InboxSettings();
 
             storageConfiguration(storage);
+
+            if (configureSettings is not null) 
+            {
+                configureSettings(settings);
+            }
+
+            settings.Configure(serialization);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var allTypes = assemblies.SelectMany(x => x.GetTypes());
@@ -35,6 +49,13 @@ namespace TransactionalBox.Inbox
             services.AddHostedService<InboxProcessor>();
 
             return new InboxDependencyBuilder(services);
+        }
+
+        internal static void UseSystemTextJson(this IInboxDeserializationConfigurator configurator)
+        {
+            var services = configurator.Services;
+
+            services.AddSingleton<IInboxDeserializer, InboxDeserializer>();
         }
     }
 }

@@ -12,6 +12,7 @@
 	
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
+	<InternalsVisibleTo Include="$(AssemblyName).CustomDeserializer" />
   </ItemGroup>
 	
 </Project>

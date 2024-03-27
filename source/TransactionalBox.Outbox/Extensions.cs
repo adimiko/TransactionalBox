@@ -30,7 +30,7 @@ namespace TransactionalBox.Outbox
                 configureSettings(settings);
             }
 
-            settings.ConfigureSerialization(serialization); //TODO maybe in settings some func to invoke Actions
+            settings.Configure(serialization);
 
             services.AddSingleton<TopicFactory>();
             services.AddScoped<IOutbox, InternalOutbox>();
