@@ -2,6 +2,7 @@
 using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Internals;
+using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Loggers;
 
@@ -21,6 +22,8 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         private readonly IJobExecutionContext _jobExecutionContext;
 
+        private readonly ICompressionAlgorithm _compressionAlgorithm;
+
         private readonly TransportMessageFactory _transportMessageFactory;
 
         public AddMessagesToTransport(
@@ -30,6 +33,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             IOutboxStorage outboxStorage,
             ITransport transport,
             IJobExecutionContext jobExecutionContext,
+            ICompressionAlgorithm compressionAlgorithm,
             TransportMessageFactory transportMessageFactory)
         {
             _systemClock = systemClock;
@@ -38,6 +42,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             _outboxStorage = outboxStorage;
             _transport = transport;
             _jobExecutionContext = jobExecutionContext;
+            _compressionAlgorithm = compressionAlgorithm;
             _transportMessageFactory = transportMessageFactory;
         }
 
@@ -63,7 +68,9 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             {
                 var payload = Encoding.UTF8.GetBytes(message.Payload);
 
-                var transportResult = await _transport.Add(message.Topic, payload);
+                var compressedPayload = _compressionAlgorithm.Compress(payload);
+
+                var transportResult = await _transport.Add(message.Topic, compressedPayload);
 
                 if (transportResult == TransportResult.Failure)
                 {
