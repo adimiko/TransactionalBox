@@ -50,7 +50,6 @@ namespace TransactionalBox.Inbox.Internals
 
                     var handler = scope.ServiceProvider.GetRequiredService(handlerType);
 
-                    //TODO #27
                     var message = _deserializer.Deserialize(inboxMessage.Data, type);
 
                     //TODO #39 (Performance) when program start below code can be compiled to lambda expresion
