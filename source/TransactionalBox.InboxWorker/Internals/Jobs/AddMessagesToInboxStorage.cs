@@ -2,6 +2,7 @@
 using System.Text.Json;
 using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.InboxBase.StorageModel.Internals;
+using TransactionalBox.InboxWorker.Decompression;
 using TransactionalBox.InboxWorker.Internals.Contracts;
 using TransactionalBox.Internals;
 
@@ -11,16 +12,20 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private IInboxWorkerTransport _inboxWorkerTransport;
+        private readonly IDecompressionAlgorithm _decompressionAlgorithm;
+
+        private readonly IInboxWorkerTransport _inboxWorkerTransport;
 
         private readonly ISystemClock _systemClock;
 
         public AddMessagesToInboxStorage(
             IServiceProvider serviceProvider,
+            IDecompressionAlgorithm decompressionAlgorithm,
             IInboxWorkerTransport inboxWorkerTransport,
             ISystemClock systemClock) 
         {
             _serviceProvider = serviceProvider;
+            _decompressionAlgorithm = decompressionAlgorithm;
             _inboxWorkerTransport = inboxWorkerTransport;
             _systemClock = systemClock;
         }
@@ -31,8 +36,9 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
+                    var decompressedMessagesFromTransport = _decompressionAlgorithm.Decompress(messagesFromTransport);
                     //TODO #27
-                    var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessage>>(messagesFromTransport);
+                    var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessage>>(decompressedMessagesFromTransport);
 
                     var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxStorage>();
 

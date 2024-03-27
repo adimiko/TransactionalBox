@@ -9,9 +9,9 @@ namespace TransactionalBox.Outbox.Settings
         internal OutboxSettings() { }
 
         internal void Configure(
-            IOutboxSerializationConfigurator configurator)
+            IOutboxSerializationConfigurator serializationConfigurator)
         {
-            ConfigureSerialization(configurator);
+            ConfigureSerialization(serializationConfigurator);
         }
     }
 }

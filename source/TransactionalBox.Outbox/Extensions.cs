@@ -20,8 +20,9 @@ namespace TransactionalBox.Outbox
             var services = builder.Services;
 
             var storage = new OutboxStorageConfigurator(services);
-            var serialization = new OutboxSerializationConfigurator(services);
             var settings = new OutboxSettings();
+
+            var serialization = new OutboxSerializationConfigurator(services);
 
             configureStorage(storage);
 
@@ -38,7 +39,7 @@ namespace TransactionalBox.Outbox
             return new OutboxDependencyBuilder(services);
         }
 
-        internal static void UseSystemTextJson(
+        public static void UseSystemTextJson(
             this IOutboxSerializationConfigurator configurator) 
         {
             var services = configurator.Services;

@@ -1,13 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.BackgroundServiceBase;
 using TransactionalBox.OutboxBase.DependencyBuilder;
+using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals;
+using TransactionalBox.OutboxWorker.Internals.Compression;
 using TransactionalBox.OutboxWorker.Internals.Configurators;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
 using TransactionalBox.OutboxWorker.Internals.Loggers;
 using TransactionalBox.OutboxWorker.Settings;
+using TransactionalBox.OutboxWorker.Settings.Compression;
 
 namespace TransactionalBox.OutboxWorker
 {
@@ -24,7 +27,7 @@ namespace TransactionalBox.OutboxWorker
             var storage = new OutboxWorkerStorageConfigurator(services);
             var transport = new OutboxWorkerTransportConfigurator(services);
             var settings = new OutboxWorkerSettings();
-            
+
             storageConfiguration(storage);
             transportConfiguration(transport);
 
@@ -32,6 +35,10 @@ namespace TransactionalBox.OutboxWorker
             {
                 settingsConfiguration(settings);
             }
+
+            var compressionAlgorithm = new OutboxWorkerCompressionAlgorithmConfigurator(services);
+
+            settings.Configure(compressionAlgorithm);
 
             services.AddBackgroundServiceBase();
 
@@ -44,6 +51,24 @@ namespace TransactionalBox.OutboxWorker
             services.AddHostedService<OutboxWorkerLauncher>();
 
             services.AddScoped<AddMessagesToTransport>();
+        }
+
+        public static void UseBrotliCompression(
+            this IOutboxWorkerCompressionAlgorithmConfigurator configurator,
+            Action<BrotliCompressionSettings>? configureCompressionSettings = null)
+        {
+            var services = configurator.Services;
+
+            var settings = new BrotliCompressionSettings();
+
+            if (configureCompressionSettings is not null)
+            {
+                configureCompressionSettings(settings);
+            }
+
+            services.AddSingleton<IBrotliCompressionSettings>(settings);
+
+            services.AddSingleton<ICompressionAlgorithm, BrotliCompression>();
         }
     }
 }
