@@ -82,6 +82,10 @@ Examples of problems that occur during network communication:
 - [x] Unordered messages
 - [X] Internal high-performance logging
 - [X] Ability to change implementation of outbox serializer and inbox deserializer
+- [ ] Grouping of messages
+    - [x] Conversion of multiple messages from the outbox to a single transport message
+    - [ ] Grouping outbox messages by topic and then by type (better compression)
+- [x] Messages compression and decompression (default: Brotli)
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages
