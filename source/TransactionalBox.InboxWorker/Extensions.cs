@@ -2,9 +2,11 @@
 using TransactionalBox.BackgroundServiceBase;
 using TransactionalBox.InboxBase.DependencyBuilder;
 using TransactionalBox.InboxWorker.Configurators;
+using TransactionalBox.InboxWorker.Decompression;
 using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.InboxWorker.Internals.Configurators;
 using TransactionalBox.InboxWorker.Internals.Contexts;
+using TransactionalBox.InboxWorker.Internals.Decompression;
 using TransactionalBox.InboxWorker.Internals.Jobs;
 using TransactionalBox.InboxWorker.Internals.Settings;
 using TransactionalBox.InboxWorker.Settings;
@@ -33,6 +35,10 @@ namespace TransactionalBox.InboxWorker
                 settingsConfiguration(settings);
             }
 
+            var decompression = new InboxWorkerDecompressionAlgorithmConfigurator(services);
+
+            settings.Configure(decompression);
+
             services.AddBackgroundServiceBase();
 
             services.AddSingleton<IInboxWorkerLauncherSettings>(settings);
@@ -41,6 +47,13 @@ namespace TransactionalBox.InboxWorker
             services.AddScoped<AddMessagesToInboxStorage>();
 
             services.AddSingleton<IInboxWorkerContext,InboxWorkerContext>();
+        }
+
+        public static void UseBrotliDecompression(this IInboxWorkerDecompressionAlgorithmConfigurator configurator)
+        {
+            var services = configurator.Services;
+
+            services.AddSingleton<IDecompressionAlgorithm, BrotliDecompression>();
         }
     }
 }
