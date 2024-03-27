@@ -85,7 +85,9 @@ Examples of problems that occur during network communication:
 - [ ] Grouping of messages
     - [x] Conversion of multiple messages from the outbox to a single transport message
     - [ ] Grouping outbox messages by topic and then by type (better compression)
-- [x] Messages compression and decompression (default: Brotli)
+- [x] Messages compression and decompression
+    - [X] Brotli (default)
+    - [x] GZip
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages
