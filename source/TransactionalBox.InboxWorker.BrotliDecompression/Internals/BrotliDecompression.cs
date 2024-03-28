@@ -1,19 +1,28 @@
-﻿using System.IO.Compression;
+﻿using Microsoft.IO;
+using System.IO.Compression;
 using TransactionalBox.InboxWorker.Decompression;
 
 namespace TransactionalBox.InboxWorker.BrotliDecompression.Internals
 {
     internal sealed class BrotliDecompression : IDecompressionAlgorithm
     {
+        private readonly RecyclableMemoryStreamManager _streamManager;
+
+        public BrotliDecompression(
+            RecyclableMemoryStreamManager streamManager)
+        {
+            _streamManager = streamManager;
+        }
+
         public async Task<byte[]> Decompress(byte[] data)
         {
-            using (MemoryStream memoryStreamInput = new MemoryStream(data))
-            using (MemoryStream memoryStreamOutput = new MemoryStream())
-            using (BrotliStream brotliStream = new BrotliStream(memoryStreamInput, CompressionMode.Decompress))
+            using (var memoryStreamInput = _streamManager.GetStream(data))
+            using (var memoryStreamOutput = _streamManager.GetStream())
+            using (var brotliStream = new BrotliStream(memoryStreamInput, CompressionMode.Decompress))
             {
                 await brotliStream.CopyToAsync(memoryStreamOutput);
 
-                memoryStreamOutput.Seek(0, SeekOrigin.Begin);
+                await brotliStream.FlushAsync();
 
                 return memoryStreamOutput.ToArray();
             }

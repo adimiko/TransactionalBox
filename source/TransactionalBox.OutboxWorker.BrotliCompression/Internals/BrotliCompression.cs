@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using Microsoft.IO;
+using System.IO.Compression;
 using TransactionalBox.OutboxWorker.Compression;
 
 namespace TransactionalBox.OutboxWorker.BrotliCompression.Internals
@@ -7,22 +8,23 @@ namespace TransactionalBox.OutboxWorker.BrotliCompression.Internals
     {
         private readonly IBrotliCompressionSettings _settings;
 
-        public BrotliCompression(IBrotliCompressionSettings settings)
+        private readonly RecyclableMemoryStreamManager _streamManager;
+
+        public BrotliCompression(
+            IBrotliCompressionSettings settings,
+            RecyclableMemoryStreamManager streamManager)
         {
             _settings = settings;
+            _streamManager = streamManager;
         }
 
         public async Task<byte[]> Compress(byte[] data)
         {
-            using (MemoryStream memoryStreamInput = new MemoryStream(data))
-            using (MemoryStream memoryStreamOutput = new MemoryStream())
-            using (BrotliStream brotliStream = new BrotliStream(memoryStreamOutput, _settings.CompressionLevel))
+            using (var memoryStreamOutput = _streamManager.GetStream())
+            using (var brotliStream = new BrotliStream(memoryStreamOutput, _settings.CompressionLevel))
             {
-                await memoryStreamInput.CopyToAsync(brotliStream);
-
-                brotliStream.Close();
-
-                byte[] output = memoryStreamOutput.ToArray();
+                await brotliStream.WriteAsync(data, 0, data.Length);
+                await brotliStream.FlushAsync();
 
                 return memoryStreamOutput.ToArray();
             }

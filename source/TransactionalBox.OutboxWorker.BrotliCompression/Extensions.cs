@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IO;
 using TransactionalBox.OutboxWorker.BrotliCompression.Internals;
 using TransactionalBox.OutboxWorker.BrotliCompression.Settings;
 using TransactionalBox.OutboxWorker.Compression;
@@ -20,6 +21,8 @@ namespace TransactionalBox.OutboxWorker.BrotliCompression
             {
                 configureCompressionSettings(settings);
             }
+
+            services.AddSingleton(new RecyclableMemoryStreamManager());
 
             services.AddSingleton<IBrotliCompressionSettings>(settings);
 
