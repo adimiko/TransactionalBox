@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IO;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.GZipCompression.Internals;
@@ -20,6 +21,8 @@ namespace TransactionalBox.OutboxWorker.GZipCompression
             {
                 configureSettings(settings);
             }
+
+            services.AddSingleton(new RecyclableMemoryStreamManager());
 
             services.AddSingleton<IGZipCompressionSettings>(settings);
 

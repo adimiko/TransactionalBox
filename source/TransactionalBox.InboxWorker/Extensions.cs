@@ -48,12 +48,5 @@ namespace TransactionalBox.InboxWorker
 
             services.AddSingleton<IInboxWorkerContext,InboxWorkerContext>();
         }
-
-        public static void UseBrotliDecompression(this IInboxWorkerDecompressionAlgorithmConfigurator configurator)
-        {
-            var services = configurator.Services;
-
-            services.AddSingleton<IDecompressionAlgorithm, BrotliDecompression>();
-        }
     }
 }

@@ -81,14 +81,17 @@ Examples of problems that occur during network communication:
 - [x] Support for TimeProvider
 - [x] Unordered messages
 - [X] Internal high-performance logging
-- [X] Ability to change implementation of outbox serializer and inbox deserializer
 - [ ] Grouping of messages
     - [x] Conversion of multiple messages from the outbox to a single transport message
     - [ ] Grouping outbox messages by topic and then by type (better compression)
+- [X] Messages serialization and serialization
+    - [X] System.Text.Json (default)
+    - [x] Custom (you can add your own implementation)
 - [x] Messages compression and decompression
-    - [X] Brotli (default)
+    - [X] No compression (default)
+    - [X] Brotli
     - [x] GZip
-    - [x] Custom algorithm (possibility of own implementation)
+    - [x] Custom (you can add your own implementation)
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [ ] Idempotent messages

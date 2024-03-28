@@ -10,7 +10,6 @@ using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
 using TransactionalBox.OutboxWorker.Internals.Loggers;
 using TransactionalBox.OutboxWorker.Settings;
-using TransactionalBox.OutboxWorker.Settings.Compression;
 
 namespace TransactionalBox.OutboxWorker
 {
@@ -51,24 +50,6 @@ namespace TransactionalBox.OutboxWorker
             services.AddHostedService<OutboxWorkerLauncher>();
 
             services.AddScoped<AddMessagesToTransport>();
-        }
-
-        public static void UseBrotliCompression(
-            this IOutboxWorkerCompressionAlgorithmConfigurator configurator,
-            Action<BrotliCompressionSettings>? configureCompressionSettings = null)
-        {
-            var services = configurator.Services;
-
-            var settings = new BrotliCompressionSettings();
-
-            if (configureCompressionSettings is not null)
-            {
-                configureCompressionSettings(settings);
-            }
-
-            services.AddSingleton<IBrotliCompressionSettings>(settings);
-
-            services.AddSingleton<ICompressionAlgorithm, BrotliCompression>();
         }
     }
 }

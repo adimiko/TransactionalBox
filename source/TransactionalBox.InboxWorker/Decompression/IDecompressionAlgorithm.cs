@@ -2,6 +2,6 @@
 {
     public interface IDecompressionAlgorithm
     {
-        byte[] Decompress(byte[] data);
+        Task<byte[]> Decompress(byte[] data);
     }
 }

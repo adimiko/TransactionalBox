@@ -2,16 +2,16 @@
 using System.IO.Compression;
 using TransactionalBox.OutboxWorker.Compression;
 
-namespace TransactionalBox.OutboxWorker.GZipCompression.Internals
+namespace TransactionalBox.OutboxWorker.BrotliCompression.Internals
 {
-    internal sealed class GZipCompression : ICompressionAlgorithm
+    internal sealed class BrotliCompression : ICompressionAlgorithm
     {
-        private readonly IGZipCompressionSettings _settings;
+        private readonly IBrotliCompressionSettings _settings;
 
         private readonly RecyclableMemoryStreamManager _streamManager;
 
-        public GZipCompression(
-            IGZipCompressionSettings settings,
+        public BrotliCompression(
+            IBrotliCompressionSettings settings,
             RecyclableMemoryStreamManager streamManager)
         {
             _settings = settings;
@@ -21,10 +21,10 @@ namespace TransactionalBox.OutboxWorker.GZipCompression.Internals
         public async Task<byte[]> Compress(byte[] data)
         {
             using (var memoryStreamOutput = _streamManager.GetStream())
-            using (var gZipStream = new GZipStream(memoryStreamOutput, _settings.CompressionLevel))
+            using (var brotliStream = new BrotliStream(memoryStreamOutput, _settings.CompressionLevel))
             {
-                await gZipStream.WriteAsync(data, 0, data.Length);
-                await gZipStream.FlushAsync();
+                await brotliStream.WriteAsync(data, 0, data.Length);
+                await brotliStream.FlushAsync();
 
                 return memoryStreamOutput.ToArray();
             }

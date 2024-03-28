@@ -2,13 +2,14 @@
 using System.IO.Compression;
 using TransactionalBox.InboxWorker.Decompression;
 
-namespace TransactionalBox.InboxWorker.GZipDecompression.Internals
+namespace TransactionalBox.InboxWorker.BrotliDecompression.Internals
 {
-    internal sealed class GZipDecompression : IDecompressionAlgorithm
+    internal sealed class BrotliDecompression : IDecompressionAlgorithm
     {
         private readonly RecyclableMemoryStreamManager _streamManager;
 
-        public GZipDecompression(RecyclableMemoryStreamManager streamManager)
+        public BrotliDecompression(
+            RecyclableMemoryStreamManager streamManager)
         {
             _streamManager = streamManager;
         }
@@ -17,11 +18,11 @@ namespace TransactionalBox.InboxWorker.GZipDecompression.Internals
         {
             using (var memoryStreamInput = _streamManager.GetStream(data))
             using (var memoryStreamOutput = _streamManager.GetStream())
-            using (var gZipStream = new GZipStream(memoryStreamInput, CompressionMode.Decompress))
+            using (var brotliStream = new BrotliStream(memoryStreamInput, CompressionMode.Decompress))
             {
-                await gZipStream.CopyToAsync(memoryStreamOutput);
+                await brotliStream.CopyToAsync(memoryStreamOutput);
 
-                await gZipStream.FlushAsync();
+                await brotliStream.FlushAsync();
 
                 return memoryStreamOutput.ToArray();
             }
