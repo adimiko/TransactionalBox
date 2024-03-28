@@ -84,7 +84,7 @@ Examples of problems that occur during network communication:
 - [ ] Grouping of messages
     - [x] Conversion of multiple messages from the outbox to a single transport message
     - [ ] Grouping outbox messages by topic and then by type (better compression)
-- [X] Messages serialization and serialization
+- [X] Messages serialization and deserialization
     - [X] System.Text.Json (default)
     - [x] Custom (you can add your own implementation)
 - [x] Messages compression and decompression
