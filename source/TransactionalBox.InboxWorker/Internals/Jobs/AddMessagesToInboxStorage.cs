@@ -36,7 +36,7 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var decompressedMessagesFromTransport = _decompressionAlgorithm.Decompress(messagesFromTransport);
+                    var decompressedMessagesFromTransport = await _decompressionAlgorithm.Decompress(messagesFromTransport);
                     //TODO #27
                     var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessage>>(decompressedMessagesFromTransport);
 

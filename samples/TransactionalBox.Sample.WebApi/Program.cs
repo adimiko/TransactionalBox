@@ -52,7 +52,7 @@ x =>
         settings =>
      {
          settings.NumberOfOutboxProcessor = 10;
-         settings.ConfigureCompressionAlgorithm = x => x.UseGZipCompression(x => x.CompressionLevel = CompressionLevel.Optimal);
+         settings.ConfigureCompressionAlgorithm = x => x.UseGZipCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())

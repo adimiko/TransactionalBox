@@ -2,6 +2,6 @@
 {
     public interface ICompressionAlgorithm
     {
-        byte[] Compress(byte[] data);
+        Task<byte[]> Compress(byte[] data);
     }
 }

@@ -5,15 +5,15 @@ namespace TransactionalBox.InboxWorker.GZipDecompression.Internals
 {
     internal sealed class GZipDecompression : IDecompressionAlgorithm
     {
-        public byte[] Decompress(byte[] data)
+        public async Task<byte[]> Decompress(byte[] data)
         {
             using (MemoryStream memoryStreamInput = new MemoryStream(data))
             using (MemoryStream memoryStreamOutput = new MemoryStream())
             using (GZipStream gZipStream = new GZipStream(memoryStreamInput, CompressionMode.Decompress))
             {
-                gZipStream.CopyTo(memoryStreamOutput);
+                await gZipStream.CopyToAsync(memoryStreamOutput);
 
-                memoryStreamOutput.Seek(0, SeekOrigin.Begin);
+                await gZipStream.FlushAsync();
 
                 return memoryStreamOutput.ToArray();
             }

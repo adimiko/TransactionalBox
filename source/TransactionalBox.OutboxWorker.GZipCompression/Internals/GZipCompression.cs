@@ -12,17 +12,13 @@ namespace TransactionalBox.OutboxWorker.GZipCompression.Internals
             _settings = settings;
         }
 
-        public byte[] Compress(byte[] data)
+        public async Task<byte[]> Compress(byte[] data)
         {
-            using (MemoryStream memoryStreamInput = new MemoryStream(data))
             using (MemoryStream memoryStreamOutput = new MemoryStream())
             using (GZipStream gZipStream = new GZipStream(memoryStreamOutput, _settings.CompressionLevel))
             {
-                memoryStreamInput.CopyTo(gZipStream);
-
-                gZipStream.Close();
-
-                byte[] output = memoryStreamOutput.ToArray();
+                await gZipStream.WriteAsync(data, 0, data.Length);
+                await gZipStream.FlushAsync();
 
                 return memoryStreamOutput.ToArray();
             }

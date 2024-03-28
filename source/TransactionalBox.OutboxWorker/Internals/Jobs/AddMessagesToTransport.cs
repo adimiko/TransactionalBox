@@ -68,7 +68,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             {
                 var payload = Encoding.UTF8.GetBytes(message.Payload);
 
-                var compressedPayload = _compressionAlgorithm.Compress(payload);
+                var compressedPayload = await _compressionAlgorithm.Compress(payload);
 
                 var transportResult = await _transport.Add(message.Topic, compressedPayload);
 
