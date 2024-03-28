@@ -16,7 +16,8 @@ using TransactionalBox.Outbox.EntityFramework;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
-using TransactionalBox.OutboxWorker.GZipCompression;
+using TransactionalBox.OutboxWorker.BrotliCompression;
+using TransactionalBox.InboxWorker.BrotliDecompression;
 using TransactionalBox.OutboxWorker.Kafka;
 using TransactionalBox.Sample.WebApi;
 var postgreSqlContainer = new PostgreSqlBuilder()
@@ -52,7 +53,7 @@ x =>
         settings =>
      {
          settings.NumberOfOutboxProcessor = 10;
-         settings.ConfigureCompressionAlgorithm = x => x.UseGZipCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
+         settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
@@ -61,7 +62,7 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
      {
-         settings.ConfigureDecompressionAlgorithm = x => x.UseGZipDecompression();
+         settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
      });
 },
 settings => settings.ServiceId = "Registrations");

@@ -73,6 +73,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWork
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.CustomDecompression", "source\TransactionalBox.InboxWorker.CustomDecompression\TransactionalBox.InboxWorker.CustomDecompression.csproj", "{BF02DDB0-0607-4984-8510-5306ECEE4121}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.BrotliCompression", "source\TransactionalBox.OutboxWorker.BrotliCompression\TransactionalBox.OutboxWorker.BrotliCompression.csproj", "{7C7A8BC9-6B81-4374-9703-E1E79CE01011}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.BrotliDecompression", "source\TransactionalBox.InboxWorker.BrotliDecompression\TransactionalBox.InboxWorker.BrotliDecompression.csproj", "{D12E8612-76AE-430B-AAFD-35C58E208236}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +211,14 @@ Global
 		{BF02DDB0-0607-4984-8510-5306ECEE4121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF02DDB0-0607-4984-8510-5306ECEE4121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF02DDB0-0607-4984-8510-5306ECEE4121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C7A8BC9-6B81-4374-9703-E1E79CE01011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C7A8BC9-6B81-4374-9703-E1E79CE01011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C7A8BC9-6B81-4374-9703-E1E79CE01011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C7A8BC9-6B81-4374-9703-E1E79CE01011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D12E8612-76AE-430B-AAFD-35C58E208236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12E8612-76AE-430B-AAFD-35C58E208236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12E8612-76AE-430B-AAFD-35C58E208236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12E8612-76AE-430B-AAFD-35C58E208236}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -244,6 +256,8 @@ Global
 		{F1FDBEE8-1169-4DBB-B339-7418B7DEC5A4} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{66560C70-F41B-406C-BBE8-A786425A7A58} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{BF02DDB0-0607-4984-8510-5306ECEE4121} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{7C7A8BC9-6B81-4374-9703-E1E79CE01011} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{D12E8612-76AE-430B-AAFD-35C58E208236} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

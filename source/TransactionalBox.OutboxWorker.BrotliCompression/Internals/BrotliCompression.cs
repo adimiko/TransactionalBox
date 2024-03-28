@@ -1,14 +1,13 @@
 ﻿using System.IO.Compression;
-using System.Net;
 using TransactionalBox.OutboxWorker.Compression;
 
-namespace TransactionalBox.OutboxWorker.Internals.Compression
+namespace TransactionalBox.OutboxWorker.BrotliCompression.Internals
 {
     internal sealed class BrotliCompression : ICompressionAlgorithm
     {
         private readonly IBrotliCompressionSettings _settings;
 
-        public BrotliCompression(IBrotliCompressionSettings settings) 
+        public BrotliCompression(IBrotliCompressionSettings settings)
         {
             _settings = settings;
         }

@@ -16,6 +16,7 @@
     <InternalsVisibleTo Include="$(AssemblyName).Kafka" />
   
 	<InternalsVisibleTo Include="$(AssemblyName).GZipCompression" />
+	<InternalsVisibleTo Include="$(AssemblyName).BrotliCompression" />
 	<InternalsVisibleTo Include="$(AssemblyName).CustomCompression" />
   </ItemGroup>
 
