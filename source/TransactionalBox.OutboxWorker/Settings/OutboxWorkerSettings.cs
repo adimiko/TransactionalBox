@@ -1,4 +1,5 @@
 ﻿using TransactionalBox.OutboxWorker.Configurators;
+using TransactionalBox.OutboxWorker.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Settings
@@ -15,7 +16,7 @@ namespace TransactionalBox.OutboxWorker.Settings
 
         public TimeSpan LockTimeout { get; set; } = TimeSpan.FromSeconds(15);
 
-        public Action<IOutboxWorkerCompressionAlgorithmConfigurator> ConfigureCompressionAlgorithm { get; set; } = x => x.UseBrotliCompression();
+        public Action<IOutboxWorkerCompressionAlgorithmConfigurator> ConfigureCompressionAlgorithm { get; set; } = x => x.UseNoCompression();
 
         internal OutboxWorkerSettings() { }
 
