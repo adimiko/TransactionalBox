@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj" />
   </ItemGroup>
 
