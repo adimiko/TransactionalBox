@@ -19,7 +19,7 @@ builder.Services.AddDbContextPool<ServiceWithOutboxDbContext>(x => x.UseNpgsql(c
 builder.Services.AddTransactionalBox(x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<ServiceWithOutboxDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.NumberOfOutboxProcessor = 3);
+     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.NumberOfAddMessagesToTransportJobExecutors = 3);
 },
 settings => settings.ServiceId = "ServiceWithOutbox");
 

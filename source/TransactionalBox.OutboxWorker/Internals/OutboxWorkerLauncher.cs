@@ -11,7 +11,7 @@ namespace TransactionalBox.OutboxWorker.Internals
             IOutboxOrchestratorSettings settings) 
             : base(serviceProvider)
         {
-            Launch<AddMessagesToTransport>(settings.NumberOfOutboxProcessor);
+            Launch<AddMessagesToTransport>(settings.NumberOfAddMessagesToTransportJobExecutors);
         }
     }
 }

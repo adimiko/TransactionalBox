@@ -2,6 +2,6 @@
 {
     internal interface IOutboxOrchestratorSettings
     {
-        int NumberOfOutboxProcessor { get; }
+        int NumberOfAddMessagesToTransportJobExecutors { get; }
     }
 }
