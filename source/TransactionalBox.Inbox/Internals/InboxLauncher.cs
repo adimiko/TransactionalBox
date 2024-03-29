@@ -8,7 +8,7 @@ namespace TransactionalBox.Inbox.Internals
         public InboxLauncher(IServiceProvider serviceProvider) 
             : base(serviceProvider)
         {
-            Launch<ProcessMessageFromInboxStorage>(1);//TODO;
+            Launch<ProcessMessageFromInboxStorage>(4);//TODO;
         }
     }
 }

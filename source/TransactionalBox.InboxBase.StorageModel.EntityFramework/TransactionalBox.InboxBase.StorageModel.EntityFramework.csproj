@@ -5,6 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.DistributedLock.EntityFramework\TransactionalBox.DistributedLock.EntityFramework.csproj" />
     <ProjectReference Include="..\TransactionalBox.InboxBase.StorageModel\TransactionalBox.InboxBase.StorageModel.csproj" />
   </ItemGroup>
 	

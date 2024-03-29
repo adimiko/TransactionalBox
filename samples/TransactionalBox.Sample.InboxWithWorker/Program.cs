@@ -48,4 +48,7 @@ app.MapGet("/get-messages-from-inbox", async (DbContext dbContext) => await dbCo
 
 app.MapGet("/get-idempotent-messages-from-inbox", async (DbContext dbContext) => await dbContext.Set<IdempotentInboxKey>().AsNoTracking().ToListAsync());
 
+app.MapGet("/inbox-distributed-locks", async (DbContext dbContext) => await dbContext.Set<InboxDistributedLock>().AsNoTracking().ToListAsync());
+
+
 app.Run();

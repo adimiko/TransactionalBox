@@ -8,6 +8,7 @@ using TransactionalBox.Inbox.Internals.Deserializers;
 using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Inbox.Settings;
 using TransactionalBox.InboxBase.DependencyBuilder;
+using TransactionalBox.BackgroundServiceBase;
 
 namespace TransactionalBox.Inbox
 {
@@ -45,6 +46,9 @@ namespace TransactionalBox.Inbox
                 .AddClasses(c => c.AssignableTo(typeof(IInboxMessageHandler<>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
+
+
+            services.AddBackgroundServiceBase();
 
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes));
 

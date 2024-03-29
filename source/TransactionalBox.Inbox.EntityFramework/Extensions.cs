@@ -4,6 +4,9 @@ using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.EntityFramework.Internals;
 using TransactionalBox.Inbox.Internals;
 using TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals;
+using TransactionalBox.InboxBase.StorageModel.Internals;
+using TransactionalBox.DistributedLock;
+using TransactionalBox.DistributedLock.EntityFramework;
 
 namespace TransactionalBox.Inbox.EntityFramework
 {
@@ -15,7 +18,9 @@ namespace TransactionalBox.Inbox.EntityFramework
             var services = storageConfigurator.Services;
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
-            services.AddScoped<IInboxStorage, InboxStorage>();
+            services.AddScoped<IInboxStorage, EntityFrameworkInboxStorage>();
+
+            services.AddDistributedLock<InboxDistributedLock>(x => x.UseEntityFramework());
         }
 
         public static void AddInbox(this ModelBuilder modelBuilder)

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.BackgroundServiceBase.Internals;
+using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Inbox.Deserialization;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
 {
@@ -14,21 +16,33 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         private readonly IInboxMessageTypes _inboxMessageTypes;
 
+        private readonly IJobExecutionContext _jobExecutionContext;
+
+        private readonly ISystemClock _systemClock;
+
         public ProcessMessageFromInboxStorage(
             IServiceProvider serviceProvider,
             IInboxStorage inboxStorage,
             IInboxDeserializer deserializer,
-            IInboxMessageTypes inboxMessageTypes)
+            IInboxMessageTypes inboxMessageTypes,
+            IJobExecutionContext jobExecutionContext,
+            ISystemClock systemClock)
         {
             _serviceProvider = serviceProvider;
             _inboxStorage = inboxStorage;
             _deserializer = deserializer;
             _inboxMessageTypes = inboxMessageTypes;
+            _jobExecutionContext = jobExecutionContext;
+            _systemClock = systemClock;
         }
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            var inboxMessage = await _inboxStorage.GetMessage();
+            var jobId = _jobExecutionContext.JobId;
+            var jobName = _jobExecutionContext.JobName;
+            var nowUtc = _systemClock.UtcNow;
+
+            var inboxMessage = await _inboxStorage.GetMessage(jobId, jobName, nowUtc, TimeSpan.FromMinutes(1));
 
             if (inboxMessage is null)
             {
