@@ -9,6 +9,7 @@ using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Inbox.Settings;
 using TransactionalBox.InboxBase.DependencyBuilder;
 using TransactionalBox.BackgroundServiceBase;
+using TransactionalBox.Inbox.Internals.Settings;
 
 namespace TransactionalBox.Inbox
 {
@@ -33,6 +34,8 @@ namespace TransactionalBox.Inbox
             }
 
             settings.Configure(serialization);
+
+            services.AddSingleton<IInboxLauncherSettings>(settings);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var allTypes = assemblies.SelectMany(x => x.GetTypes());
