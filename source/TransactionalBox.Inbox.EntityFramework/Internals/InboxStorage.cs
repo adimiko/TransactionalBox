@@ -15,7 +15,7 @@ namespace TransactionalBox.Inbox.EntityFramework.Internals
 
         public async Task<InboxMessage?> GetMessage()
         {
-            //TODO DistributedLock or not because single instance only update
+            //TODO DistributedLock or not because only single update
             var message = await _dbContext.Set<InboxMessage>()
                 .Where(x => !x.IsProcessed)
                 .OrderBy(x => x.OccurredUtc)
