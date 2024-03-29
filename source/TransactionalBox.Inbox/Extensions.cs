@@ -5,6 +5,7 @@ using TransactionalBox.Inbox.Deserialization;
 using TransactionalBox.Inbox.Internals;
 using TransactionalBox.Inbox.Internals.Configurators;
 using TransactionalBox.Inbox.Internals.Deserializers;
+using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Inbox.Settings;
 using TransactionalBox.InboxBase.DependencyBuilder;
 
@@ -46,7 +47,9 @@ namespace TransactionalBox.Inbox
                 .WithScopedLifetime());
 
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes));
-            services.AddHostedService<InboxProcessor>();
+
+            services.AddHostedService<InboxLauncher>();
+            services.AddScoped<ProcessMessageFromInboxStorage>();
 
             return new InboxDependencyBuilder(services);
         }
