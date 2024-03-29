@@ -52,7 +52,7 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), 
         settings =>
      {
-         settings.NumberOfOutboxProcessor = 10;
+         settings.NumberOfAddMessagesToTransportJobExecutors = 4;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
@@ -62,6 +62,7 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
      {
+         settings.NumberOfAddMessagesToInboxStorageJobExecutors = 4;
          settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
      });
 },
@@ -122,9 +123,16 @@ app.MapGet("/get-idempotent-messages-from-inbox", async (DbContext dbContext) =>
     return messages;
 });
 
-app.MapGet("/locks", async (DbContext dbContext) =>
+app.MapGet("/outbox-distributed-locks", async (DbContext dbContext) =>
 {
     var locks = await dbContext.Set<OutboxDistributedLock>().AsNoTracking().ToListAsync();
+
+    return locks;
+});
+
+app.MapGet("/inbox-distributed-locks", async (DbContext dbContext) =>
+{
+    var locks = await dbContext.Set<InboxDistributedLock>().AsNoTracking().ToListAsync();
 
     return locks;
 });

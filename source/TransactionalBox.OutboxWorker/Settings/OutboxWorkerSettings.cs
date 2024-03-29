@@ -8,7 +8,7 @@ namespace TransactionalBox.OutboxWorker.Settings
     {
         public int BatchSize { get; set; } = 5000;
 
-        public int NumberOfOutboxProcessor { get; set; } = 2;
+        public int NumberOfAddMessagesToTransportJobExecutors { get; set; } = 2;
 
         public TimeSpan DelayWhenBatchIsEmpty { get; set; } = TimeSpan.FromSeconds(1);
 

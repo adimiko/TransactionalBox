@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TransactionalBox.DistributedLock.EntityFramework;
+using TransactionalBox.InboxBase.StorageModel.Internals;
 
 namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
 {
@@ -8,6 +10,7 @@ namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
         {
             modelBuilder.ApplyConfiguration(new InboxMessageEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new IdempotentInboxKeyEntityTypeConfiguration());
+            modelBuilder.AddDistributedLock<InboxDistributedLock>();
         }
     }
 }

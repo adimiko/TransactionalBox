@@ -10,4 +10,7 @@
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
+  </ItemGroup>
 </Project>

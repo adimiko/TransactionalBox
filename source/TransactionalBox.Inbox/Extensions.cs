@@ -5,8 +5,11 @@ using TransactionalBox.Inbox.Deserialization;
 using TransactionalBox.Inbox.Internals;
 using TransactionalBox.Inbox.Internals.Configurators;
 using TransactionalBox.Inbox.Internals.Deserializers;
+using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Inbox.Settings;
 using TransactionalBox.InboxBase.DependencyBuilder;
+using TransactionalBox.BackgroundServiceBase;
+using TransactionalBox.Inbox.Internals.Settings;
 
 namespace TransactionalBox.Inbox
 {
@@ -32,6 +35,8 @@ namespace TransactionalBox.Inbox
 
             settings.Configure(serialization);
 
+            services.AddSingleton<IInboxLauncherSettings>(settings);
+
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var allTypes = assemblies.SelectMany(x => x.GetTypes());
 
@@ -45,8 +50,13 @@ namespace TransactionalBox.Inbox
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
+
+            services.AddBackgroundServiceBase();
+
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes));
-            services.AddHostedService<InboxProcessor>();
+
+            services.AddHostedService<InboxLauncher>();
+            services.AddScoped<ProcessMessageFromInboxStorage>();
 
             return new InboxDependencyBuilder(services);
         }
