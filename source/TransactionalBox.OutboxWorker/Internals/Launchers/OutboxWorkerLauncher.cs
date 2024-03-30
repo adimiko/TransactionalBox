@@ -7,10 +7,12 @@ namespace TransactionalBox.OutboxWorker.Internals.Launchers
     {
         public OutboxWorkerLauncher(
             IServiceProvider serviceProvider,
-            IAddMessagesToTransportLauncherSettings settings)
+            IAddMessagesToTransportLauncherSettings addMessagesToTransportSettings,
+            ICleanUpProcessedMessagesLauncherSettings cleanUpProcessedMessagesSettings)
             : base(serviceProvider)
         {
-            Launch<AddMessagesToTransport>(settings.NumberOfInstances);
+            Launch<AddMessagesToTransport>(addMessagesToTransportSettings.NumberOfInstances);
+            Launch<CleanUpProcessedMessages>(cleanUpProcessedMessagesSettings.NumberOfInstances);
         }
     }
 }
