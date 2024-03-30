@@ -42,14 +42,21 @@ namespace TransactionalBox.OutboxWorker
             services.AddBackgroundServiceBase();
 
             services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
+            services.AddSingleton<TransportMessageFactory>();
 
+
+            // Settings
             services.AddSingleton<IAddMessagesToTransportJobSettings>(settings.AddMessagesToTransportSettings);
             services.AddSingleton<IAddMessagesToTransportLauncherSettings>(settings.AddMessagesToTransportSettings);
-            services.AddSingleton<TransportMessageFactory>();
+
+            services.AddSingleton<ICleanUpProcessedMessagesJobSettings>(settings.CleanUpProcessedMessagesSettings);
+            services.AddSingleton<ICleanUpProcessedMessagesLauncherSettings>(settings.CleanUpProcessedMessagesSettings);
 
             services.AddHostedService<OutboxWorkerLauncher>();
 
+            // Jobs
             services.AddScoped<AddMessagesToTransport>();
+            services.AddScoped<CleanUpProcessedMessages>();
         }
     }
 }

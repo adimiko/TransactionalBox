@@ -79,5 +79,22 @@ namespace TransactionalBox.OutboxWorker.EntityFramework.Internals
                 await transaction.CommitAsync();
             }
         }
+
+        public async Task<int> RemoveProcessedMessages(int batchSize)
+        {
+            int rowCount = 0;
+
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
+            {
+                rowCount = await _outboxMessages
+                    .Where(x => x.ProcessedUtc != null)
+                    .Take(batchSize)
+                    .ExecuteDeleteAsync();
+
+                await transaction.CommitAsync();
+            }
+
+            return rowCount;
+        }
     }
 }

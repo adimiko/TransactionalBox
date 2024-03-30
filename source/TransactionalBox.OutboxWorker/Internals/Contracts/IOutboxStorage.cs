@@ -10,5 +10,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Contracts
         Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId);
 
         Task MarkAsProcessed(JobId jobId, DateTime processedUtc);
+
+        Task<int> RemoveProcessedMessages(int batchSize);
     }
 }
