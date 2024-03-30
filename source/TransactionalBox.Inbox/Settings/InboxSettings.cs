@@ -1,11 +1,11 @@
 ﻿using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.Internals.Settings;
+using TransactionalBox.Inbox.Internals.Launchers;
 
 namespace TransactionalBox.Inbox.Settings
 {
     public sealed class InboxSettings : IInboxLauncherSettings
     {
-        public int NumberOfProcessMessageFromInboxStorageExecutors { get; set; } = 4;
+        public int NumberOfInstances { get; set; } = 4;
 
         public Action<IInboxDeserializationConfigurator> ConfigureDeserialization { get; set; } = x => x.UseSystemTextJson();
 

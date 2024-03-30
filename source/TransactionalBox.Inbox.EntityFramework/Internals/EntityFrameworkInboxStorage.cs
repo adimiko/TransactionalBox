@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 using TransactionalBox.DistributedLock;
-using TransactionalBox.Inbox.Internals;
+using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 
 namespace TransactionalBox.Inbox.EntityFramework.Internals

@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 
-namespace TransactionalBox.Inbox.Internals
+namespace TransactionalBox.Inbox.Internals.Contracts
 {
     internal interface IInboxStorage
     {

@@ -2,6 +2,7 @@
 using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Inbox.Deserialization;
+using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
