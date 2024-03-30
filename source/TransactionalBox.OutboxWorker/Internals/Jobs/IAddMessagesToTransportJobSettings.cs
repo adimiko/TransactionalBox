@@ -1,6 +1,6 @@
-﻿namespace TransactionalBox.OutboxWorker.Internals.Contracts
+﻿namespace TransactionalBox.OutboxWorker.Internals.Jobs
 {
-    internal interface IOutboxProcessorSettings
+    internal interface IAddMessagesToTransportJobSettings
     {
         int BatchSize { get; }
 

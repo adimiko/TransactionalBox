@@ -9,7 +9,7 @@ using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Inbox.Settings;
 using TransactionalBox.InboxBase.DependencyBuilder;
 using TransactionalBox.BackgroundServiceBase;
-using TransactionalBox.Inbox.Internals.Settings;
+using TransactionalBox.Inbox.Internals.Launchers;
 
 namespace TransactionalBox.Inbox
 {

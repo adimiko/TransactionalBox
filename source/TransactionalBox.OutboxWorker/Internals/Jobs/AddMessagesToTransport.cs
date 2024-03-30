@@ -14,7 +14,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         private readonly IOutboxWorkerLogger<AddMessagesToTransport> _logger;
 
-        private readonly IOutboxProcessorSettings _settings;
+        private readonly IAddMessagesToTransportJobSettings _settings;
 
         private readonly IOutboxStorage _outboxStorage;
 
@@ -29,7 +29,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
         public AddMessagesToTransport(
             ISystemClock systemClock,
             IOutboxWorkerLogger<AddMessagesToTransport> logger,
-            IOutboxProcessorSettings settings,
+            IAddMessagesToTransportJobSettings settings,
             IOutboxStorage outboxStorage,
             ITransport transport,
             IJobExecutionContext jobExecutionContext,
@@ -48,8 +48,6 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            //_logger.Information("Start job with id: {0}", _jobExecutionContext.JobId.ToString());
-
             var nowUtc = _systemClock.UtcNow;
 
             var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, _settings.BatchSize, nowUtc, _settings.LockTimeout);
@@ -88,8 +86,6 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
                 //TODO BackgroundJob delay based on result ?
                 await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
             }
-
-            //_logger.Information("End job with id: {0}", _jobExecutionContext.JobId);
         }
     }
 }

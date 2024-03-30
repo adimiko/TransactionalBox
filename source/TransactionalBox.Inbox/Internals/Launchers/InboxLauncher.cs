@@ -1,17 +1,16 @@
 ﻿using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.Inbox.Internals.Jobs;
-using TransactionalBox.Inbox.Internals.Settings;
 
-namespace TransactionalBox.Inbox.Internals
+namespace TransactionalBox.Inbox.Internals.Launchers
 {
     internal sealed class InboxLauncher : Launcher
     {
         public InboxLauncher(
             IServiceProvider serviceProvider,
-            IInboxLauncherSettings settings) 
+            IInboxLauncherSettings settings)
             : base(serviceProvider)
         {
-            Launch<ProcessMessageFromInboxStorage>(settings.NumberOfProcessMessageFromInboxStorageExecutors);
+            Launch<ProcessMessageFromInboxStorage>(settings.NumberOfInstances);
         }
     }
 }
