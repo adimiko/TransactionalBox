@@ -3,12 +3,11 @@ using TransactionalBox.BackgroundServiceBase;
 using TransactionalBox.InboxBase.DependencyBuilder;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Decompression;
-using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.InboxWorker.Internals.Configurators;
 using TransactionalBox.InboxWorker.Internals.Contexts;
 using TransactionalBox.InboxWorker.Internals.Decompression;
 using TransactionalBox.InboxWorker.Internals.Jobs;
-using TransactionalBox.InboxWorker.Internals.Settings;
+using TransactionalBox.InboxWorker.Internals.Launchers;
 using TransactionalBox.InboxWorker.Settings;
 
 namespace TransactionalBox.InboxWorker
@@ -41,7 +40,7 @@ namespace TransactionalBox.InboxWorker
 
             services.AddBackgroundServiceBase();
 
-            services.AddSingleton<IInboxWorkerLauncherSettings>(settings);
+            services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
 
             services.AddHostedService<InboxWorkerLauncher>();
             services.AddScoped<AddMessagesToInboxStorage>();

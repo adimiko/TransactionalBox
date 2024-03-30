@@ -1,12 +1,11 @@
 ﻿using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Internals;
-using TransactionalBox.InboxWorker.Internals.Settings;
 
 namespace TransactionalBox.InboxWorker.Settings
 {
-    public sealed class InboxWorkerSettings : IInboxWorkerLauncherSettings
+    public sealed class InboxWorkerSettings
     {
-        public int NumberOfAddMessagesToInboxStorageJobExecutors { get; set; } = 1;
+        public AddMessagesToInboxStorageSettings AddMessagesToInboxStorageSettings { get; } = new AddMessagesToInboxStorageSettings();
 
         public Action<IInboxWorkerDecompressionAlgorithmConfigurator> ConfigureDecompressionAlgorithm { get; set; } = x => x.UseNoDecompression();
 
