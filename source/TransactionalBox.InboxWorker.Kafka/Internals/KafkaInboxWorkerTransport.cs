@@ -1,10 +1,7 @@
 ﻿using Confluent.Kafka;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
-using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Internals.Contexts;
 using TransactionalBox.InboxWorker.Internals.Contracts;
-using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.Kafka.Internals
 {
@@ -22,14 +19,13 @@ namespace TransactionalBox.InboxWorker.Kafka.Internals
             _configFactory = configFactory;
         }
 
-        public async IAsyncEnumerable<byte[]> GetMessages([EnumeratorCancellation] CancellationToken cancellationToken)
+        public async IAsyncEnumerable<byte[]> GetMessages(IEnumerable<string> topics, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             var config = _configFactory.Create();
 
             using (var consumer = new ConsumerBuilder<Ignore, byte[]>(config).Build())
             {
-                //TODO #41
-                consumer.Subscribe($"{_inboxWorkerContext.Id}-ExampleMessage");
+                consumer.Subscribe(topics);
 
                 do
                 {

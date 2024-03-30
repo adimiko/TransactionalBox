@@ -4,6 +4,7 @@ using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Decompression;
 using TransactionalBox.InboxWorker.Internals.Contracts;
+using TransactionalBox.InboxWorker.Internals.Services;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.Internals.Jobs
@@ -18,21 +19,25 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
         private readonly ISystemClock _systemClock;
 
+        private readonly ITopicsProvider _topicsProvider;
+
         public AddMessagesToInboxStorage(
             IServiceProvider serviceProvider,
             IDecompressionAlgorithm decompressionAlgorithm,
             IInboxWorkerTransport inboxWorkerTransport,
-            ISystemClock systemClock) 
+            ISystemClock systemClock,
+            ITopicsProvider topicsProvider) 
         {
             _serviceProvider = serviceProvider;
             _decompressionAlgorithm = decompressionAlgorithm;
             _inboxWorkerTransport = inboxWorkerTransport;
             _systemClock = systemClock;
+            _topicsProvider = topicsProvider;
         }
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(stoppingToken))
+            await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken))
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {

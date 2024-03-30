@@ -4,6 +4,6 @@ namespace TransactionalBox.InboxWorker.Internals.Contracts
 {
     internal interface IInboxWorkerTransport
     {
-        IAsyncEnumerable<byte[]> GetMessages(CancellationToken cancellationToken);
+        IAsyncEnumerable<byte[]> GetMessages(IEnumerable<string> topics, CancellationToken cancellationToken);
     }
 }

@@ -52,7 +52,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
                 return;
             }
 
-            var messageTypeName = inboxMessage.Topic.Split('-')[1];
+            var messageTypeName = inboxMessage.Topic.Split('.')[1]; //TODO
 
             _inboxMessageTypes.Types.TryGetValue(messageTypeName, out var type);
 

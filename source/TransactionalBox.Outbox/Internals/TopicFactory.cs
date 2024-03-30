@@ -2,7 +2,7 @@
 {
     internal sealed class TopicFactory
     {
-        private const char _separator = '-';
+        private const char _separator = '.';
 
         public string Create<TMessage>(string serviceName, TMessage message) where TMessage : IOutboxMessage
         {
