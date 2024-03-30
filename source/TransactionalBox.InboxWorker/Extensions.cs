@@ -8,6 +8,7 @@ using TransactionalBox.InboxWorker.Internals.Contexts;
 using TransactionalBox.InboxWorker.Internals.Decompression;
 using TransactionalBox.InboxWorker.Internals.Jobs;
 using TransactionalBox.InboxWorker.Internals.Launchers;
+using TransactionalBox.InboxWorker.Internals.Services;
 using TransactionalBox.InboxWorker.Settings;
 
 namespace TransactionalBox.InboxWorker
@@ -46,6 +47,9 @@ namespace TransactionalBox.InboxWorker
             services.AddScoped<AddMessagesToInboxStorage>();
 
             services.AddSingleton<IInboxWorkerContext,InboxWorkerContext>();
+
+            //TODO register topics service, and messages (lisen event from another services)
+            services.AddSingleton<ITopicsProvider, TopicsProvider>();
         }
     }
 }

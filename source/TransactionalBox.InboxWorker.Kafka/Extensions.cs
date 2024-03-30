@@ -24,6 +24,8 @@ namespace TransactionalBox.InboxWorker.Kafka
             services.AddSingleton<IInboxWorkerKafkaSettings>(settings);
             services.AddSingleton<KafkaConfigFactory>();
             services.AddSingleton<IInboxWorkerTransport, KafkaInboxWorkerTransport>();
+
+            services.AddSingleton<ITransportTopicWithWildCard, KafkaTransportTopicWithWildCard>();
         }
     }
 }
