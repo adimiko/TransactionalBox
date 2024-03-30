@@ -13,7 +13,7 @@ namespace TransactionalBox.Outbox.UnitTests
         {
             // Arrange
             const string serviceName = "ModuleName";
-            const char separator = '-';
+            const char separator = '.';
             var message = new TestMessage();
 
             // Act
