@@ -70,7 +70,7 @@ Examples of problems that occur during network communication:
 - [ ] Message duplication rate
 
 #### Maintenecne
-- [ ] Remove processed messages from the outbox
+- [x] Remove processed messages from the outbox
 - [ ] Remove processed messages from the inbox
 - [ ] Archive processed messages from the outbox
 - [ ] Archive processed messages from the inbox
