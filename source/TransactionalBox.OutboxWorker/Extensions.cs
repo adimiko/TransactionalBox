@@ -6,8 +6,8 @@ using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals;
 using TransactionalBox.OutboxWorker.Internals.Compression;
 using TransactionalBox.OutboxWorker.Internals.Configurators;
-using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
+using TransactionalBox.OutboxWorker.Internals.Launchers;
 using TransactionalBox.OutboxWorker.Internals.Loggers;
 using TransactionalBox.OutboxWorker.Settings;
 
@@ -43,8 +43,8 @@ namespace TransactionalBox.OutboxWorker
 
             services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
 
-            services.AddSingleton<IOutboxProcessorSettings>(settings);
-            services.AddSingleton<IOutboxOrchestratorSettings>(settings);
+            services.AddSingleton<IAddMessagesToTransportJobSettings>(settings.AddMessagesToTransportSettings);
+            services.AddSingleton<IAddMessagesToTransportLauncherSettings>(settings.AddMessagesToTransportSettings);
             services.AddSingleton<TransportMessageFactory>();
 
             services.AddHostedService<OutboxWorkerLauncher>();

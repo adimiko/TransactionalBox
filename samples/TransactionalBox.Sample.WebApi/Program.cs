@@ -52,7 +52,7 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), 
         settings =>
      {
-         settings.NumberOfAddMessagesToTransportJobExecutors = 4;
+         settings.AddMessagesToTransportSettings.NumberOfInstances = 4;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
