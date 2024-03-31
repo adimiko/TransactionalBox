@@ -5,8 +5,8 @@ namespace TransactionalBox.Sample.WebApi
 {
     public sealed class ExampleMessage : IOutboxMessage, IInboxMessage
     {
-        public string Name { get; set; } = "Adrian";
+        public string Name { get; set; }
 
-        public int Age { get; set; } = 25;
+        public int Age { get; set; }
     }
 }

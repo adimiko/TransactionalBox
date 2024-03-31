@@ -53,7 +53,7 @@ x =>
         settings =>
      {
          settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
-         settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 1;
+         settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 0;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
@@ -66,7 +66,7 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
      {
-         settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 1;
+         settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
          settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
          settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
      });
@@ -101,7 +101,6 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
     await outbox.AddRange(messages, m =>
     {
         m.Receiver = "Registrations";
-        m.OccurredUtc = DateTime.UtcNow;
     });
 
     await dbContext.SaveChangesAsync();

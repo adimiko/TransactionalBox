@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
 using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
 using TransactionalBox.Inbox.Deserialization;
@@ -62,6 +63,10 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
             var handler = _serviceProvider.GetRequiredService(handlerType);
 
+            //TODO how deserialize ?
+            var x = JsonSerializer.Deserialize(inboxMessage.Data, typeof(Dictionary<string, object>));
+            //TODO message
+            //TODO executionContext
             var message = _deserializer.Deserialize(inboxMessage.Data, type);
 
             //TODO #39 (Performance) when program start below code can be compiled to lambda expresion

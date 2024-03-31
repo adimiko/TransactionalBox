@@ -50,13 +50,16 @@ namespace TransactionalBox.Outbox.Internals
                 receiver = _serviceContext.Id;
             }
 
+            var metadata = new Metadata(envelope, _serviceContext.Id);
+            var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
+
             var outboxMessage = new OutboxMessage
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = envelope.OccurredUtc,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
-                Data = _serializer.Serialize(message),
+                Data = _serializer.Serialize(outboxMessagePayload),
             };
 
             await _outboxStorage.Add(outboxMessage);
@@ -86,15 +89,19 @@ namespace TransactionalBox.Outbox.Internals
 
             var outboxMessages = new List<OutboxMessage>();
 
+            var metadata = new Metadata(envelope, _serviceContext.Id);
+
             foreach (var message in messages) 
             {
+                var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
+
                 var outboxMessage = new OutboxMessage
                 {
                     Id = Guid.NewGuid(), //TODO Sequential GUID #14
                     OccurredUtc = envelope.OccurredUtc,
                     ProcessedUtc = null,
                     Topic = _topicFactory.Create(receiver, message),
-                    Data = _serializer.Serialize(message),
+                    Data = _serializer.Serialize(outboxMessagePayload),
                 };
 
                 outboxMessages.Add(outboxMessage);
