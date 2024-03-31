@@ -6,13 +6,14 @@ namespace TransactionalBox.BackgroundServiceBase.Internals
 {
     public abstract class Launcher : BackgroundService
     {
-        private readonly List<JobLaunchSettings> _jobLaunchSettings = new();
+        private readonly List<JobLaunchSettings> _jobLaunchSettings;
 
         private readonly IServiceProvider _serviceProvider;
 
         protected Launcher(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _jobLaunchSettings = new List<JobLaunchSettings>();
         }
 
         protected void Launch<T>(int numberOfInstances) where T : Job

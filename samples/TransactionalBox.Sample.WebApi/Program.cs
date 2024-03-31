@@ -52,17 +52,22 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), 
         settings =>
      {
-         settings.AddMessagesToTransportSettings.NumberOfInstances = 4;
+         settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
+         settings.CleanUpProcessedMessagesSettings.NumberOfInstances = 1;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
-    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>())
+    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
+    {
+        settings.NumberOfInstances = 1;
+    })
      .WithWorker(
         storage => storage.UseEntityFramework(),
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
      {
-         settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 4;
+         settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 1;
+         settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
          settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
      });
 },

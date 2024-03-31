@@ -44,12 +44,19 @@ namespace TransactionalBox.InboxWorker
             services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
 
             services.AddHostedService<InboxWorkerLauncher>();
-            services.AddScoped<AddMessagesToInboxStorage>();
+
+            // Settings
+            services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
+            services.AddSingleton<ICleanUpProcessedInboxMessagesLauncherSettings>(settings.CleanUpProcessedInboxMessagesSettings);
 
             services.AddSingleton<IInboxWorkerContext,InboxWorkerContext>();
 
             //TODO register topics service, and messages (lisen event from another services)
             services.AddSingleton<ITopicsProvider, TopicsProvider>();
+
+            // Jobs
+            services.AddScoped<AddMessagesToInboxStorage>();
+            services.AddScoped<CleanUpProcessedInboxMessages>();
         }
     }
 }
