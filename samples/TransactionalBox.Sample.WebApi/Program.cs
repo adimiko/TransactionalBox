@@ -53,13 +53,13 @@ x =>
         settings =>
      {
          settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
-         settings.CleanUpProcessedMessagesSettings.NumberOfInstances = 1;
+         settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 1;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
     {
-        settings.NumberOfInstances = 1;
+        settings.NumberOfInstances = 5;
     })
      .WithWorker(
         storage => storage.UseEntityFramework(),

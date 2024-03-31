@@ -4,17 +4,17 @@ using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Internals.Jobs
 {
-    internal sealed class CleanUpProcessedMessages : Job
+    internal sealed class CleanUpProcessedOutboxMessages : Job
     {
         private readonly IOutboxStorage _outboxStorage;
 
-        private readonly ICleanUpProcessedMessagesJobSettings _settings;
+        private readonly ICleanUpProcessedOutboxMessagesJobSettings _settings;
 
         private readonly ISystemClock _systemClock;
 
-        public CleanUpProcessedMessages(
+        public CleanUpProcessedOutboxMessages(
             IOutboxStorage outboxStorage,
-            ICleanUpProcessedMessagesJobSettings settings,
+            ICleanUpProcessedOutboxMessagesJobSettings settings,
             ISystemClock systemClock) 
         {
             _outboxStorage = outboxStorage;

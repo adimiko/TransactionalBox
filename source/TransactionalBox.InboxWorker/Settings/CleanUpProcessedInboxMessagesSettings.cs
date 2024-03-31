@@ -5,7 +5,7 @@ namespace TransactionalBox.InboxWorker.Settings
 {
     public sealed class CleanUpProcessedInboxMessagesSettings : ICleanUpProcessedInboxMessagesJobSettings, ICleanUpProcessedInboxMessagesLauncherSettings
     {
-        public int BatchSize { get; set; } = 10000;
+        public int BatchSize { get; set; } = 1000;
 
         public int NumberOfInstances { get; set; } = 1;
 

@@ -3,14 +3,11 @@ using System.Data;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.InboxWorker.Internals.Contracts;
-using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.EntityFramework.Internals
 {
     internal sealed class EntityFrameworkInboxStorage : IInboxStorage
     {
-        private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
-
         private readonly DbContext _dbContext;
 
         private readonly DbSet<InboxMessage> _inboxMessages;
@@ -69,21 +66,12 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
             }
         }
 
-        public async Task<int> RemoveProcessedMessages(int batchSize)
+        public Task<int> RemoveProcessedMessages(int batchSize)
         {
-            int rowCount = 0;
-
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
-            {
-                rowCount = await _inboxMessages
+            return _inboxMessages
                     .Where(x => x.IsProcessed)
                     .Take(batchSize)
                     .ExecuteDeleteAsync();
-
-                await transaction.CommitAsync();
-            }
-
-            return rowCount;
         }
     }
 }
