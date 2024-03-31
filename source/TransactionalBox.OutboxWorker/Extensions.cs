@@ -49,14 +49,14 @@ namespace TransactionalBox.OutboxWorker
             services.AddSingleton<IAddMessagesToTransportJobSettings>(settings.AddMessagesToTransportSettings);
             services.AddSingleton<IAddMessagesToTransportLauncherSettings>(settings.AddMessagesToTransportSettings);
 
-            services.AddSingleton<ICleanUpProcessedMessagesJobSettings>(settings.CleanUpProcessedMessagesSettings);
-            services.AddSingleton<ICleanUpProcessedMessagesLauncherSettings>(settings.CleanUpProcessedMessagesSettings);
+            services.AddSingleton<ICleanUpProcessedOutboxMessagesJobSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
+            services.AddSingleton<ICleanUpProcessedOutboxMessagesLauncherSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
 
             services.AddHostedService<OutboxWorkerLauncher>();
 
             // Jobs
             services.AddScoped<AddMessagesToTransport>();
-            services.AddScoped<CleanUpProcessedMessages>();
+            services.AddScoped<CleanUpProcessedOutboxMessages>();
         }
     }
 }

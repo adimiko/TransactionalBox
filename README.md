@@ -71,7 +71,7 @@ Examples of problems that occur during network communication:
 
 #### Maintenecne
 - [x] Remove processed messages from the outbox
-- [ ] Remove processed messages from the inbox
+- [x] Remove processed messages from the inbox
 - [ ] Remove expired idempotency keys
 - [ ] Archive processed messages from the outbox
 - [ ] Archive processed messages from the inbox

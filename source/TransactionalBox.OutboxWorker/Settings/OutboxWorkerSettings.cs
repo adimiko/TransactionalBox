@@ -7,7 +7,7 @@ namespace TransactionalBox.OutboxWorker.Settings
     {
         public AddMessagesToTransportSettings AddMessagesToTransportSettings { get; } = new AddMessagesToTransportSettings();
 
-        public CleanUpProcessedMessagesSettings CleanUpProcessedMessagesSettings { get; } = new CleanUpProcessedMessagesSettings();
+        public CleanUpProcessedOutboxMessagesSettings CleanUpProcessedOutboxMessagesSettings { get; } = new CleanUpProcessedOutboxMessagesSettings();
 
         public Action<IOutboxWorkerCompressionAlgorithmConfigurator> ConfigureCompressionAlgorithm { get; set; } = x => x.UseNoCompression();
 

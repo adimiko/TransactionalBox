@@ -3,7 +3,6 @@ using System.Data;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.InboxWorker.Internals.Contracts;
-using TransactionalBox.Internals;
 
 namespace TransactionalBox.InboxWorker.EntityFramework.Internals
 {
@@ -65,6 +64,14 @@ namespace TransactionalBox.InboxWorker.EntityFramework.Internals
             {
                 return AddRangeToInboxStorageResult.Failure;
             }
+        }
+
+        public Task<int> RemoveProcessedMessages(int batchSize)
+        {
+            return _inboxMessages
+                    .Where(x => x.IsProcessed)
+                    .Take(batchSize)
+                    .ExecuteDeleteAsync();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace TransactionalBox.OutboxWorker.Internals.Jobs
+﻿namespace TransactionalBox.InboxWorker.Internals.Jobs
 {
-    internal interface ICleanUpProcessedMessagesJobSettings
+    internal interface ICleanUpProcessedInboxMessagesJobSettings
     {
         int BatchSize { get; }
 

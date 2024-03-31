@@ -7,6 +7,8 @@ namespace TransactionalBox.InboxWorker.Settings
     {
         public AddMessagesToInboxStorageSettings AddMessagesToInboxStorageSettings { get; } = new AddMessagesToInboxStorageSettings();
 
+        public CleanUpProcessedInboxMessagesSettings CleanUpProcessedInboxMessagesSettings { get; } = new CleanUpProcessedInboxMessagesSettings();
+
         public Action<IInboxWorkerDecompressionAlgorithmConfigurator> ConfigureDecompressionAlgorithm { get; set; } = x => x.UseNoDecompression();
 
         internal InboxWorkerSettings() { }

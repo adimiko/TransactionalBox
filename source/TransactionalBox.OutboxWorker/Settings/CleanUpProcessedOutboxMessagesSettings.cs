@@ -3,7 +3,7 @@ using TransactionalBox.OutboxWorker.Internals.Launchers;
 
 namespace TransactionalBox.OutboxWorker.Settings
 {
-    public sealed class CleanUpProcessedMessagesSettings : ICleanUpProcessedMessagesJobSettings, ICleanUpProcessedMessagesLauncherSettings
+    public sealed class CleanUpProcessedOutboxMessagesSettings : ICleanUpProcessedOutboxMessagesJobSettings, ICleanUpProcessedOutboxMessagesLauncherSettings
     {
         public int BatchSize { get; set; } = 10000;
 
@@ -13,6 +13,6 @@ namespace TransactionalBox.OutboxWorker.Settings
 
         public TimeSpan DelayWhenBatchIsNotFull { get; set; } = TimeSpan.FromSeconds(1);
 
-        internal CleanUpProcessedMessagesSettings() { }
+        internal CleanUpProcessedOutboxMessagesSettings() { }
     }
 }

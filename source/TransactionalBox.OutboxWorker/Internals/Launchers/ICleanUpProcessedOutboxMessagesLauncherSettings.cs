@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.OutboxWorker.Internals.Launchers
 {
-    internal interface ICleanUpProcessedMessagesLauncherSettings
+    internal interface ICleanUpProcessedOutboxMessagesLauncherSettings
     {
         int NumberOfInstances { get; }
     }
