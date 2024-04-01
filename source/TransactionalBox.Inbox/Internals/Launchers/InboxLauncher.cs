@@ -10,7 +10,7 @@ namespace TransactionalBox.Inbox.Internals.Launchers
             IInboxLauncherSettings settings)
             : base(serviceProvider)
         {
-            Launch<ProcessMessageFromInboxStorage>(settings.NumberOfInstances);
+            Launch<ProcessMessageFromInbox>(settings.NumberOfInstances);
         }
     }
 }

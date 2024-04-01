@@ -9,7 +9,7 @@ using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
 {
-    internal sealed class ProcessMessageFromInboxStorage : Job
+    internal sealed class ProcessMessageFromInbox : Job
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -23,13 +23,16 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         private readonly ISystemClock _systemClock;
 
-        public ProcessMessageFromInboxStorage(
+        private readonly IProcessMessageFromInboxJobSettings _settings;
+
+        public ProcessMessageFromInbox(
             IServiceProvider serviceProvider,
             IInboxStorage inboxStorage,
             IInboxDeserializer deserializer,
             IInboxMessageTypes inboxMessageTypes,
             IJobExecutionContext jobExecutionContext,
-            ISystemClock systemClock)
+            ISystemClock systemClock,
+            IProcessMessageFromInboxJobSettings settings)
         {
             _serviceProvider = serviceProvider;
             _inboxStorage = inboxStorage;
@@ -37,6 +40,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             _inboxMessageTypes = inboxMessageTypes;
             _jobExecutionContext = jobExecutionContext;
             _systemClock = systemClock;
+            _settings = settings;
         }
 
         protected override async Task Execute(CancellationToken stoppingToken)
@@ -49,7 +53,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
             if (inboxMessage is null)
             {
-                await Task.Delay(500);
+                await Task.Delay(_settings.DelayWhenInboxIsEmpty, _systemClock.TimeProvider);
 
                 return;
             }
