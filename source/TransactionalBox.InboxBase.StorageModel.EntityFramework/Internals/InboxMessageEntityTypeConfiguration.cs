@@ -12,7 +12,7 @@ namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
             builder.Property(x => x.OccurredUtc);
             builder.Property(x => x.IsProcessed).IsConcurrencyToken();
             builder.Property(x => x.Topic);
-            builder.Property(x => x.Data);
+            builder.Property(x => x.Payload);
         }
     }
 }

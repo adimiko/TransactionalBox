@@ -67,7 +67,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             string metadataJson;
             string messageJson;
 
-            using (var jsonDocument = JsonDocument.Parse(inboxMessage.Data))
+            using (var jsonDocument = JsonDocument.Parse(inboxMessage.Payload))
             {
                 var jsonRoot = jsonDocument.RootElement;
 

@@ -56,7 +56,7 @@ namespace TransactionalBox.Outbox.Internals
                 OccurredUtc = metadata.OccurredUtc,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
-                Data = _serializer.Serialize(outboxMessagePayload),
+                Payload = _serializer.Serialize(outboxMessagePayload),
             };
 
             await _outboxStorage.Add(outboxMessage);
@@ -93,7 +93,7 @@ namespace TransactionalBox.Outbox.Internals
                     OccurredUtc = metadata.OccurredUtc,
                     ProcessedUtc = null,
                     Topic = _topicFactory.Create(receiver, message),
-                    Data = _serializer.Serialize(outboxMessagePayload),
+                    Payload = _serializer.Serialize(outboxMessagePayload),
                 };
 
                 outboxMessages.Add(outboxMessage);
