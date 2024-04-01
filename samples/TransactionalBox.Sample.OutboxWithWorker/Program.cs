@@ -51,7 +51,6 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
         await outbox.Add(message, m =>
         {
             m.Receiver = "ServiceWithInbox";
-            m.OccurredUtc = DateTime.UtcNow;
         });
     }
 
