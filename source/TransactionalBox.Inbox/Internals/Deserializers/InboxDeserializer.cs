@@ -5,9 +5,9 @@ namespace TransactionalBox.Inbox.Internals.Deserializers
 {
     internal sealed class InboxDeserializer : IInboxDeserializer
     {
-        public IInboxMessage DeserializeMessage(string data, Type type)
+        public IInboxMessage DeserializeMessage(string message, Type type)
         {
-            return JsonSerializer.Deserialize(data, type) as IInboxMessage;
+            return JsonSerializer.Deserialize(message, type) as IInboxMessage;
         }
 
         public Metadata DeserializeMetadata(string metadata)

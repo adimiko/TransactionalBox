@@ -2,7 +2,7 @@
 {
     public interface IInboxDeserializer
     {
-        IInboxMessage DeserializeMessage(string data, Type type);
+        IInboxMessage DeserializeMessage(string message, Type type);
 
         Metadata DeserializeMetadata(string metadata);
     }
