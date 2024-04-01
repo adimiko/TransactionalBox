@@ -36,6 +36,7 @@ namespace TransactionalBox.Inbox
             settings.Configure(serialization);
 
             services.AddSingleton<IInboxLauncherSettings>(settings);
+            services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var allTypes = assemblies.SelectMany(x => x.GetTypes());
@@ -56,7 +57,7 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes));
 
             services.AddHostedService<InboxLauncher>();
-            services.AddScoped<ProcessMessageFromInboxStorage>();
+            services.AddScoped<ProcessMessageFromInbox>();
 
             return new InboxDependencyBuilder(services);
         }

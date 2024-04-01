@@ -1,4 +1,5 @@
 ﻿using TransactionalBox.Inbox;
+using TransactionalBox.Inbox.Contexts;
 
 namespace TransactionalBox.Sample.InboxWithWorker
 {
@@ -11,11 +12,11 @@ namespace TransactionalBox.Sample.InboxWithWorker
             _context = dbContext;
         }
 
-        public async Task Handle(ExampleMessage message, CancellationToken cancellationToken)
+        public async Task Handle(ExampleMessage message, IExecutionContext executionContext)
         {
             // Logic
             // TODO config AutoSaveChanges = false (default)
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(executionContext.CancellationToken);
         }
     }
 }

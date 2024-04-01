@@ -2,6 +2,6 @@
 {
     public interface IOutboxSerializer
     {
-        string Serialize<T>(T outboxMessage) where T : class, IOutboxMessage;
+        string Serialize<T>(T outboxMessagePayload) where T : class, IOutboxMessagePayload;
     }
 }

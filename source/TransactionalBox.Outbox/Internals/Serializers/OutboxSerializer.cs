@@ -12,7 +12,7 @@ namespace TransactionalBox.Outbox.Internals.Serializers
         };
 
         public string Serialize<T>(T outboxMessage)
-            where T : class, IOutboxMessage
+            where T : class, IOutboxMessagePayload
         {
             return JsonSerializer.Serialize(outboxMessage, _options);
         }

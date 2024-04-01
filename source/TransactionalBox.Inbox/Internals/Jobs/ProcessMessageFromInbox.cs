@@ -1,13 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
 using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
+using TransactionalBox.Inbox.Contexts;
 using TransactionalBox.Inbox.Deserialization;
 using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
 {
-    internal sealed class ProcessMessageFromInboxStorage : Job
+    internal sealed class ProcessMessageFromInbox : Job
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -21,13 +23,16 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         private readonly ISystemClock _systemClock;
 
-        public ProcessMessageFromInboxStorage(
+        private readonly IProcessMessageFromInboxJobSettings _settings;
+
+        public ProcessMessageFromInbox(
             IServiceProvider serviceProvider,
             IInboxStorage inboxStorage,
             IInboxDeserializer deserializer,
             IInboxMessageTypes inboxMessageTypes,
             IJobExecutionContext jobExecutionContext,
-            ISystemClock systemClock)
+            ISystemClock systemClock,
+            IProcessMessageFromInboxJobSettings settings)
         {
             _serviceProvider = serviceProvider;
             _inboxStorage = inboxStorage;
@@ -35,6 +40,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             _inboxMessageTypes = inboxMessageTypes;
             _jobExecutionContext = jobExecutionContext;
             _systemClock = systemClock;
+            _settings = settings;
         }
 
         protected override async Task Execute(CancellationToken stoppingToken)
@@ -47,7 +53,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
             if (inboxMessage is null)
             {
-                await Task.Delay(500);
+                await Task.Delay(_settings.DelayWhenInboxIsEmpty, _systemClock.TimeProvider);
 
                 return;
             }
@@ -62,12 +68,26 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
             var handler = _serviceProvider.GetRequiredService(handlerType);
 
-            var message = _deserializer.Deserialize(inboxMessage.Data, type);
+            string metadataJson;
+            string messageJson;
+
+            using (var jsonDocument = JsonDocument.Parse(inboxMessage.Payload))
+            {
+                var jsonRoot = jsonDocument.RootElement;
+
+                metadataJson = jsonRoot.GetProperty("Metadata").ToString();
+                messageJson = jsonRoot.GetProperty("Message").ToString();
+            }
+
+            var metadata = _deserializer.DeserializeMetadata(metadataJson);
+            var message = _deserializer.DeserializeMessage(messageJson, type);
+
+            IExecutionContext executionContext = new ExecutionContext(metadata, stoppingToken);
 
             //TODO #39 (Performance) when program start below code can be compiled to lambda expresion
             await (Task)handlerType
                 .GetMethod("Handle")?
-                .Invoke(handler, new object[] { message, stoppingToken });
+                .Invoke(handler, new object[] { message, executionContext });
         }
     }
 }
