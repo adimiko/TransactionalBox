@@ -2,6 +2,7 @@
 using System.Text.Json;
 using TransactionalBox.BackgroundServiceBase.Internals;
 using TransactionalBox.BackgroundServiceBase.Internals.Context;
+using TransactionalBox.Inbox.Contexts;
 using TransactionalBox.Inbox.Deserialization;
 using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Internals;
@@ -63,16 +64,26 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
             var handler = _serviceProvider.GetRequiredService(handlerType);
 
-            //TODO how deserialize ?
-            var x = JsonSerializer.Deserialize(inboxMessage.Data, typeof(Dictionary<string, object>));
-            //TODO message
-            //TODO executionContext
-            var message = _deserializer.Deserialize(inboxMessage.Data, type);
+            string metadataJson;
+            string messageJson;
+
+            using (var jsonDocument = JsonDocument.Parse(inboxMessage.Data))
+            {
+                var jsonRoot = jsonDocument.RootElement;
+
+                metadataJson = jsonRoot.GetProperty("Metadata").ToString();
+                messageJson = jsonRoot.GetProperty("Message").ToString();
+            }
+
+            var metadata = _deserializer.DeserializeMetadata(metadataJson);
+            var message = _deserializer.DeserializeMessage(messageJson, type);
+
+            IExecutionContext executionContext = new ExecutionContext(metadata, stoppingToken);
 
             //TODO #39 (Performance) when program start below code can be compiled to lambda expresion
             await (Task)handlerType
                 .GetMethod("Handle")?
-                .Invoke(handler, new object[] { message, stoppingToken });
+                .Invoke(handler, new object[] { message, executionContext });
         }
     }
 }
