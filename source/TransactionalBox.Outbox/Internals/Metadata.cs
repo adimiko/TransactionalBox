@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Outbox.Internals
 {
-    public sealed class Metadata
+    internal sealed class Metadata
     {
         public string Source { get; }
 
@@ -8,10 +8,10 @@
 
         public string CorrelationId { get; }
 
-        internal Metadata(Envelope envelope, string serviceName) 
+        internal Metadata(Envelope envelope, string serviceName, DateTime nowUtc) 
         {
             Source = serviceName;
-            OccurredUtc = envelope.OccurredUtc;
+            OccurredUtc = nowUtc;
             CorrelationId = envelope.CorrelationId;
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using TransactionalBox.Internals;
-using TransactionalBox.Outbox.Internals.Exceptions;
+﻿using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Serialization;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 
@@ -14,17 +12,21 @@ namespace TransactionalBox.Outbox.Internals
 
         private readonly IOutboxSerializer _serializer;
 
+        private readonly ISystemClock _systemClock;
+
         private readonly TopicFactory _topicFactory;
 
         public InternalOutbox(
             IServiceContext serviceContext,
             IOutboxStorage outbox,
             IOutboxSerializer serializer,
+            ISystemClock systemClock,
             TopicFactory topicFactory) 
         {
             _serviceContext = serviceContext;
             _outboxStorage = outbox;
             _serializer = serializer;
+            _systemClock = systemClock;
             _topicFactory = topicFactory;
         }
 
@@ -38,11 +40,6 @@ namespace TransactionalBox.Outbox.Internals
                 envelopeConfiguration(envelope);
             }
 
-            if (envelope.OccurredUtc.Kind != DateTimeKind.Utc)
-            {
-                throw new OccurredUtcMustBeUtcException();
-            }
-
             var receiver = envelope.Receiver;
 
             if (receiver is null)
@@ -50,13 +47,13 @@ namespace TransactionalBox.Outbox.Internals
                 receiver = _serviceContext.Id;
             }
 
-            var metadata = new Metadata(envelope, _serviceContext.Id);
+            var metadata = new Metadata(envelope, _serviceContext.Id, _systemClock.UtcNow);
             var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
 
             var outboxMessage = new OutboxMessage
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
-                OccurredUtc = envelope.OccurredUtc,
+                OccurredUtc = metadata.OccurredUtc,
                 ProcessedUtc = null,
                 Topic = _topicFactory.Create(receiver, message),
                 Data = _serializer.Serialize(outboxMessagePayload),
@@ -75,11 +72,6 @@ namespace TransactionalBox.Outbox.Internals
                 envelopeConfiguration(envelope);
             }
 
-            if (envelope.OccurredUtc.Kind != DateTimeKind.Utc)
-            {
-                throw new OccurredUtcMustBeUtcException();
-            }
-
             var receiver = envelope.Receiver;
 
             if (receiver is null)
@@ -89,7 +81,7 @@ namespace TransactionalBox.Outbox.Internals
 
             var outboxMessages = new List<OutboxMessage>();
 
-            var metadata = new Metadata(envelope, _serviceContext.Id);
+            var metadata = new Metadata(envelope, _serviceContext.Id, _systemClock.UtcNow);
 
             foreach (var message in messages) 
             {
@@ -98,7 +90,7 @@ namespace TransactionalBox.Outbox.Internals
                 var outboxMessage = new OutboxMessage
                 {
                     Id = Guid.NewGuid(), //TODO Sequential GUID #14
-                    OccurredUtc = envelope.OccurredUtc,
+                    OccurredUtc = metadata.OccurredUtc,
                     ProcessedUtc = null,
                     Topic = _topicFactory.Create(receiver, message),
                     Data = _serializer.Serialize(outboxMessagePayload),
