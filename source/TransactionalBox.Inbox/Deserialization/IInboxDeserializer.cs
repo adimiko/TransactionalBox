@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Inbox.Internals;
-
-namespace TransactionalBox.Inbox.Deserialization
+﻿namespace TransactionalBox.Inbox.Deserialization
 {
     public interface IInboxDeserializer
     {

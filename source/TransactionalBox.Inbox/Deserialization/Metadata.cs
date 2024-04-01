@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals
+﻿namespace TransactionalBox.Inbox.Deserialization
 {
     public sealed class Metadata
     {
