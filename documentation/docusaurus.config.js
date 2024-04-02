@@ -8,7 +8,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'TransactionalBox',
+  title: 'Transactional Box',
   tagline: 'Outbox and Inbox pattern in .NET',
   favicon: 'img/logo.png',
 
