@@ -40,7 +40,7 @@ Examples of problems that occur during network communication:
 #### Transport
 - [x] Support for Apache Kafka
 - [ ] Support for InMemory
-- [ ] Supprot for HTTP
+- [ ] Support for HTTP
 - [ ] Support for RabbitMQ
 - [ ] Support for Iggy
 - [ ] Supprot for gRPC
