@@ -4,7 +4,8 @@ sidebar_position: 1
 
 # Introduction
 
-Let's discover **TransactionalBox  in less than 5 minutes**.
+Transactional box is an implementation of the outbox and inbox pattern in .NET.
+Ensures eventual consistency when modules need to communicate with each other over the network.
 
 ## General concept
 
