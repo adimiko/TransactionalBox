@@ -5,7 +5,15 @@ sidebar_position: 1
 # Entity Framework
 
 TransactionalBox is not responsible for configuring Entity Framework.
-All it needs is to use the already existing DbContext and add the model to the ModelBuilder.
+All it needs is to use the already existing `DbContext` and add the model to the `ModelBuilder`.
+
+Transactional box add messages to your `DbContext`.
+You need to invoke `SaveChangesAsync()` on `DbContext`.
+
+:::warning
+Remember, all changes need to be in one transaction.
+Using `ExecuteUpdate` or `ExecuteDelete` you need to create own transaction.
+:::
 
 :::tip
 
@@ -14,6 +22,8 @@ Use `AddDbContexPoll` when configuring Entity Framework.
 builder.Services.AddDbContextPool<SampleDbContext>(x => x.Use...(connectionString));
 ```
 :::
+
+
 
 ## Configuration
 ### Install package
@@ -25,7 +35,7 @@ dotnet add package TransactionalBox.Outbox.EntityFramework
 ```csharp
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
+    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
 });
 
 ```
