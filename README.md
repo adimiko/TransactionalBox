@@ -75,7 +75,7 @@ Examples of problems that occur during network communication:
 - [ ] Remove expired idempotency keys
 - [ ] Archive processed messages from the outbox
 - [ ] Archive processed messages from the inbox
-- [ ] Correlation ID
+- [x] Correlation ID
 
 #### Other
 - [x] Modular package architecture
