@@ -2,6 +2,6 @@
 sidebar_position: 1
 ---
 
-# Outbox
+# Entity Framework
 
 TODO
