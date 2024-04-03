@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
 using TransactionalBox.InboxWorker.Configurators;
-using TransactionalBox.InboxWorker.Decompression;
 
-namespace TransactionalBox.InboxWorker.GZipDecompression
+namespace TransactionalBox.InboxWorker.Decompression.GZip
 {
     public static class Extensions
     {

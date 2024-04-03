@@ -17,7 +17,7 @@
 	<InternalsVisibleTo Include="TransactionalBox.TransportBase.InMemory" />
 	  
 	<InternalsVisibleTo Include="$(AssemblyName).BrotliDecompression" />
-	<InternalsVisibleTo Include="$(AssemblyName).GZipDecompression" />
+	<InternalsVisibleTo Include="$(AssemblyName).Decompression.GZip" />
 	<InternalsVisibleTo Include="$(AssemblyName).CustomDecompression" />
   </ItemGroup>
 
