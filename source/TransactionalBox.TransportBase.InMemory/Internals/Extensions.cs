@@ -20,6 +20,7 @@ namespace TransactionalBox.TransportBase.InMemory.Internals
             var services = configurator.Services;
 
             services.AddSingleton<IInboxWorkerTransport, InternalTransport>();
+            services.AddSingleton<ITransportTopicWithWildCard, InMemoryTransportTopicWithWildCard>();
         }
     }
 }

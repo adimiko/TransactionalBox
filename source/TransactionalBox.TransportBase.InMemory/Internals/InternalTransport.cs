@@ -34,11 +34,20 @@ namespace TransactionalBox.TransportBase.InMemory.Internals
 
         public async IAsyncEnumerable<byte[]> GetMessages(IEnumerable<string> topics, CancellationToken cancellationToken)
         {
+            var topicsWithWildcard = topics.Where(x => x.EndsWith('*'));
+
+            var expectedTopicsStartWith = topicsWithWildcard.Select(x => x.Replace("*", string.Empty));
+
             await foreach (var message in _reader.ReadAllAsync(cancellationToken)) 
             {
-                //TODO should return topics with messages ?
-
-                yield return message.Payload;
+                if (topics.Contains(message.Topic) || expectedTopicsStartWith.Where(message.Topic.StartsWith).Any())
+                {
+                    yield return message.Payload;
+                }
+                else
+                {
+                    continue;
+                }
             }
         }
     }
