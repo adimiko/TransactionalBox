@@ -34,16 +34,16 @@ Examples of problems that occur during network communication:
 - [x] Entity Framework (Relational)
     - [x] Migrations
     - [X] Distributed Lock (Optimistic Concurency Control, Standalone Package)
-- [x] InMemory
+- [ ] InMemory
 - [ ] MongoDB
 
 #### Transport
-- [x] Support for Apache Kafka
-- [ ] Support for InMemory
-- [ ] Support for HTTP
-- [ ] Support for RabbitMQ
-- [ ] Support for Iggy
-- [ ] Supprot for gRPC
+- [x] Apache Kafka
+- [x] InMemory
+- [ ] RabbitMQ
+- [ ] Iggy
+- [ ] HTTP
+- [ ] gRPC
 
 #### Scalability & Fault Tolerance
 - [ ] Support for multiple outbox worker instances
