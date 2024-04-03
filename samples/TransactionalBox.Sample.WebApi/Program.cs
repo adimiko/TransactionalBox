@@ -20,6 +20,9 @@ using TransactionalBox.OutboxWorker.BrotliCompression;
 using TransactionalBox.InboxWorker.BrotliDecompression;
 using TransactionalBox.OutboxWorker.Kafka;
 using TransactionalBox.Sample.WebApi;
+using TransactionalBox.OutboxWorker.InMemory;
+using TransactionalBox.InboxWorker.InMemory;
+
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
   .Build();
@@ -49,7 +52,8 @@ x =>
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
      .WithWorker(
         storage => storage.UseEntityFramework(), 
-        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), 
+        //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        transport => transport.UseInMemory(),
         settings =>
      {
          settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
@@ -63,7 +67,8 @@ x =>
     })
      .WithWorker(
         storage => storage.UseEntityFramework(),
-        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        transport => transport.UseInMemory(),
         settings =>
      {
          settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;

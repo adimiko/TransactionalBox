@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.OutboxWorker.Internals.Contracts
 {
-    internal interface ITransport
+    internal interface IOutboxWorkerTransport
     {
         Task<TransportResult> Add(string topic, byte[] payload);
     }

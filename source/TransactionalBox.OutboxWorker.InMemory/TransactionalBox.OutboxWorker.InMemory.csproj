@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj" />
+    <ProjectReference Include="..\TransactionalBox.TransportBase.InMemory\TransactionalBox.TransportBase.InMemory.csproj" />
+  </ItemGroup>
+</Project>

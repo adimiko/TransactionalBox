@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.CustomDecompression\TransactionalBox.InboxWorker.CustomDecompression.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.EntityFramework\TransactionalBox.InboxWorker.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.GZipDecompression\TransactionalBox.InboxWorker.GZipDecompression.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.InMemory\TransactionalBox.InboxWorker.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Kafka\TransactionalBox.InboxWorker.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.EntityFramework\TransactionalBox.Outbox.EntityFramework.csproj" />
@@ -28,6 +29,7 @@
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.CustomCompression\TransactionalBox.OutboxWorker.CustomCompression.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.EntityFramework\TransactionalBox.OutboxWorker.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.GZipCompression\TransactionalBox.OutboxWorker.GZipCompression.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.InMemory\TransactionalBox.OutboxWorker.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Kafka\TransactionalBox.OutboxWorker.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj" />
   </ItemGroup>
