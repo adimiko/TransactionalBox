@@ -8,7 +8,7 @@ using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
-using TransactionalBox.InboxWorker.EntityFramework;
+using TransactionalBox.InboxWorker.Storage.EntityFramework;
 using TransactionalBox.InboxWorker.Decompression.GZip;
 using TransactionalBox.InboxWorker.Transport.Kafka;
 using TransactionalBox.Outbox;

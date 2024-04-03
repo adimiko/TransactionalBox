@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Storage.EntityFramework\TransactionalBox.Inbox.Storage.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.EntityFramework\TransactionalBox.InboxWorker.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Storage.EntityFramework\TransactionalBox.InboxWorker.Storage.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Transport.Kafka\TransactionalBox.InboxWorker.Transport.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker\TransactionalBox.InboxWorker.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />

@@ -4,7 +4,7 @@ using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Internals;
 using TransactionalBox.InboxWorker.Internals.Contracts;
 
-namespace TransactionalBox.InboxWorker.EntityFramework.Internals
+namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
 {
     internal sealed class EntityFrameworkInboxStorage : IInboxStorage
     {
