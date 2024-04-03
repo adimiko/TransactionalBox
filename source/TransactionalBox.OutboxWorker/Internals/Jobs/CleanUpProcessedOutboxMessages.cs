@@ -6,14 +6,14 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 {
     internal sealed class CleanUpProcessedOutboxMessages : Job
     {
-        private readonly IOutboxStorage _outboxStorage;
+        private readonly IOutboxWorkerStorage _outboxStorage;
 
         private readonly ICleanUpProcessedOutboxMessagesJobSettings _settings;
 
         private readonly ISystemClock _systemClock;
 
         public CleanUpProcessedOutboxMessages(
-            IOutboxStorage outboxStorage,
+            IOutboxWorkerStorage outboxStorage,
             ICleanUpProcessedOutboxMessagesJobSettings settings,
             ISystemClock systemClock) 
         {

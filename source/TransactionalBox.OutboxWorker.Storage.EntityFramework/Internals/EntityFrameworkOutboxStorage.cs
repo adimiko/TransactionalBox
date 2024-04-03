@@ -7,7 +7,7 @@ using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
 {
-    internal sealed class EntityFrameworkOutboxStorage : IOutboxStorage
+    internal sealed class EntityFrameworkOutboxStorage : IOutboxWorkerStorage
     {
         private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
 

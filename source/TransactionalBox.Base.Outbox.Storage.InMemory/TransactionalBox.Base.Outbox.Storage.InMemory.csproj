@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<InternalsVisibleTo Include="TransactionalBox.Outbox.Storage.InMemory" />
+  </ItemGroup>
+</Project>

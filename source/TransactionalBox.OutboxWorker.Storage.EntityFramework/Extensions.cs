@@ -14,7 +14,7 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework
         {
             var services = outboxWorkerStorageConfigurator.Services;
 
-            services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
+            services.AddScoped<IOutboxWorkerStorage, EntityFrameworkOutboxStorage>();
 
             services.AddDistributedLock<OutboxDistributedLock>(x => x.UseEntityFramework());
         }
