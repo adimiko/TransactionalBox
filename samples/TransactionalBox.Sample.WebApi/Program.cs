@@ -17,6 +17,7 @@ using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
 using TransactionalBox.OutboxWorker.Compression.Brotli;
+using TransactionalBox.OutboxWorker.Compression.GZip;
 using TransactionalBox.InboxWorker.BrotliDecompression;
 using TransactionalBox.OutboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
@@ -58,7 +59,7 @@ x =>
      {
          settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
          settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 0;
-         settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
+         settings.ConfigureCompressionAlgorithm = x => x.UseGZipCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
@@ -73,7 +74,7 @@ x =>
      {
          settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
          settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
-         settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
+         settings.ConfigureDecompressionAlgorithm = x => x.UseGZipDecompression();
      });
 },
 settings => settings.ServiceId = "Registrations");

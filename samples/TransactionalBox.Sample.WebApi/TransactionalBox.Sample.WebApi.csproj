@@ -28,7 +28,7 @@
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Compression.Brotli\TransactionalBox.OutboxWorker.Compression.Brotli.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.CustomCompression\TransactionalBox.OutboxWorker.CustomCompression.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.EntityFramework\TransactionalBox.OutboxWorker.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.GZipCompression\TransactionalBox.OutboxWorker.GZipCompression.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Compression.GZip\TransactionalBox.OutboxWorker.Compression.GZip.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Transport.InMemory\TransactionalBox.OutboxWorker.Transport.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Transport.Kafka\TransactionalBox.OutboxWorker.Transport.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj" />

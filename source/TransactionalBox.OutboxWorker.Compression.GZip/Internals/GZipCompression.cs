@@ -2,7 +2,7 @@
 using System.IO.Compression;
 using TransactionalBox.OutboxWorker.Compression;
 
-namespace TransactionalBox.OutboxWorker.GZipCompression.Internals
+namespace TransactionalBox.OutboxWorker.Compression.GZip.Internals
 {
     internal sealed class GZipCompression : ICompressionAlgorithm
     {

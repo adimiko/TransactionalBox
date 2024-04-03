@@ -2,10 +2,10 @@
 using Microsoft.IO;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.OutboxWorker.GZipCompression.Internals;
-using TransactionalBox.OutboxWorker.GZipCompression.Settings;
+using TransactionalBox.OutboxWorker.Compression.GZip.Internals;
+using TransactionalBox.OutboxWorker.Compression.GZip.Settings;
 
-namespace TransactionalBox.OutboxWorker.GZipCompression
+namespace TransactionalBox.OutboxWorker.Compression.GZip
 {
     public static class Extensions
     {
