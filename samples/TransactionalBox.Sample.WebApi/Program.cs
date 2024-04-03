@@ -16,7 +16,7 @@ using TransactionalBox.Outbox.EntityFramework;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
-using TransactionalBox.OutboxWorker.BrotliCompression;
+using TransactionalBox.OutboxWorker.Compression.Brotli;
 using TransactionalBox.InboxWorker.BrotliDecompression;
 using TransactionalBox.OutboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
