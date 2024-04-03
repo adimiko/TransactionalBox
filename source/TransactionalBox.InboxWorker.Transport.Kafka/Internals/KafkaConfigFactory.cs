@@ -2,7 +2,7 @@
 using TransactionalBox.InboxWorker.Internals.Contexts;
 using TransactionalBox.Internals;
 
-namespace TransactionalBox.InboxWorker.Kafka.Internals
+namespace TransactionalBox.InboxWorker.Transport.Kafka.Internals
 {
     internal sealed class KafkaConfigFactory
     {

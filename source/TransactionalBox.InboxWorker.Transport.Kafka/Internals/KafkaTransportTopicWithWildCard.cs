@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.InboxWorker.Internals.Contracts;
 
-namespace TransactionalBox.InboxWorker.Kafka.Internals
+namespace TransactionalBox.InboxWorker.Transport.Kafka.Internals
 {
     internal sealed class KafkaTransportTopicWithWildCard : ITransportTopicWithWildCard
     {

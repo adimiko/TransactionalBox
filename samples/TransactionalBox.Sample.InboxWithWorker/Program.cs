@@ -5,7 +5,7 @@ using TransactionalBox.Inbox.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
 using TransactionalBox.InboxWorker.EntityFramework;
-using TransactionalBox.InboxWorker.Kafka;
+using TransactionalBox.InboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.InboxWithWorker;
 
 const string connectionString = "Server=mssql;Database=msdb;User Id=sa;Password=Password123!@#;TrustServerCertificate=true;";

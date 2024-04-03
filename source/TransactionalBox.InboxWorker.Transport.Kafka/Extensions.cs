@@ -2,10 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Internals.Contracts;
-using TransactionalBox.InboxWorker.Kafka.Internals;
-using TransactionalBox.InboxWorker.Kafka.Settings;
+using TransactionalBox.InboxWorker.Transport.Kafka.Internals;
+using TransactionalBox.InboxWorker.Transport.Kafka.Settings;
 
-namespace TransactionalBox.InboxWorker.Kafka
+namespace TransactionalBox.InboxWorker.Transport.Kafka
 {
     public static class Extensions
     {

@@ -10,7 +10,7 @@ using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
 using TransactionalBox.InboxWorker.EntityFramework;
 using TransactionalBox.InboxWorker.GZipDecompression;
-using TransactionalBox.InboxWorker.Kafka;
+using TransactionalBox.InboxWorker.Transport.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.EntityFramework;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
@@ -52,8 +52,8 @@ x =>
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
      .WithWorker(
         storage => storage.UseEntityFramework(), 
-        //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
-        transport => transport.UseInMemory(),
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        //transport => transport.UseInMemory(),
         settings =>
      {
          settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
@@ -67,8 +67,8 @@ x =>
     })
      .WithWorker(
         storage => storage.UseEntityFramework(),
-        //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
-        transport => transport.UseInMemory(),
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        //transport => transport.UseInMemory(),
         settings =>
      {
          settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;

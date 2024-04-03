@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
-    <InternalsVisibleTo Include="$(AssemblyName).Kafka" />
+    <InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
 	<InternalsVisibleTo Include="TransactionalBox.TransportBase.InMemory" />
 	  
 	<InternalsVisibleTo Include="$(AssemblyName).BrotliDecompression" />

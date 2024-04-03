@@ -22,7 +22,7 @@
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.EntityFramework\TransactionalBox.InboxWorker.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.GZipDecompression\TransactionalBox.InboxWorker.GZipDecompression.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.InMemory\TransactionalBox.InboxWorker.InMemory.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Kafka\TransactionalBox.InboxWorker.Kafka.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Transport.Kafka\TransactionalBox.InboxWorker.Transport.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.EntityFramework\TransactionalBox.Outbox.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.BrotliCompression\TransactionalBox.OutboxWorker.BrotliCompression.csproj" />
