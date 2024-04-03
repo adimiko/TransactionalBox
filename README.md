@@ -31,11 +31,11 @@ Examples of problems that occur during network communication:
 - [x] Get a message from inbox and process it
 
 #### Storage
-- [x] Support for Entity Framework (Relational)
+- [x] Entity Framework (Relational)
     - [x] Migrations
     - [X] Distributed Lock (Optimistic Concurency Control, Standalone Package)
-- [ ] Support for InMemory
-- [ ] Support for MongoDB
+- [x] InMemory
+- [ ] MongoDB
 
 #### Transport
 - [x] Support for Apache Kafka
