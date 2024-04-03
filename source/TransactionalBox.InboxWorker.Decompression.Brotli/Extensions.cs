@@ -3,7 +3,7 @@ using Microsoft.IO;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Decompression;
 
-namespace TransactionalBox.InboxWorker.BrotliDecompression
+namespace TransactionalBox.InboxWorker.Decompression.Brotli
 {
     public static class Extensions
     {

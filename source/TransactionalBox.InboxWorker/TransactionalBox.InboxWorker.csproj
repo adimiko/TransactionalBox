@@ -16,7 +16,7 @@
     <InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
 	<InternalsVisibleTo Include="TransactionalBox.TransportBase.InMemory" />
 	  
-	<InternalsVisibleTo Include="$(AssemblyName).BrotliDecompression" />
+	<InternalsVisibleTo Include="$(AssemblyName).Decompression.Brotli" />
 	<InternalsVisibleTo Include="$(AssemblyName).Decompression.GZip" />
 	<InternalsVisibleTo Include="$(AssemblyName).CustomDecompression" />
   </ItemGroup>

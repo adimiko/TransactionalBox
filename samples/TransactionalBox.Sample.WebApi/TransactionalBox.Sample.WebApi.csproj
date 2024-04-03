@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.EntityFramework\TransactionalBox.Inbox.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.BrotliDecompression\TransactionalBox.InboxWorker.BrotliDecompression.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Decompression.Brotli\TransactionalBox.InboxWorker.Decompression.Brotli.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.CustomDecompression\TransactionalBox.InboxWorker.CustomDecompression.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.EntityFramework\TransactionalBox.InboxWorker.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Decompression.GZip\TransactionalBox.InboxWorker.Decompression.GZip.csproj" />

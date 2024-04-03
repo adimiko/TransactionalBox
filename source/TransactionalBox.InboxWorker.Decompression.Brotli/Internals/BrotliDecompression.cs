@@ -2,7 +2,7 @@
 using System.IO.Compression;
 using TransactionalBox.InboxWorker.Decompression;
 
-namespace TransactionalBox.InboxWorker.BrotliDecompression.Internals
+namespace TransactionalBox.InboxWorker.Decompression.Brotli.Internals
 {
     internal sealed class BrotliDecompression : IDecompressionAlgorithm
     {
