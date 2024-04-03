@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 
-namespace TransactionalBox.OutboxWorker.Kafka.Internals
+namespace TransactionalBox.OutboxWorker.Transport.Kafka.Internals
 {
     internal sealed class KafkaConfigFactory
     {
