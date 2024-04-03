@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.TransportBase.InMemory.Internals;
 
-namespace TransactionalBox.OutboxWorker.InMemory
+namespace TransactionalBox.OutboxWorker.Transport.InMemory
 {
     public static class Extensions
     {

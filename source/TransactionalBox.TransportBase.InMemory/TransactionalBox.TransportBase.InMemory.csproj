@@ -5,7 +5,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.InMemory" />
+		<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.Transport.InMemory" />
 		<InternalsVisibleTo Include="TransactionalBox.InboxWorker.InMemory" />
 	</ItemGroup>
 </Project>
