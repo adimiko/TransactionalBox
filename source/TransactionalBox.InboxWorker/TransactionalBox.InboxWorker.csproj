@@ -18,7 +18,7 @@
 	  
 	<InternalsVisibleTo Include="$(AssemblyName).Decompression.Brotli" />
 	<InternalsVisibleTo Include="$(AssemblyName).Decompression.GZip" />
-	<InternalsVisibleTo Include="$(AssemblyName).CustomDecompression" />
+	<InternalsVisibleTo Include="$(AssemblyName).Decompression.CustomDecompression" />
   </ItemGroup>
 
 </Project>

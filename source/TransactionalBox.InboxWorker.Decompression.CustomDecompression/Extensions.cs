@@ -2,7 +2,7 @@
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Decompression;
 
-namespace TransactionalBox.InboxWorker.CustomDecompression
+namespace TransactionalBox.InboxWorker.Decompression.CustomDecompression
 {
     public static class Extensions
     {
