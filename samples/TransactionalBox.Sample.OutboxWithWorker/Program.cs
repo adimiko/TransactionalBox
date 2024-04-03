@@ -1,6 +1,6 @@
 using TransactionalBox;
 using TransactionalBox.Outbox;
-using TransactionalBox.Outbox.EntityFramework;
+using TransactionalBox.Outbox.Storage.EntityFramework;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.EntityFramework;
 using TransactionalBox.OutboxWorker.Transport.Kafka;

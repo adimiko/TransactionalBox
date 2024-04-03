@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.UnitTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox", "source\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj", "{F86E46C4-F478-4B05-A187-2641AD14BF3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.EntityFramework", "source\TransactionalBox.Outbox.EntityFramework\TransactionalBox.Outbox.EntityFramework.csproj", "{36DBAFB0-B554-4730-8098-22898103B2EA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{D018E603-5AE9-4B1B-BF33-04EB0B5D6913}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.WebApi", "samples\TransactionalBox.Sample.WebApi\TransactionalBox.Sample.WebApi.csproj", "{0F2366C8-A646-4714-A884-3DE04348B45F}"
@@ -83,6 +81,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.Decompression.CustomDecompression", "source\TransactionalBox.InboxWorker.Decompression.CustomDecompression\TransactionalBox.InboxWorker.Decompression.CustomDecompression.csproj", "{7B4083C2-AB25-493C-9EBD-51A491C92736}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Storage.EntityFramework", "source\TransactionalBox.Outbox.Storage.EntityFramework\TransactionalBox.Outbox.Storage.EntityFramework.csproj", "{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,10 +101,6 @@ Global
 		{F86E46C4-F478-4B05-A187-2641AD14BF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F86E46C4-F478-4B05-A187-2641AD14BF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F86E46C4-F478-4B05-A187-2641AD14BF3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36DBAFB0-B554-4730-8098-22898103B2EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36DBAFB0-B554-4730-8098-22898103B2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36DBAFB0-B554-4730-8098-22898103B2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36DBAFB0-B554-4730-8098-22898103B2EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F2366C8-A646-4714-A884-3DE04348B45F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F2366C8-A646-4714-A884-3DE04348B45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F2366C8-A646-4714-A884-3DE04348B45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -237,6 +233,10 @@ Global
 		{7B4083C2-AB25-493C-9EBD-51A491C92736}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B4083C2-AB25-493C-9EBD-51A491C92736}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B4083C2-AB25-493C-9EBD-51A491C92736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -245,7 +245,6 @@ Global
 		{A736B4E9-B86A-4654-9525-4A4B2889E70F} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{EB3E6211-3118-4D11-B108-F8508A0CD052} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{F86E46C4-F478-4B05-A187-2641AD14BF3A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{36DBAFB0-B554-4730-8098-22898103B2EA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{0F2366C8-A646-4714-A884-3DE04348B45F} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{7934A882-94D0-4A2A-8965-D7CDE3808F8A} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{289E2039-7A1E-48AE-AFB1-D8988C939C20} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
@@ -279,6 +278,7 @@ Global
 		{C184F68D-52C9-4217-8278-227CCE29E3A4} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{0B918138-12BE-4158-8131-C884375CC386} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{7B4083C2-AB25-493C-9EBD-51A491C92736} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

@@ -7,7 +7,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
 	<InternalsVisibleTo Include="TransactionalBox.Outbox" />
-	<InternalsVisibleTo Include="TransactionalBox.Outbox.EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.Outbox.Storage.EntityFramework" />
 	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.EntityFramework" />
 	  
