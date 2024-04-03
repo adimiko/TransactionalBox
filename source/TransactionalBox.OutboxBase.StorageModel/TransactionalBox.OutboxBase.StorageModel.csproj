@@ -9,7 +9,7 @@
 	<InternalsVisibleTo Include="TransactionalBox.Outbox" />
 	<InternalsVisibleTo Include="TransactionalBox.Outbox.Storage.EntityFramework" />
 	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker" />
-	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.Storage.EntityFramework" />
 	  
 	 <!--Samples-->
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />

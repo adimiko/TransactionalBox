@@ -15,7 +15,7 @@ using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
-using TransactionalBox.OutboxWorker.EntityFramework;
+using TransactionalBox.OutboxWorker.Storage.EntityFramework;
 using TransactionalBox.OutboxWorker.Compression.Brotli;
 using TransactionalBox.OutboxWorker.Compression.GZip;
 using TransactionalBox.InboxWorker.Decompression.Brotli;

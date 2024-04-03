@@ -3,10 +3,10 @@ using TransactionalBox.DistributedLock;
 using TransactionalBox.DistributedLock.EntityFramework;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.OutboxWorker.EntityFramework.Internals;
+using TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 
-namespace TransactionalBox.OutboxWorker.EntityFramework
+namespace TransactionalBox.OutboxWorker.Storage.EntityFramework
 {
     public static class Extensions
     {
