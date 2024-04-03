@@ -2,7 +2,7 @@
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Configurators;
 
-namespace TransactionalBox.OutboxWorker.CustomCompression
+namespace TransactionalBox.OutboxWorker.Compression.CustomCompression
 {
     public static class Extensions
     {

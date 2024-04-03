@@ -18,7 +18,7 @@
 
 	<InternalsVisibleTo Include="$(AssemblyName).Compression.GZip" />
 	<InternalsVisibleTo Include="$(AssemblyName).Compression.Brotli" />
-	<InternalsVisibleTo Include="$(AssemblyName).CustomCompression" />
+	<InternalsVisibleTo Include="$(AssemblyName).Compression.CustomCompression" />
   </ItemGroup>
 
 </Project>
