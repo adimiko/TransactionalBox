@@ -5,7 +5,7 @@ using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
 using TransactionalBox;
 using TransactionalBox.Inbox;
-using TransactionalBox.Inbox.EntityFramework;
+using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
 using TransactionalBox.InboxWorker.EntityFramework;

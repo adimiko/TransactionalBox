@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.EntityFramework.Internals;
+using TransactionalBox.Inbox.Storage.EntityFramework.Internals;
 using TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.DistributedLock.EntityFramework;
 using TransactionalBox.Inbox.Internals.Contracts;
 
-namespace TransactionalBox.Inbox.EntityFramework
+namespace TransactionalBox.Inbox.Storage.EntityFramework
 {
     public static class Extensions
     {

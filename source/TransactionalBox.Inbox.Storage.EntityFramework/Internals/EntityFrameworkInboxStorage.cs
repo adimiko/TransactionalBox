@@ -4,7 +4,7 @@ using TransactionalBox.DistributedLock;
 using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 
-namespace TransactionalBox.Inbox.EntityFramework.Internals
+namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
 {
     internal sealed class EntityFrameworkInboxStorage : IInboxStorage
     {
