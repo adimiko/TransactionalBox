@@ -21,7 +21,7 @@ namespace TransactionalBox.OutboxWorker.Kafka
 
             services.AddSingleton<IOutboxWorkerKafkaSettings>(settings);
             services.AddSingleton<KafkaConfigFactory>();
-            services.AddScoped<ITransport, KafkaTransport>();
+            services.AddScoped<IOutboxWorkerTransport, KafkaTransport>();
         }
     }
 }

@@ -6,7 +6,7 @@ using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Kafka.Internals
 {
-    internal sealed class KafkaTransport : ITransport
+    internal sealed class KafkaTransport : IOutboxWorkerTransport
     {
         private readonly KafkaConfigFactory _configFactory;
 

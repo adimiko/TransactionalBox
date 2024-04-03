@@ -18,7 +18,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
         private readonly IOutboxStorage _outboxStorage;
 
-        private readonly ITransport _transport;
+        private readonly IOutboxWorkerTransport _transport;
 
         private readonly IJobExecutionContext _jobExecutionContext;
 
@@ -31,7 +31,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
             IOutboxWorkerLogger<AddMessagesToTransport> logger,
             IAddMessagesToTransportJobSettings settings,
             IOutboxStorage outboxStorage,
-            ITransport transport,
+            IOutboxWorkerTransport transport,
             IJobExecutionContext jobExecutionContext,
             ICompressionAlgorithm compressionAlgorithm,
             TransportMessageFactory transportMessageFactory)
