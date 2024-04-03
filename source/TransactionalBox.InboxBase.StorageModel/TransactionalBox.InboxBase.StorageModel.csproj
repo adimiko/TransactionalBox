@@ -2,9 +2,9 @@
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
 	<InternalsVisibleTo Include="TransactionalBox.Inbox" />
-	<InternalsVisibleTo Include="TransactionalBox.Inbox.EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.Inbox.Storage.EntityFramework" />
 	<InternalsVisibleTo Include="TransactionalBox.InboxWorker" />
-	<InternalsVisibleTo Include="TransactionalBox.InboxWorker.EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.InboxWorker.Storage.EntityFramework" />
 	 
 	 <!--Samples-->
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />

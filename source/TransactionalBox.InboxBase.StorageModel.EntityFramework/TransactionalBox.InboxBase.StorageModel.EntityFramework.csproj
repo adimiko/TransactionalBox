@@ -10,6 +10,6 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <InternalsVisibleTo Include="TransactionalBox.Inbox.EntityFramework" />
+    <InternalsVisibleTo Include="TransactionalBox.Inbox.Storage.EntityFramework" />
   </ItemGroup>
 </Project>

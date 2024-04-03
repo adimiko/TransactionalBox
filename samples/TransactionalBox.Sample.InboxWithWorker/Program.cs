@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using TransactionalBox;
 using TransactionalBox.Inbox;
-using TransactionalBox.Inbox.EntityFramework;
+using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
-using TransactionalBox.InboxWorker.EntityFramework;
-using TransactionalBox.InboxWorker.Kafka;
+using TransactionalBox.InboxWorker.Storage.EntityFramework;
+using TransactionalBox.InboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.InboxWithWorker;
 
 const string connectionString = "Server=mssql;Database=msdb;User Id=sa;Password=Password123!@#;TrustServerCertificate=true;";

@@ -7,7 +7,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
+    <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
 	<InternalsVisibleTo Include="$(AssemblyName).CustomSerializer" />
   </ItemGroup>
 </Project>

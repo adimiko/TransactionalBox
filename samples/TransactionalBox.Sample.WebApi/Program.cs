@@ -5,23 +5,24 @@ using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
 using TransactionalBox;
 using TransactionalBox.Inbox;
-using TransactionalBox.Inbox.EntityFramework;
+using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
-using TransactionalBox.InboxWorker.EntityFramework;
-using TransactionalBox.InboxWorker.GZipDecompression;
-using TransactionalBox.InboxWorker.Kafka;
+using TransactionalBox.InboxWorker.Storage.EntityFramework;
+using TransactionalBox.InboxWorker.Decompression.GZip;
+using TransactionalBox.InboxWorker.Transport.Kafka;
 using TransactionalBox.Outbox;
-using TransactionalBox.Outbox.EntityFramework;
+using TransactionalBox.Outbox.Storage.EntityFramework;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
-using TransactionalBox.OutboxWorker.EntityFramework;
-using TransactionalBox.OutboxWorker.BrotliCompression;
-using TransactionalBox.InboxWorker.BrotliDecompression;
-using TransactionalBox.OutboxWorker.Kafka;
+using TransactionalBox.OutboxWorker.Storage.EntityFramework;
+using TransactionalBox.OutboxWorker.Compression.Brotli;
+using TransactionalBox.OutboxWorker.Compression.GZip;
+using TransactionalBox.InboxWorker.Decompression.Brotli;
+using TransactionalBox.OutboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
-using TransactionalBox.OutboxWorker.InMemory;
-using TransactionalBox.InboxWorker.InMemory;
+using TransactionalBox.OutboxWorker.Transport.InMemory;
+using TransactionalBox.InboxWorker.Transport.InMemory;
 
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
