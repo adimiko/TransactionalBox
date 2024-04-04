@@ -13,9 +13,11 @@ using TransactionalBox.InboxWorker.Decompression.GZip;
 using TransactionalBox.InboxWorker.Transport.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
+using TransactionalBox.Outbox.Storage.InMemory;
 using TransactionalBox.OutboxBase.StorageModel.Internals;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.Storage.EntityFramework;
+using TransactionalBox.OutboxWorker.Storage.InMemory;
 using TransactionalBox.OutboxWorker.Compression.Brotli;
 using TransactionalBox.OutboxWorker.Compression.GZip;
 using TransactionalBox.InboxWorker.Decompression.Brotli;
@@ -23,6 +25,7 @@ using TransactionalBox.OutboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.OutboxWorker.Transport.InMemory;
 using TransactionalBox.InboxWorker.Transport.InMemory;
+using TransactionalBox.Base.Outbox.Storage.InMemory;
 
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
@@ -50,9 +53,11 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionSt
 builder.Services.AddTransactionalBox(
 x =>
 {
-    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
+    //x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
+    x.AddOutbox(storage => storage.UseInMemory())
      .WithWorker(
-        storage => storage.UseEntityFramework(), 
+        //storage => storage.UseEntityFramework(), 
+        storage => storage.UseInMemory(), 
         //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         transport => transport.UseInMemory(),
         settings =>
@@ -112,9 +117,12 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
     await dbContext.SaveChangesAsync();
 });
 
-app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
+app.MapGet("/get-messages-from-outbox", async (DbContext dbContext, IOutboxStorageReadOnly outboxStorageReadOnly) =>
 {
-    var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
+    //TODO get InMemoryColletion ForTests
+    //var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
+
+    var messages = outboxStorageReadOnly.OutboxMessages;
 
     return messages;
 });
