@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.OutboxBase.StorageModel.Internals
 {
-    internal sealed class OutboxMessage
+    public sealed class OutboxMessage
     {
         public required Guid Id { get; set; }
 

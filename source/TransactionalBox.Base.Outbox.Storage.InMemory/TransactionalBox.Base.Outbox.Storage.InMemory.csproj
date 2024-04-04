@@ -7,5 +7,6 @@
 
   <ItemGroup>
 	<InternalsVisibleTo Include="TransactionalBox.Outbox.Storage.InMemory" />
+	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.Storage.InMemory" />
   </ItemGroup>
 </Project>

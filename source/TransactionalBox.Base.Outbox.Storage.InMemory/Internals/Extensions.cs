@@ -2,6 +2,7 @@
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
 using TransactionalBox.OutboxWorker.Configurators;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
 {
@@ -11,6 +12,7 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
         {
             var services = configurator.Services;
 
+            services.AddSingleton<IOutboxStorageReadOnly, InMemoryOutboxStorage>();
             services.AddSingleton<IOutboxStorage, InMemoryOutboxStorage>();
         }
 
@@ -18,7 +20,8 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
         {
             var services = configurator.Services;
 
-            services.AddSingleton<IOutboxStorage, InMemoryOutboxStorage>();
+            services.AddSingleton<IOutboxStorageReadOnly, InMemoryOutboxStorage>();
+            services.AddSingleton<IOutboxWorkerStorage, InMemoryOutboxStorage>();
         }
     }
 }

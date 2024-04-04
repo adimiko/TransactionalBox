@@ -89,6 +89,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Inbox
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Storage.InMemory", "source\TransactionalBox.Outbox.Storage.InMemory\TransactionalBox.Outbox.Storage.InMemory.csproj", "{78C27B51-23A3-4937-8020-D48177006E12}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Storage.InMemory", "source\TransactionalBox.OutboxWorker.Storage.InMemory\TransactionalBox.OutboxWorker.Storage.InMemory.csproj", "{F1A53222-8BB9-45A7-8DC6-3050E1908C87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -255,6 +257,10 @@ Global
 		{78C27B51-23A3-4937-8020-D48177006E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78C27B51-23A3-4937-8020-D48177006E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78C27B51-23A3-4937-8020-D48177006E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1A53222-8BB9-45A7-8DC6-3050E1908C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A53222-8BB9-45A7-8DC6-3050E1908C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A53222-8BB9-45A7-8DC6-3050E1908C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A53222-8BB9-45A7-8DC6-3050E1908C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -300,6 +306,7 @@ Global
 		{AAA940A5-952E-49CA-B5C7-49F885E9FA9A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{54EB96AD-DF58-44D5-8BAA-D09D7430F191} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{78C27B51-23A3-4937-8020-D48177006E12} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{F1A53222-8BB9-45A7-8DC6-3050E1908C87} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

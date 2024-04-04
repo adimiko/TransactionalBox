@@ -5,10 +5,13 @@ using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
 {
-    internal sealed class InMemoryOutboxStorage : IOutboxStorage, IOutboxWorkerStorage
+    internal sealed class InMemoryOutboxStorage : IOutboxStorage, IOutboxWorkerStorage, IOutboxStorageReadOnly
     {
         //TODO semaphoreSlim
+        //TODO DistributedLock
         private static readonly List<OutboxMessage> _outboxMessages = new List<OutboxMessage>();
+
+        public IReadOnlyCollection<OutboxMessage> OutboxMessages => _outboxMessages.AsReadOnly();
 
         public Task Add(OutboxMessage message)
         {
@@ -35,11 +38,10 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
         {
             var messages = _outboxMessages.Where(x => x.ProcessedUtc == null && x.JobId == jobId.ToString());
 
-            messages.Select(x =>
+            foreach (var message in messages) 
             {
-                x.ProcessedUtc = processedUtc;
-                return x;
-            });
+                message.ProcessedUtc = processedUtc;
+            }
 
             return Task.CompletedTask;
         }
@@ -49,17 +51,16 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
             var messages = _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
                 .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
-                .Take(batchSize);
+                .Take(batchSize)
+                .ToList();
 
-            messages.Select(x =>
+            foreach(var message in messages) 
             {
-                x.JobId = jobId.ToString();
-                x.LockUtc = nowUtc + lockTimeout;
+                message.JobId = jobId.ToString();
+                message.LockUtc = nowUtc + lockTimeout;
+            }
 
-                return x;
-            });
-
-            return Task.FromResult(messages.Count());
+            return Task.FromResult(messages.Count);
         }
 
         public Task<int> RemoveProcessedMessages(int batchSize)
