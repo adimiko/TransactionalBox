@@ -96,7 +96,8 @@ Examples of problems that occur during network communication:
     - [x] Custom (you can add your own implementation)
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
-- [ ] Idempotent messages
+- [x] Idempotent messages
+- [ ] SemaphoreSlim with Key
 
 ## :clapper: Run Sample
 > [!NOTE]
