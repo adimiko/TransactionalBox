@@ -11,7 +11,7 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework
         {
             var services = inboxWorkerStorageConfigurator.Services;
 
-            services.AddScoped<IInboxStorage, EntityFrameworkInboxStorage>();
+            services.AddScoped<IInboxWorkerStorage, EntityFrameworkInboxStorage>();
         }
     }
 }

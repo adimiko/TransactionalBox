@@ -6,6 +6,7 @@ using Testcontainers.PostgreSql;
 using TransactionalBox;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
+using TransactionalBox.Inbox.Storage.InMemory;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
 using TransactionalBox.InboxWorker.Storage.EntityFramework;
@@ -26,6 +27,9 @@ using TransactionalBox.Sample.WebApi;
 using TransactionalBox.OutboxWorker.Transport.InMemory;
 using TransactionalBox.InboxWorker.Transport.InMemory;
 using TransactionalBox.Base.Outbox.Storage.InMemory;
+using TransactionalBox.InboxWorker.Storage.InMemory;
+using TransactionalBox.Base.Inbox.Storage.InMemory;
+
 
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
@@ -67,12 +71,14 @@ x =>
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
-    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
+    //x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
+    x.AddInbox(storage => storage.UseInMemory(), settings =>
     {
         settings.NumberOfInstances = 5;
     })
      .WithWorker(
-        storage => storage.UseEntityFramework(),
+        //storage => storage.UseEntityFramework(),
+        storage => storage.UseInMemory(),
         //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         transport => transport.UseInMemory(),
         settings =>
@@ -100,6 +106,43 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox) =>
+{
+    var messages = new List<ExampleMessage>();
+
+    for (var i = 0; i < 100; i++)
+    {
+        messages.Add(message);
+    }
+
+    await outbox.AddRange(messages, m =>
+    {
+        m.Receiver = "Registrations";
+    });
+});
+
+app.MapGet("/get-messages-from-outbox", async (IOutboxStorageReadOnly outboxStorageReadOnly) =>
+{
+    var messages = outboxStorageReadOnly.OutboxMessages;
+
+    return messages;
+});
+
+app.MapGet("/get-messages-from-inbox", async (IInboxStorageReadOnly inboxStorage) =>
+{
+    var messages = inboxStorage.InboxMessages;
+
+    return messages;
+});
+
+app.MapGet("/get-idempotent-messages-from-inbox", async (IInboxStorageReadOnly inboxStorage) =>
+{
+    var messages = inboxStorage.IdempotentInboxKeys;
+
+    return messages;
+});
+
+/*
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
     var messages = new List<ExampleMessage>();
@@ -120,9 +163,9 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
 app.MapGet("/get-messages-from-outbox", async (DbContext dbContext, IOutboxStorageReadOnly outboxStorageReadOnly) =>
 {
     //TODO get InMemoryColletion ForTests
-    //var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
+    var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
 
-    var messages = outboxStorageReadOnly.OutboxMessages;
+    //var messages = outboxStorageReadOnly.OutboxMessages;
 
     return messages;
 });
@@ -154,5 +197,5 @@ app.MapGet("/inbox-distributed-locks", async (DbContext dbContext) =>
 
     return locks;
 });
-
+*/
 app.Run();
