@@ -6,19 +6,19 @@ using TransactionalBox.InboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
 {
-    internal sealed class EntityFrameworkInboxStorage : IInboxStorage
+    internal sealed class EntityFrameworkInboxStorage : IInboxWorkerStorage
     {
         private readonly DbContext _dbContext;
 
         private readonly DbSet<InboxMessage> _inboxMessages;
 
-        private readonly DbSet<IdempotentInboxKey> _idempotentInboxekeys;
+        private readonly DbSet<IdempotentInboxKey> _idempotentInboxKeys;
 
         public EntityFrameworkInboxStorage(DbContext dbContext)
         {
             _dbContext = dbContext;
             _inboxMessages = dbContext.Set<InboxMessage>();
-            _idempotentInboxekeys = _dbContext.Set<IdempotentInboxKey>();
+            _idempotentInboxKeys = _dbContext.Set<IdempotentInboxKey>();
         }
 
         public async Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages)
@@ -26,7 +26,7 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
             //TODO input ready id
             var ids = messages.Select(x => x.Id);
 
-            var idempotentInboxKeys = await _idempotentInboxekeys
+            var idempotentInboxKeys = await _idempotentInboxKeys
                         .AsNoTracking()
                         .Where(x => ids.Contains(x.Id))
                         .ToListAsync();
@@ -51,7 +51,7 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
 
             try
             {
-                await _idempotentInboxekeys.AddRangeAsync(idempotentMessages);
+                await _idempotentInboxKeys.AddRangeAsync(idempotentMessages);
 
                 await _inboxMessages.AddRangeAsync(messages);
 

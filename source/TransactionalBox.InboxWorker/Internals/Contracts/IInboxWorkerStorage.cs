@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.InboxWorker.Internals.Contracts
 {
-    internal interface IInboxStorage
+    internal interface IInboxWorkerStorage
     {
         Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages);
 

@@ -45,7 +45,7 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
                     //TODO #27
                     var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessage>>(decompressedMessagesFromTransport);
 
-                    var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxStorage>();
+                    var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
 
                     var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages);
 

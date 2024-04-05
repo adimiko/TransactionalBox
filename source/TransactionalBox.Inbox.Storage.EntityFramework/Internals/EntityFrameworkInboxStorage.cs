@@ -22,6 +22,7 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
 
         public async Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, DateTime nowUtc, TimeSpan lockTimeout)
         {
+            //TODO mark message and process
             await _distributedLock.Acquire(jobName.ToString(), nowUtc, lockTimeout, TimeSpan.FromMicroseconds(50));
 
             var message = await _dbContext.Set<InboxMessage>()
