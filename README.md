@@ -34,9 +34,7 @@ Examples of problems that occur during network communication:
 - [x] Entity Framework (Relational)
     - [x] Migrations
     - [X] Distributed Lock (Optimistic Concurency Control, Standalone Package)
-- [ ] InMemory
-    - [x] Outbox
-    - [ ] Inbox
+- [x] InMemory
 - [ ] MongoDB
 
 #### Transport
