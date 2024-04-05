@@ -17,6 +17,11 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
 
         public Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc)
         {
+            foreach (var message in messages)
+            {
+                message.AddedUtc = nowUtc;
+            }
+
             _inboxMessages.AddRange(messages);
 
             var idempotentMessages = messages.Select(x => IdempotentInboxKey.CreateBasedOnInboxMessage(x));
