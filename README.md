@@ -35,6 +35,8 @@ Examples of problems that occur during network communication:
     - [x] Migrations
     - [X] Distributed Lock (Optimistic Concurency Control, Standalone Package)
 - [ ] InMemory
+    - [x] Outbox
+    - [ ] Inbox
 - [ ] MongoDB
 
 #### Transport
