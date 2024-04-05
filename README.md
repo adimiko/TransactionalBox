@@ -35,6 +35,8 @@ Examples of problems that occur during network communication:
     - [x] Migrations
     - [X] Distributed Lock (Optimistic Concurency Control, Standalone Package)
 - [ ] InMemory
+    - [x] Outbox
+    - [ ] Inbox
 - [ ] MongoDB
 
 #### Transport
@@ -96,7 +98,8 @@ Examples of problems that occur during network communication:
     - [x] Custom (you can add your own implementation)
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
-- [ ] Idempotent messages
+- [x] Idempotent messages
+- [ ] SemaphoreSlim with Key
 
 ## :clapper: Run Sample
 > [!NOTE]
