@@ -28,7 +28,7 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.Use...(connectionStrin
 ## Configuration
 ### Install package
 ```csharp
-dotnet add package TransactionalBox.Outbox.EntityFramework
+dotnet add package TransactionalBox.Outbox.Transport.EntityFramework
 ```
 
 ### Register entity framework as outbox storage
