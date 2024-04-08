@@ -95,6 +95,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Storage.InMemory", "source\TransactionalBox.Inbox.Storage.InMemory\TransactionalBox.Inbox.Storage.InMemory.csproj", "{1BF21145-4651-40BD-897A-0CDFB2913FA6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.WebApi.InMemory", "samples\TransactionalBox.Sample.WebApi.InMemory\TransactionalBox.Sample.WebApi.InMemory.csproj", "{5C2EB157-F976-42F9-8B26-42A50898714C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +275,10 @@ Global
 		{1BF21145-4651-40BD-897A-0CDFB2913FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BF21145-4651-40BD-897A-0CDFB2913FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BF21145-4651-40BD-897A-0CDFB2913FA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C2EB157-F976-42F9-8B26-42A50898714C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2EB157-F976-42F9-8B26-42A50898714C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2EB157-F976-42F9-8B26-42A50898714C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2EB157-F976-42F9-8B26-42A50898714C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -321,6 +327,7 @@ Global
 		{F1A53222-8BB9-45A7-8DC6-3050E1908C87} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{AC95B0C2-49E0-4A20-AF37-447D1ECA96AC} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{1BF21145-4651-40BD-897A-0CDFB2913FA6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{5C2EB157-F976-42F9-8B26-42A50898714C} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}
