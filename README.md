@@ -54,7 +54,7 @@ Examples of problems that occur during network communication:
     - [x] Multiple processes in the same service
 - [ ] Support for multiple inbox instances
     - [ ] Multiple instances of the same service 
-    - [x] Multiple processes in the same service
+    - [ ] Multiple processes in the same service
 - [ ] Standalone outbox worker
 - [ ] Standalone inbox worker
 - [ ] Error handling in background services
