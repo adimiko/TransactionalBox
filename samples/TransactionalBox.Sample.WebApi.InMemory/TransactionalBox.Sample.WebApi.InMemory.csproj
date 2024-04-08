@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Storage.InMemory\TransactionalBox.Inbox.Storage.InMemory.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Storage.InMemory\TransactionalBox.InboxWorker.Storage.InMemory.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.InboxWorker.Transport.InMemory\TransactionalBox.InboxWorker.Transport.InMemory.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Storage.InMemory\TransactionalBox.Outbox.Storage.InMemory.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Storage.InMemory\TransactionalBox.OutboxWorker.Storage.InMemory.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Transport.InMemory\TransactionalBox.OutboxWorker.Transport.InMemory.csproj" />
+  </ItemGroup>
+
+</Project>
