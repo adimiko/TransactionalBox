@@ -11,13 +11,14 @@ using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.InMemory;
 using TransactionalBox.Base.Inbox.Storage.InMemory;
 using TransactionalBox.Base.Outbox.Storage.InMemory;
-using TransactionalBox.Sample.WebApi.InMemory.Messages;
 using Microsoft.AspNetCore.Mvc;
+using TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ExampleServiceWithOutbox>();
 
 builder.Services.AddTransactionalBox(x =>
 {
@@ -44,7 +45,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox) => await outbox.Add(message, m => m.Receiver = "ServiceName"));
+app.MapPost("/add-message-to-outbox", async (ExampleServiceWithOutbox exampleServiceWithOutbox) => await exampleServiceWithOutbox.Execute());
 
 app.MapGet("/get-messages-from-outbox", async (IOutboxStorageReadOnly outboxStorageReadOnly) => outboxStorageReadOnly.OutboxMessages);
 
