@@ -30,7 +30,7 @@ using TransactionalBox.Base.Outbox.Storage.InMemory;
 using TransactionalBox.InboxWorker.Storage.InMemory;
 using TransactionalBox.Base.Inbox.Storage.InMemory;
 
-
+/*
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
   .Build();
@@ -46,13 +46,13 @@ await Task.WhenAll(postgresStartTask, kafkaStartTask);
 
 var connectionString = postgreSqlContainer.GetConnectionString();
 var bootstrapServers = kafkaContainer.GetBootstrapAddress();
-
+*/
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionString));
+//builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionString));
 
 builder.Services.AddTransactionalBox(
 x =>
@@ -91,13 +91,13 @@ x =>
 settings => settings.ServiceId = "Registrations");
 
 var app = builder.Build();
-
+/*
 using (var scope = app.Services.CreateScope())
 {
 
     scope.ServiceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
 }
-
+*/
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
