@@ -30,7 +30,7 @@ using TransactionalBox.Base.Outbox.Storage.InMemory;
 using TransactionalBox.InboxWorker.Storage.InMemory;
 using TransactionalBox.Base.Inbox.Storage.InMemory;
 
-/*
+
 var postgreSqlContainer = new PostgreSqlBuilder()
   .WithImage("postgres:15.1")
   .Build();
@@ -46,24 +46,24 @@ await Task.WhenAll(postgresStartTask, kafkaStartTask);
 
 var connectionString = postgreSqlContainer.GetConnectionString();
 var bootstrapServers = kafkaContainer.GetBootstrapAddress();
-*/
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionString));
+builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionString));
 
 builder.Services.AddTransactionalBox(
 x =>
 {
-    //x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
-    x.AddOutbox(storage => storage.UseInMemory())
+    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
+    //x.AddOutbox(storage => storage.UseInMemory())
      .WithWorker(
-        //storage => storage.UseEntityFramework(), 
-        storage => storage.UseInMemory(), 
-        //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
-        transport => transport.UseInMemory(),
+        storage => storage.UseEntityFramework(), 
+        //storage => storage.UseInMemory(), 
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        //transport => transport.UseInMemory(),
         settings =>
      {
          settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
@@ -71,16 +71,16 @@ x =>
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
-    //x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
-    x.AddInbox(storage => storage.UseInMemory(), settings =>
+    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
+    //x.AddInbox(storage => storage.UseInMemory(), settings =>
     {
         settings.NumberOfInstances = 5;
     })
      .WithWorker(
-        //storage => storage.UseEntityFramework(),
-        storage => storage.UseInMemory(),
-        //transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
-        transport => transport.UseInMemory(),
+        storage => storage.UseEntityFramework(),
+        //storage => storage.UseInMemory(),
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        //transport => transport.UseInMemory(),
         settings =>
      {
          settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
@@ -91,13 +91,13 @@ x =>
 settings => settings.ServiceId = "Registrations");
 
 var app = builder.Build();
-/*
+
 using (var scope = app.Services.CreateScope())
 {
 
     scope.ServiceProvider.GetRequiredService<SampleDbContext>().Database.EnsureCreated();
 }
-*/
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -106,43 +106,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox) =>
-{
-    var messages = new List<ExampleMessage>();
 
-    for (var i = 0; i < 100; i++)
-    {
-        messages.Add(message);
-    }
 
-    await outbox.AddRange(messages, m =>
-    {
-        m.Receiver = "Registrations";
-    });
-});
-
-app.MapGet("/get-messages-from-outbox", async (IOutboxStorageReadOnly outboxStorageReadOnly) =>
-{
-    var messages = outboxStorageReadOnly.OutboxMessages;
-
-    return messages;
-});
-
-app.MapGet("/get-messages-from-inbox", async (IInboxStorageReadOnly inboxStorage) =>
-{
-    var messages = inboxStorage.InboxMessages;
-
-    return messages;
-});
-
-app.MapGet("/get-idempotent-messages-from-inbox", async (IInboxStorageReadOnly inboxStorage) =>
-{
-    var messages = inboxStorage.IdempotentInboxKeys;
-
-    return messages;
-});
-
-/*
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
     var messages = new List<ExampleMessage>();
@@ -160,12 +125,9 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
     await dbContext.SaveChangesAsync();
 });
 
-app.MapGet("/get-messages-from-outbox", async (DbContext dbContext, IOutboxStorageReadOnly outboxStorageReadOnly) =>
+app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
 {
-    //TODO get InMemoryColletion ForTests
     var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
-
-    //var messages = outboxStorageReadOnly.OutboxMessages;
 
     return messages;
 });
@@ -197,5 +159,5 @@ app.MapGet("/inbox-distributed-locks", async (DbContext dbContext) =>
 
     return locks;
 });
-*/
+
 app.Run();
