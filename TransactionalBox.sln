@@ -97,6 +97,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Deserialization.CustomDeserializer", "source\TransactionalBox.Inbox.Deserialization.CustomDeserializer\TransactionalBox.Inbox.Deserialization.CustomDeserializer.csproj", "{6FFF3094-38DF-434A-AB60-04AD38DFEB75}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedSemaphoreSlim", "source\TransactionalBox.KeyedSemaphoreSlim\TransactionalBox.KeyedSemaphoreSlim.csproj", "{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,6 +281,10 @@ Global
 		{6FFF3094-38DF-434A-AB60-04AD38DFEB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FFF3094-38DF-434A-AB60-04AD38DFEB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FFF3094-38DF-434A-AB60-04AD38DFEB75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -328,6 +334,7 @@ Global
 		{E571BCAB-F17F-427A-BD3B-BBB4DD87D3F7} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{8112E3E8-184F-4694-9A75-609DAC06BCF5} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{6FFF3094-38DF-434A-AB60-04AD38DFEB75} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}
