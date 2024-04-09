@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 using System.Text.Json;
-using TransactionalBox.OutboxBase.StorageModel;
+using TransactionalBox.Base.Outbox.StorageModel;
 using TransactionalBox.OutboxWorker.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 

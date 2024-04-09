@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.OutboxBase.StorageModel.EntityFramework\TransactionalBox.OutboxBase.StorageModel.EntityFramework.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Base.Outbox.StorageModel.EntityFramework\TransactionalBox.Base.Outbox.StorageModel.EntityFramework.csproj" />
     <ProjectReference Include="..\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
   </ItemGroup>
 

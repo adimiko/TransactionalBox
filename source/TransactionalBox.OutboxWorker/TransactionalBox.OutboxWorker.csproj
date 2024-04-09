@@ -5,16 +5,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.BackgroundServiceBase\TransactionalBox.BackgroundServiceBase.csproj" />
-    <ProjectReference Include="..\TransactionalBox.OutboxBase.DependencyBuilder\TransactionalBox.OutboxBase.DependencyBuilder.csproj" />
-    <ProjectReference Include="..\TransactionalBox.OutboxBase.StorageModel\TransactionalBox.OutboxBase.StorageModel.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Base.Outbox.DependencyBuilder\TransactionalBox.Base.Outbox.DependencyBuilder.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Base.Outbox.StorageModel\TransactionalBox.Base.Outbox.StorageModel.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
     <InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
-	<InternalsVisibleTo Include="TransactionalBox.TransportBase.InMemory" />
+	<InternalsVisibleTo Include="TransactionalBox.Base.Transport.InMemory" />
 	<InternalsVisibleTo Include="TransactionalBox.Base.Outbox.Storage.InMemory" />
 	<InternalsVisibleTo Include="TransactionalBox.OutboxWorker.Storage.InMemory" />
 	  

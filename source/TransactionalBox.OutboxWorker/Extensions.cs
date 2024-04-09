@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.BackgroundServiceBase;
-using TransactionalBox.OutboxBase.DependencyBuilder;
+using TransactionalBox.Base.BackgroundService;
+using TransactionalBox.Base.Outbox.DependencyBuilder;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals;

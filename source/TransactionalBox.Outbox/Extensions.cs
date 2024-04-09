@@ -6,7 +6,7 @@ using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Internals.Serializers;
 using TransactionalBox.Outbox.Serialization;
 using TransactionalBox.Outbox.Settings;
-using TransactionalBox.OutboxBase.DependencyBuilder;
+using TransactionalBox.Base.Outbox.DependencyBuilder;
 
 namespace TransactionalBox.Outbox
 {

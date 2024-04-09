@@ -7,7 +7,7 @@ using TransactionalBox.OutboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.OutboxWithWorker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using TransactionalBox.OutboxBase.StorageModel.Internals;
+using TransactionalBox.Base.Outbox.StorageModel.Internals;
 
 const string connectionString = "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres";
 const string bootstrapServers = "plaintext://kafka:9092";
