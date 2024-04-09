@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Configurators;
-using TransactionalBox.Outbox.Serialization;
 
-namespace TransactionalBox.Outbox.CustomSerializer
+namespace TransactionalBox.Outbox.Serialization.CustomSerializer
 {
     public static class Extensions
     {
