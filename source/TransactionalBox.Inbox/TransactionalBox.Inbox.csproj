@@ -14,7 +14,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
 	<InternalsVisibleTo Include="TransactionalBox.Base.Inbox.Storage.InMemory" />
-	<InternalsVisibleTo Include="$(AssemblyName).CustomDeserializer" />
+	<InternalsVisibleTo Include="$(AssemblyName).Deserialization.CustomDeserializer" />
   </ItemGroup>
 	
 </Project>
