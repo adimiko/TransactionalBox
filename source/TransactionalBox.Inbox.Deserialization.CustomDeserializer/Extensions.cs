@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.Deserialization;
 
-namespace TransactionalBox.Inbox.CustomDeserializer
+namespace TransactionalBox.Inbox.Deserialization.CustomDeserializer
 {
     public static class Extensions
     {

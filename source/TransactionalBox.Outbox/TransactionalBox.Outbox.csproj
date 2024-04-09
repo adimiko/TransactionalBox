@@ -10,6 +10,6 @@
 	<InternalsVisibleTo Include="TransactionalBox.Base.Outbox.Storage.InMemory" />
     <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
 	<InternalsVisibleTo Include="$(AssemblyName).Storage.InMemory" />
-	<InternalsVisibleTo Include="$(AssemblyName).CustomSerializer" />
+	<InternalsVisibleTo Include="$(AssemblyName).Serialization.CustomSerializer" />
   </ItemGroup>
 </Project>
