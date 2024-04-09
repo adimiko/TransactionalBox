@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Storage.EntityFramework.Internals;
-using TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals;
-using TransactionalBox.InboxBase.StorageModel.Internals;
+using TransactionalBox.Base.Inbox.StorageModel.EntityFramework.Internals;
+using TransactionalBox.Base.Inbox.StorageModel.Internals;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.DistributedLock.EntityFramework;
 using TransactionalBox.Inbox.Internals.Contracts;

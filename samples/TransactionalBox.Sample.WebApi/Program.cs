@@ -7,7 +7,7 @@ using TransactionalBox;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.Inbox.Storage.InMemory;
-using TransactionalBox.InboxBase.StorageModel.Internals;
+using TransactionalBox.Base.Inbox.StorageModel.Internals;
 using TransactionalBox.InboxWorker;
 using TransactionalBox.InboxWorker.Storage.EntityFramework;
 using TransactionalBox.InboxWorker.Decompression.GZip;

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TransactionalBox.InboxBase.StorageModel.Internals;
+using TransactionalBox.Base.Inbox.StorageModel.Internals;
 
-namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
+namespace TransactionalBox.Base.Inbox.StorageModel.EntityFramework.Internals
 {
     internal sealed class IdempotentInboxKeyEntityTypeConfiguration : IEntityTypeConfiguration<IdempotentInboxKey>
     {

@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.InboxBase.StorageModel.Internals
+﻿namespace TransactionalBox.Base.Inbox.StorageModel.Internals
 {
     //TODO
     public sealed class IdempotentInboxKey

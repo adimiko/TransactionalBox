@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.DistributedLock.EntityFramework;
-using TransactionalBox.InboxBase.StorageModel.Internals;
+using TransactionalBox.Base.Inbox.StorageModel.Internals;
 
-namespace TransactionalBox.InboxBase.StorageModel.EntityFramework.Internals
+namespace TransactionalBox.Base.Inbox.StorageModel.EntityFramework.Internals
 {
     internal static class Extensions
     {
