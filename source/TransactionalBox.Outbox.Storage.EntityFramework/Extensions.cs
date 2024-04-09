@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Storage.EntityFramework.Internals;
 using TransactionalBox.Outbox.Internals;
-using TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals;
+using TransactionalBox.Base.Outbox.StorageModel.EntityFramework.Internals;
 
 namespace TransactionalBox.Outbox.Storage.EntityFramework
 {

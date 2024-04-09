@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TransactionalBox.OutboxBase.StorageModel.Internals;
+using TransactionalBox.Base.Outbox.StorageModel.Internals;
 
-namespace TransactionalBox.OutboxBase.StorageModel.EntityFramework.Internals
+namespace TransactionalBox.Base.Outbox.StorageModel.EntityFramework.Internals
 {
     internal sealed class OutboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<OutboxMessage>
     {

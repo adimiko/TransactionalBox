@@ -1,4 +1,4 @@
-﻿using TransactionalBox.OutboxBase.StorageModel.Internals;
+﻿using TransactionalBox.Base.Outbox.StorageModel.Internals;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {
