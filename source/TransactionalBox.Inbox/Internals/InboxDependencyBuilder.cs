@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.InboxBase.DependencyBuilder;
+using TransactionalBox.Base.Inbox.DependencyBuilder;
 
 namespace TransactionalBox.Inbox.Internals
 {

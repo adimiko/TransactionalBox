@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.InboxBase.DependencyBuilder
+namespace TransactionalBox.Base.Inbox.DependencyBuilder
 {
     public interface IInboxDependencyBuilder
     {
