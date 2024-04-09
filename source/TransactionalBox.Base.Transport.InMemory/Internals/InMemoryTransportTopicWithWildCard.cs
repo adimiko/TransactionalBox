@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.InboxWorker.Internals.Contracts;
 
-namespace TransactionalBox.TransportBase.InMemory.Internals
+namespace TransactionalBox.Base.Transport.InMemory.Internals
 {
     internal sealed class InMemoryTransportTopicWithWildCard : ITransportTopicWithWildCard
     {
