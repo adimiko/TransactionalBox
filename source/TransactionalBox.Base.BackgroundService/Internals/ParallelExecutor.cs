@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.BackgroundServiceBase.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals
 {
     internal sealed class ParallelExecutor : IParallelExecutor
     {

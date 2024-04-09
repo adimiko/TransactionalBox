@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace TransactionalBox.BackgroundServiceBase.Internals.Loggers
+namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 {
     internal sealed class LauncherLogger<T> : ILauncherLogger<T>
         where T : class

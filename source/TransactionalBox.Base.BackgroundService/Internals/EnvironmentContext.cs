@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace TransactionalBox.BackgroundServiceBase.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals
 {
     internal sealed class EnvironmentContext : IEnvironmentContext
     {

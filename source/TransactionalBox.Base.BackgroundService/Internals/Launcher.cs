@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using TransactionalBox.BackgroundServiceBase.Internals.Loggers;
+using TransactionalBox.Base.BackgroundService.Internals.Loggers;
 
-namespace TransactionalBox.BackgroundServiceBase.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals
 {
-    public abstract class Launcher : BackgroundService
+    public abstract class Launcher : Microsoft.Extensions.Hosting.BackgroundService
     {
         private readonly List<JobLaunchSettings> _jobLaunchSettings;
 

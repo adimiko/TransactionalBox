@@ -1,6 +1,6 @@
-﻿using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
+﻿using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
 
-namespace TransactionalBox.BackgroundServiceBase.Internals.Loggers
+namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 {
     internal interface IJobExecutorLogger<T> where T : class
     {

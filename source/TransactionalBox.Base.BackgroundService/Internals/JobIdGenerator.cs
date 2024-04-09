@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Internals;
 
-namespace TransactionalBox.BackgroundServiceBase.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals
 {
     //TODO sequence based on timestamp + servicename + sequence
     internal sealed class JobIdGenerator

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using TransactionalBox.BackgroundServiceBase.Internals;
+using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.InboxBase.StorageModel.Internals;
 using TransactionalBox.InboxWorker.Decompression;
 using TransactionalBox.InboxWorker.Internals.Contracts;

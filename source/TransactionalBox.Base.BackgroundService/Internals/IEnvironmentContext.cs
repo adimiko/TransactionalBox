@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.BackgroundServiceBase.Internals
+﻿namespace TransactionalBox.Base.BackgroundService.Internals
 {
     internal interface IEnvironmentContext
     {

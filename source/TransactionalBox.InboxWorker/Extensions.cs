@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.BackgroundServiceBase;
+using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Base.Inbox.DependencyBuilder;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Decompression;

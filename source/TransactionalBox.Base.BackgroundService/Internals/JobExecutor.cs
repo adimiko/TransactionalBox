@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.BackgroundServiceBase.Internals.Context;
-using TransactionalBox.BackgroundServiceBase.Internals.Loggers;
-using TransactionalBox.BackgroundServiceBase.Internals.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.Context;
+using TransactionalBox.Base.BackgroundService.Internals.Loggers;
+using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
 
-namespace TransactionalBox.BackgroundServiceBase.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals
 {
     internal sealed class JobExecutor
     {

@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.BackgroundServiceBase.Internals.ValueObjects
+﻿namespace TransactionalBox.Base.BackgroundService.Internals.ValueObjects
 {
     public sealed record JobExecutorId(Guid Value)
     {

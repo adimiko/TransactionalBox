@@ -1,4 +1,4 @@
-﻿using TransactionalBox.BackgroundServiceBase.Internals;
+﻿using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
 
 namespace TransactionalBox.OutboxWorker.Internals.Launchers
