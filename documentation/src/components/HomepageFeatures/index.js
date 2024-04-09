@@ -8,28 +8,34 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Designed to be easy to understand.
       </>
     ),
   },
   {
-    title: 'Focus on your App',
+    title: 'Configurable and Expandable',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Easy to expand and configure
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Scalability & Fault Tolerance',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Supports multi-instance (distributed processing)
+      </>
+    ),
+  },
+  {
+    title: 'Faster Transfer',
+    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    description: (
+      <>
+        Using algorithms for compression, clustering and adjusting the size of the transport message, you can increase bandwidth and reduce latency.
       </>
     ),
   },
