@@ -1,8 +1,10 @@
-﻿namespace TransactionalBox.KeyedSemaphoreSlim
+﻿using TransactionalBox.KeyedSemaphoreSlim.Internals;
+
+namespace TransactionalBox.KeyedSemaphoreSlim
 {
-    public interface IKeyedSemaphoreSlim
+    public interface IKeyedSemaphoreSlim : IDisposable
     {
-        Task Acquire(string key, CancellationToken cancellationToken = default);
+        Task<IKeyedSemaphoreSlim> Acquire(string key, CancellationToken cancellationToken = default);
 
         void Release();
     }

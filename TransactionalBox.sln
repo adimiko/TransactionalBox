@@ -99,6 +99,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Dese
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedSemaphoreSlim", "source\TransactionalBox.KeyedSemaphoreSlim\TransactionalBox.KeyedSemaphoreSlim.csproj", "{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedSemaphoreSlim.Tests", "tests\TransactionalBox.KeyedSemaphoreSlim.Tests\TransactionalBox.KeyedSemaphoreSlim.Tests.csproj", "{8F0C583D-BEB0-4A73-8C6F-7EE4959C4520}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -285,6 +287,10 @@ Global
 		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F0C583D-BEB0-4A73-8C6F-7EE4959C4520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F0C583D-BEB0-4A73-8C6F-7EE4959C4520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F0C583D-BEB0-4A73-8C6F-7EE4959C4520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F0C583D-BEB0-4A73-8C6F-7EE4959C4520}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -335,6 +341,7 @@ Global
 		{8112E3E8-184F-4694-9A75-609DAC06BCF5} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{6FFF3094-38DF-434A-AB60-04AD38DFEB75} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{6AEAB6E4-4B04-40CB-A3C3-DDE889018415} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{8F0C583D-BEB0-4A73-8C6F-7EE4959C4520} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}
