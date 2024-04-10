@@ -9,4 +9,8 @@
     <InternalsVisibleTo Include="$(AssemblyName).EntityFramework" />
   </ItemGroup>
 	
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.KeyedInMemoryLock\TransactionalBox.KeyedInMemoryLock.csproj" />
+  </ItemGroup>
+	
 </Project>
