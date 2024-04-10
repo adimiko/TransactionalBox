@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.DistributedLock.Configurators;
 using TransactionalBox.DistributedLock.Internals;
+using TransactionalBox.KeyedSemaphoreSlim;
 
 namespace TransactionalBox.DistributedLock
 {
@@ -15,6 +16,7 @@ namespace TransactionalBox.DistributedLock
 
             storageConfiguration(storage);
 
+            services.AddKeyedSemaphoreSlim();
             services.AddScoped<IDistributedLock<T>, InternalDistributedLock<T>>();
         }
     }
