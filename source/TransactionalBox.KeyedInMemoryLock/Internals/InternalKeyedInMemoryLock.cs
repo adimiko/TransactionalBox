@@ -1,14 +1,14 @@
 ﻿using System.Collections.Concurrent;
 
-namespace TransactionalBox.KeyedSemaphoreSlim.Internals
+namespace TransactionalBox.KeyedInMemoryLock.Internals
 {
-    internal sealed class InternalKeyedSemaphoreSlim : IKeyedSemaphoreSlim
+    internal sealed class InternalKeyedInMemoryLock : IKeyedInMemoryLock
     {
         private static ConcurrentDictionary<string, SemaphoreSlim> _locks = new ConcurrentDictionary<string, SemaphoreSlim>();
 
         private SemaphoreSlim? _currentLock;
 
-        public async Task<IKeyedSemaphoreSlim> Acquire(string key, CancellationToken cancellationToken = default)
+        public async Task<IKeyedInMemoryLock> Acquire(string key, CancellationToken cancellationToken = default)
         {
             _currentLock = _locks.GetOrAdd(key, x => new SemaphoreSlim(1, 1));
 

@@ -1,4 +1,4 @@
-﻿using TransactionalBox.KeyedSemaphoreSlim;
+﻿using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock.Internals
 {
@@ -9,13 +9,13 @@ namespace TransactionalBox.DistributedLock.Internals
 
         private readonly IDistributedLockStorage _distributedLockStorage;
 
-        private readonly IKeyedSemaphoreSlim _inMemoryLock;
+        private readonly IKeyedInMemoryLock _inMemoryLock;
 
         private T _newLock;
 
         public InternalDistributedLock(
             IDistributedLockStorage distributedLockStorage,
-            IKeyedSemaphoreSlim inMemoryLock) 
+            IKeyedInMemoryLock inMemoryLock) 
         {
             _distributedLockStorage = distributedLockStorage;
             _inMemoryLock = inMemoryLock;

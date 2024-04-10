@@ -1,22 +1,22 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace TransactionalBox.KeyedSemaphoreSlim.Tests;
+namespace TransactionalBox.KeyedInMemoryLock.Tests;
 
-public sealed class KeyedSemaphoreSlimTest
+public sealed class KeyedInMemoryLockTest
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public KeyedSemaphoreSlimTest() 
+    public KeyedInMemoryLockTest() 
     {
         IServiceCollection services = new ServiceCollection();
 
-        services.AddKeyedSemaphoreSlim();
+        services.AddKeyedInMemoryLock();
 
         _serviceProvider = services.BuildServiceProvider();
     }
 
-    [Fact(DisplayName = "KeyedSemaphoreSlim works correct in multi-thread enviroment")]
+    [Fact(DisplayName = "KeyedInMemoryLock works correct in multi-thread enviroment")]
     public async Task Test()
     {
         for (var i = 0; i < 2; i++)
@@ -26,11 +26,11 @@ public sealed class KeyedSemaphoreSlimTest
             var lockKeyB = "B";
 
             // Create different instances for each scope
-            var lockForTaskA1 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedSemaphoreSlim>();
-            var lockForTaskB1 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedSemaphoreSlim>();
+            var lockForTaskA1 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedInMemoryLock>();
+            var lockForTaskB1 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedInMemoryLock>();
 
-            var lockForTaskA2 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedSemaphoreSlim>();
-            var lockForTaskB2 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedSemaphoreSlim>();
+            var lockForTaskA2 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedInMemoryLock>();
+            var lockForTaskB2 = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IKeyedInMemoryLock>();
 
             var taskA1 = lockForTaskA1.Acquire(lockKeyA);
             var taskB1 = lockForTaskB1.Acquire(lockKeyB);
