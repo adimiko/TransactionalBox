@@ -97,7 +97,7 @@ Examples of problems that occur during network communication:
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [x] Idempotent messages
-- [ ] SemaphoreSlim with Key
+- [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 
 ## :clapper: Run Sample
 > [!NOTE]
