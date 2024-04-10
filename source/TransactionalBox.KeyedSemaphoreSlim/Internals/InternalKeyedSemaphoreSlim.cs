@@ -2,7 +2,6 @@
 
 namespace TransactionalBox.KeyedSemaphoreSlim.Internals
 {
-    //TODO tests wit tasks
     internal sealed class InternalKeyedSemaphoreSlim : IKeyedSemaphoreSlim
     {
         private static ConcurrentDictionary<string, SemaphoreSlim> _locks = new ConcurrentDictionary<string, SemaphoreSlim>();
