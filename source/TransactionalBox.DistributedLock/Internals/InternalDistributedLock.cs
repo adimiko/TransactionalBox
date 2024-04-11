@@ -13,6 +13,9 @@ namespace TransactionalBox.DistributedLock.Internals
 
         private T _newLock;
 
+        private ILockInstance _inMemoryLockInstance;
+
+
         public InternalDistributedLock(
             IDistributedLockStorage distributedLockStorage,
             IKeyedInMemoryLock inMemoryLock) 
@@ -27,7 +30,7 @@ namespace TransactionalBox.DistributedLock.Internals
             TimeSpan lockTimeout,
             TimeSpan checkingIntervalWhenLockIsNotReleased)
         {
-            await _inMemoryLock.Acquire(typeof(T).Name);
+            _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name);
 
             if (!_addedFirstLock)
             {
@@ -60,7 +63,7 @@ namespace TransactionalBox.DistributedLock.Internals
             _newLock.Release();
 
             var isReleased = await _distributedLockStorage.Release(_newLock);
-            _inMemoryLock.Release();
+            _inMemoryLockInstance.Dispose();
 
             if (!isReleased) 
             {

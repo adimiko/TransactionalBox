@@ -2,10 +2,8 @@
 
 namespace TransactionalBox.KeyedInMemoryLock
 {
-    public interface IKeyedInMemoryLock : IDisposable
+    public interface IKeyedInMemoryLock
     {
-        Task<IKeyedInMemoryLock> Acquire(string key, CancellationToken cancellationToken = default);
-
-        void Release();
+        Task<ILockInstance> Acquire(string key, CancellationToken cancellationToken = default);
     }
 }
