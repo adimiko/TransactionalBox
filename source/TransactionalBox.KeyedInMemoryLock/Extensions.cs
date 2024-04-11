@@ -5,9 +5,11 @@ namespace TransactionalBox.KeyedInMemoryLock
 {
     public static class Extensions
     {
-        public static void AddKeyedInMemoryLock(this IServiceCollection services)
+        public static IServiceCollection AddKeyedInMemoryLock(this IServiceCollection services)
         {
-            services.AddScoped<IKeyedInMemoryLock, InternalKeyedInMemoryLock>();
+            services.AddSingleton<IKeyedInMemoryLock, InternalKeyedInMemoryLock>();
+
+            return services;
         }
     }
 }

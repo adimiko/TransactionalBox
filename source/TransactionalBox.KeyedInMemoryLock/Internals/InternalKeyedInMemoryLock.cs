@@ -6,19 +6,13 @@ namespace TransactionalBox.KeyedInMemoryLock.Internals
     {
         private static ConcurrentDictionary<string, SemaphoreSlim> _locks = new ConcurrentDictionary<string, SemaphoreSlim>();
 
-        private SemaphoreSlim? _currentLock;
-
-        public async Task<IKeyedInMemoryLock> Acquire(string key, CancellationToken cancellationToken = default)
+        public async Task<ILockInstance> Acquire(string key, CancellationToken cancellationToken = default)
         {
-            _currentLock = _locks.GetOrAdd(key, x => new SemaphoreSlim(1, 1));
+            var @lock = _locks.GetOrAdd(key, x => new SemaphoreSlim(1, 1));
 
-            await _currentLock.WaitAsync(cancellationToken);
+            await @lock.WaitAsync(cancellationToken);
 
-            return this;
+            return new LockInstance(@lock);
         }
-
-        public void Release() => _currentLock?.Release();
-
-        public void Dispose() => Release();
     }
 }
