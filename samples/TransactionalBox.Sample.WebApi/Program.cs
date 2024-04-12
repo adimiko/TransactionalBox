@@ -67,7 +67,7 @@ x =>
         settings =>
      {
          settings.AddMessagesToTransportSettings.LockTimeout = TimeSpan.FromSeconds(1);
-         settings.AddMessagesToTransportSettings.NumberOfInstances = 3;
+         settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
          settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 0;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
@@ -75,7 +75,7 @@ x =>
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
     //x.AddInbox(storage => storage.UseInMemory(), settings =>
     {
-        settings.NumberOfInstances = 3;
+        settings.NumberOfInstances = 1;
     })
      .WithWorker(
         storage => storage.UseEntityFramework(),
@@ -85,7 +85,7 @@ x =>
         settings =>
      {
          settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
-         settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 2;
+         settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
          settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
      });
 },

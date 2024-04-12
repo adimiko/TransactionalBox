@@ -25,13 +25,13 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
             //TODO mark message and process
             InboxMessage? message;
 
-            await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
-            {
+            //await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
+            //{
                 message = await _dbContext.Set<InboxMessage>()
                 .Where(x => !x.IsProcessed)
                 .OrderBy(x => x.OccurredUtc)
                 .FirstOrDefaultAsync();
-            }
+            //}
 
             if (message is not null) 
             {
