@@ -29,32 +29,22 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Internals
             }
         }
 
-        public async Task<bool> TryAddNextLock<T>(T @lock, int previousLockConcurrencyToken)
-            where T : Lock, new()
-        {
-            var addedRows = await _dbContext.Set<T>()
-                        .Where(x => x.Key == @lock.Key && x.ConcurrencyToken == previousLockConcurrencyToken)
-                        .ExecuteUpdateAsync(x => x
-                        .SetProperty(x => x.IsReleased, @lock.IsReleased)
-                        .SetProperty(x => x.StartUtc, @lock.StartUtc)
-                        .SetProperty(x => x.TimeoutUtc, @lock.TimeoutUtc)
-                        .SetProperty(x => x.ConcurrencyToken, @lock.ConcurrencyToken));
-
-            return addedRows > 0;
-        }
-
-        public Task<T?> GetPreviousReleasedLock<T>(string key, DateTime nowUtc)
-            where T : Lock, new()
-        {
-            return _dbContext.Set<T>().AsNoTracking().SingleOrDefaultAsync(x => x.Key == key && (x.IsReleased || x.TimeoutUtc <= nowUtc));
-        }
-
-        public async Task<bool> Release<T>(T @lock)
+        public async Task<bool> Release<T>(string key, DateTime nowUtc, DateTime expirationUtc)
             where T : Lock, new()
         {
             var updatedRows = await _dbContext.Set<T>()
-                    .Where(x => x.Key == @lock.Key && x.ConcurrencyToken == @lock.ConcurrencyToken)
-                    .ExecuteUpdateAsync(x => x.SetProperty(x => x.IsReleased, @lock.IsReleased));
+                .Where(x => x.Key == key && x.ExpirationUtc == expirationUtc)
+                .ExecuteUpdateAsync(x => x.SetProperty(x => x.ExpirationUtc, nowUtc));
+
+            return updatedRows > 0;
+        }
+
+        public async Task<bool> TryAcquire<T>(string key, DateTime nowUtc, DateTime newExpirationUtc)
+            where T : Lock, new()
+        {
+            var updatedRows = await _dbContext.Set<T>()
+            .Where(x => x.Key == key && x.ExpirationUtc <= nowUtc)
+            .ExecuteUpdateAsync(x => x.SetProperty(x => x.ExpirationUtc, newExpirationUtc));
 
             return updatedRows > 0;
         }

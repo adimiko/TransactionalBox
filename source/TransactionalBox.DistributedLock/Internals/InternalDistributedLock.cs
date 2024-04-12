@@ -11,26 +11,25 @@ namespace TransactionalBox.DistributedLock.Internals
 
         private readonly IKeyedInMemoryLock _inMemoryLock;
 
-        private T _newLock;
-
-        private ILockInstance _inMemoryLockInstance;
-
+        private readonly IServiceProvider _serviceProvider;
 
         public InternalDistributedLock(
             IDistributedLockStorage distributedLockStorage,
-            IKeyedInMemoryLock inMemoryLock) 
+            IKeyedInMemoryLock inMemoryLock,
+            IServiceProvider serviceProvider) 
         {
             _distributedLockStorage = distributedLockStorage;
             _inMemoryLock = inMemoryLock;
+            _serviceProvider = serviceProvider;
         }
 
-        public async Task Acquire(
+        public async Task<IDistributedLockInstance> Acquire(
             string key,
-            DateTime nowUtc,
+            DateTime nowUtc, //TODO timeprovider
             TimeSpan lockTimeout,
             TimeSpan checkingIntervalWhenLockIsNotReleased)
         {
-            _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name);
+            var _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name);
 
             if (!_addedFirstLock)
             {
@@ -38,44 +37,41 @@ namespace TransactionalBox.DistributedLock.Internals
                 _addedFirstLock = true;
             }
 
-            bool isLockAcquired = false;
+            bool isAcquired = false;
+
+            DateTime expirationUtc;
 
             do
             {
-                var previousReleasedLock = await _distributedLockStorage.GetPreviousReleasedLock<T>(key, nowUtc);
+                var now = DateTime.UtcNow; //TODO
 
-                if (previousReleasedLock is not null)
-                {
-                    _newLock = previousReleasedLock.CreateNewLock<T>(nowUtc, lockTimeout);
+                expirationUtc = CalculateExpirationUtc(now, lockTimeout);
 
-                    isLockAcquired = await _distributedLockStorage.TryAddNextLock(_newLock, previousReleasedLock.ConcurrencyToken);
-                }
-                else
+                isAcquired = await _distributedLockStorage.TryAcquire<T>(key, now, expirationUtc);
+
+                if (!isAcquired)
                 {
                     await Task.Delay(checkingIntervalWhenLockIsNotReleased);
                 }
             }
-            while (!isLockAcquired);
-        }
+            while (!isAcquired); //TODO CancellationToken
 
-        public async Task Release()
-        {
-            _newLock.Release();
+            var @lock = new T() { Key = key, ExpirationUtc = expirationUtc };
 
-            var isReleased = await _distributedLockStorage.Release(_newLock);
-            _inMemoryLockInstance.Dispose();
-
-            if (!isReleased) 
-            {
-                //TODO LOG
-            }
+            return new DistributedLockInstance<T>(@lock, _inMemoryLockInstance, _serviceProvider);
         }
 
         private async Task AddFirstLock(string key, DateTime nowUtc, TimeSpan lockTimeout)
         {
-            var @lock = Lock.CreateFirstLock<T>(key, nowUtc, lockTimeout);
+            var @lock = new T()
+            {
+                Key = key,
+                ExpirationUtc = CalculateExpirationUtc(nowUtc,lockTimeout),
+            };
 
             await _distributedLockStorage.AddFirstLock(@lock);
         }
+
+        private DateTime CalculateExpirationUtc(DateTime nowUtc, TimeSpan lockTimeout) => nowUtc + lockTimeout;
     }
 }
