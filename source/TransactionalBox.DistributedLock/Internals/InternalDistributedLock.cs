@@ -1,4 +1,5 @@
-﻿using TransactionalBox.KeyedInMemoryLock;
+﻿using TransactionalBox.DistributedLock.Internals.Contracts;
+using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock.Internals
 {
@@ -11,71 +12,72 @@ namespace TransactionalBox.DistributedLock.Internals
 
         private readonly IKeyedInMemoryLock _inMemoryLock;
 
-        private T _newLock;
-
-        private ILockInstance _inMemoryLockInstance;
-
+        private readonly IServiceProvider _serviceProvider;
 
         public InternalDistributedLock(
             IDistributedLockStorage distributedLockStorage,
-            IKeyedInMemoryLock inMemoryLock) 
+            IKeyedInMemoryLock inMemoryLock,
+            IServiceProvider serviceProvider) 
         {
             _distributedLockStorage = distributedLockStorage;
             _inMemoryLock = inMemoryLock;
+            _serviceProvider = serviceProvider;
         }
 
-        public async Task Acquire(
+        public async Task<IDistributedLockInstance> Acquire(
             string key,
-            DateTime nowUtc,
+            TimeProvider timeProvider,
             TimeSpan lockTimeout,
-            TimeSpan checkingIntervalWhenLockIsNotReleased)
+            TimeSpan checkingIntervalWhenLockIsNotReleased, 
+            CancellationToken cancellationToken = default)
         {
-            _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name);
+            var _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name, cancellationToken);
 
             if (!_addedFirstLock)
             {
-                await AddFirstLock(key, nowUtc, lockTimeout);
+                await AddFirstLock(key, timeProvider, lockTimeout);
                 _addedFirstLock = true;
             }
 
-            bool isLockAcquired = false;
+            bool isAcquired = false;
+
+            DateTime expirationUtc;
 
             do
             {
-                var previousReleasedLock = await _distributedLockStorage.GetPreviousReleasedLock<T>(key, nowUtc);
+                var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-                if (previousReleasedLock is not null)
-                {
-                    _newLock = previousReleasedLock.CreateNewLock<T>(nowUtc, lockTimeout);
+                expirationUtc = CalculateExpirationUtc(nowUtc, lockTimeout);
 
-                    isLockAcquired = await _distributedLockStorage.TryAddNextLock(_newLock, previousReleasedLock.ConcurrencyToken);
-                }
-                else
+                isAcquired = await _distributedLockStorage.TryAcquire<T>(key, nowUtc, expirationUtc);
+
+                if (!isAcquired)
                 {
                     await Task.Delay(checkingIntervalWhenLockIsNotReleased);
                 }
             }
-            while (!isLockAcquired);
+            while (!isAcquired || cancellationToken.IsCancellationRequested);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var @lock = new T() { Key = key, ExpirationUtc = expirationUtc };
+
+            return new DistributedLockInstance<T>(@lock, _inMemoryLockInstance, _serviceProvider);
         }
 
-        public async Task Release()
+        private async Task AddFirstLock(string key, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
-            _newLock.Release();
+            var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-            var isReleased = await _distributedLockStorage.Release(_newLock);
-            _inMemoryLockInstance.Dispose();
-
-            if (!isReleased) 
+            var @lock = new T()
             {
-                //TODO LOG
-            }
-        }
-
-        private async Task AddFirstLock(string key, DateTime nowUtc, TimeSpan lockTimeout)
-        {
-            var @lock = Lock.CreateFirstLock<T>(key, nowUtc, lockTimeout);
+                Key = key,
+                ExpirationUtc = CalculateExpirationUtc(nowUtc,lockTimeout),
+            };
 
             await _distributedLockStorage.AddFirstLock(@lock);
         }
+
+        private DateTime CalculateExpirationUtc(DateTime nowUtc, TimeSpan lockTimeout) => nowUtc + lockTimeout;
     }
 }

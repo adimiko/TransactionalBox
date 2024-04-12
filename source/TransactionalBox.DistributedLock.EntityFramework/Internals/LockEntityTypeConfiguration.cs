@@ -9,10 +9,7 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Internals
         public void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(x => x.Key);
-            builder.Property(x => x.StartUtc);
-            builder.Property(x => x.TimeoutUtc);
-            builder.Property(x => x.ConcurrencyToken);
-            builder.Property(x => x.IsReleased);
+            builder.Property(x => x.ExpirationUtc);
         }
     }
 }

@@ -20,17 +20,18 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
             _distributedLock = distributedLock;
         }
 
-        public async Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, DateTime nowUtc, TimeSpan lockTimeout)
+        public async Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             //TODO mark message and process
-            await _distributedLock.Acquire(jobName.ToString(), nowUtc, lockTimeout, TimeSpan.FromMicroseconds(50));
+            InboxMessage? message;
 
-            var message = await _dbContext.Set<InboxMessage>()
-            .Where(x => !x.IsProcessed)
-            .OrderBy(x => x.OccurredUtc)
-            .FirstOrDefaultAsync();
-
-            await _distributedLock.Release();
+            //await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
+            //{
+                message = await _dbContext.Set<InboxMessage>()
+                .Where(x => !x.IsProcessed)
+                .OrderBy(x => x.OccurredUtc)
+                .FirstOrDefaultAsync();
+            //}
 
             if (message is not null) 
             {

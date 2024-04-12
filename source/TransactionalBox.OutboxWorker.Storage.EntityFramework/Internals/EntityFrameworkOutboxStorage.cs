@@ -25,28 +25,27 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
             _distributedLock = distributedLock;
         }
-        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, TimeSpan lockTimeout)
+        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             int rowCount = 0;
 
-            //TODO to outboxworker
-            //TODO
-            await _distributedLock.Acquire(jobName.ToString(), nowUtc, lockTimeout, TimeSpan.FromMicroseconds(50));
-
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
+            await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
             {
-                rowCount = await _outboxMessages
-                .OrderBy(x => x.OccurredUtc)
-                .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
-                .Take(batchSize)
-                .ExecuteUpdateAsync(setters => setters
-                    .SetProperty(x => x.LockUtc, nowUtc + lockTimeout)
-                    .SetProperty(x => x.JobId, jobId.ToString()));
+                var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-                await transaction.CommitAsync();
+                using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
+                {
+                    rowCount = await _outboxMessages
+                    .OrderBy(x => x.OccurredUtc)
+                    .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                    .Take(batchSize)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(x => x.LockUtc, nowUtc + lockTimeout)
+                        .SetProperty(x => x.JobId, jobId.ToString()));
+
+                    await transaction.CommitAsync();
+                }
             }
-
-            await _distributedLock.Release();
 
             return rowCount;
         }

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.DistributedLock.Configurators;
 using TransactionalBox.DistributedLock.EntityFramework.Internals;
-using TransactionalBox.DistributedLock.Internals;
+using TransactionalBox.DistributedLock.Internals.Contracts;
 
 namespace TransactionalBox.DistributedLock.EntityFramework
 {
