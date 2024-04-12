@@ -25,14 +25,14 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessage>();
             _distributedLock = distributedLock;
         }
-        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, TimeSpan lockTimeout)
+        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             int rowCount = 0;
-            //TODO to outboxworker
-            //TODO
 
-            await using (await _distributedLock.Acquire(jobName.ToString(), nowUtc, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
+            await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
             {
+                var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
+
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
                 {
                     rowCount = await _outboxMessages

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.DistributedLock.Internals;
+using TransactionalBox.DistributedLock.Internals.Contracts;
 
 namespace TransactionalBox.DistributedLock.EntityFramework.Internals
 {

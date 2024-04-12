@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.DistributedLock.Internals
+﻿namespace TransactionalBox.DistributedLock.Internals.Contracts
 {
     internal interface IDistributedLockStorage
     {

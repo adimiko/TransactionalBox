@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.DistributedLock.Internals.Contracts;
 using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock.Internals

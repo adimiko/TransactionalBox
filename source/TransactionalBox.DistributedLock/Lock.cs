@@ -1,6 +1,4 @@
-﻿using TransactionalBox.DistributedLock.Internals.Exceptions;
-
-namespace TransactionalBox.DistributedLock
+﻿namespace TransactionalBox.DistributedLock
 {
     public abstract class Lock
     {

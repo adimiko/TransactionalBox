@@ -50,7 +50,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
         {
             var nowUtc = _systemClock.UtcNow;
 
-            var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, _settings.BatchSize, nowUtc, _settings.LockTimeout);
+            var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, _settings.BatchSize, _systemClock.TimeProvider, _settings.LockTimeout);
 
             if (numberOfMessages == 0) // IsBatchEmpty
             {

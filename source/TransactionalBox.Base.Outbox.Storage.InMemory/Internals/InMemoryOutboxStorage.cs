@@ -46,8 +46,10 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
             return Task.CompletedTask;
         }
 
-        public Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, TimeSpan lockTimeout)
+        public Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
+            var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
+
             var messages = _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
                 .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))

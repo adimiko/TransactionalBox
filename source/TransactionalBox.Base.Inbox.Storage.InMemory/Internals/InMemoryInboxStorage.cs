@@ -40,7 +40,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
             return Task.FromResult(idempotentInboxKeys);
         }
 
-        public Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, DateTime nowUtc, TimeSpan lockTimeout)
+        public Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             //TODO mark message and process
             var message = _inboxMessages

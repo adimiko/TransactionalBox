@@ -1,4 +1,5 @@
-﻿using TransactionalBox.KeyedInMemoryLock;
+﻿using TransactionalBox.DistributedLock.Internals.Contracts;
+using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock.Internals
 {
@@ -25,15 +26,16 @@ namespace TransactionalBox.DistributedLock.Internals
 
         public async Task<IDistributedLockInstance> Acquire(
             string key,
-            DateTime nowUtc, //TODO timeprovider
+            TimeProvider timeProvider,
             TimeSpan lockTimeout,
-            TimeSpan checkingIntervalWhenLockIsNotReleased)
+            TimeSpan checkingIntervalWhenLockIsNotReleased, 
+            CancellationToken cancellationToken = default)
         {
-            var _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name);
+            var _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name, cancellationToken);
 
             if (!_addedFirstLock)
             {
-                await AddFirstLock(key, nowUtc, lockTimeout);
+                await AddFirstLock(key, timeProvider, lockTimeout);
                 _addedFirstLock = true;
             }
 
@@ -43,26 +45,30 @@ namespace TransactionalBox.DistributedLock.Internals
 
             do
             {
-                var now = DateTime.UtcNow; //TODO
+                var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-                expirationUtc = CalculateExpirationUtc(now, lockTimeout);
+                expirationUtc = CalculateExpirationUtc(nowUtc, lockTimeout);
 
-                isAcquired = await _distributedLockStorage.TryAcquire<T>(key, now, expirationUtc);
+                isAcquired = await _distributedLockStorage.TryAcquire<T>(key, nowUtc, expirationUtc);
 
                 if (!isAcquired)
                 {
                     await Task.Delay(checkingIntervalWhenLockIsNotReleased);
                 }
             }
-            while (!isAcquired); //TODO CancellationToken
+            while (!isAcquired || cancellationToken.IsCancellationRequested);
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             var @lock = new T() { Key = key, ExpirationUtc = expirationUtc };
 
             return new DistributedLockInstance<T>(@lock, _inMemoryLockInstance, _serviceProvider);
         }
 
-        private async Task AddFirstLock(string key, DateTime nowUtc, TimeSpan lockTimeout)
+        private async Task AddFirstLock(string key, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
+            var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
+
             var @lock = new T()
             {
                 Key = key,

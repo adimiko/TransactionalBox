@@ -5,7 +5,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Contracts
 {
     internal interface IOutboxWorkerStorage
     {
-        Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, DateTime nowUtc, TimeSpan lockTimeout);
+        Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout);
 
         Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId);
 
