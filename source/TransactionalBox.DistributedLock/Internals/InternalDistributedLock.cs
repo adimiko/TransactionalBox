@@ -1,4 +1,5 @@
-﻿using TransactionalBox.DistributedLock.Internals.Contracts;
+﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.DistributedLock.Internals.Contracts;
 using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock.Internals
@@ -8,20 +9,11 @@ namespace TransactionalBox.DistributedLock.Internals
     {
         private static bool _addedFirstLock = false;
 
-        private readonly IDistributedLockStorage _distributedLockStorage;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        private readonly IKeyedInMemoryLock _inMemoryLock;
-
-        private readonly IServiceProvider _serviceProvider;
-
-        public InternalDistributedLock(
-            IDistributedLockStorage distributedLockStorage,
-            IKeyedInMemoryLock inMemoryLock,
-            IServiceProvider serviceProvider) 
+        public InternalDistributedLock(IServiceScopeFactory serviceScopeFactory) 
         {
-            _distributedLockStorage = distributedLockStorage;
-            _inMemoryLock = inMemoryLock;
-            _serviceProvider = serviceProvider;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public async Task<IDistributedLockInstance> Acquire(
@@ -31,11 +23,16 @@ namespace TransactionalBox.DistributedLock.Internals
             TimeSpan checkingIntervalWhenLockIsNotReleased, 
             CancellationToken cancellationToken = default)
         {
-            var _inMemoryLockInstance = await _inMemoryLock.Acquire(typeof(T).Name, cancellationToken);
+            using var scope = _serviceScopeFactory.CreateScope();
+
+            var storage = scope.ServiceProvider.GetRequiredService<IDistributedLockStorage>();
+            var inMemoryLock = scope.ServiceProvider.GetRequiredService<IKeyedInMemoryLock>();
+
+            var _inMemoryLockInstance = await inMemoryLock.Acquire(key, cancellationToken);
 
             if (!_addedFirstLock)
             {
-                await AddFirstLock(key, timeProvider, lockTimeout);
+                await AddFirstLock(key, timeProvider, lockTimeout, storage);
                 _addedFirstLock = true;
             }
 
@@ -49,7 +46,7 @@ namespace TransactionalBox.DistributedLock.Internals
 
                 expirationUtc = CalculateExpirationUtc(nowUtc, lockTimeout);
 
-                isAcquired = await _distributedLockStorage.TryAcquire<T>(key, nowUtc, expirationUtc);
+                isAcquired = await storage.TryAcquire<T>(key, nowUtc, expirationUtc);
 
                 if (!isAcquired)
                 {
@@ -62,10 +59,10 @@ namespace TransactionalBox.DistributedLock.Internals
 
             var @lock = new T() { Key = key, ExpirationUtc = expirationUtc };
 
-            return new DistributedLockInstance<T>(@lock, _inMemoryLockInstance, _serviceProvider);
+            return new DistributedLockInstance<T>(@lock, _inMemoryLockInstance, _serviceScopeFactory);
         }
 
-        private async Task AddFirstLock(string key, TimeProvider timeProvider, TimeSpan lockTimeout)
+        private async Task AddFirstLock(string key, TimeProvider timeProvider, TimeSpan lockTimeout, IDistributedLockStorage storage)
         {
             var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
@@ -75,7 +72,7 @@ namespace TransactionalBox.DistributedLock.Internals
                 ExpirationUtc = CalculateExpirationUtc(nowUtc,lockTimeout),
             };
 
-            await _distributedLockStorage.AddFirstLock(@lock);
+            await storage.AddFirstLock(@lock);
         }
 
         private DateTime CalculateExpirationUtc(DateTime nowUtc, TimeSpan lockTimeout) => nowUtc + lockTimeout;

@@ -101,6 +101,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedInMem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedInMemoryLock.Tests", "tests\TransactionalBox.KeyedInMemoryLock.Tests\TransactionalBox.KeyedInMemoryLock.Tests.csproj", "{CF1E2553-3259-42E2-8E3D-6B3A3382F847}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.DistributedLock.EntityFramework.Tests", "tests\TransactionalBox.DistributedLock.EntityFramework.Tests\TransactionalBox.DistributedLock.EntityFramework.Tests.csproj", "{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -291,6 +293,10 @@ Global
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -342,6 +348,7 @@ Global
 		{6FFF3094-38DF-434A-AB60-04AD38DFEB75} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{D9F3EEEB-5307-4CF4-97FF-BDBFDEC77D6A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
+		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}
