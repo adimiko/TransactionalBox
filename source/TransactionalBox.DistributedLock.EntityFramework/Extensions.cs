@@ -20,6 +20,16 @@ namespace TransactionalBox.DistributedLock.EntityFramework
             return services;
         }
 
+        public static IServiceCollection UseEntityFramework(
+            this IDistributedLockStorageConfigurator storageConfigurator)
+        {
+            var services = storageConfigurator.Services;
+
+            services.AddScoped<IDistributedLockStorage, EntityFrameworkDistributedLockStorage>();
+
+            return services;
+        }
+
         public static void AddDistributedLock<T>(this ModelBuilder modelBuilder) 
             where T : Lock, new()
         {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TransactionalBox.DistributedLock.EntityFramework.Tests
+namespace TransactionalBox.DistributedLock.EntityFramework.Tests.SeedWork
 {
     public sealed class TestDbContext : DbContext
     {

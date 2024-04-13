@@ -32,7 +32,7 @@ namespace TransactionalBox.DistributedLock.Internals
 
             if (!_addedFirstLock)
             {
-                await AddFirstLock(key, timeProvider, lockTimeout, storage);
+                await AddFirstLock(key, timeProvider, storage);
                 _addedFirstLock = true;
             }
 
@@ -62,14 +62,14 @@ namespace TransactionalBox.DistributedLock.Internals
             return new DistributedLockInstance<T>(@lock, _inMemoryLockInstance, _serviceScopeFactory);
         }
 
-        private async Task AddFirstLock(string key, TimeProvider timeProvider, TimeSpan lockTimeout, IDistributedLockStorage storage)
+        private async Task AddFirstLock(string key, TimeProvider timeProvider, IDistributedLockStorage storage)
         {
             var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
             var @lock = new T()
             {
                 Key = key,
-                ExpirationUtc = CalculateExpirationUtc(nowUtc,lockTimeout),
+                ExpirationUtc = nowUtc,
             };
 
             await storage.AddFirstLock(@lock);

@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
+using TransactionalBox.DistributedLock.EntityFramework.Tests.SeedWork;
 using TransactionalBox.KeyedInMemoryLock;
 using Xunit;
 
 namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 {
-    public sealed class Test : IAsyncLifetime
+    public sealed class DistributedLockTests : IAsyncLifetime
     {
         private IServiceProvider _serviceProvider;
 
@@ -24,6 +25,9 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 
             services.AddDistributedLock<TestLock>(x => x.UseEntityFramework<TestDbContext>());
 
+            // KeyedInMemoryLock is disabled because we want multiple tasks to query the database
+            services.AddSingleton<IKeyedInMemoryLock, DisabledKeyedInMemoryLock>();
+
             _serviceProvider = services.BuildServiceProvider();
 
             using var scope = _serviceProvider.CreateScope();
@@ -31,12 +35,12 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
             scope.ServiceProvider.GetRequiredService<TestDbContext>().Database.EnsureCreated();
         }
 
-        [Fact]
+        [Fact(DisplayName = "Distributed lock works correct in multi-thread enviroment")]
         public async Task Test1()
         {
             var timeProvider = TimeProvider.System;
-            var lockTimeout = TimeSpan.FromMicroseconds(1000);
-            var checkingInterval = TimeSpan.FromMicroseconds(10);
+            var lockTimeout = TimeSpan.FromSeconds(1);
+            var checkingInterval = TimeSpan.FromMicroseconds(100);
 
             var distributedLock = _serviceProvider.GetRequiredService<IDistributedLock<TestLock>>();
 
@@ -45,8 +49,6 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
                 // Different lock keys
                 var lockKeyA = "A";
                 var lockKeyB = "B";
-
-                //var distributedLock = _serviceProvider.GetRequiredService<IDistributedLock<TestLock>>();
 
                 var taskA1 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
                 var taskB1 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
@@ -60,8 +62,10 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
                 Assert.True(taskB1.IsCompleted);
 
                 // Second tasks should wait when locks will be released
-                Assert.False(taskA2.IsCompleted);
-                Assert.False(taskB2.IsCompleted);
+                await Task.Delay(100);
+
+                Assert.False(taskA2.IsCompleted, "Task A2 did not wait for task A1 to release the distributed lock");
+                Assert.False(taskB2.IsCompleted, "Task B2 did not wait for task B1 to release the distributed lock");
 
                 // When first tasks release locks, second tasks can continue
                 await taskA1.Result.DisposeAsync();
