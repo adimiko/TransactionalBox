@@ -44,78 +44,78 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 
             var distributedLock = _serviceProvider.GetRequiredService<IDistributedLock<TestLock>>();
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 5; i++)
             {
                 // Different lock keys
                 var lockKeyA = "A";
                 var lockKeyB = "B";
                 var lockKeyC = "C";
 
-                var taskA1 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
-                var taskB1 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
-                var taskC1 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
+                var a1 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
+                var b1 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
+                var c1 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
 
-                var taskA2 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
-                var taskB2 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
-                var taskC2 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
+                var a2 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
+                var b2 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
+                var c2 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
 
-                var taskA3 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
-                var taskB3 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
-                var taskC3 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
+                var a3 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
+                var b3 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
+                var c3 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
 
-                await Task.WhenAll(taskA1, taskB1);
+                await Task.WhenAll(a1, b1, c1);
 
-                Assert.True(taskA1.IsCompleted, ShouldBeCompletedMessage("A1"));
-                Assert.True(taskB1.IsCompleted, ShouldBeCompletedMessage("B1"));
-                Assert.True(taskC1.IsCompleted, ShouldBeCompletedMessage("C1"));
+                Assert.True(a1.IsCompleted, Message(nameof(a1)));
+                Assert.True(b1.IsCompleted, Message(nameof(b1)));
+                Assert.True(c1.IsCompleted, Message(nameof(c1)));
 
                 // Second tasks should wait when locks will be released
                 await Task.Delay(100);
 
-                Assert.False(taskA2.IsCompleted, DidNotWaitMessage("A2", "A1"));
-                Assert.False(taskB2.IsCompleted, DidNotWaitMessage("B2", "B1"));
-                Assert.False(taskC2.IsCompleted, DidNotWaitMessage("C2", "C1"));
+                Assert.False(a2.IsCompleted, Message(nameof(a2), nameof(a1)));
+                Assert.False(b2.IsCompleted, Message(nameof(b2), nameof(b1)));
+                Assert.False(c2.IsCompleted, Message(nameof(c2), nameof(c1)));
 
-                Assert.False(taskA3.IsCompleted, DidNotWaitMessage("A3", "A1"));
-                Assert.False(taskB3.IsCompleted, DidNotWaitMessage("B3", "B1"));
-                Assert.False(taskC3.IsCompleted, DidNotWaitMessage("C3", "C1"));
+                Assert.False(a3.IsCompleted, Message(nameof(a3), nameof(a1)));
+                Assert.False(b3.IsCompleted, Message(nameof(b3), nameof(b1)));
+                Assert.False(c3.IsCompleted, Message(nameof(c3), nameof(c1)));
 
                 // When first tasks release locks, second tasks can continue
-                await taskA1.Result.DisposeAsync();
-                await taskB1.Result.DisposeAsync();
-                await taskC1.Result.DisposeAsync();
+                await a1.Result.DisposeAsync();
+                await b1.Result.DisposeAsync();
+                await c1.Result.DisposeAsync();
 
-                await Task.WhenAll(taskA2, taskB2, taskC2);
+                await Task.WhenAll(a2, b2, c2);
 
-                Assert.True(taskA2.IsCompleted, ShouldBeCompletedMessage("A2"));
-                Assert.True(taskB2.IsCompleted, ShouldBeCompletedMessage("B2"));
-                Assert.True(taskC2.IsCompleted, ShouldBeCompletedMessage("C2"));
+                Assert.True(a2.IsCompleted, Message(nameof(a2)));
+                Assert.True(b2.IsCompleted, Message(nameof(b2)));
+                Assert.True(c2.IsCompleted, Message(nameof(c2)));
 
-                Assert.False(taskA3.IsCompleted, DidNotWaitMessage("A3", "A2"));
-                Assert.False(taskB3.IsCompleted, DidNotWaitMessage("B3", "B2"));
-                Assert.False(taskC3.IsCompleted, DidNotWaitMessage("C3", "C2"));
+                Assert.False(a3.IsCompleted, Message(nameof(a3), nameof(a2)));
+                Assert.False(b3.IsCompleted, Message(nameof(b3), nameof(b2)));
+                Assert.False(c3.IsCompleted, Message(nameof(c3), nameof(c2)));
 
-                await taskA2.Result.DisposeAsync();
-                await taskB2.Result.DisposeAsync();
-                await taskC2.Result.DisposeAsync();
+                await a2.Result.DisposeAsync();
+                await b2.Result.DisposeAsync();
+                await c2.Result.DisposeAsync();
 
 
-                await Task.WhenAll(taskA3, taskB3, taskC3);
+                await Task.WhenAll(a3, b3, c3);
 
-                Assert.True(taskA3.IsCompleted, ShouldBeCompletedMessage("A3"));
-                Assert.True(taskB3.IsCompleted, ShouldBeCompletedMessage("B3"));
-                Assert.True(taskC3.IsCompleted, ShouldBeCompletedMessage("C3"));
+                Assert.True(a3.IsCompleted, Message(nameof(a3)));
+                Assert.True(b3.IsCompleted, Message(nameof(b3)));
+                Assert.True(c3.IsCompleted, Message(nameof(c3)));
 
-                await taskA3.Result.DisposeAsync();
-                await taskB3.Result.DisposeAsync();
-                await taskC3.Result.DisposeAsync();
+                await a3.Result.DisposeAsync();
+                await b3.Result.DisposeAsync();
+                await c3.Result.DisposeAsync();
             }
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        private string ShouldBeCompletedMessage(string x) => $"Task {x} should be completed.";
+        private string Message(string x) => $"Task {x} should be completed.";
 
-        private string DidNotWaitMessage(string x, string y) => $"Task {x} did not wait for task {y} to release the distributed lock.";
+        private string Message(string x, string y) => $"Task {x} did not wait for task {y} to release the distributed lock.";
     }
 }
