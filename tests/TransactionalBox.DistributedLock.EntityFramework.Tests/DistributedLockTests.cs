@@ -65,20 +65,20 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 
                 await Task.WhenAll(taskA1, taskB1);
 
-                Assert.True(taskA1.IsCompleted);
-                Assert.True(taskB1.IsCompleted);
-                Assert.True(taskC1.IsCompleted);
+                Assert.True(taskA1.IsCompleted, ShouldBeCompletedMessage("A1"));
+                Assert.True(taskB1.IsCompleted, ShouldBeCompletedMessage("B1"));
+                Assert.True(taskC1.IsCompleted, ShouldBeCompletedMessage("C1"));
 
                 // Second tasks should wait when locks will be released
                 await Task.Delay(100);
 
-                Assert.False(taskA2.IsCompleted, "Task A2 did not wait for task A1 to release the distributed lock");
-                Assert.False(taskB2.IsCompleted, "Task B2 did not wait for task B1 to release the distributed lock");
-                Assert.False(taskC2.IsCompleted, "Task C2 did not wait for task C1 to release the distributed lock");
+                Assert.False(taskA2.IsCompleted, DidNotWaitMessage("A2", "A1"));
+                Assert.False(taskB2.IsCompleted, DidNotWaitMessage("B2", "B1"));
+                Assert.False(taskC2.IsCompleted, DidNotWaitMessage("C2", "C1"));
 
-                Assert.False(taskA3.IsCompleted, "Task A3 did not wait for task A1 to release the distributed lock");
-                Assert.False(taskB3.IsCompleted, "Task B3 did not wait for task B1 to release the distributed lock");
-                Assert.False(taskC3.IsCompleted, "Task C3 did not wait for task C1 to release the distributed lock");
+                Assert.False(taskA3.IsCompleted, DidNotWaitMessage("A3", "A1"));
+                Assert.False(taskB3.IsCompleted, DidNotWaitMessage("B3", "B1"));
+                Assert.False(taskC3.IsCompleted, DidNotWaitMessage("C3", "C1"));
 
                 // When first tasks release locks, second tasks can continue
                 await taskA1.Result.DisposeAsync();
@@ -87,13 +87,13 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 
                 await Task.WhenAll(taskA2, taskB2, taskC2);
 
-                Assert.True(taskA2.IsCompleted);
-                Assert.True(taskB2.IsCompleted);
-                Assert.True(taskC2.IsCompleted);
+                Assert.True(taskA2.IsCompleted, ShouldBeCompletedMessage("A2"));
+                Assert.True(taskB2.IsCompleted, ShouldBeCompletedMessage("B2"));
+                Assert.True(taskC2.IsCompleted, ShouldBeCompletedMessage("C2"));
 
-                Assert.False(taskA3.IsCompleted, "Task A3 did not wait for task A2 to release the distributed lock");
-                Assert.False(taskB3.IsCompleted, "Task B3 did not wait for task B2 to release the distributed lock");
-                Assert.False(taskC3.IsCompleted, "Task C3 did not wait for task C2 to release the distributed lock");
+                Assert.False(taskA3.IsCompleted, DidNotWaitMessage("A3", "A2"));
+                Assert.False(taskB3.IsCompleted, DidNotWaitMessage("B3", "B2"));
+                Assert.False(taskC3.IsCompleted, DidNotWaitMessage("C3", "C2"));
 
                 await taskA2.Result.DisposeAsync();
                 await taskB2.Result.DisposeAsync();
@@ -102,9 +102,9 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 
                 await Task.WhenAll(taskA3, taskB3, taskC3);
 
-                Assert.True(taskA3.IsCompleted);
-                Assert.True(taskB3.IsCompleted);
-                Assert.True(taskC3.IsCompleted);
+                Assert.True(taskA3.IsCompleted, ShouldBeCompletedMessage("A3"));
+                Assert.True(taskB3.IsCompleted, ShouldBeCompletedMessage("B3"));
+                Assert.True(taskC3.IsCompleted, ShouldBeCompletedMessage("C3"));
 
                 await taskA3.Result.DisposeAsync();
                 await taskB3.Result.DisposeAsync();
@@ -113,5 +113,9 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
+
+        private string ShouldBeCompletedMessage(string x) => $"Task {x} should be completed.";
+
+        private string DidNotWaitMessage(string x, string y) => $"Task {x} did not wait for task {y} to release the distributed lock.";
     }
 }
