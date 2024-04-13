@@ -36,7 +36,7 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
         }
 
         [Fact(DisplayName = "Distributed lock works correct in multi-thread enviroment")]
-        public async Task Test1()
+        public async Task Test()
         {
             var timeProvider = TimeProvider.System;
             var lockTimeout = TimeSpan.FromSeconds(1);
@@ -44,13 +44,12 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 
             var distributedLock = _serviceProvider.GetRequiredService<IDistributedLock<TestLock>>();
 
+            const string lockKeyA = "A";
+            const string lockKeyB = "B";
+            const string lockKeyC = "C";
+
             for (var i = 0; i < 5; i++)
             {
-                // Different lock keys
-                var lockKeyA = "A";
-                var lockKeyB = "B";
-                var lockKeyC = "C";
-
                 var a1 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
                 var b1 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
                 var c1 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
