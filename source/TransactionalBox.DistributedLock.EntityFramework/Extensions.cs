@@ -8,6 +8,18 @@ namespace TransactionalBox.DistributedLock.EntityFramework
 {
     public static class Extensions
     {
+        public static IServiceCollection UseEntityFramework<TDbContext>(
+            this IDistributedLockStorageConfigurator storageConfigurator)
+            where TDbContext : DbContext
+        {
+            var services = storageConfigurator.Services;
+
+            services.AddScoped<DbContext>(sp => sp.GetRequiredService<TDbContext>());
+            services.AddScoped<IDistributedLockStorage, EntityFrameworkDistributedLockStorage>();
+
+            return services;
+        }
+
         public static IServiceCollection UseEntityFramework(
             this IDistributedLockStorageConfigurator storageConfigurator)
         {

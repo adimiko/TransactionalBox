@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data;
 using TransactionalBox.DistributedLock.Internals.Contracts;
 
 namespace TransactionalBox.DistributedLock.EntityFramework.Internals
@@ -15,12 +16,12 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Internals
         public async Task AddFirstLock<T>(T @lock) 
             where T : Lock, new()
         {
-            if (!await _dbContext.Set<T>().AnyAsync(x => x.Key == @lock.Key))
+            if (!await _dbContext.Set<T>().AnyAsync(x => x.Key == @lock.Key).ConfigureAwait(false))
             {
                 try
                 {
-                    await _dbContext.Set<T>().AddAsync(@lock);
-                    await _dbContext.SaveChangesAsync();
+                    _dbContext.Set<T>().Add(@lock);
+                    await _dbContext.SaveChangesAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -32,9 +33,10 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Internals
         public async Task<bool> Release<T>(string key, DateTime nowUtc, DateTime expirationUtc)
             where T : Lock, new()
         {
-            var updatedRows = await _dbContext.Set<T>()
+            int updatedRows = await _dbContext.Set<T>()
                 .Where(x => x.Key == key && x.ExpirationUtc == expirationUtc)
-                .ExecuteUpdateAsync(x => x.SetProperty(x => x.ExpirationUtc, nowUtc));
+                .ExecuteUpdateAsync(x => x.SetProperty(x => x.ExpirationUtc, nowUtc))
+                .ConfigureAwait(false);
 
             return updatedRows > 0;
         }
@@ -42,9 +44,10 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Internals
         public async Task<bool> TryAcquire<T>(string key, DateTime nowUtc, DateTime newExpirationUtc)
             where T : Lock, new()
         {
-            var updatedRows = await _dbContext.Set<T>()
-            .Where(x => x.Key == key && x.ExpirationUtc <= nowUtc)
-            .ExecuteUpdateAsync(x => x.SetProperty(x => x.ExpirationUtc, newExpirationUtc));
+            int updatedRows = await _dbContext.Set<T>()
+                .Where(x => x.Key == key && x.ExpirationUtc <= nowUtc)
+                .ExecuteUpdateAsync(x => x.SetProperty(x => x.ExpirationUtc, newExpirationUtc))
+                .ConfigureAwait(false);
 
             return updatedRows > 0;
         }

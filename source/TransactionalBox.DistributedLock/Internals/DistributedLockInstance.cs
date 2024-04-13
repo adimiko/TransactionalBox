@@ -25,10 +25,11 @@ namespace TransactionalBox.DistributedLock.Internals
 
         public async ValueTask DisposeAsync()
         {
-            var storage = _serviceProvider.GetRequiredService<IDistributedLockStorage>();
+            using var scope = _serviceProvider.CreateScope();
+            var storage = scope.ServiceProvider.GetRequiredService<IDistributedLockStorage>();
             var nowUtc = TimeProvider.System.GetUtcNow().UtcDateTime;
 
-            var x = await storage.Release<T>(_lock.Key, nowUtc, _lock.ExpirationUtc); //TODO logging release
+            var x = await storage.Release<T>(_lock.Key, nowUtc, _lock.ExpirationUtc).ConfigureAwait(false); //TODO logging release
 
             _inMemoryLockInstance.Dispose();
         }

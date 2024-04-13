@@ -18,7 +18,7 @@ namespace TransactionalBox.DistributedLock
             storageConfiguration(storage);
 
             services.AddKeyedInMemoryLock();
-            services.AddScoped<IDistributedLock<T>, InternalDistributedLock<T>>();
+            services.AddSingleton<IDistributedLock<T>, InternalDistributedLock<T>>();
         }
     }
 }
