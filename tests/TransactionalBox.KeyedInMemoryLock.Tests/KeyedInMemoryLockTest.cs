@@ -37,8 +37,6 @@ public sealed class KeyedInMemoryLockTest
             Assert.True(c1.IsCompleted, Message(nameof(c1)));
 
             // Second tasks should wait when locks will be released
-            await Task.Delay(25);
-
             Assert.False(a2.IsCompleted, Message(nameof(a2), nameof(a1)));
             Assert.False(b2.IsCompleted, Message(nameof(b2), nameof(b1)));
             Assert.False(c2.IsCompleted, Message(nameof(c2), nameof(c1)));

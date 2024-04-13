@@ -11,25 +11,25 @@ namespace TransactionalBox.DistributedLock.Internals
 
         private readonly ILockInstance _inMemoryLockInstance;
 
-        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IServiceProvider _serviceProvider;
 
         internal DistributedLockInstance(
             T @lock,
             ILockInstance inMemoryLockInstance,
-            IServiceScopeFactory serviceScopeFactory) 
+            IServiceProvider serviceProvider) 
         {
             _lock = @lock;
             _inMemoryLockInstance = inMemoryLockInstance;
-            _serviceScopeFactory = serviceScopeFactory;
+            _serviceProvider = serviceProvider;
         }
 
         public async ValueTask DisposeAsync()
         {
-            using var scope = _serviceScopeFactory.CreateScope();
+            using var scope = _serviceProvider.CreateScope();
             var storage = scope.ServiceProvider.GetRequiredService<IDistributedLockStorage>();
             var nowUtc = TimeProvider.System.GetUtcNow().UtcDateTime;
 
-            var x = await storage.Release<T>(_lock.Key, nowUtc, _lock.ExpirationUtc); //TODO logging release
+            var x = await storage.Release<T>(_lock.Key, nowUtc, _lock.ExpirationUtc).ConfigureAwait(false); //TODO logging release
 
             _inMemoryLockInstance.Dispose();
         }
