@@ -10,13 +10,13 @@ public sealed class KeyedInMemoryLockTest
     [Fact(DisplayName = "KeyedInMemoryLock works correct in multi-thread enviroment")]
     public async Task Test()
     {
+        var inMemoryLock = _serviceProvider.GetRequiredService<IKeyedInMemoryLock>();
+
         for (var i = 0; i < 2; i++)
         {
             // Different lock keys
             var lockKeyA = "A";
             var lockKeyB = "B";
-
-            var inMemoryLock = _serviceProvider.GetRequiredService<IKeyedInMemoryLock>();
 
             var taskA1 = inMemoryLock.Acquire(lockKeyA);
             var taskB1 = inMemoryLock.Acquire(lockKeyB);
