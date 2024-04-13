@@ -39,8 +39,8 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
         public async Task Test()
         {
             var timeProvider = TimeProvider.System;
-            var lockTimeout = TimeSpan.FromSeconds(30);
-            var checkingInterval = TimeSpan.FromMicroseconds(200);
+            var lockTimeout = TimeSpan.FromSeconds(5);
+            var checkingInterval = TimeSpan.FromMicroseconds(10);
 
             var distributedLock = _serviceProvider.GetRequiredService<IDistributedLock<TestLock>>();
 
@@ -64,6 +64,8 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
                 Assert.True(a1.IsCompleted, Message(nameof(a1)));
                 Assert.True(b1.IsCompleted, Message(nameof(b1)));
                 Assert.True(c1.IsCompleted, Message(nameof(c1)));
+
+                await Task.Delay(250);
 
                 // Second tasks should wait when locks will be released
                 Assert.False(a2.IsCompleted, Message(nameof(a2), nameof(a1)));

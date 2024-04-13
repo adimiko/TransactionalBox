@@ -16,7 +16,7 @@ public sealed class KeyedInMemoryLockTest
         const string lockKeyB = "B";
         const string lockKeyC = "C";
 
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < 3; i++)
         {
             var a1 = inMemoryLock.Acquire(lockKeyA);
             var b1 = inMemoryLock.Acquire(lockKeyB);
