@@ -33,7 +33,7 @@ Examples of problems that occur during network communication:
 #### Storage
 - [x] Entity Framework (Relational)
     - [x] Migrations
-    - [X] Distributed Lock (Optimistic Concurency Control, Standalone Package)
+    - [X] Distributed Lock (Based on atomic write operation, Standalone Package)
 - [x] InMemory
 - [ ] MongoDB
 
