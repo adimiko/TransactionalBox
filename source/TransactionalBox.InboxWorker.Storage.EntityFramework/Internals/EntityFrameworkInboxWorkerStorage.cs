@@ -63,12 +63,40 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
             }
         }
 
-        public Task<int> RemoveProcessedMessages(int batchSize)
+        public async Task<int> RemoveProcessedMessages(int batchSize)
         {
-            return _inboxMessages
+            int numberOfDeletedRows;
+
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel).ConfigureAwait(false))
+            {
+                numberOfDeletedRows = await _inboxMessages
                     .Where(x => x.IsProcessed)
                     .Take(batchSize)
-                    .ExecuteDeleteAsync();
+                    .ExecuteDeleteAsync()
+                    .ConfigureAwait(false);
+
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+
+            return numberOfDeletedRows;
+        }
+
+        public async Task<int> RemoveExpiredIdempotencyKeys(int batchSize, DateTime nowUtc)
+        {
+            int numberOfDeletedRows;
+
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel).ConfigureAwait(false))
+            {
+                numberOfDeletedRows = await _idempotentInboxKeys
+                    .Where(x => x.ExpirationUtc <= nowUtc)
+                    .Take(batchSize)
+                    .ExecuteDeleteAsync()
+                    .ConfigureAwait(false);
+
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+
+            return numberOfDeletedRows;
         }
     }
 }

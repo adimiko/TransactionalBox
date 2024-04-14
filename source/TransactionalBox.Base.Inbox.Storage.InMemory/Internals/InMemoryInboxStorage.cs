@@ -51,6 +51,18 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
             return Task.FromResult(message);
         }
 
+        public Task<int> RemoveExpiredIdempotencyKeys(int batchSize, DateTime nowUtc)
+        {
+            var expiredIdempotentKeys = _idempotentInboxKeys.Where(x => x.ExpirationUtc <= nowUtc).Take(batchSize).ToList();
+
+            foreach (var key in expiredIdempotentKeys)
+            {
+                _idempotentInboxKeys.Remove(key);
+            }
+
+            return Task.FromResult(expiredIdempotentKeys.Count);
+        }
+
         public Task<int> RemoveProcessedMessages(int batchSize)
         {
             var messages = _inboxMessages.Where(x => x.IsProcessed).Take(batchSize).ToList();
@@ -60,7 +72,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
                 _inboxMessages.Remove(message);
             }
 
-            return Task.FromResult(_inboxMessages.Count);
+            return Task.FromResult(messages.Count);
         }
     }
 }

@@ -41,13 +41,18 @@ namespace TransactionalBox.InboxWorker
 
             services.AddBackgroundServiceBase();
 
-            services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
+            
 
             services.AddHostedService<InboxWorkerLauncher>();
 
             // Settings
+            services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
+
             services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
             services.AddSingleton<ICleanUpProcessedInboxMessagesLauncherSettings>(settings.CleanUpProcessedInboxMessagesSettings);
+
+            services.AddSingleton<ICleanUpExpiredIdempotencyKeysJobSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
+            services.AddSingleton<ICleanUpExpiredIdempotencyKeysLauncherSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
 
             services.AddSingleton<IInboxWorkerContext,InboxWorkerContext>();
 
@@ -57,6 +62,7 @@ namespace TransactionalBox.InboxWorker
             // Jobs
             services.AddScoped<AddMessagesToInboxStorage>();
             services.AddScoped<CleanUpProcessedInboxMessages>();
+            services.AddScoped<CleanUpExpiredIdempotencyKeys>();
         }
     }
 }

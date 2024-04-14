@@ -37,7 +37,7 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            var ttl = TimeSpan.FromDays(10); //TODO settings
+            var ttl = TimeSpan.FromDays(0); //TODO settings
 
             await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken))
             {
