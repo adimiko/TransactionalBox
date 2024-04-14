@@ -46,15 +46,15 @@ Examples of problems that occur during network communication:
 - [ ] gRPC
 
 #### Scalability & Fault Tolerance
-- [ ] Support for multiple outbox worker instances
-    - [ ] Multiple instances of the same service 
+- [x] Support for multiple outbox worker instances
+    - [x] Multiple instances of the same service 
     - [x] Multiple processes in the same service
-- [ ] Support for multiple inbox worker instances
-    - [ ] Multiple instances of the same service 
+- [x] Support for multiple inbox worker instances
+    - [x] Multiple instances of the same service 
     - [x] Multiple processes in the same service
-- [ ] Support for multiple inbox instances
-    - [ ] Multiple instances of the same service 
-    - [ ] Multiple processes in the same service
+- [x] Support for multiple inbox instances
+    - [x] Multiple instances of the same service 
+    - [x] Multiple processes in the same service
 - [ ] Standalone outbox worker
 - [ ] Standalone inbox worker
 - [ ] Error handling in background services
