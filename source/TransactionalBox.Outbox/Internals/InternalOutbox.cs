@@ -54,7 +54,7 @@ namespace TransactionalBox.Outbox.Internals
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = metadata.OccurredUtc,
-                ProcessedUtc = null,
+                IsProcessed = false,
                 Topic = _topicFactory.Create(receiver, message),
                 Payload = _serializer.Serialize(outboxMessagePayload),
             };
@@ -91,7 +91,7 @@ namespace TransactionalBox.Outbox.Internals
                 {
                     Id = Guid.NewGuid(), //TODO Sequential GUID #14
                     OccurredUtc = metadata.OccurredUtc,
-                    ProcessedUtc = null,
+                    IsProcessed = false,
                     Topic = _topicFactory.Create(receiver, message),
                     Payload = _serializer.Serialize(outboxMessagePayload),
                 };

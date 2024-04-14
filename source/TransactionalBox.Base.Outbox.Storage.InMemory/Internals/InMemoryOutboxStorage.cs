@@ -29,18 +29,20 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
 
         public Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId)
         {
-            var messages = _outboxMessages.Where(x => x.ProcessedUtc == null && x.JobId == jobId.ToString());
+            var messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
 
             return Task.FromResult(messages);
         }
 
         public Task MarkAsProcessed(JobId jobId, DateTime processedUtc)
         {
-            var messages = _outboxMessages.Where(x => x.ProcessedUtc == null && x.JobId == jobId.ToString());
+            var messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
 
             foreach (var message in messages) 
             {
-                message.ProcessedUtc = processedUtc;
+                message.IsProcessed = true;
+                message.JobId = null;
+                message.LockUtc = null;
             }
 
             return Task.CompletedTask;
@@ -52,7 +54,7 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
 
             var messages = _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
-                .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                .Where(x => !x.IsProcessed && (x.LockUtc == null || x.LockUtc <= nowUtc))
                 .Take(batchSize)
                 .ToList();
 
@@ -68,7 +70,7 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
         public Task<int> RemoveProcessedMessages(int batchSize)
         {
             var messagesToRemove = _outboxMessages
-                .Where(x => x.ProcessedUtc != null)
+                .Where(x => x.IsProcessed)
                 .Take(batchSize);
 
             foreach (var message in messagesToRemove) 
