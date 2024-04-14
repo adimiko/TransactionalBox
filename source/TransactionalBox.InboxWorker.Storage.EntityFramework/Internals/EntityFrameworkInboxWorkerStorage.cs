@@ -6,15 +6,17 @@ using TransactionalBox.InboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
 {
-    internal sealed class EntityFrameworkInboxStorage : IInboxWorkerStorage
+    internal sealed class EntityFrameworkInboxWorkerStorage : IInboxWorkerStorage
     {
+        private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
+
         private readonly DbContext _dbContext;
 
         private readonly DbSet<InboxMessage> _inboxMessages;
 
         private readonly DbSet<IdempotentInboxKey> _idempotentInboxKeys;
 
-        public EntityFrameworkInboxStorage(DbContext dbContext)
+        public EntityFrameworkInboxWorkerStorage(DbContext dbContext)
         {
             _dbContext = dbContext;
             _inboxMessages = dbContext.Set<InboxMessage>();
@@ -26,10 +28,18 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
             //TODO input ready id
             var ids = messages.Select(x => x.Id);
 
-            var idempotentInboxKeys = await _idempotentInboxKeys
-                        .AsNoTracking()
-                        .Where(x => ids.Contains(x.Id))
-                        .ToListAsync();
+            IEnumerable<IdempotentInboxKey> idempotentInboxKeys;
+
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel).ConfigureAwait(false)) 
+            {
+                idempotentInboxKeys = await _idempotentInboxKeys
+                .AsNoTracking()
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
 
             return idempotentInboxKeys;
         }

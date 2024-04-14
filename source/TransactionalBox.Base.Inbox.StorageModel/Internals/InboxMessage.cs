@@ -9,6 +9,10 @@
 
         public required DateTime OccurredUtc { get; set; }
 
+        public DateTime LockUtc { get; set; }
+
+        public string JobId { get; set; }
+
         public bool IsProcessed { get; set; }
 
         public required string Topic { get; set; }

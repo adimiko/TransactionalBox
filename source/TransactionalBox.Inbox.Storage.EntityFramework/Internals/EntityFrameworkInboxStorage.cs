@@ -3,6 +3,7 @@ using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Base.Inbox.StorageModel.Internals;
+using System.Data;
 
 namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
 {
@@ -22,16 +23,37 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
 
         public async Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
-            //TODO mark message and process
-            InboxMessage? message;
+            InboxMessage? message = null;
 
-            //await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
-            //{
-                message = await _dbContext.Set<InboxMessage>()
-                .Where(x => !x.IsProcessed)
-                .OrderBy(x => x.OccurredUtc)
-                .FirstOrDefaultAsync();
-            //}
+            int rowCount = 0;
+
+            await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
+            {
+                var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
+
+                using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted).ConfigureAwait(false))
+                {
+                    rowCount = await _dbContext.Set<InboxMessage>()
+                    .OrderBy(x => x.OccurredUtc)
+                    .Where(x => !x.IsProcessed && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                    .Take(1)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(x => x.LockUtc, nowUtc + lockTimeout)
+                        .SetProperty(x => x.JobId, jobId.ToString()))
+                    .ConfigureAwait(false);
+
+                    if (rowCount > 0)
+                    {
+                        message = await _dbContext.Set<InboxMessage>()
+                        .Where(x => !x.IsProcessed && x.JobId == jobId.ToString())
+                        .OrderBy(x => x.OccurredUtc)
+                        .FirstOrDefaultAsync()
+                        .ConfigureAwait(false);
+                    }
+
+                    await transaction.CommitAsync().ConfigureAwait(false);
+                }
+            }
 
             if (message is not null) 
             {

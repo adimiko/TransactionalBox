@@ -75,7 +75,7 @@ x =>
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
     //x.AddInbox(storage => storage.UseInMemory(), settings =>
     {
-        settings.NumberOfInstances = 1;
+        settings.NumberOfInstances = 4;
     })
      .WithWorker(
         storage => storage.UseEntityFramework(),
