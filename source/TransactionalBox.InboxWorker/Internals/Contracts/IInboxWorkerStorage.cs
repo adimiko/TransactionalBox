@@ -6,7 +6,7 @@ namespace TransactionalBox.InboxWorker.Internals.Contracts
     {
         Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages);
 
-        Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc);
+        Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys);
 
         Task<int> RemoveProcessedMessages(int batchSize);
     }

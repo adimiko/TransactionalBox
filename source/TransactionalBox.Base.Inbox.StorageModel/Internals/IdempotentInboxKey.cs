@@ -1,23 +1,19 @@
 ﻿namespace TransactionalBox.Base.Inbox.StorageModel.Internals
 {
-    //TODO
     public sealed class IdempotentInboxKey
     {
         public Guid Id { get; }
 
-        public DateTime AddedUtc { get; }
+        public DateTime ExpirationUtc { get; }
 
         private IdempotentInboxKey() { }
 
-        private IdempotentInboxKey(Guid id, DateTime addedUtc)
+        public IdempotentInboxKey(Guid id, TimeSpan timeToLive, TimeProvider timeProvider)
         {
-            Id = id;
-            AddedUtc = addedUtc;
-        }
+            var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-        public static IdempotentInboxKey CreateBasedOnInboxMessage(InboxMessage inboxMessage)
-        {
-            return new IdempotentInboxKey(inboxMessage.Id, inboxMessage.AddedUtc);
+            Id = id;
+            ExpirationUtc = nowUtc + timeToLive;
         }
     }
 }

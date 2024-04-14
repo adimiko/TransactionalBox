@@ -37,6 +37,8 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
+            var ttl = TimeSpan.FromDays(10); //TODO settings
+
             await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken))
             {
                 using (var scope = _serviceProvider.CreateScope())
@@ -51,7 +53,13 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
                     if (!existIdempotentInboxKeys.Any())
                     {
-                        var result = await inboxStorage.AddRange(inboxMessages, _systemClock.UtcNow);
+                        //TODO result with duplicated messages and log id in inbox-Worker
+
+                        //TODO create models with created AddedUtc
+
+                        var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, ttl, _systemClock.TimeProvider));
+
+                        var result = await inboxStorage.AddRange(inboxMessages, idempotentMessages);
 
                         if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
                         {
@@ -76,7 +84,9 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
                         var inboxMessagesToSave = inboxMessages.Where(x => existIds.Contains(x.Id));
 
-                        result1 = await inboxStorage.AddRange(inboxMessages, _systemClock.UtcNow);
+                        var idempotentMessagesToSave = inboxMessagesToSave.Select(x => new IdempotentInboxKey(x.Id, ttl, _systemClock.TimeProvider));
+
+                        result1 = await inboxStorage.AddRange(inboxMessages, idempotentMessagesToSave);
                     }
                     while (result1 == AddRangeToInboxStorageResult.Success);
                 }

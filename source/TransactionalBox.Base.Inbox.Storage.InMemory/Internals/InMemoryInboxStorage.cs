@@ -15,18 +15,11 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
 
         public IReadOnlyCollection<IdempotentInboxKey> IdempotentInboxKeys => _idempotentInboxKeys;
 
-        public Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc)
+        public Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys)
         {
-            foreach (var message in messages)
-            {
-                message.AddedUtc = nowUtc;
-            }
-
             _inboxMessages.AddRange(messages);
-
-            var idempotentMessages = messages.Select(x => IdempotentInboxKey.CreateBasedOnInboxMessage(x));
             
-            _idempotentInboxKeys.AddRange(idempotentMessages);
+            _idempotentInboxKeys.AddRange(idempotentInboxKeys);
 
             return Task.FromResult(AddRangeToInboxStorageResult.Success);
         }
@@ -51,6 +44,8 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
             if (message is not null)
             {
                 message.IsProcessed = true;
+                message.LockUtc = null;
+                message.JobId = null;
             }
 
             return Task.FromResult(message);

@@ -44,34 +44,21 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
             return idempotentInboxKeys;
         }
 
-        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, DateTime nowUtc) //TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
+        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys) 
         {
-
-            var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
-
-            //TODO result with duplicated messages and log id in inbox-Worker
-
-            //TODO create models with created AddedUtc
-            foreach (var message in messages) 
-            {
-                message.AddedUtc = nowUtc;
-            }
-
-            var idempotentMessages = messages.Select(x => IdempotentInboxKey.CreateBasedOnInboxMessage(x));
-
             try
             {
-                await _idempotentInboxKeys.AddRangeAsync(idempotentMessages);
+                await _idempotentInboxKeys.AddRangeAsync(idempotentInboxKeys);
 
                 await _inboxMessages.AddRangeAsync(messages);
 
-                await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
                 return AddRangeToInboxStorageResult.Success;
             }
             //TODO Add a better check
             catch (DbUpdateException dbUpdateException) when (dbUpdateException.InnerException != null && dbUpdateException.InnerException.Message.Contains("duplicate key"))
-            {
+            {//TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
                 return AddRangeToInboxStorageResult.Failure;
             }
         }
