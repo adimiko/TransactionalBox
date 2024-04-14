@@ -37,7 +37,7 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
                 {
                     rowCount = await _outboxMessages
                     .OrderBy(x => x.OccurredUtc)
-                    .Where(x => x.ProcessedUtc == null && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                    .Where(x => !x.IsProcessed && (x.LockUtc == null || x.LockUtc <= nowUtc))
                     .Take(batchSize)
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(x => x.LockUtc, nowUtc + lockTimeout)
@@ -58,7 +58,7 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
             {
                 messages = await _outboxMessages
                     .AsNoTracking()
-                    .Where(x => x.ProcessedUtc == null && x.JobId == jobId.ToString())
+                    .Where(x => !x.IsProcessed && x.JobId == jobId.ToString())
                     .ToListAsync();
 
                 await transaction.CommitAsync();
@@ -72,8 +72,11 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
             {
                 await _outboxMessages
-                    .Where(x => x.ProcessedUtc == null && x.JobId == jobId.ToString())
-                    .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.ProcessedUtc, processedUtc));
+                    .Where(x => !x.IsProcessed && x.JobId == jobId.ToString())
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(x => x.IsProcessed, true)
+                        .SetProperty(x => x.JobId, (string?)null)
+                        .SetProperty(x => x.LockUtc, (DateTime?)null));
 
                 await transaction.CommitAsync();
             }
@@ -86,7 +89,7 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
             {
                 rowCount = await _outboxMessages
-                    .Where(x => x.ProcessedUtc != null)
+                    .Where(x => x.IsProcessed)
                     .Take(batchSize)
                     .ExecuteDeleteAsync();
 
