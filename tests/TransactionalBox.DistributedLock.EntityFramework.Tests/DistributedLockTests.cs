@@ -50,7 +50,6 @@ namespace TransactionalBox.DistributedLock.EntityFramework.Tests
 
             for (var i = 0; i < 2; i++)
             {
-                //TODO nie jestem wstanie kolejności uruchomienia wykonać
                 var a1 = distributedLock.Acquire(lockKeyA, timeProvider, lockTimeout, checkingInterval);
                 var b1 = distributedLock.Acquire(lockKeyB, timeProvider, lockTimeout, checkingInterval);
                 var c1 = distributedLock.Acquire(lockKeyC, timeProvider, lockTimeout, checkingInterval);
