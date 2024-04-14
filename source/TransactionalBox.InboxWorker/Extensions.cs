@@ -46,6 +46,7 @@ namespace TransactionalBox.InboxWorker
             services.AddHostedService<InboxWorkerLauncher>();
 
             // Settings
+            services.AddSingleton<IAddMessagesToInboxStorageJobSettings>(settings.AddMessagesToInboxStorageSettings);
             services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
 
             services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
