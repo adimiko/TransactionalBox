@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Base.Inbox.StorageModel.Internals;
@@ -21,24 +22,26 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
         private readonly ITopicsProvider _topicsProvider;
 
+        private readonly IAddMessagesToInboxStorageJobSettings _settings;
+
         public AddMessagesToInboxStorage(
             IServiceProvider serviceProvider,
             IDecompressionAlgorithm decompressionAlgorithm,
             IInboxWorkerTransport inboxWorkerTransport,
             ISystemClock systemClock,
-            ITopicsProvider topicsProvider) 
+            ITopicsProvider topicsProvider,
+            IAddMessagesToInboxStorageJobSettings settings) 
         {
             _serviceProvider = serviceProvider;
             _decompressionAlgorithm = decompressionAlgorithm;
             _inboxWorkerTransport = inboxWorkerTransport;
             _systemClock = systemClock;
             _topicsProvider = topicsProvider;
+            _settings = settings;
         }
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            var ttl = TimeSpan.FromDays(10); //TODO settings
-
             await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken))
             {
                 using (var scope = _serviceProvider.CreateScope())
@@ -55,9 +58,7 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
                     {
                         //TODO result with duplicated messages and log id in inbox-Worker
 
-                        //TODO create models with created AddedUtc
-
-                        var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, ttl, _systemClock.TimeProvider));
+                        var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
 
                         var result = await inboxStorage.AddRange(inboxMessages, idempotentMessages);
 
@@ -84,7 +85,7 @@ namespace TransactionalBox.InboxWorker.Internals.Jobs
 
                         var inboxMessagesToSave = inboxMessages.Where(x => existIds.Contains(x.Id));
 
-                        var idempotentMessagesToSave = inboxMessagesToSave.Select(x => new IdempotentInboxKey(x.Id, ttl, _systemClock.TimeProvider));
+                        var idempotentMessagesToSave = inboxMessagesToSave.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
 
                         result1 = await inboxStorage.AddRange(inboxMessages, idempotentMessagesToSave);
                     }

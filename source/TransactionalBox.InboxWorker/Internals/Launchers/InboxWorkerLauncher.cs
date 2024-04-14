@@ -8,11 +8,14 @@ namespace TransactionalBox.InboxWorker.Internals.Launchers
         public InboxWorkerLauncher(
             IServiceProvider serviceProvider,
             IAddMessagesToInboxStorageLauncherSettings addMessagesToInboxStorageLauncherSettings,
-            ICleanUpProcessedInboxMessagesLauncherSettings cleanUpProcessedInboxMessagesLauncherSettings)
+            ICleanUpProcessedInboxMessagesLauncherSettings cleanUpProcessedInboxMessagesLauncherSettings,
+            ICleanUpExpiredIdempotencyKeysLauncherSettings cleanUpExpiredIdempotencyKeysLauncherSettings)
             : base(serviceProvider)
         {
             Launch<AddMessagesToInboxStorage>(addMessagesToInboxStorageLauncherSettings.NumberOfInstances);
             Launch<CleanUpProcessedInboxMessages>(cleanUpProcessedInboxMessagesLauncherSettings.NumberOfInstances);
+            Launch<CleanUpExpiredIdempotencyKeys>(cleanUpExpiredIdempotencyKeysLauncherSettings.NumberOfInstances);
+
         }
     }
 }
