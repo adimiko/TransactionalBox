@@ -58,6 +58,8 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
             if (message is not null) 
             {
                 message.IsProcessed = true;
+                message.LockUtc = null;
+                message.JobId = null;
             }
             
             return message;

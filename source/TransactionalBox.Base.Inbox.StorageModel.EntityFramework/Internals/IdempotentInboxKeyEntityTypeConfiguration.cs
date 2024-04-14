@@ -9,7 +9,7 @@ namespace TransactionalBox.Base.Inbox.StorageModel.EntityFramework.Internals
         public void Configure(EntityTypeBuilder<IdempotentInboxKey> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.AddedUtc);
+            builder.Property(x => x.ExpirationUtc);
         }
     }
 }
