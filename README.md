@@ -29,6 +29,7 @@ Examples of problems that occur during network communication:
 - [x] Get messages from outbox and add them to transport
 - [x] Get a message from transport and add them to the inbox
 - [x] Get a message from inbox and process it
+- [ ] Get messages from inbox and process them
 
 #### Storage
 - [x] Entity Framework (Relational)
