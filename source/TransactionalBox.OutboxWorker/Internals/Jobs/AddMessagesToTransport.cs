@@ -60,15 +60,11 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
             var messages = await _outboxStorage.GetMarkedMessages(_jobExecutionContext.JobId);
 
-            var transportMessages = _transportMessageFactory.Create(messages);
+            var transportMessages = await _transportMessageFactory.Create(messages);
 
-            foreach ( var message in transportMessages ) 
+            foreach (var transportMessage in transportMessages) 
             {
-                var payload = Encoding.UTF8.GetBytes(message.Payload);
-
-                var compressedPayload = await _compressionAlgorithm.Compress(payload);
-
-                var transportResult = await _transport.Add(message.Topic, compressedPayload);
+                var transportResult = await _transport.Add(transportMessage.Topic, transportMessage.Payload);
 
                 if (transportResult == TransportResult.Failure)
                 {

@@ -1,6 +1,4 @@
-﻿using Confluent.Kafka;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Transport.Kafka.Internals;
@@ -20,6 +18,8 @@ namespace TransactionalBox.OutboxWorker.Transport.Kafka
             settingsConfiguration(settings);
 
             services.AddSingleton<IOutboxWorkerKafkaSettings>(settings);
+            services.AddSingleton<ITransportMessageSizeSettings>(settings.TransportMessageSizeSettings);
+
             services.AddSingleton<KafkaConfigFactory>();
             services.AddScoped<IOutboxWorkerTransport, KafkaTransport>();
         }

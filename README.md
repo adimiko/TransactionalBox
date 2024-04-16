@@ -85,8 +85,8 @@ Examples of problems that occur during network communication:
 - [X] Internal high-performance logging
 - [x] Execution context in Inbox
 - [ ] Grouping of messages
-    - [x] Conversion of multiple messages from the outbox to a single transport message
-    - [ ] Order by topic (better compression), then adjust the transport message to optimal size of transport
+    - [x] Group by topic outbox messages to a single transport message from batch (better compression)
+    - [ ] Adjusting optimal transport message size
 - [X] Messages serialization and deserialization
     - [X] System.Text.Json (default)
     - [x] Custom (you can add your own implementation)
