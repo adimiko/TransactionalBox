@@ -18,7 +18,7 @@ namespace TransactionalBox.OutboxWorker.Transport.Kafka
             settingsConfiguration(settings);
 
             services.AddSingleton<IOutboxWorkerKafkaSettings>(settings);
-            services.AddSingleton<ITransportMessageSizeSettings>(settings);
+            services.AddSingleton<ITransportMessageSizeSettings>(settings.TransportMessageSizeSettings);
 
             services.AddSingleton<KafkaConfigFactory>();
             services.AddScoped<IOutboxWorkerTransport, KafkaTransport>();

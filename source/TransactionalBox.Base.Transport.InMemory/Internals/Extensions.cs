@@ -13,6 +13,7 @@ namespace TransactionalBox.Base.Transport.InMemory.Internals
             var services = configurator.Services;
 
             services.AddSingleton<IOutboxWorkerTransport, InternalTransport>();
+            services.AddSingleton<ITransportMessageSizeSettings>(new InMemoryTransportMessageSizeSettings());
         }
 
         internal static void UseInternalInMemory(this IInboxWorkerTransportConfigurator configurator)
