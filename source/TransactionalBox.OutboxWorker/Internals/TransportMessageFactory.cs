@@ -1,14 +1,26 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
+using TransactionalBox.OutboxWorker.Compression;
+using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.OutboxWorker.Internals
 {
     internal sealed class TransportMessageFactory
     {
-        // TODO maxLimit for transport
-        // TODO TransportSerializer
-        // TODO Remove TransactionalBox.TransportBase.Models
-        public IEnumerable<TransportMessage> Create(IEnumerable<OutboxMessage> outboxMessages)
+        private readonly ICompressionAlgorithm _compressionAlgorithm;
+
+        private readonly ITransportMessageSizeSettings _transportMessageSizeSettings;
+
+        public TransportMessageFactory(
+            ICompressionAlgorithm compressionAlgorithm,
+            ITransportMessageSizeSettings transportMessageSizeSettings) 
+        {
+            _compressionAlgorithm = compressionAlgorithm;
+            _transportMessageSizeSettings = transportMessageSizeSettings;
+        }    
+
+        public async Task<IEnumerable<TransportMessage>> Create(IEnumerable<OutboxMessage> outboxMessages)
         {
             var groupedOutboxMessagesByTopic = outboxMessages
             .GroupBy(x => x.Topic)
@@ -23,32 +35,33 @@ namespace TransactionalBox.OutboxWorker.Internals
             foreach (var groupedOutboxMessagesWithTheSameTopic in groupedOutboxMessagesByTopic)
             {
                 var messages = groupedOutboxMessagesWithTheSameTopic.Messages;
-                //TODO #27
-                //var payload = JsonSerializer.Serialize(messages); //TODO not all values from outboxMessage (convert to some new object)
 
-                //TODO if serialized value is bigger that limit, split to 2 transport message
+                var payload = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(messages)); //TODO TransportSerializer with StringBuilder
 
-                //TODO settings ?
-                //TODO per transport ??
-                /*
-                const int maxBytes = 1_000_000;
-                var payloadBytes = Encoding.UTF8.GetByteCount(payload);
+                var compressedPayload = await _compressionAlgorithm.Compress(payload);
+
+                var compressedPayloadBytes = compressedPayload.Length;
+
                 
-                if (maxBytes <= payloadBytes)
+                //TODO (Improvment) maxMessage transport size
+                /*
+                if (_transportMessageSizeSettings.OptimalTransportMessageSize <= compressedPayloadBytes)
                 {
                     //TODO log Information splittes messages
 
                     var numberOfMessages = messages.Count();
 
-                    // splitvar firstTransportMessage = messages.Get
-                    // split
+                    if (numberOfMessages > 1) 
+                    {
+
+                    }
                 }
                 */
 
                 var transportMessage = new TransportMessage()
                 {
                     Topic = groupedOutboxMessagesWithTheSameTopic.Topic,
-                    Payload = JsonSerializer.Serialize(groupedOutboxMessagesWithTheSameTopic.Messages),
+                    Payload = compressedPayload,
                 };
 
                 transportMessages.Add(transportMessage);

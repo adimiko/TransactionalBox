@@ -4,6 +4,6 @@
     {
         internal required string Topic { get; init; }
 
-        internal required string Payload { get; init; }
+        internal required byte[] Payload { get; init; }
     }
 }
