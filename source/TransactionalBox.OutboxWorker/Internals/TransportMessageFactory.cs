@@ -42,7 +42,6 @@ namespace TransactionalBox.OutboxWorker.Internals
 
                 var compressedPayloadBytes = compressedPayload.Length;
 
-                
                 //TODO (Improvment) maxMessage transport size
                 /*
                 if (_transportMessageSizeSettings.OptimalTransportMessageSize <= compressedPayloadBytes)
