@@ -3,22 +3,27 @@ using System.Text.Json;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
+using TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies;
 
-namespace TransactionalBox.OutboxWorker.Internals
+namespace TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories
 {
     internal sealed class TransportMessageFactory
     {
         private readonly ICompressionAlgorithm _compressionAlgorithm;
 
+        private readonly IEnumerable<IPayloadCreationPolicy> _payloadCreationPolicies;
+
         private readonly ITransportMessageSizeSettings _transportMessageSizeSettings;
 
         public TransportMessageFactory(
             ICompressionAlgorithm compressionAlgorithm,
-            ITransportMessageSizeSettings transportMessageSizeSettings) 
+            IEnumerable<IPayloadCreationPolicy> payloadCreationPolicies,
+            ITransportMessageSizeSettings transportMessageSizeSettings)
         {
             _compressionAlgorithm = compressionAlgorithm;
+            _payloadCreationPolicies = payloadCreationPolicies;
             _transportMessageSizeSettings = transportMessageSizeSettings;
-        }    
+        }
 
         public async Task<IEnumerable<TransportMessage>> Create(IEnumerable<OutboxMessage> outboxMessages)
         {
@@ -40,30 +45,22 @@ namespace TransactionalBox.OutboxWorker.Internals
 
                 var compressedPayload = await _compressionAlgorithm.Compress(payload);
 
-                var compressedPayloadBytes = compressedPayload.Length;
+                var compressedPayloadSize = compressedPayload.Length;
 
-                //TODO (Improvment) maxMessage transport size
-                /*
-                if (_transportMessageSizeSettings.OptimalTransportMessageSize <= compressedPayloadBytes)
+                var policy = _payloadCreationPolicies.First(x => x.IsApplicable(compressedPayloadSize));
+
+                var payloads = await policy.Execute(compressedPayload, messages);
+
+                foreach (var p in payloads) 
                 {
-                    //TODO log Information splittes messages
-
-                    var numberOfMessages = messages.Count();
-
-                    if (numberOfMessages > 1) 
+                    var transportMessage = new TransportMessage()
                     {
+                        Topic = groupedOutboxMessagesWithTheSameTopic.Topic,
+                        Payload = p,
+                    };
 
-                    }
+                    transportMessages.Add(transportMessage);
                 }
-                */
-
-                var transportMessage = new TransportMessage()
-                {
-                    Topic = groupedOutboxMessagesWithTheSameTopic.Topic,
-                    Payload = compressedPayload,
-                };
-
-                transportMessages.Add(transportMessage);
             }
 
             return transportMessages;

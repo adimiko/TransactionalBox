@@ -4,9 +4,10 @@ using TransactionalBox.Base.BackgroundService.Internals.Context;
 using TransactionalBox.Internals;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
+using TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories;
 using TransactionalBox.OutboxWorker.Internals.Loggers;
 
-namespace TransactionalBox.OutboxWorker.Internals.Jobs
+namespace TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob
 {
     internal sealed class AddMessagesToTransport : Job
     {
@@ -62,7 +63,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs
 
             var transportMessages = await _transportMessageFactory.Create(messages);
 
-            foreach (var transportMessage in transportMessages) 
+            foreach (var transportMessage in transportMessages)
             {
                 var transportResult = await _transport.Add(transportMessage.Topic, transportMessage.Payload);
 
