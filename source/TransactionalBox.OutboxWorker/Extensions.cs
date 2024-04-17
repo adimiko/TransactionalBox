@@ -3,10 +3,12 @@ using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Base.Outbox.DependencyBuilder;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.OutboxWorker.Internals;
 using TransactionalBox.OutboxWorker.Internals.Compression;
 using TransactionalBox.OutboxWorker.Internals.Configurators;
 using TransactionalBox.OutboxWorker.Internals.Jobs;
+using TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob;
+using TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories;
+using TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies;
 using TransactionalBox.OutboxWorker.Internals.Launchers;
 using TransactionalBox.OutboxWorker.Internals.Loggers;
 using TransactionalBox.OutboxWorker.Settings;
@@ -57,6 +59,10 @@ namespace TransactionalBox.OutboxWorker
             // Jobs
             services.AddScoped<AddMessagesToTransport>();
             services.AddScoped<CleanUpProcessedOutboxMessages>();
+
+            // Policies
+            services.AddSingleton<IPayloadCreationPolicy, PayloadHasOptimalSizePolicy>();
+            services.AddSingleton<IPayloadCreationPolicy, PayloadIsLargerThanOptimalSizePolicy>();
         }
     }
 }

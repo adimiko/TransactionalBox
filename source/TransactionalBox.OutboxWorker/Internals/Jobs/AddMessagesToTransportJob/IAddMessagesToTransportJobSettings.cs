@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.OutboxWorker.Internals.Jobs
+﻿namespace TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob
 {
     internal interface IAddMessagesToTransportJobSettings
     {

@@ -1,4 +1,4 @@
-﻿using TransactionalBox.OutboxWorker.Internals.Jobs;
+﻿using TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob;
 using TransactionalBox.OutboxWorker.Internals.Launchers;
 
 namespace TransactionalBox.OutboxWorker.Settings

@@ -62,7 +62,10 @@ x =>
      .WithWorker(
         storage => storage.UseEntityFramework(), 
         //storage => storage.UseInMemory(), 
-        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        transport => transport.UseKafka(settings =>
+        {
+            settings.BootstrapServers = bootstrapServers;
+        }),
         //transport => transport.UseInMemory(),
         settings =>
      {
