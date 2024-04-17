@@ -31,7 +31,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob
             }
 
             var compressedPayloadSize = compressedPayload.Length;
-            //TODO what when 0 ?
+
             var splitRatio = Math.Ceiling(Convert.ToDecimal(compressedPayloadSize) / _settings.OptimalTransportMessageSize);
 
             var chunkSize = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(numberOfMessages) / splitRatio));
@@ -45,7 +45,7 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob
                 var payload = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(chunk)); //TODO TransportSerializer with StringBuilder
 
                 var cpayload = await _compressionAlgorithm.Compress(payload);
-                //TODO split if is 
+
                 payloads.Add(cpayload);
             }
 

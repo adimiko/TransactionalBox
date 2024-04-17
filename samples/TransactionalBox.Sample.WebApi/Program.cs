@@ -65,8 +65,7 @@ x =>
         transport => transport.UseKafka(settings =>
         {
             settings.BootstrapServers = bootstrapServers;
-            settings.TransportMessageSizeSettings.OptimalTransportMessageSize = 1000;
-         }),
+        }),
         //transport => transport.UseInMemory(),
         settings =>
      {
