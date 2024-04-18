@@ -84,9 +84,9 @@ Examples of problems that occur during network communication:
 - [x] Unordered messages
 - [X] Internal high-performance logging
 - [x] Execution context in Inbox
-- [ ] Grouping of messages
+- [x] Grouping of messages
     - [x] Group by topic outbox messages to a single transport message from batch (better compression)
-    - [ ] Adjusting optimal transport message size
+    - [x] Adjusting optimal transport message size
 - [X] Messages serialization and deserialization
     - [X] System.Text.Json (default)
     - [x] Custom (you can add your own implementation)
@@ -97,6 +97,7 @@ Examples of problems that occur during network communication:
     - [x] Custom (you can add your own implementation)
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
+- [ ] Own transport message serialier and deseralizer (with StringBuilder)
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 
