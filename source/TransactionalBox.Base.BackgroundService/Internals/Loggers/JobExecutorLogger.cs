@@ -3,7 +3,7 @@ using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 {
-    internal sealed class JobExecutorLogger<T> : IJobExecutorLogger<T>
+    internal sealed partial class JobExecutorLogger<T> : IJobExecutorLogger<T>
         where T : class
     {
         private readonly ILogger<T> _logger;
@@ -12,7 +12,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
         {
             _logger = logger;
         }
-
+        //TODO source generation
         private static Action<ILogger, string, Exception?> _endedJob = LoggerMessage.Define<string>(LogLevel.Trace, 0, "Ended job '{jobId}'");
 
         public void EndedJob(JobId jobId) => _endedJob(_logger, jobId.ToString(), null);
@@ -21,8 +21,11 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 
         public void StartedJob(JobExecutorId jobExecutorId, JobName jobName, JobId jobId) => _startedJob(_logger, jobExecutorId.Value, jobName.Value, jobId.Value, null);
         
-        private static Action<ILogger, Exception?> _unexpectedException = LoggerMessage.Define(LogLevel.Error, 0, "Unexpected exception");
 
-        public void UnexpectedError(Exception exception) => _unexpectedException(_logger, exception);
+        [LoggerMessage(0, LogLevel.Error, "Unexpected exception (Attempt: {attempt} Delay: {delay})")]
+        public partial void UnexpectedError(Exception exception, long attempt, TimeSpan delay);
+
+        [LoggerMessage(1, LogLevel.Information, "Returned to normal")]
+        public partial void ReturnedToNormal();
     }
 }

@@ -9,5 +9,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Context
         JobExecutorId JobExecutorId { get; }
 
         JobName JobName { get; }
+
+        ProcessingState ProcessingState { get; }
     }
 }
