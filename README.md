@@ -82,7 +82,7 @@ Examples of problems that occur during network communication:
 - [x] Modular package architecture
 - [x] Support for TimeProvider
 - [x] Unordered messages
-- [X] Internal high-performance logging
+- [X] Internal high-performance logging (Source Generators)
 - [x] Execution context in Inbox
 - [x] Grouping of messages
     - [x] Group by topic outbox messages to a single transport message from batch (better compression)
