@@ -8,6 +8,9 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 
         void EndedJob(JobId jobId);
 
-        void UnexpectedError(Exception exception);
+        void UnexpectedError(Exception exception, long attempt, TimeSpan delay);
+
+        void ReturnedToNormal();
+
     }
 }
