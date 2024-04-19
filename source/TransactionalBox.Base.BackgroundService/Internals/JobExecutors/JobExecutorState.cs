@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TransactionalBox.Base.BackgroundService
+namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 {
     internal sealed class JobExecutorState
     {

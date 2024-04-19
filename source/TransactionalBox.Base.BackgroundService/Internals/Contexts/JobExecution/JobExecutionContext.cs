@@ -1,6 +1,7 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
+﻿using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 
-namespace TransactionalBox.Base.BackgroundService.Internals.Context
+namespace TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution
 {
     internal sealed class JobExecutionContext : IJobExecutionContext, IJobExecutionContextConstructor
     {

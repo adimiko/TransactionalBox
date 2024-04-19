@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 {

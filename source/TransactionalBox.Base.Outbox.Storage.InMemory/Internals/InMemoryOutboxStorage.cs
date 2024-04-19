@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.Outbox.Internals;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
-using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 
 namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
 {

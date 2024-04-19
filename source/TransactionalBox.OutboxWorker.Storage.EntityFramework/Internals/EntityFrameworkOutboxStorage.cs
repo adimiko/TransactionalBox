@@ -3,7 +3,7 @@ using System.Data;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
-using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 
 namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
 {

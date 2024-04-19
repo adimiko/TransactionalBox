@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using TransactionalBox.Base.BackgroundService.Internals;
-using TransactionalBox.Base.BackgroundService.Internals.Context;
+using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Internals;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Internals.Contracts;

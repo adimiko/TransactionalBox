@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.ComponentModel.DataAnnotations;
-using System.Numerics;
-using TransactionalBox.Base.BackgroundService.Internals.Context;
-using TransactionalBox.Base.BackgroundService.Internals.Loggers;
-using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
+using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 
-namespace TransactionalBox.Base.BackgroundService.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 {
     internal sealed class JobExecutor
     {
@@ -18,7 +15,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals
         public JobExecutor(
             IServiceProvider serviceProvider,
             IJobExecutorLogger<JobExecutor> logger,
-            TimeProvider timeProvider) 
+            TimeProvider timeProvider)
         {
             _serviceProvider = serviceProvider;
             _logger = logger;
