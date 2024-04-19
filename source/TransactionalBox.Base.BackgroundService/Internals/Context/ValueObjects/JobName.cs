@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Base.BackgroundService.Internals.ValueObjects
+﻿namespace TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects
 {
     public sealed record JobName(string Value)
     {

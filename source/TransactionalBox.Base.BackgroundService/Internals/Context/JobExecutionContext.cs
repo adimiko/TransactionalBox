@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
+﻿using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Context
 {

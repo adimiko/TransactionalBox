@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 using TransactionalBox.Base.BackgroundService.Internals.Context;
 using TransactionalBox.Base.BackgroundService.Internals.Loggers;
-using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
 
 namespace TransactionalBox.Base.BackgroundService.Internals
 {

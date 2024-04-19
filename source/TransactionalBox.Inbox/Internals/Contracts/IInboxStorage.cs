@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
+﻿using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
 using TransactionalBox.Base.Inbox.StorageModel.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Contracts

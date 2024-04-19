@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using TransactionalBox.Base.BackgroundService.Internals.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.Context.ValueObjects;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 {
@@ -8,24 +8,20 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
     {
         private readonly ILogger<T> _logger;
 
-        public JobExecutorLogger(ILogger<T> logger) 
-        {
-            _logger = logger;
-        }
-        //TODO source generation
-        private static Action<ILogger, string, Exception?> _endedJob = LoggerMessage.Define<string>(LogLevel.Trace, 0, "Ended job '{jobId}'");
+        public JobExecutorLogger(ILogger<T> logger) => _logger = logger;
 
-        public void EndedJob(JobId jobId) => _endedJob(_logger, jobId.ToString(), null);
+        [LoggerMessage(0, LogLevel.Trace, "Ended job '{jobId}'")]
+        public partial void EndedJob(JobId jobId);
 
-        private static Action<ILogger, Guid, string, string, Exception?> _startedJob = LoggerMessage.Define<Guid, string, string>(LogLevel.Trace, 1, "Job executor '{jobExecutorId}' started '{jobName}' job '{jobId}'");
 
-        public void StartedJob(JobExecutorId jobExecutorId, JobName jobName, JobId jobId) => _startedJob(_logger, jobExecutorId.Value, jobName.Value, jobId.Value, null);
+        [LoggerMessage(0, LogLevel.Trace, "Job executor '{jobExecutorId}' started '{jobName}' job '{jobId}'")]
+        public partial void StartedJob(JobExecutorId jobExecutorId, JobName jobName, JobId jobId);
         
 
-        [LoggerMessage(0, LogLevel.Error, "Unexpected exception (Attempt: {attempt} Delay: {delay})")]
+        [LoggerMessage(0, LogLevel.Error, "Unexpected exception (Attempt: {attempt} Delay: {delay})", SkipEnabledCheck = true)]
         public partial void UnexpectedError(Exception exception, long attempt, TimeSpan delay);
 
-        [LoggerMessage(1, LogLevel.Information, "Returned to normal")]
+        [LoggerMessage(0, LogLevel.Information, "Returned to normal", SkipEnabledCheck = true)]
         public partial void ReturnedToNormal();
     }
 }
