@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+using TransactionalBox.Base.BackgroundService.Internals.JobExecutors.Loggers;
+using TransactionalBox.Base.BackgroundService.Internals.Loggers;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 {
@@ -35,6 +37,8 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
             var processingState = ProcessingState.Normal;
             long attempt = 0;
 
+            var logger = _serviceProvider.GetRequiredService(typeof(IJobExecutorLogger<>).MakeGenericType(jobType)) as IJobExecutorLogger;
+
             while (!stoppingToken.IsCancellationRequested)
             {
 
@@ -54,11 +58,11 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 
                         Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
 
-                        _logger.StartedJob(jobExecutorId, jobName, localJobId);
+                        logger.StartedJob(jobExecutorId, localJobId);
 
                         await job.Execute(stoppingToken);
 
-                        _logger.EndedJob(localJobId);
+                        logger.EndedJob(localJobId);
                     }
 
                     if (processingState == ProcessingState.Error)
@@ -82,7 +86,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
                         delay = TimeSpan.FromSeconds(attempt);
                     }
 
-                    _logger.UnexpectedError(ex, attempt, delay);
+                    logger.UnexpectedError(ex, attempt, delay);
 
                     await Task.Delay(delay, _timeProvider, stoppingToken);
                 }

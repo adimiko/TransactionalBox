@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
-using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
+using TransactionalBox.Base.BackgroundService.Internals.JobExecutors.Loggers;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
 {
@@ -15,8 +15,8 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
         public partial void EndedJob(JobId jobId);
 
 
-        [LoggerMessage(0, LogLevel.Trace, "Job executor '{jobExecutorId}' started '{jobName}' job '{jobId}'")]
-        public partial void StartedJob(JobExecutorId jobExecutorId, JobName jobName, JobId jobId);
+        [LoggerMessage(0, LogLevel.Trace, "Job executor '{jobExecutorId}' started job '{jobId}'")]
+        public partial void StartedJob(JobExecutorId jobExecutorId, JobId jobId);
         
 
         [LoggerMessage(0, LogLevel.Error, "Unexpected exception (Attempt: {attempt} Delay: {delay})", SkipEnabledCheck = true)]
