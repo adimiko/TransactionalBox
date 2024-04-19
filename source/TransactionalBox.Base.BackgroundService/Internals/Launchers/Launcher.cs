@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Base.BackgroundService.Internals.Loggers;
 
-namespace TransactionalBox.Base.BackgroundService.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
 {
     public abstract class Launcher : Microsoft.Extensions.Hosting.BackgroundService
     {
@@ -30,7 +29,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals
             {
                 var startedTasks = new List<Task>();
 
-                foreach(var settings in _jobLaunchSettings)
+                foreach (var settings in _jobLaunchSettings)
                 {
                     var tasks = await parallelExecutor.Run(settings.JobType, settings.NumberOfInstances, stoppingToken);
 

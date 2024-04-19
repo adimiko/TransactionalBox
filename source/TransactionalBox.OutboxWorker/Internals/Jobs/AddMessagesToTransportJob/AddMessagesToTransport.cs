@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using TransactionalBox.Base.BackgroundService.Internals;
-using TransactionalBox.Base.BackgroundService.Internals.Context;
+using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
+using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 using TransactionalBox.Internals;
 using TransactionalBox.OutboxWorker.Compression;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
@@ -51,7 +52,14 @@ namespace TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob
         {
             var nowUtc = _systemClock.UtcNow;
 
-            var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, _settings.BatchSize, _systemClock.TimeProvider, _settings.LockTimeout);
+            var batchSize = _settings.BatchSize;
+
+            if (_jobExecutionContext.ProcessingState == ProcessingState.Error)
+            {
+                batchSize = 1; //TODO settings
+            }
+
+            var numberOfMessages = await _outboxStorage.MarkMessages(_jobExecutionContext.JobId, _jobExecutionContext.JobName, batchSize, _systemClock.TimeProvider, _settings.LockTimeout);
 
             if (numberOfMessages == 0) // IsBatchEmpty
             {

@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Base.BackgroundService.Internals.Loggers
+﻿namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
 {
     internal interface ILauncherLogger<T> where T : class
     {
