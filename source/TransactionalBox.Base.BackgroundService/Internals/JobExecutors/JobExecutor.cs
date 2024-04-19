@@ -10,26 +10,18 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly IJobExecutorLogger<JobExecutor> _logger;
-
         private readonly TimeProvider _timeProvider;
 
         public JobExecutor(
             IServiceProvider serviceProvider,
-            IJobExecutorLogger<JobExecutor> logger,
             TimeProvider timeProvider)
         {
             _serviceProvider = serviceProvider;
-            _logger = logger;
             _timeProvider = timeProvider;
         }
 
         internal async Task Execute(Type jobType, string jobId, CancellationToken stoppingToken)
         {
-            //TODO prepare
-            //TODO log settings & enviroment (ProcessorCount etc.)
-            //TODO error
-
             //_logger.Information("Settings: {0}", _settings);
 
             var jobExecutorId = new JobExecutorId(Guid.NewGuid());
@@ -70,7 +62,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
                         processingState = ProcessingState.Normal;
                         attempt = 0;
 
-                        _logger.ReturnedToNormal(); //TODO jaki which job logging
+                        logger.ReturnedToNormal();
                     }
                 }
                 catch (Exception ex)
@@ -81,7 +73,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 
                     TimeSpan delay = TimeSpan.FromSeconds(10); //TODO settings
 
-                    if (attempt <= 10) //TODO settings
+                    if (attempt <= 10)
                     {
                         delay = TimeSpan.FromSeconds(attempt);
                     }
