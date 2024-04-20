@@ -152,4 +152,3 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 - Synchronization primitives
 - Idempotency
 - Retry Pattern
-- Circuit Breaker Pattern
