@@ -8,11 +8,41 @@ using TransactionalBox.Sample.OutboxWithWorker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.Elasticsearch;
+using System.Reflection;
 
 const string connectionString = "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres";
 const string bootstrapServers = "plaintext://kafka:9092";
 
 var builder = WebApplication.CreateBuilder(args);
+
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .Build();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .Enrich.WithEnvironmentName()
+    .Enrich.WithMachineName()
+    .WriteTo.Console()
+    .WriteTo.Debug()
+    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(configuration["ElasticSearch:Url"]))
+    {
+        AutoRegisterTemplate = true,
+        //AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
+        IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name!.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+        NumberOfReplicas = 1,
+        NumberOfShards = 2
+    })
+    .ReadFrom.Configuration(configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddDbContextPool<ServiceWithOutboxDbContext>(x => x.UseNpgsql(connectionString));
 
@@ -43,8 +73,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
+app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger) =>
 {
+    logger.LogInformation("TEST");
     for (var i = 0; i < 100; i++)
     {
         //TODO AddRange
