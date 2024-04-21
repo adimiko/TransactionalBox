@@ -99,6 +99,7 @@ Examples of problems that occur during network communication:
 - [ ] Message streaming
 - [ ] Package configuration using appsetings.json
 - [ ] Own transport message serialier and deseralizer (with StringBuilder)
+- [ ] Internal box
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 
