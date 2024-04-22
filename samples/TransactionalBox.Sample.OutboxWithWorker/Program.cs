@@ -31,7 +31,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.WithMachineName()
     .WriteTo.Console()
     .WriteTo.Debug()
-    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(configuration["ElasticSearch:Url"]))
+    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
     {
         AutoRegisterTemplate = true,
         //AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
@@ -75,7 +75,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger) =>
 {
-    logger.LogInformation("TEST");
+    Log.Error("test");
     for (var i = 0; i < 100; i++)
     {
         //TODO AddRange
