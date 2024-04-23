@@ -31,7 +31,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.WithMachineName()
     .WriteTo.Console()
     .WriteTo.Debug()
-    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
     {
         AutoRegisterTemplate = true,
         //AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
