@@ -31,8 +31,7 @@ builder.Services.AddTransactionalBox(x =>
      .WithWorker(
         storage => storage.UseInMemory(),
         transport => transport.UseInMemory());
-},
-settings => settings.ServiceId = "ServiceName");
+}, configuration: builder.Configuration);
 
 var app = builder.Build();
 
