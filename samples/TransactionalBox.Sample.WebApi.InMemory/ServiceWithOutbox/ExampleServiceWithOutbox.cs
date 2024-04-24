@@ -19,7 +19,7 @@ namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
                 Age = 25,
             };
 
-            await _outbox.Add(message, envelope => envelope.Receiver = "ServiceName");
+            await _outbox.Add(message, envelope => envelope.Receiver = "ExampleServiceId");
         }
     }
 }
