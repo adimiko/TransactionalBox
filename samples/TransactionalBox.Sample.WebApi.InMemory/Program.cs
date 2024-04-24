@@ -31,7 +31,8 @@ builder.Services.AddTransactionalBox(x =>
      .WithWorker(
         storage => storage.UseInMemory(),
         transport => transport.UseInMemory());
-}, configuration: builder.Configuration);
+}, 
+configuration: builder.Configuration);
 
 var app = builder.Build();
 

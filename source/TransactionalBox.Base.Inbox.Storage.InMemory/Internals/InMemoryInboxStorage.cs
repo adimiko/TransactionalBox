@@ -2,6 +2,7 @@
 using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Base.Inbox.StorageModel.Internals;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
 {
@@ -15,64 +16,96 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
 
         public IReadOnlyCollection<IdempotentInboxKey> IdempotentInboxKeys => _idempotentInboxKeys;
 
-        public Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys)
-        {
-            _inboxMessages.AddRange(messages);
-            
-            _idempotentInboxKeys.AddRange(idempotentInboxKeys);
+        private readonly IKeyedInMemoryLock _keyedInMemoryLock;
 
-            return Task.FromResult(AddRangeToInboxStorageResult.Success);
+        public InMemoryInboxStorage(IKeyedInMemoryLock keyedInMemoryLock)
+        {
+            _keyedInMemoryLock = keyedInMemoryLock;
         }
 
-        public Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages)
+        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys)
         {
-            var ids = messages.Select(x => x.Id);
-
-            var idempotentInboxKeys = _idempotentInboxKeys.Where(x => ids.Contains(x.Id));
-
-            return Task.FromResult(idempotentInboxKeys);
-        }
-
-        public Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
-        {
-            //TODO mark message and process
-            var message = _inboxMessages
-            .Where(x => !x.IsProcessed)
-            .OrderBy(x => x.OccurredUtc)
-            .FirstOrDefault();
-
-            if (message is not null)
+            using (await _keyedInMemoryLock.Acquire(nameof(_inboxMessages)))
+            using (await _keyedInMemoryLock.Acquire(nameof(_idempotentInboxKeys)))
             {
-                message.IsProcessed = true;
-                message.LockUtc = null;
-                message.JobId = null;
+                _inboxMessages.AddRange(messages);
+
+                _idempotentInboxKeys.AddRange(idempotentInboxKeys);
             }
 
-            return Task.FromResult(message);
+            return AddRangeToInboxStorageResult.Success;
         }
 
-        public Task<int> RemoveExpiredIdempotencyKeys(int batchSize, DateTime nowUtc)
+        public async Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages)
         {
-            var expiredIdempotentKeys = _idempotentInboxKeys.Where(x => x.ExpirationUtc <= nowUtc).Take(batchSize).ToList();
+            IEnumerable<IdempotentInboxKey> idempotentInboxKeys;
 
-            foreach (var key in expiredIdempotentKeys)
+            using (await _keyedInMemoryLock.Acquire(nameof(_idempotentInboxKeys)))
             {
-                _idempotentInboxKeys.Remove(key);
+                var ids = messages.Select(x => x.Id);
+
+                idempotentInboxKeys = _idempotentInboxKeys.Where(x => ids.Contains(x.Id));
             }
 
-            return Task.FromResult(expiredIdempotentKeys.Count);
+            return idempotentInboxKeys;
         }
 
-        public Task<int> RemoveProcessedMessages(int batchSize)
+        public async Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
-            var messages = _inboxMessages.Where(x => x.IsProcessed).Take(batchSize).ToList();
+            var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-            foreach (var message in messages)
+            InboxMessage? message;
+
+            using (await _keyedInMemoryLock.Acquire(nameof(_inboxMessages)))
             {
-                _inboxMessages.Remove(message);
+                message = _inboxMessages
+                .OrderBy(x => x.OccurredUtc)
+                .Where(x => !x.IsProcessed && (x.LockUtc == null || x.LockUtc <= nowUtc))
+                .FirstOrDefault();
+
+                if (message is not null)
+                {
+                    message.IsProcessed = true;
+                    message.LockUtc = null;
+                    message.JobId = null;
+                }
             }
 
-            return Task.FromResult(messages.Count);
+            return message;
+        }
+
+        public async Task<int> RemoveExpiredIdempotencyKeys(int batchSize, DateTime nowUtc)
+        {
+            List<IdempotentInboxKey> expiredIdempotentKeys;
+
+            using (await _keyedInMemoryLock.Acquire(nameof(_idempotentInboxKeys)))
+            {
+                expiredIdempotentKeys = _idempotentInboxKeys.Where(x => x.ExpirationUtc <= nowUtc).Take(batchSize).ToList();
+
+                foreach (var key in expiredIdempotentKeys)
+                {
+                    _idempotentInboxKeys.Remove(key);
+                }
+            }
+
+            return expiredIdempotentKeys.Count;
+        }
+
+        public async Task<int> RemoveProcessedMessages(int batchSize)
+        {
+            List<InboxMessage> messages;
+
+            using (await _keyedInMemoryLock.Acquire(nameof(_inboxMessages)))
+            {
+                messages = _inboxMessages.Where(x => x.IsProcessed).Take(batchSize).ToList();
+
+                foreach (var message in messages)
+                {
+                    _inboxMessages.Remove(message);
+                }
+            }
+
+            return messages.Count;
         }
     }
 }

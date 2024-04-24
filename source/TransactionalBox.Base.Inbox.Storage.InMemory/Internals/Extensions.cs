@@ -3,6 +3,7 @@ using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.InboxWorker.Configurators;
 using TransactionalBox.InboxWorker.Internals.Contracts;
+using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
 {
@@ -12,6 +13,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
         {
             var services = configurator.Services;
 
+            services.AddKeyedInMemoryLock();
             services.AddSingleton<IInboxStorage, InMemoryInboxStorage>();
             services.AddSingleton<IInboxStorageReadOnly, InMemoryInboxStorage>();
         }
@@ -20,6 +22,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
         {
             var services = configurator.Services;
 
+            services.AddKeyedInMemoryLock();
             services.AddSingleton<IInboxWorkerStorage, InMemoryInboxStorage>();
             services.AddSingleton<IInboxStorageReadOnly, InMemoryInboxStorage>();
         }

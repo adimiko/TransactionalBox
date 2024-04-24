@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.KeyedInMemoryLock;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
 using TransactionalBox.OutboxWorker.Configurators;
@@ -12,6 +13,7 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
         {
             var services = configurator.Services;
 
+            services.AddKeyedInMemoryLock();
             services.AddSingleton<IOutboxStorageReadOnly, InMemoryOutboxStorage>();
             services.AddSingleton<IOutboxStorage, InMemoryOutboxStorage>();
         }
@@ -20,6 +22,7 @@ namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
         {
             var services = configurator.Services;
 
+            services.AddKeyedInMemoryLock();
             services.AddSingleton<IOutboxStorageReadOnly, InMemoryOutboxStorage>();
             services.AddSingleton<IOutboxWorkerStorage, InMemoryOutboxStorage>();
         }

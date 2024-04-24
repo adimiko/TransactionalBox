@@ -2,83 +2,110 @@
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
 {
     internal sealed class InMemoryOutboxStorage : IOutboxStorage, IOutboxWorkerStorage, IOutboxStorageReadOnly
     {
-        //TODO semaphoreSlim
-        //TODO DistributedLock
         private static readonly List<OutboxMessage> _outboxMessages = new List<OutboxMessage>();
 
         public IReadOnlyCollection<OutboxMessage> OutboxMessages => _outboxMessages.AsReadOnly();
 
-        public Task Add(OutboxMessage message)
-        {
-            _outboxMessages.Add(message);
+        private readonly IKeyedInMemoryLock _keyedInMemoryLock;
 
-            return Task.CompletedTask;
+        public InMemoryOutboxStorage(IKeyedInMemoryLock keyedInMemoryLock)
+        {
+            _keyedInMemoryLock = keyedInMemoryLock;
         }
 
-        public Task AddRange(IEnumerable<OutboxMessage> messages)
+        public async Task Add(OutboxMessage message)
         {
-            _outboxMessages.AddRange(messages);
-
-            return Task.CompletedTask;
-        }
-
-        public Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId)
-        {
-            var messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
-
-            return Task.FromResult(messages);
-        }
-
-        public Task MarkAsProcessed(JobId jobId, DateTime processedUtc)
-        {
-            var messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
-
-            foreach (var message in messages) 
+            using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {
-                message.IsProcessed = true;
-                message.JobId = null;
-                message.LockUtc = null;
+                _outboxMessages.Add(message);
+            }
+        }
+
+        public async Task AddRange(IEnumerable<OutboxMessage> messages)
+        {
+            using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
+            {
+                _outboxMessages.AddRange(messages);
+            }
+        }
+
+        public async Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId)
+        {
+            IEnumerable<OutboxMessage> messages;
+
+            using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
+            {
+                messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
             }
 
-            return Task.CompletedTask;
+            return messages;
         }
 
-        public Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
+        public async Task MarkAsProcessed(JobId jobId, DateTime processedUtc)
+        {
+            using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
+            {
+                var messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
+
+                foreach (var message in messages)
+                {
+                    message.IsProcessed = true;
+                    message.JobId = null;
+                    message.LockUtc = null;
+                }
+            }
+        }
+
+        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-            var messages = _outboxMessages
+            List<OutboxMessage> messages;
+
+            using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
+            {
+                messages = _outboxMessages
                 .OrderBy(x => x.OccurredUtc)
                 .Where(x => !x.IsProcessed && (x.LockUtc == null || x.LockUtc <= nowUtc))
                 .Take(batchSize)
                 .ToList();
 
-            foreach(var message in messages) 
-            {
-                message.JobId = jobId.ToString();
-                message.LockUtc = nowUtc + lockTimeout;
+                foreach (var message in messages)
+                {
+                    message.JobId = jobId.ToString();
+                    message.LockUtc = nowUtc + lockTimeout;
+                }
             }
 
-            return Task.FromResult(messages.Count);
+            return messages.Count;
         }
 
-        public Task<int> RemoveProcessedMessages(int batchSize)
+        public async Task<int> RemoveProcessedMessages(int batchSize)
         {
-            var messagesToRemove = _outboxMessages
-                .Where(x => x.IsProcessed)
-                .Take(batchSize);
+            int count;
 
-            foreach (var message in messagesToRemove) 
+            using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {
-                _outboxMessages.Remove(message);
+                var messagesToRemove = _outboxMessages
+                .Where(x => x.IsProcessed)
+                .Take(batchSize)
+                .ToList();
+
+                count = messagesToRemove.Count();
+
+                foreach (var message in messagesToRemove)
+                {
+                    _outboxMessages.Remove(message);
+                }
             }
-            
-            return Task.FromResult(messagesToRemove.Count());
+
+            return count;
         }
     }
 }
