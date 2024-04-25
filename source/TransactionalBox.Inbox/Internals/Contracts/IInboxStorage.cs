@@ -5,6 +5,6 @@ namespace TransactionalBox.Inbox.Internals.Contracts
 {
     internal interface IInboxStorage
     {
-        Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout);
+        Task<InboxMessageStorage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout);
     }
 }

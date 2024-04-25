@@ -21,9 +21,9 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
             _distributedLock = distributedLock;
         }
 
-        public async Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
+        public async Task<InboxMessageStorage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
-            InboxMessage? message = null;
+            InboxMessageStorage? message = null;
 
             int rowCount = 0;
 
@@ -33,7 +33,7 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
 
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted).ConfigureAwait(false))
                 {
-                    rowCount = await _dbContext.Set<InboxMessage>()
+                    rowCount = await _dbContext.Set<InboxMessageStorage>()
                     .OrderBy(x => x.OccurredUtc)
                     .Where(x => !x.IsProcessed && (x.LockUtc == null || x.LockUtc <= nowUtc))
                     .Take(1)
@@ -44,7 +44,7 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
 
                     if (rowCount > 0)
                     {
-                        message = await _dbContext.Set<InboxMessage>()
+                        message = await _dbContext.Set<InboxMessageStorage>()
                         .Where(x => !x.IsProcessed && x.JobId == jobId.ToString())
                         .OrderBy(x => x.OccurredUtc)
                         .FirstOrDefaultAsync()

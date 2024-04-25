@@ -10,6 +10,7 @@ using TransactionalBox.Inbox.Settings;
 using TransactionalBox.Base.Inbox.DependencyBuilder;
 using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Inbox.Internals.Launchers;
+using System.Reflection;
 
 namespace TransactionalBox.Inbox
 {

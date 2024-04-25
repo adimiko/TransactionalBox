@@ -4,9 +4,9 @@ using TransactionalBox.Base.Inbox.StorageModel.Internals;
 
 namespace TransactionalBox.Base.Inbox.StorageModel.EntityFramework.Internals
 {
-    internal sealed class InboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<InboxMessage>
+    internal sealed class InboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<InboxMessageStorage>
     {
-        public void Configure(EntityTypeBuilder<InboxMessage> builder)
+        public void Configure(EntityTypeBuilder<InboxMessageStorage> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.OccurredUtc);
