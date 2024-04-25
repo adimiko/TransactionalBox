@@ -44,7 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/get-messages-from-inbox", async (DbContext dbContext) => await dbContext.Set<InboxMessage>().AsNoTracking().ToListAsync());
+app.MapGet("/get-messages-from-inbox", async (DbContext dbContext) => await dbContext.Set<InboxMessageStorage>().AsNoTracking().ToListAsync());
 
 app.MapGet("/get-idempotent-messages-from-inbox", async (DbContext dbContext) => await dbContext.Set<IdempotentInboxKey>().AsNoTracking().ToListAsync());
 

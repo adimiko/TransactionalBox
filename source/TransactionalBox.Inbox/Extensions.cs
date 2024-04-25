@@ -18,15 +18,22 @@ namespace TransactionalBox.Inbox
         public static IInboxDependencyBuilder AddInbox(
             this ITransactionalBoxBuilder builder,
             Action<IInboxStorageConfigurator> storageConfiguration,
-            Action<InboxSettings>? configureSettings = null)
+            Action<InboxSettings>? configureSettings = null,
+            Action<IInboxAssemblyConfigurator>? assemblyConfiguraton = null)
         {
             var services = builder.Services;
 
             var storage = new InboxStorageConfigurator(services);
             var serialization = new InboxDeserializationConfigurator(services);
+            var assemblyConfigurator = new InboxAssemblyConfigurator();
             var settings = new InboxSettings();
 
             storageConfiguration(storage);
+
+            if (assemblyConfiguraton is not null)
+            {
+                assemblyConfiguraton(assemblyConfigurator);
+            }
 
             if (configureSettings is not null) 
             {
@@ -38,8 +45,9 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<IInboxLauncherSettings>(settings);
             services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings);
 
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            var allTypes = assemblies.SelectMany(x => x.GetTypes());
+            var assemblies = assemblyConfigurator.Assemblies;
+
+            var allTypes = assemblyConfigurator.Assemblies.SelectMany(x => x.GetTypes());
 
             var inboxMessageHandlerTypes = allTypes
             .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IInboxMessageHandler<>)))

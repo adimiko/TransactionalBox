@@ -12,18 +12,18 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
 
         private readonly DbContext _dbContext;
 
-        private readonly DbSet<InboxMessage> _inboxMessages;
+        private readonly DbSet<InboxMessageStorage> _inboxMessages;
 
         private readonly DbSet<IdempotentInboxKey> _idempotentInboxKeys;
 
         public EntityFrameworkInboxWorkerStorage(DbContext dbContext)
         {
             _dbContext = dbContext;
-            _inboxMessages = dbContext.Set<InboxMessage>();
+            _inboxMessages = dbContext.Set<InboxMessageStorage>();
             _idempotentInboxKeys = _dbContext.Set<IdempotentInboxKey>();
         }
 
-        public async Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages)
+        public async Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessageStorage> messages)
         {
             //TODO input ready id
             var ids = messages.Select(x => x.Id);
@@ -44,7 +44,7 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
             return idempotentInboxKeys;
         }
 
-        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys) 
+        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessageStorage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys) 
         {
             try
             {

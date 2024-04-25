@@ -138,7 +138,7 @@ app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
 
 app.MapGet("/get-messages-from-inbox", async (DbContext dbContext) =>
 {
-    var messages = await dbContext.Set<InboxMessage>().AsNoTracking().ToListAsync();
+    var messages = await dbContext.Set<InboxMessageStorage>().AsNoTracking().ToListAsync();
 
     return messages;
 });

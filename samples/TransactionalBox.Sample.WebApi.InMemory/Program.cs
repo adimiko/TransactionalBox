@@ -27,7 +27,7 @@ builder.Services.AddTransactionalBox(x =>
         storage => storage.UseInMemory(),
         transport => transport.UseInMemory());
 
-    x.AddInbox(storage => storage.UseInMemory())
+    x.AddInbox(storage => storage.UseInMemory(), assemblyConfiguraton: x => x.RegisterFromAssemblies(typeof(ExampleMessage).Assembly))
      .WithWorker(
         storage => storage.UseInMemory(),
         transport => transport.UseInMemory());

@@ -8,11 +8,11 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
 {
     internal sealed class InMemoryInboxStorage : IInboxStorage, IInboxWorkerStorage, IInboxStorageReadOnly
     {
-        private static readonly List<InboxMessage> _inboxMessages = new List<InboxMessage>();
+        private static readonly List<InboxMessageStorage> _inboxMessages = new List<InboxMessageStorage>();
 
         private static readonly List<IdempotentInboxKey> _idempotentInboxKeys = new List<IdempotentInboxKey>();
 
-        public IReadOnlyCollection<InboxMessage> InboxMessages => _inboxMessages;
+        public IReadOnlyCollection<InboxMessageStorage> InboxMessages => _inboxMessages;
 
         public IReadOnlyCollection<IdempotentInboxKey> IdempotentInboxKeys => _idempotentInboxKeys;
 
@@ -23,7 +23,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
             _keyedInMemoryLock = keyedInMemoryLock;
         }
 
-        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys)
+        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessageStorage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys)
         {
             using (await _keyedInMemoryLock.Acquire(nameof(_inboxMessages)))
             using (await _keyedInMemoryLock.Acquire(nameof(_idempotentInboxKeys)))
@@ -36,7 +36,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
             return AddRangeToInboxStorageResult.Success;
         }
 
-        public async Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessage> messages)
+        public async Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessageStorage> messages)
         {
             IEnumerable<IdempotentInboxKey> idempotentInboxKeys;
 
@@ -50,11 +50,11 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
             return idempotentInboxKeys;
         }
 
-        public async Task<InboxMessage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
+        public async Task<InboxMessageStorage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-            InboxMessage? message;
+            InboxMessageStorage? message;
 
             using (await _keyedInMemoryLock.Acquire(nameof(_inboxMessages)))
             {
@@ -93,7 +93,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
 
         public async Task<int> RemoveProcessedMessages(int batchSize)
         {
-            List<InboxMessage> messages;
+            List<InboxMessageStorage> messages;
 
             using (await _keyedInMemoryLock.Acquire(nameof(_inboxMessages)))
             {

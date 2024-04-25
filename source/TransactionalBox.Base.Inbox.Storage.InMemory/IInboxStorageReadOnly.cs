@@ -4,7 +4,7 @@ namespace TransactionalBox.Base.Inbox.Storage.InMemory
 {
     public interface IInboxStorageReadOnly
     {
-        IReadOnlyCollection<InboxMessage> InboxMessages { get; }
+        IReadOnlyCollection<InboxMessageStorage> InboxMessages { get; }
 
         IReadOnlyCollection<IdempotentInboxKey> IdempotentInboxKeys { get; }
     }
