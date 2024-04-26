@@ -44,7 +44,6 @@ Examples of problems that occur during network communication:
 - [ ] RabbitMQ
 - [ ] Iggy
 - [ ] HTTP
-- [ ] gRPC
 
 #### Scalability & Fault Tolerance
 - [x] Support for multiple outbox worker instances
