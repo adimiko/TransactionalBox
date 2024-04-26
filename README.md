@@ -149,7 +149,7 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 ### Topics
 - Distributed lock (prevent race condition)
 - Concurrency control
-- Scaling and parallel processing
+- Scaling and parallel processing (distributed processing)
 - Synchronization primitives
 - Idempotency
 - Retry Pattern
