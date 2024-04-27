@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals
+﻿namespace TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.Internals
 {
     internal interface IInboxMessageTypes
     {

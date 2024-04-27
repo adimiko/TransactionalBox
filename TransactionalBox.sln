@@ -103,6 +103,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedInMem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.DistributedLock.EntityFramework.Tests", "tests\TransactionalBox.DistributedLock.EntityFramework.Tests\TransactionalBox.DistributedLock.EntityFramework.Tests.csproj", "{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Inbox.MessageTypesFromAssemblies", "source\TransactionalBox.Base.Inbox.MessageTypesFromAssemblies\TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.csproj", "{22C06BA0-199E-42D4-84D7-9DFE6FABB962}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -297,6 +299,10 @@ Global
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C06BA0-199E-42D4-84D7-9DFE6FABB962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C06BA0-199E-42D4-84D7-9DFE6FABB962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C06BA0-199E-42D4-84D7-9DFE6FABB962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C06BA0-199E-42D4-84D7-9DFE6FABB962}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -349,6 +355,7 @@ Global
 		{D9F3EEEB-5307-4CF4-97FF-BDBFDEC77D6A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
+		{22C06BA0-199E-42D4-84D7-9DFE6FABB962} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

@@ -2,8 +2,8 @@
 
 namespace TransactionalBox.Inbox
 {
-    public interface IInboxMessageHandler<TInboxMessage> 
-        where TInboxMessage : IInboxMessage, new()
+    public interface IInboxMessageHandler<TInboxMessage>
+        where TInboxMessage : IInboxMessage, new() 
     {
         Task Handle(TInboxMessage message, IExecutionContext executionContext);
     }

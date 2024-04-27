@@ -2,6 +2,7 @@
 using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
+using TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.Internals;
 using TransactionalBox.Inbox.Contexts;
 using TransactionalBox.Inbox.Deserialization;
 using TransactionalBox.Inbox.Internals.Contracts;

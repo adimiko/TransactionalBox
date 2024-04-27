@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj" />
     <ProjectReference Include="..\TransactionalBox.Base.Inbox.DependencyBuilder\TransactionalBox.Base.Inbox.DependencyBuilder.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Base.Inbox.MessageTypesFromAssemblies\TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.csproj" />
     <ProjectReference Include="..\TransactionalBox.Base.Inbox.StorageModel\TransactionalBox.Base.Inbox.StorageModel.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>

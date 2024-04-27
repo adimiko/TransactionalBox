@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals
+﻿namespace TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.Internals
 {
     internal sealed class InboxMessageTypes : IInboxMessageTypes
     {
@@ -6,13 +6,13 @@
 
         public IReadOnlyDictionary<string, Type> Types => _types;
 
-        internal InboxMessageTypes(IEnumerable<Type> inboxMessageHandlerTypes)
+        internal InboxMessageTypes(IEnumerable<Type> inboxMessageHandlerTypes, Type handlerGenericType)
         {
             foreach (Type type in inboxMessageHandlerTypes)
             {
                 var handlerTypes = type
                     .GetInterfaces()
-                    .Where(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IInboxMessageHandler<>));
+                    .Where(t => t.IsGenericType && t.GetGenericTypeDefinition() == handlerGenericType);
 
                 foreach (Type handlerType in handlerTypes)
                 {

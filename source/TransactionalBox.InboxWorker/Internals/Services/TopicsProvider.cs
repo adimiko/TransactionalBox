@@ -16,7 +16,9 @@ namespace TransactionalBox.InboxWorker.Internals.Services
             var service = inboxWorkerContext.Id;
 
             var topicWithWildCard = transportTopicWithWildCard.GetTopicWithWildCard(service);
-
+            //TODO topicWithWildCard remove
+            //TODO create topics based on message types with attribute and without
+            //TODO to base
             topics.Add(topicWithWildCard);
 
             Topics = topics;
