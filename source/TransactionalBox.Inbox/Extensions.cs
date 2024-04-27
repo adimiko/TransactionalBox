@@ -10,6 +10,7 @@ using TransactionalBox.Inbox.Settings;
 using TransactionalBox.Base.Inbox.DependencyBuilder;
 using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Inbox.Internals.Launchers;
+using TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.Internals;
 
 namespace TransactionalBox.Inbox
 {
@@ -62,7 +63,7 @@ namespace TransactionalBox.Inbox
 
             services.AddBackgroundServiceBase();
 
-            services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes));
+            services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
 
             services.AddHostedService<InboxLauncher>();
             services.AddScoped<ProcessMessageFromInbox>();

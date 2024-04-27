@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<InternalsVisibleTo Include="TransactionalBox.Inbox" />
+		<InternalsVisibleTo Include="TransactionalBox.InboxWorker" />
+	</ItemGroup>
+</Project>
