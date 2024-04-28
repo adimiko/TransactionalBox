@@ -43,7 +43,6 @@ Examples of problems that occur during network communication:
 - [x] InMemory
 - [ ] RabbitMQ
 - [ ] Iggy
-- [ ] HTTP
 
 #### Scalability & Fault Tolerance
 - [x] Support for multiple outbox worker instances
