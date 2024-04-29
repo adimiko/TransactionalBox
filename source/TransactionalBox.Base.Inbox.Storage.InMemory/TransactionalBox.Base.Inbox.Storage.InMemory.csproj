@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.InboxWorker\TransactionalBox.InboxWorker.csproj" />
     <ProjectReference Include="..\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
     <ProjectReference Include="..\TransactionalBox.KeyedInMemoryLock\TransactionalBox.KeyedInMemoryLock.csproj" />
   </ItemGroup>
