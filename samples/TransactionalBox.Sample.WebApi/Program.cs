@@ -6,8 +6,6 @@ using Testcontainers.PostgreSql;
 using TransactionalBox;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
-using TransactionalBox.Inbox.Storage.InMemory;
-using TransactionalBox.Base.Inbox.StorageModel.Internals;
 using TransactionalBox.Inbox.Transport.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
@@ -21,6 +19,7 @@ using TransactionalBox.OutboxWorker.Compression.GZip;
 using TransactionalBox.Inbox.Decompression.Brotli;
 using TransactionalBox.OutboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
+using TransactionalBox.Inbox.Internals.Storage;
 
 
 var postgreSqlContainer = new PostgreSqlBuilder()

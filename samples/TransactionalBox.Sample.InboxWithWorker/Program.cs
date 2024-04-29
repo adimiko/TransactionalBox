@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using TransactionalBox;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
-using TransactionalBox.Base.Inbox.StorageModel.Internals;
 using TransactionalBox.Inbox.Transport.Kafka;
 using TransactionalBox.Sample.InboxWithWorker;
+using TransactionalBox.Inbox.Internals.Storage;
 
 const string connectionString = "Server=mssql;Database=msdb;User Id=sa;Password=Password123!@#;TrustServerCertificate=true;";
 const string bootstrapServers = "plaintext://kafka:9092";

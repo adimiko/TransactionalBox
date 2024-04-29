@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.Base.Inbox.Storage.InMemory\TransactionalBox.Base.Inbox.Storage.InMemory.csproj" />
     <ProjectReference Include="..\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
   </ItemGroup>
 

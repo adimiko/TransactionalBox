@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Base.Inbox.StorageModel.Internals;
+using TransactionalBox.Inbox.Internals.Storage;
 
-namespace TransactionalBox.Base.Inbox.StorageModel.EntityFramework.Internals
+namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals.EntityTypeConfigurations
 {
     internal sealed class InboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<InboxMessageStorage>
     {

@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.DistributedLock;
 
-namespace TransactionalBox.Base.Inbox.StorageModel.Internals
+namespace TransactionalBox.Inbox.Internals.Storage
 {
     internal sealed class InboxDistributedLock : Lock;
 }
