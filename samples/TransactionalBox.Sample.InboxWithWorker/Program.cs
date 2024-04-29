@@ -3,8 +3,6 @@ using TransactionalBox;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.Base.Inbox.StorageModel.Internals;
-using TransactionalBox.InboxWorker;
-using TransactionalBox.InboxWorker.Storage.EntityFramework;
 using TransactionalBox.Inbox.Transport.Kafka;
 using TransactionalBox.Sample.InboxWithWorker;
 
@@ -23,8 +21,7 @@ builder.Services.AddDbContextPool<ServiceWithInboxDbContext>(x => x.UseSqlServer
 
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddInbox(storage => storage.UseEntityFramework<ServiceWithInboxDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
+    x.AddInbox(storage => storage.UseEntityFramework<ServiceWithInboxDbContext>(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
 },
 settings => settings.ServiceId = "ServiceWithInbox");
 

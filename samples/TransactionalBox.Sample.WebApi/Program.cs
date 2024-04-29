@@ -8,9 +8,6 @@ using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.Inbox.Storage.InMemory;
 using TransactionalBox.Base.Inbox.StorageModel.Internals;
-using TransactionalBox.InboxWorker;
-using TransactionalBox.InboxWorker.Storage.EntityFramework;
-using TransactionalBox.Inbox.Decompression.GZip;
 using TransactionalBox.Inbox.Transport.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
@@ -24,11 +21,6 @@ using TransactionalBox.OutboxWorker.Compression.GZip;
 using TransactionalBox.Inbox.Decompression.Brotli;
 using TransactionalBox.OutboxWorker.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
-using TransactionalBox.OutboxWorker.Transport.InMemory;
-using TransactionalBox.InboxWorker.Transport.InMemory;
-using TransactionalBox.Base.Outbox.Storage.InMemory;
-using TransactionalBox.InboxWorker.Storage.InMemory;
-using TransactionalBox.Base.Inbox.Storage.InMemory;
 
 
 var postgreSqlContainer = new PostgreSqlBuilder()
@@ -75,22 +67,13 @@ x =>
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
-    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), settings =>
-    //x.AddInbox(storage => storage.UseInMemory(), settings =>
+    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings =>
     {
         settings.NumberOfInstances = 4;
-    })
-     .WithWorker(
-        storage => storage.UseEntityFramework(),
-        //storage => storage.UseInMemory(),
-        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
-        //transport => transport.UseInMemory(),
-        settings =>
-     {
-         settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
-         settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
-         settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
-     });
+        settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
+        settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
+        settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
+    });
 },
 settings => settings.ServiceId = "Registrations");
 

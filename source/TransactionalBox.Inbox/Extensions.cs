@@ -20,19 +20,22 @@ namespace TransactionalBox.Inbox
     {
         public static IInboxDependencyBuilder AddInbox(
             this ITransactionalBoxBuilder builder,
-            Action<IInboxStorageConfigurator> storageConfiguration,
+            Action<IInboxStorageConfigurator> storageConfiguration, //TODO null ?
+            Action<IInboxTransportConfigurator> transportConfiguration, //TODO null ?
             Action<InboxSettings>? configureSettings = null,
             Action<IInboxAssemblyConfigurator>? assemblyConfiguraton = null)
         {
             var services = builder.Services;
 
             var storage = new InboxStorageConfigurator(services);
+            var transport = new InboxTransportConfigurator(services);
             var serialization = new InboxDeserializationConfigurator(services);
-            var decompression = new InboxWorkerDecompressionAlgorithmConfigurator(services);
+            var decompression = new InboxDecompressionAlgorithmConfigurator(services);
             var assemblyConfigurator = new InboxAssemblyConfigurator();
             var settings = new InboxSettings();
 
             storageConfiguration(storage);
+            transportConfiguration(transport);
 
             if (assemblyConfiguraton is not null)
             {

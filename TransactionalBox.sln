@@ -97,6 +97,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Deco
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Transport.Kafka", "source\TransactionalBox.Inbox.Transport.Kafka\TransactionalBox.Inbox.Transport.Kafka.csproj", "{EADA69BF-75D0-462A-870B-663DA4C1EB0F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Transport.InMemory", "source\TransactionalBox.Inbox.Transport.InMemory\TransactionalBox.Inbox.Transport.InMemory.csproj", "{AC1F80A9-B6B1-4151-BE83-BD7EFC704E49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,6 +281,10 @@ Global
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC1F80A9-B6B1-4151-BE83-BD7EFC704E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC1F80A9-B6B1-4151-BE83-BD7EFC704E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC1F80A9-B6B1-4151-BE83-BD7EFC704E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC1F80A9-B6B1-4151-BE83-BD7EFC704E49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -328,6 +334,7 @@ Global
 		{DE66051A-57E7-418B-9E4F-DE2F40D31C94} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{AC1F80A9-B6B1-4151-BE83-BD7EFC704E49} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

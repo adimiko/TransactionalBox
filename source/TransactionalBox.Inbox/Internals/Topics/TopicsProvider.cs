@@ -1,5 +1,5 @@
-﻿using TransactionalBox.InboxWorker.Internals.Contexts;
-using TransactionalBox.InboxWorker.Internals.Contracts;
+﻿using TransactionalBox.Inbox.Internals.Contexts;
+using TransactionalBox.Inbox.Internals.Contracts;
 
 namespace TransactionalBox.Inbox.Internals.Topics
 {

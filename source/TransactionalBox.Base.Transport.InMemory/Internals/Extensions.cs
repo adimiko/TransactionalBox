@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.InboxWorker.Internals.Contracts;
+using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 

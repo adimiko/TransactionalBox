@@ -1,5 +1,5 @@
 ﻿using Confluent.Kafka;
-using TransactionalBox.InboxWorker.Internals.Contexts;
+using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Transport.Kafka.Internals

@@ -1,4 +1,4 @@
-﻿using TransactionalBox.InboxWorker.Internals.Contracts;
+﻿using TransactionalBox.Inbox.Internals.Contracts;
 
 namespace TransactionalBox.Base.Transport.InMemory.Internals
 {

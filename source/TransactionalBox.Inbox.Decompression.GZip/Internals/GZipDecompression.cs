@@ -1,6 +1,5 @@
 ﻿using Microsoft.IO;
 using System.IO.Compression;
-using TransactionalBox.InboxWorker.Decompression;
 
 namespace TransactionalBox.Inbox.Decompression.GZip.Internals
 {
