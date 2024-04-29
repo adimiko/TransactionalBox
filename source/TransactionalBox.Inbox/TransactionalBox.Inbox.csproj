@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj" />
-    <ProjectReference Include="..\TransactionalBox.Base.Inbox.StorageModel\TransactionalBox.Base.Inbox.StorageModel.csproj" />
+    <ProjectReference Include="..\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 	
@@ -20,6 +20,9 @@
 	<InternalsVisibleTo Include="$(AssemblyName).Decompression.GZip" />
 	<InternalsVisibleTo Include="$(AssemblyName).Decompression.CustomDecompression" />
 	<InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
+
+	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
+	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
   </ItemGroup>
 	
 </Project>

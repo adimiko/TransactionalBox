@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Storage.EntityFramework.Internals;
-using TransactionalBox.Base.Inbox.StorageModel.Internals;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.DistributedLock.EntityFramework;
 using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Inbox.Storage.EntityFramework.Internals.EntityTypeConfigurations;
+using TransactionalBox.Inbox.Internals.Storage;
 
 namespace TransactionalBox.Inbox.Storage.EntityFramework
 {
