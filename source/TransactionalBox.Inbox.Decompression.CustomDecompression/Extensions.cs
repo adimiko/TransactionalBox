@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.InboxWorker.Configurators;
-using TransactionalBox.InboxWorker.Decompression;
+using TransactionalBox.Inbox.Configurators;
 
-namespace TransactionalBox.InboxWorker.Decompression.CustomDecompression
+namespace TransactionalBox.Inbox.Decompression.CustomDecompression
 {
     public static class Extensions
     {
         public static void UseCustomDecompression<TCustomDecompression>(
-            this IInboxWorkerDecompressionAlgorithmConfigurator configurator)
+            this IInboxDecompressionAlgorithmConfigurator configurator)
             where TCustomDecompression : class, IDecompressionAlgorithm
         {
             var services = configurator.Services;

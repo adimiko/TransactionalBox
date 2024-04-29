@@ -49,12 +49,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWork
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Compression.CustomCompression", "source\TransactionalBox.OutboxWorker.Compression.CustomCompression\TransactionalBox.OutboxWorker.Compression.CustomCompression.csproj", "{2C74C098-E561-41CB-8D76-0E0563546D1C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.Decompression.GZip", "source\TransactionalBox.InboxWorker.Decompression.GZip\TransactionalBox.InboxWorker.Decompression.GZip.csproj", "{C184F68D-52C9-4217-8278-227CCE29E3A4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.Decompression.Brotli", "source\TransactionalBox.InboxWorker.Decompression.Brotli\TransactionalBox.InboxWorker.Decompression.Brotli.csproj", "{0B918138-12BE-4158-8131-C884375CC386}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.InboxWorker.Decompression.CustomDecompression", "source\TransactionalBox.InboxWorker.Decompression.CustomDecompression\TransactionalBox.InboxWorker.Decompression.CustomDecompression.csproj", "{7B4083C2-AB25-493C-9EBD-51A491C92736}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Storage.EntityFramework", "source\TransactionalBox.Outbox.Storage.EntityFramework\TransactionalBox.Outbox.Storage.EntityFramework.csproj", "{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Storage.EntityFramework", "source\TransactionalBox.OutboxWorker.Storage.EntityFramework\TransactionalBox.OutboxWorker.Storage.EntityFramework.csproj", "{E5D7930D-A74A-40F4-829E-5917DF4861F7}"
@@ -104,6 +98,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.DistributedLock.EntityFramework.Tests", "tests\TransactionalBox.DistributedLock.EntityFramework.Tests\TransactionalBox.DistributedLock.EntityFramework.Tests.csproj", "{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Inbox.MessageTypesFromAssemblies", "source\TransactionalBox.Base.Inbox.MessageTypesFromAssemblies\TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.csproj", "{22C06BA0-199E-42D4-84D7-9DFE6FABB962}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Decompression.Brotli", "source\TransactionalBox.Inbox.Decompression.Brotli\TransactionalBox.Inbox.Decompression.Brotli.csproj", "{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Decompression.CustomDecompression", "source\TransactionalBox.Inbox.Decompression.CustomDecompression\TransactionalBox.Inbox.Decompression.CustomDecompression.csproj", "{DE66051A-57E7-418B-9E4F-DE2F40D31C94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Decompression.GZip", "source\TransactionalBox.Inbox.Decompression.GZip\TransactionalBox.Inbox.Decompression.GZip.csproj", "{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,18 +191,6 @@ Global
 		{2C74C098-E561-41CB-8D76-0E0563546D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C74C098-E561-41CB-8D76-0E0563546D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C74C098-E561-41CB-8D76-0E0563546D1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C184F68D-52C9-4217-8278-227CCE29E3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C184F68D-52C9-4217-8278-227CCE29E3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C184F68D-52C9-4217-8278-227CCE29E3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C184F68D-52C9-4217-8278-227CCE29E3A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B918138-12BE-4158-8131-C884375CC386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B918138-12BE-4158-8131-C884375CC386}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B918138-12BE-4158-8131-C884375CC386}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B918138-12BE-4158-8131-C884375CC386}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B4083C2-AB25-493C-9EBD-51A491C92736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B4083C2-AB25-493C-9EBD-51A491C92736}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B4083C2-AB25-493C-9EBD-51A491C92736}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B4083C2-AB25-493C-9EBD-51A491C92736}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -303,6 +291,18 @@ Global
 		{22C06BA0-199E-42D4-84D7-9DFE6FABB962}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22C06BA0-199E-42D4-84D7-9DFE6FABB962}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22C06BA0-199E-42D4-84D7-9DFE6FABB962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE66051A-57E7-418B-9E4F-DE2F40D31C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE66051A-57E7-418B-9E4F-DE2F40D31C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE66051A-57E7-418B-9E4F-DE2F40D31C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE66051A-57E7-418B-9E4F-DE2F40D31C94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -328,9 +328,6 @@ Global
 		{C4E7ABF3-1F6E-4F79-8C06-3FAA3459A42C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{F8910D3E-7FA1-4AFB-AC26-E7FD3DC318F6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{2C74C098-E561-41CB-8D76-0E0563546D1C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{C184F68D-52C9-4217-8278-227CCE29E3A4} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{0B918138-12BE-4158-8131-C884375CC386} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{7B4083C2-AB25-493C-9EBD-51A491C92736} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{E5D7930D-A74A-40F4-829E-5917DF4861F7} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{26B38DB2-902E-4294-9D05-469A8AF701DA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
@@ -356,6 +353,9 @@ Global
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{22C06BA0-199E-42D4-84D7-9DFE6FABB962} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{DE66051A-57E7-418B-9E4F-DE2F40D31C94} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}
