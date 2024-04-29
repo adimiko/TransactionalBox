@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
 using TransactionalBox.Base.Inbox.StorageModel.Internals;
-using TransactionalBox.InboxWorker.Internals;
-using TransactionalBox.InboxWorker.Internals.Contracts;
+using TransactionalBox.Inbox.Internals.Contracts;
 
-namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
+namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
 {
+    //TODO storage per job ?
     internal sealed class EntityFrameworkInboxWorkerStorage : IInboxWorkerStorage
     {
         private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
@@ -30,7 +30,7 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
 
             IEnumerable<IdempotentInboxKey> idempotentInboxKeys;
 
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel).ConfigureAwait(false)) 
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel).ConfigureAwait(false))
             {
                 idempotentInboxKeys = await _idempotentInboxKeys
                 .AsNoTracking()
@@ -44,7 +44,7 @@ namespace TransactionalBox.InboxWorker.Storage.EntityFramework.Internals
             return idempotentInboxKeys;
         }
 
-        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessageStorage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys) 
+        public async Task<AddRangeToInboxStorageResult> AddRange(IEnumerable<InboxMessageStorage> messages, IEnumerable<IdempotentInboxKey> idempotentInboxKeys)
         {
             try
             {
