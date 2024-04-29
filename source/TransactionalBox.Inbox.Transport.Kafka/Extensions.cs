@@ -1,16 +1,16 @@
 ﻿using Confluent.Kafka;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.InboxWorker.Configurators;
-using TransactionalBox.InboxWorker.Internals.Contracts;
-using TransactionalBox.InboxWorker.Transport.Kafka.Internals;
-using TransactionalBox.InboxWorker.Transport.Kafka.Settings;
+using TransactionalBox.Inbox.Transport.Kafka.Internals;
+using TransactionalBox.Inbox.Transport.Kafka.Settings;
+using TransactionalBox.Inbox.Internals.Contracts;
+using TransactionalBox.Inbox.Configurators;
 
-namespace TransactionalBox.InboxWorker.Transport.Kafka
+namespace TransactionalBox.Inbox.Transport.Kafka
 {
     public static class Extensions
     {
         public static void UseKafka(
-            this IInboxWorkerTransportConfigurator inboxWorkerTransportConfigurator,
+            this IInboxTransportConfigurator inboxWorkerTransportConfigurator,
             Action<InboxWorkerKafkaSettings> settingsConfiguration = null)
         {
             var services = inboxWorkerTransportConfigurator.Services;

@@ -1,9 +1,9 @@
 ﻿using Confluent.Kafka;
 using System.Runtime.CompilerServices;
-using TransactionalBox.InboxWorker.Internals.Contexts;
-using TransactionalBox.InboxWorker.Internals.Contracts;
+using TransactionalBox.Inbox.Internals.Contexts;
+using TransactionalBox.Inbox.Internals.Contracts;
 
-namespace TransactionalBox.InboxWorker.Transport.Kafka.Internals
+namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {
     internal sealed class KafkaInboxWorkerTransport : IInboxWorkerTransport
     {

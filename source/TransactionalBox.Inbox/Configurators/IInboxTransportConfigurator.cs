@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Inbox.Configurators
 {
-    public interface IInboxWorkerTransportConfigurator
+    public interface IInboxTransportConfigurator
     {
         internal IServiceCollection Services { get; }
     }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.InboxWorker.Configurators;
+using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.InboxWorker.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
@@ -16,7 +16,7 @@ namespace TransactionalBox.Base.Transport.InMemory.Internals
             services.AddSingleton<ITransportMessageSizeSettings>(new InMemoryTransportMessageSizeSettings());
         }
 
-        internal static void UseInternalInMemory(this IInboxWorkerTransportConfigurator configurator)
+        internal static void UseInternalInMemory(this IInboxTransportConfigurator configurator)
         {
             var services = configurator.Services;
 
