@@ -7,10 +7,16 @@ namespace TransactionalBox.Inbox.Internals.Launchers
     {
         public InboxLauncher(
             IServiceProvider serviceProvider,
-            IInboxLauncherSettings settings)
+            IInboxLauncherSettings settings,
+            IAddMessagesToInboxStorageLauncherSettings addMessagesToInboxStorageLauncherSettings,
+            ICleanUpProcessedInboxMessagesLauncherSettings cleanUpProcessedInboxMessagesLauncherSettings,
+            ICleanUpExpiredIdempotencyKeysLauncherSettings cleanUpExpiredIdempotencyKeysLauncherSettings)
             : base(serviceProvider)
         {
             Launch<ProcessMessageFromInbox>(settings.NumberOfInstances);
+            Launch<AddMessagesToInboxStorage>(addMessagesToInboxStorageLauncherSettings.NumberOfInstances);
+            Launch<CleanUpProcessedInboxMessages>(cleanUpProcessedInboxMessagesLauncherSettings.NumberOfInstances);
+            Launch<CleanUpExpiredIdempotencyKeys>(cleanUpExpiredIdempotencyKeysLauncherSettings.NumberOfInstances);
         }
     }
 }
