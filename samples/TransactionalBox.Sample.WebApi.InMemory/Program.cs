@@ -4,10 +4,8 @@ using TransactionalBox.Outbox.Storage.InMemory;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.Storage.InMemory;
 using TransactionalBox.OutboxWorker.Transport.InMemory;
-using TransactionalBox.InboxWorker;
-using TransactionalBox.InboxWorker.Transport.InMemory;
-using TransactionalBox.InboxWorker.Storage.InMemory;
 using TransactionalBox.Inbox;
+using TransactionalBox.Inbox.Transport.InMemory;
 using TransactionalBox.Inbox.Storage.InMemory;
 using TransactionalBox.Base.Inbox.Storage.InMemory;
 using TransactionalBox.Base.Outbox.Storage.InMemory;
@@ -27,10 +25,7 @@ builder.Services.AddTransactionalBox(x =>
         storage => storage.UseInMemory(),
         transport => transport.UseInMemory());
 
-    x.AddInbox(storage => storage.UseInMemory(), assemblyConfiguraton: x => x.RegisterFromAssemblies(typeof(ExampleMessage).Assembly))
-     .WithWorker(
-        storage => storage.UseInMemory(),
-        transport => transport.UseInMemory());
+    x.AddInbox(storage => storage.UseInMemory(), transport => transport.UseInMemory(), assemblyConfiguraton: x => x.RegisterFromAssemblies(typeof(ExampleMessage).Assembly));
 }, 
 configuration: builder.Configuration);
 
@@ -47,10 +42,10 @@ app.UseHttpsRedirection();
 
 app.MapPost("/add-message-to-outbox", async (ExampleServiceWithOutbox exampleServiceWithOutbox) => await exampleServiceWithOutbox.Execute());
 
-app.MapGet("/get-messages-from-outbox", async (IOutboxStorageReadOnly outboxStorageReadOnly) => outboxStorageReadOnly.OutboxMessages);
+app.MapGet("/get-messages-from-outbox",  (IOutboxStorageReadOnly outboxStorageReadOnly) => outboxStorageReadOnly.OutboxMessages);
 
-app.MapGet("/get-messages-from-inbox", async (IInboxStorageReadOnly inboxStorage) => inboxStorage.InboxMessages);
+app.MapGet("/get-messages-from-inbox", (IInboxStorageReadOnly inboxStorage) => inboxStorage.InboxMessages);
 
-app.MapGet("/get-idempotent-messages-from-inbox", async (IInboxStorageReadOnly inboxStorage) => inboxStorage.IdempotentInboxKeys);
+app.MapGet("/get-idempotent-messages-from-inbox", (IInboxStorageReadOnly inboxStorage) => inboxStorage.IdempotentInboxKeys);
 
 app.Run();

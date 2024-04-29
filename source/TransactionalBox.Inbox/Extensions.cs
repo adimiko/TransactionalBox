@@ -11,6 +11,8 @@ using TransactionalBox.Base.Inbox.DependencyBuilder;
 using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Inbox.Internals.Launchers;
 using TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.Internals;
+using TransactionalBox.Inbox.Internals.Contexts;
+using TransactionalBox.Inbox.Internals.Topics;
 
 namespace TransactionalBox.Inbox
 {
@@ -18,18 +20,22 @@ namespace TransactionalBox.Inbox
     {
         public static IInboxDependencyBuilder AddInbox(
             this ITransactionalBoxBuilder builder,
-            Action<IInboxStorageConfigurator> storageConfiguration,
+            Action<IInboxStorageConfigurator> storageConfiguration, //TODO null ?
+            Action<IInboxTransportConfigurator> transportConfiguration, //TODO null ?
             Action<InboxSettings>? configureSettings = null,
             Action<IInboxAssemblyConfigurator>? assemblyConfiguraton = null)
         {
             var services = builder.Services;
 
             var storage = new InboxStorageConfigurator(services);
+            var transport = new InboxTransportConfigurator(services);
             var serialization = new InboxDeserializationConfigurator(services);
+            var decompression = new InboxDecompressionAlgorithmConfigurator(services);
             var assemblyConfigurator = new InboxAssemblyConfigurator();
             var settings = new InboxSettings();
 
             storageConfiguration(storage);
+            transportConfiguration(transport);
 
             if (assemblyConfiguraton is not null)
             {
@@ -41,7 +47,7 @@ namespace TransactionalBox.Inbox
                 configureSettings(settings);
             }
 
-            settings.Configure(serialization);
+            settings.Configure(serialization, decompression);
 
             services.AddSingleton<IInboxLauncherSettings>(settings);
             services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings);
@@ -65,8 +71,29 @@ namespace TransactionalBox.Inbox
 
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
 
+            //TODO register topics service, and messages (lisen event from another services)
+            services.AddSingleton<ITopicsProvider, TopicsProvider>();
+
+            //TODO
+            services.AddSingleton<IInboxWorkerContext, InboxWorkerContext>();
+
+            // Settings
+            services.AddSingleton<IAddMessagesToInboxStorageJobSettings>(settings.AddMessagesToInboxStorageSettings);
+            services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
+
+            services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
+            services.AddSingleton<ICleanUpProcessedInboxMessagesLauncherSettings>(settings.CleanUpProcessedInboxMessagesSettings);
+
+            services.AddSingleton<ICleanUpExpiredIdempotencyKeysJobSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
+            services.AddSingleton<ICleanUpExpiredIdempotencyKeysLauncherSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
+
+            // Jobs
             services.AddHostedService<InboxLauncher>();
+
             services.AddScoped<ProcessMessageFromInbox>();
+            services.AddScoped<AddMessagesToInboxStorage>();
+            services.AddScoped<CleanUpProcessedInboxMessages>();
+            services.AddScoped<CleanUpExpiredIdempotencyKeys>();
 
             return new InboxDependencyBuilder(services);
         }

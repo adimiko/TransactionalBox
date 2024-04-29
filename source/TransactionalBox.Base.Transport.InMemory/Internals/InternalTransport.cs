@@ -1,5 +1,5 @@
 ﻿using System.Threading.Channels;
-using TransactionalBox.InboxWorker.Internals.Contracts;
+using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 
 namespace TransactionalBox.Base.Transport.InMemory.Internals
