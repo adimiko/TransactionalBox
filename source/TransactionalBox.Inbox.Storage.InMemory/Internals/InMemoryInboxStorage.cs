@@ -3,7 +3,7 @@ using TransactionalBox.Base.Inbox.StorageModel.Internals;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 using TransactionalBox.KeyedInMemoryLock;
 
-namespace TransactionalBox.Base.Inbox.Storage.InMemory.Internals
+namespace TransactionalBox.Inbox.Storage.InMemory.Internals
 {
     internal sealed class InMemoryInboxStorage : IInboxStorage, IInboxWorkerStorage, IInboxStorageReadOnly
     {

@@ -7,7 +7,6 @@ using TransactionalBox.OutboxWorker.Transport.InMemory;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Transport.InMemory;
 using TransactionalBox.Inbox.Storage.InMemory;
-using TransactionalBox.Base.Inbox.Storage.InMemory;
 using TransactionalBox.Base.Outbox.Storage.InMemory;
 using Microsoft.AspNetCore.Mvc;
 using TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox;

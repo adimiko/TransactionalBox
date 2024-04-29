@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Base.Inbox.StorageModel.Internals;
 
-namespace TransactionalBox.Base.Inbox.Storage.InMemory
+namespace TransactionalBox.Inbox.Storage.InMemory
 {
     public interface IInboxStorageReadOnly
     {
