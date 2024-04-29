@@ -7,10 +7,8 @@ using TransactionalBox.Inbox.Internals.Configurators;
 using TransactionalBox.Inbox.Internals.Deserializers;
 using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Inbox.Settings;
-using TransactionalBox.Base.Inbox.DependencyBuilder;
 using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Inbox.Internals.Launchers;
-using TransactionalBox.Base.Inbox.MessageTypesFromAssemblies.Internals;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.Topics;
 
@@ -18,7 +16,7 @@ namespace TransactionalBox.Inbox
 {
     public static class Extensions
     {
-        public static IInboxDependencyBuilder AddInbox(
+        public static void AddInbox(
             this ITransactionalBoxBuilder builder,
             Action<IInboxStorageConfigurator> storageConfiguration, //TODO null ?
             Action<IInboxTransportConfigurator> transportConfiguration, //TODO null ?
@@ -94,15 +92,6 @@ namespace TransactionalBox.Inbox
             services.AddScoped<AddMessagesToInboxStorage>();
             services.AddScoped<CleanUpProcessedInboxMessages>();
             services.AddScoped<CleanUpExpiredIdempotencyKeys>();
-
-            return new InboxDependencyBuilder(services);
-        }
-
-        internal static void UseSystemTextJson(this IInboxDeserializationConfigurator configurator)
-        {
-            var services = configurator.Services;
-
-            services.AddSingleton<IInboxDeserializer, InboxDeserializer>();
         }
     }
 }
