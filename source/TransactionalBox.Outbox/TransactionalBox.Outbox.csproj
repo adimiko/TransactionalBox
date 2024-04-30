@@ -2,8 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj" />
-    <ProjectReference Include="..\TransactionalBox.Base.Outbox.DependencyBuilder\TransactionalBox.Base.Outbox.DependencyBuilder.csproj" />
-    <ProjectReference Include="..\TransactionalBox.Base.Outbox.StorageModel\TransactionalBox.Base.Outbox.StorageModel.csproj" />
+    <ProjectReference Include="..\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 
@@ -16,6 +15,8 @@
 	<InternalsVisibleTo Include="$(AssemblyName).Compression.Brotli" />
 	<InternalsVisibleTo Include="$(AssemblyName).Compression.GZip" />
 	<InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
-	  
+
+	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
+	<InternalsVisibleTo Include="TransactionalBox.Sample.OutboxWithWorker" />
   </ItemGroup>
 </Project>

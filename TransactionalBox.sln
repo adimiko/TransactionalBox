@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Storage.EntityFramework", "source\TransactionalBox.Inbox.Storage.EntityFramework\TransactionalBox.Inbox.Storage.EntityFramework.csproj", "{26B38DB2-902E-4294-9D05-469A8AF701DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.Storage.InMemory", "source\TransactionalBox.Base.Outbox.Storage.InMemory\TransactionalBox.Base.Outbox.Storage.InMemory.csproj", "{AAA940A5-952E-49CA-B5C7-49F885E9FA9A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Storage.InMemory", "source\TransactionalBox.Outbox.Storage.InMemory\TransactionalBox.Outbox.Storage.InMemory.csproj", "{78C27B51-23A3-4937-8020-D48177006E12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Storage.InMemory", "source\TransactionalBox.Inbox.Storage.InMemory\TransactionalBox.Inbox.Storage.InMemory.csproj", "{1BF21145-4651-40BD-897A-0CDFB2913FA6}"
@@ -44,12 +42,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.WebApi.InMemory", "samples\TransactionalBox.Sample.WebApi.InMemory\TransactionalBox.Sample.WebApi.InMemory.csproj", "{5C2EB157-F976-42F9-8B26-42A50898714C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Transport.InMemory", "source\TransactionalBox.Base.Transport.InMemory\TransactionalBox.Base.Transport.InMemory.csproj", "{E1275999-220F-489C-8536-002E02FFE10B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.DependencyBuilder", "source\TransactionalBox.Base.Outbox.DependencyBuilder\TransactionalBox.Base.Outbox.DependencyBuilder.csproj", "{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.StorageModel", "source\TransactionalBox.Base.Outbox.StorageModel\TransactionalBox.Base.Outbox.StorageModel.csproj", "{AAC2397B-EAC1-439A-8A18-1883871794BF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.StorageModel.EntityFramework", "source\TransactionalBox.Base.Outbox.StorageModel.EntityFramework\TransactionalBox.Base.Outbox.StorageModel.EntityFramework.csproj", "{6D508C6F-0721-4C1A-A599-8E83465DF684}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.BackgroundService", "source\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj", "{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}"
 EndProject
@@ -133,10 +125,6 @@ Global
 		{26B38DB2-902E-4294-9D05-469A8AF701DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26B38DB2-902E-4294-9D05-469A8AF701DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26B38DB2-902E-4294-9D05-469A8AF701DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAA940A5-952E-49CA-B5C7-49F885E9FA9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAA940A5-952E-49CA-B5C7-49F885E9FA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAA940A5-952E-49CA-B5C7-49F885E9FA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAA940A5-952E-49CA-B5C7-49F885E9FA9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78C27B51-23A3-4937-8020-D48177006E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78C27B51-23A3-4937-8020-D48177006E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78C27B51-23A3-4937-8020-D48177006E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -153,18 +141,6 @@ Global
 		{E1275999-220F-489C-8536-002E02FFE10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1275999-220F-489C-8536-002E02FFE10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1275999-220F-489C-8536-002E02FFE10B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -231,14 +207,10 @@ Global
 		{D89EDC24-3316-4A91-8442-6D1ABAFEDEBF} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{26B38DB2-902E-4294-9D05-469A8AF701DA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{AAA940A5-952E-49CA-B5C7-49F885E9FA9A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{78C27B51-23A3-4937-8020-D48177006E12} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{1BF21145-4651-40BD-897A-0CDFB2913FA6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{5C2EB157-F976-42F9-8B26-42A50898714C} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{E1275999-220F-489C-8536-002E02FFE10B} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{AAC2397B-EAC1-439A-8A18-1883871794BF} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{6D508C6F-0721-4C1A-A599-8E83465DF684} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{D9F3EEEB-5307-4CF4-97FF-BDBFDEC77D6A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}

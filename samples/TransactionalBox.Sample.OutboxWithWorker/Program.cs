@@ -5,11 +5,11 @@ using TransactionalBox.Outbox.Transport.Kafka;
 using TransactionalBox.Sample.OutboxWithWorker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using TransactionalBox.Base.Outbox.StorageModel.Internals;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
+using TransactionalBox.Outbox.Internals.Storage;
 
 const string connectionString = "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres";
 const string bootstrapServers = "plaintext://kafka:9092";

@@ -1,6 +1,6 @@
-﻿using TransactionalBox.Base.Outbox.StorageModel.Internals;
+﻿using TransactionalBox.Outbox.Internals.Storage;
 
-namespace TransactionalBox.Base.Outbox.Storage.InMemory
+namespace TransactionalBox.Outbox.Storage.InMemory
 {
     public interface IOutboxStorageReadOnly
     {
