@@ -11,9 +11,6 @@ using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
 using TransactionalBox.Outbox.Storage.InMemory;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
-using TransactionalBox.OutboxWorker;
-using TransactionalBox.OutboxWorker.Storage.EntityFramework;
-using TransactionalBox.OutboxWorker.Storage.InMemory;
 using TransactionalBox.Outbox.Compression.Brotli;
 using TransactionalBox.Outbox.Compression.GZip;
 using TransactionalBox.Inbox.Decompression.Brotli;
@@ -51,8 +48,6 @@ x =>
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
     //x.AddOutbox(storage => storage.UseInMemory())
      .WithWorker(
-        storage => storage.UseEntityFramework(), 
-        //storage => storage.UseInMemory(), 
         transport => transport.UseKafka(settings =>
         {
             settings.BootstrapServers = bootstrapServers;

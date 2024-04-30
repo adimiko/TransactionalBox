@@ -48,17 +48,14 @@ namespace TransactionalBox.Outbox
 
         public static void WithWorker(
             this IOutboxDependencyBuilder builder,
-            Action<IOutboxWorkerStorageConfigurator> storageConfiguration,
             Action<IOutboxWorkerTransportConfigurator> transportConfiguration,
             Action<OutboxWorkerSettings>? settingsConfiguration = null)
         {
             var services = builder.Services;
 
-            var storage = new OutboxWorkerStorageConfigurator(services);
             var transport = new OutboxWorkerTransportConfigurator(services);
             var settings = new OutboxWorkerSettings();
 
-            storageConfiguration(storage);
             transportConfiguration(transport);
 
             if (settingsConfiguration is not null)

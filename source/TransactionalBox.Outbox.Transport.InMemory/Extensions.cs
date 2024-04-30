@@ -1,5 +1,5 @@
-﻿using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.Base.Transport.InMemory.Internals;
+﻿using TransactionalBox.Base.Transport.InMemory.Internals;
+using TransactionalBox.Outbox.Configurators;
 
 namespace TransactionalBox.Outbox.Transport.InMemory
 {

@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Base.BackgroundService.Internals.Launchers;
-using TransactionalBox.OutboxWorker.Internals.Jobs;
-using TransactionalBox.OutboxWorker.Internals.Jobs.AddMessagesToTransportJob;
+using TransactionalBox.Outbox.Internals.Jobs;
+using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob;
 
 namespace TransactionalBox.Outbox.Internals.Launchers
 {
