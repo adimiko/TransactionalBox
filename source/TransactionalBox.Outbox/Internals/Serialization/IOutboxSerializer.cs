@@ -1,6 +1,6 @@
-﻿namespace TransactionalBox.Outbox.Serialization
+﻿namespace TransactionalBox.Outbox.Internals.Serialization
 {
-    public interface IOutboxSerializer
+    internal interface IOutboxSerializer
     {
         string Serialize<T>(T outboxMessagePayload) where T : class, IOutboxMessagePayload;
     }

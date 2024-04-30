@@ -1,8 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using TransactionalBox.Outbox.Serialization;
 
-namespace TransactionalBox.Outbox.Internals.Serializers
+namespace TransactionalBox.Outbox.Internals.Serialization
 {
     internal sealed class OutboxSerializer : IOutboxSerializer
     {

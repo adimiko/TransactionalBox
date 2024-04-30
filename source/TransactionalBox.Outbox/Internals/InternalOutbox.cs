@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Internals;
-using TransactionalBox.Outbox.Serialization;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
+using TransactionalBox.Outbox.Internals.Serialization;
 
 namespace TransactionalBox.Outbox.Internals
 {
