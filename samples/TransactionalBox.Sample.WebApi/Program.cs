@@ -17,7 +17,7 @@ using TransactionalBox.OutboxWorker.Storage.InMemory;
 using TransactionalBox.Outbox.Compression.Brotli;
 using TransactionalBox.Outbox.Compression.GZip;
 using TransactionalBox.Inbox.Decompression.Brotli;
-using TransactionalBox.OutboxWorker.Transport.Kafka;
+using TransactionalBox.Outbox.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.Inbox.Internals.Storage;
 

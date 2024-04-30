@@ -31,8 +31,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.Inb
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "TransactionalBoxWithWorkers", "samples\TransactionalBoxWithWorkers.dcproj", "{D89EDC24-3316-4A91-8442-6D1ABAFEDEBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Transport.Kafka", "source\TransactionalBox.OutboxWorker.Transport.Kafka\TransactionalBox.OutboxWorker.Transport.Kafka.csproj", "{0A6FE35D-DBA1-4E42-A7C4-7A41697BE1C9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Storage.EntityFramework", "source\TransactionalBox.Outbox.Storage.EntityFramework\TransactionalBox.Outbox.Storage.EntityFramework.csproj", "{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Storage.EntityFramework", "source\TransactionalBox.Inbox.Storage.EntityFramework\TransactionalBox.Inbox.Storage.EntityFramework.csproj", "{26B38DB2-902E-4294-9D05-469A8AF701DA}"
@@ -74,6 +72,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Compression.GZip", "source\TransactionalBox.Outbox.Compression.GZip\TransactionalBox.Outbox.Compression.GZip.csproj", "{3D5E31DE-CC38-4B7E-ABB0-594C55E70514}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Transport.InMemory", "source\TransactionalBox.Outbox.Transport.InMemory\TransactionalBox.Outbox.Transport.InMemory.csproj", "{A5D7459E-AAF3-4835-B47F-46AD9CA6C242}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Transport.Kafka", "source\TransactionalBox.Outbox.Transport.Kafka\TransactionalBox.Outbox.Transport.Kafka.csproj", "{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,10 +125,6 @@ Global
 		{D89EDC24-3316-4A91-8442-6D1ABAFEDEBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D89EDC24-3316-4A91-8442-6D1ABAFEDEBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D89EDC24-3316-4A91-8442-6D1ABAFEDEBF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A6FE35D-DBA1-4E42-A7C4-7A41697BE1C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A6FE35D-DBA1-4E42-A7C4-7A41697BE1C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A6FE35D-DBA1-4E42-A7C4-7A41697BE1C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A6FE35D-DBA1-4E42-A7C4-7A41697BE1C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -213,6 +209,10 @@ Global
 		{A5D7459E-AAF3-4835-B47F-46AD9CA6C242}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5D7459E-AAF3-4835-B47F-46AD9CA6C242}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5D7459E-AAF3-4835-B47F-46AD9CA6C242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -229,7 +229,6 @@ Global
 		{A59D7F0D-0631-438B-B022-56ACBD640E01} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{26ECF009-798E-4AEA-B8B1-E11FEED33FB0} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{D89EDC24-3316-4A91-8442-6D1ABAFEDEBF} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
-		{0A6FE35D-DBA1-4E42-A7C4-7A41697BE1C9} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{26B38DB2-902E-4294-9D05-469A8AF701DA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{AAA940A5-952E-49CA-B5C7-49F885E9FA9A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
@@ -251,6 +250,7 @@ Global
 		{96EBBB14-3BA9-4613-8E15-D1AE24B38C1C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{3D5E31DE-CC38-4B7E-ABB0-594C55E70514} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{A5D7459E-AAF3-4835-B47F-46AD9CA6C242} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

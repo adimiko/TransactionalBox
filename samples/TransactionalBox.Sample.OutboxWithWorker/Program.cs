@@ -3,7 +3,7 @@ using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.Storage.EntityFramework;
-using TransactionalBox.OutboxWorker.Transport.Kafka;
+using TransactionalBox.Outbox.Transport.Kafka;
 using TransactionalBox.Sample.OutboxWithWorker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;

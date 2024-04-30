@@ -4,7 +4,7 @@ using TransactionalBox.Base.Outbox.StorageModel;
 using TransactionalBox.OutboxWorker.Internals;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 
-namespace TransactionalBox.OutboxWorker.Transport.Kafka.Internals
+namespace TransactionalBox.Outbox.Transport.Kafka.Internals
 {
     internal sealed class KafkaTransport : IOutboxWorkerTransport
     {

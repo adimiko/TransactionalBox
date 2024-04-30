@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.OutboxWorker.Internals.Contracts;
-using TransactionalBox.OutboxWorker.Transport.Kafka.Internals;
+using TransactionalBox.Outbox.Transport.Kafka.Internals;
 
-namespace TransactionalBox.OutboxWorker.Transport.Kafka.Settings
+namespace TransactionalBox.Outbox.Transport.Kafka.Settings
 {
     public sealed class OutboxWorkerKafkaSettings : IOutboxWorkerKafkaSettings
     {
