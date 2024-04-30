@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj" />
     <ProjectReference Include="..\TransactionalBox.Base.Outbox.DependencyBuilder\TransactionalBox.Base.Outbox.DependencyBuilder.csproj" />
     <ProjectReference Include="..\TransactionalBox.Base.Outbox.StorageModel\TransactionalBox.Base.Outbox.StorageModel.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
@@ -8,8 +9,13 @@
 
   <ItemGroup>
 	<InternalsVisibleTo Include="TransactionalBox.Base.Outbox.Storage.InMemory" />
-    <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.Base.Transport.InMemory" />
+	<InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
 	<InternalsVisibleTo Include="$(AssemblyName).Storage.InMemory" />
 	<InternalsVisibleTo Include="$(AssemblyName).Serialization.CustomSerializer" />
+	<InternalsVisibleTo Include="$(AssemblyName).Compression.Brotli" />
+	<InternalsVisibleTo Include="$(AssemblyName).Compression.GZip" />
+	<InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
+	  
   </ItemGroup>
 </Project>

@@ -1,9 +1,7 @@
 using TransactionalBox;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.InMemory;
-using TransactionalBox.OutboxWorker;
-using TransactionalBox.OutboxWorker.Storage.InMemory;
-using TransactionalBox.OutboxWorker.Transport.InMemory;
+using TransactionalBox.Outbox.Transport.InMemory;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Transport.InMemory;
 using TransactionalBox.Inbox.Storage.InMemory;
@@ -20,9 +18,7 @@ builder.Services.AddScoped<ExampleServiceWithOutbox>();
 builder.Services.AddTransactionalBox(x =>
 {
     x.AddOutbox(storage => storage.UseInMemory())
-     .WithWorker(
-        storage => storage.UseInMemory(),
-        transport => transport.UseInMemory());
+     .WithWorker(transport => transport.UseInMemory());
 
     x.AddInbox(storage => storage.UseInMemory(), assemblyConfiguraton: x => x.RegisterFromAssemblies(typeof(ExampleMessage).Assembly))
     .WithWorker(transport => transport.UseInMemory());

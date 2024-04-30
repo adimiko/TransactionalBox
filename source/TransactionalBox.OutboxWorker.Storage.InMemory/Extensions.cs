@@ -1,4 +1,5 @@
 ﻿using TransactionalBox.Base.Outbox.Storage.InMemory.Internals;
+using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.OutboxWorker.Configurators;
 
 namespace TransactionalBox.OutboxWorker.Storage.InMemory

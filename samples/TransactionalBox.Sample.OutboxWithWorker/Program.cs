@@ -1,9 +1,7 @@
 using TransactionalBox;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
-using TransactionalBox.OutboxWorker;
-using TransactionalBox.OutboxWorker.Storage.EntityFramework;
-using TransactionalBox.OutboxWorker.Transport.Kafka;
+using TransactionalBox.Outbox.Transport.Kafka;
 using TransactionalBox.Sample.OutboxWithWorker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +47,7 @@ builder.Services.AddDbContextPool<ServiceWithOutboxDbContext>(x => x.UseNpgsql(c
 builder.Services.AddTransactionalBox(x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<ServiceWithOutboxDbContext>())
-     .WithWorker(storage => storage.UseEntityFramework(), transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.AddMessagesToTransportSettings.NumberOfInstances = 2);
+     .WithWorker(transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings => settings.AddMessagesToTransportSettings.NumberOfInstances = 2);
 },
 settings => settings.ServiceId = "ServiceWithOutbox");
 
