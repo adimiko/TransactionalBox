@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Inbox.Deserialization
 {
-    public sealed class Metadata
+    internal sealed class Metadata
     {
         public string Source { get; init; }
 
