@@ -47,8 +47,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Trans
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.StorageModel", "source\TransactionalBox.Base.Outbox.StorageModel\TransactionalBox.Base.Outbox.StorageModel.csproj", "{AAC2397B-EAC1-439A-8A18-1883871794BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.StorageModel.EntityFramework", "source\TransactionalBox.Base.Outbox.StorageModel.EntityFramework\TransactionalBox.Base.Outbox.StorageModel.EntityFramework.csproj", "{6D508C6F-0721-4C1A-A599-8E83465DF684}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.BackgroundService", "source\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj", "{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedInMemoryLock", "source\TransactionalBox.KeyedInMemoryLock\TransactionalBox.KeyedInMemoryLock.csproj", "{D9F3EEEB-5307-4CF4-97FF-BDBFDEC77D6A}"
@@ -155,10 +153,6 @@ Global
 		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D508C6F-0721-4C1A-A599-8E83465DF684}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -231,7 +225,6 @@ Global
 		{5C2EB157-F976-42F9-8B26-42A50898714C} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{E1275999-220F-489C-8536-002E02FFE10B} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{AAC2397B-EAC1-439A-8A18-1883871794BF} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{6D508C6F-0721-4C1A-A599-8E83465DF684} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{D9F3EEEB-5307-4CF4-97FF-BDBFDEC77D6A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
