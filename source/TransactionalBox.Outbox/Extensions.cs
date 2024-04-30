@@ -14,6 +14,7 @@ using TransactionalBox.Outbox.Internals.Jobs;
 using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies;
 using TransactionalBox.Outbox.Builders;
 using TransactionalBox.Outbox.Internals.Builders;
+using TransactionalBox.Outbox.Internals.Storage.InMemory;
 
 namespace TransactionalBox.Outbox
 {
@@ -21,7 +22,7 @@ namespace TransactionalBox.Outbox
     {
         public static IOutboxDependencyBuilder AddOutbox(
             this ITransactionalBoxBuilder builder,
-            Action<IOutboxStorageConfigurator> configureStorage,
+            Action<IOutboxStorageConfigurator>? storageConfiguration = null,
             Action<OutboxSettings>? configureSettings = null)
         {
             var services = builder.Services;
@@ -31,7 +32,14 @@ namespace TransactionalBox.Outbox
 
             var serialization = new OutboxSerializationConfigurator(services);
 
-            configureStorage(storage);
+            if (storageConfiguration is not null)
+            {
+                storageConfiguration(storage);
+            }
+            else
+            {
+                storage.UseInternalInMemory();
+            }
 
             if (configureSettings is not null)
             {

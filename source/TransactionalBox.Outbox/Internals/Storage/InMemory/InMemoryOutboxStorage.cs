@@ -1,10 +1,8 @@
-﻿using TransactionalBox.Outbox.Internals;
-using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+﻿using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 using TransactionalBox.KeyedInMemoryLock;
 using TransactionalBox.Outbox.Internals.Contracts;
-using TransactionalBox.Outbox.Internals.Storage;
 
-namespace TransactionalBox.Outbox.Storage.InMemory.Internals
+namespace TransactionalBox.Outbox.Internals.Storage.InMemory
 {
     internal sealed class InMemoryOutboxStorage : IOutboxStorage, IOutboxWorkerStorage, IOutboxStorageReadOnly
     {

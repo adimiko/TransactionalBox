@@ -20,6 +20,7 @@
 	<InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
 
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
+	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
   </ItemGroup>
 	

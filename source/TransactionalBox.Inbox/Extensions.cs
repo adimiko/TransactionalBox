@@ -13,6 +13,7 @@ using TransactionalBox.Inbox.Settings.InboxWorker;
 using TransactionalBox.Inbox.Settings.Inbox;
 using TransactionalBox.Inbox.Internals.Launchers.Inbox;
 using TransactionalBox.Inbox.Internals.Launchers.InboxWorker;
+using TransactionalBox.Inbox.Internals.Storage.InMemory;
 
 namespace TransactionalBox.Inbox
 {
@@ -20,7 +21,7 @@ namespace TransactionalBox.Inbox
     {
         public static IInboxDependencyBuilder AddInbox(
             this ITransactionalBoxBuilder builder,
-            Action<IInboxStorageConfigurator> storageConfiguration, //TODO add null (when null use inMemory)
+            Action<IInboxStorageConfigurator>? storageConfiguration = null,
             Action<InboxSettings>? settingsConfiguration = null,
             Action<IInboxAssemblyConfigurator>? assemblyConfiguraton = null)
         {
@@ -32,7 +33,14 @@ namespace TransactionalBox.Inbox
             var assemblyConfigurator = new InboxAssemblyConfigurator();
             var settings = new InboxSettings();
 
-            storageConfiguration(storage);
+            if (storageConfiguration is not null)
+            {
+                storageConfiguration(storage);
+            }
+            else
+            {
+                storage.UseInternalInMemory();
+            }
 
             if (assemblyConfiguraton is not null)
             {

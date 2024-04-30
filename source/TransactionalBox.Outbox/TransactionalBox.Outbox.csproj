@@ -18,5 +18,6 @@
 
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.OutboxWithWorker" />
+	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
   </ItemGroup>
 </Project>
