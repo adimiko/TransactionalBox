@@ -2,12 +2,12 @@
 using System.Data;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.Base.Outbox.StorageModel.Internals;
-using TransactionalBox.OutboxWorker.Internals.Contracts;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+using TransactionalBox.Outbox.Internals.Contracts;
 
-namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
+namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 {
-    internal sealed class EntityFrameworkOutboxStorage : IOutboxWorkerStorage
+    internal sealed class EntityFrameworkOutboxWorkerStorage : IOutboxWorkerStorage
     {
         private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
 
@@ -17,9 +17,9 @@ namespace TransactionalBox.OutboxWorker.Storage.EntityFramework.Internals
 
         private readonly IDistributedLock<OutboxDistributedLock> _distributedLock;
 
-        public EntityFrameworkOutboxStorage(
+        public EntityFrameworkOutboxWorkerStorage(
             DbContext dbContext,
-            IDistributedLock<OutboxDistributedLock> distributedLock) 
+            IDistributedLock<OutboxDistributedLock> distributedLock)
         {
             _dbContext = dbContext;
             _outboxMessages = dbContext.Set<OutboxMessage>();

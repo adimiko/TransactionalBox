@@ -4,6 +4,10 @@ using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Storage.EntityFramework.Internals;
 using TransactionalBox.Outbox.Internals;
 using TransactionalBox.Base.Outbox.StorageModel.EntityFramework.Internals;
+using TransactionalBox.Base.Outbox.StorageModel.Internals;
+using TransactionalBox.Outbox.Internals.Contracts;
+using TransactionalBox.DistributedLock.EntityFramework;
+using TransactionalBox.DistributedLock;
 
 namespace TransactionalBox.Outbox.Storage.EntityFramework
 {
@@ -14,9 +18,13 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework
         {
             var services = outboxStorageConfigurator.Services;
 
+            services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
+
             services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
 
-            services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
+            services.AddScoped<IOutboxWorkerStorage, EntityFrameworkOutboxWorkerStorage>();
+
+            services.AddDistributedLock<OutboxDistributedLock>(x => x.UseEntityFramework());
         }
 
         public static void AddOutbox(this ModelBuilder modelBuilder)
