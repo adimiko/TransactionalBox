@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
 using TransactionalBox.Inbox.Configurators;
+using TransactionalBox.Inbox.Internals.Decompression;
 
 namespace TransactionalBox.Inbox.Decompression.Brotli
 {

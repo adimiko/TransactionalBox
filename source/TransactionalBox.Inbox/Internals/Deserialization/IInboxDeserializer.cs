@@ -1,6 +1,6 @@
-﻿namespace TransactionalBox.Inbox.Deserialization
+﻿namespace TransactionalBox.Inbox.Internals.Deserialization
 {
-    public interface IInboxDeserializer
+    internal interface IInboxDeserializer
     {
         IInboxMessage DeserializeMessage(string message, Type type);
 

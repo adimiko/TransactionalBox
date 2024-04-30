@@ -1,5 +1,6 @@
 ﻿using Microsoft.IO;
 using System.IO.Compression;
+using TransactionalBox.Inbox.Internals.Decompression;
 
 namespace TransactionalBox.Inbox.Decompression.Brotli.Internals
 {

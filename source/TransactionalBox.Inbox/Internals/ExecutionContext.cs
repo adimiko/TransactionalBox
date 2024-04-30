@@ -1,5 +1,5 @@
 ﻿using TransactionalBox.Inbox.Contexts;
-using TransactionalBox.Inbox.Deserialization;
+using TransactionalBox.Inbox.Internals.Deserialization;
 
 namespace TransactionalBox.Inbox.Internals
 {

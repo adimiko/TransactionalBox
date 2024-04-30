@@ -19,14 +19,12 @@
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Storage.EntityFramework\TransactionalBox.Inbox.Storage.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Storage.InMemory\TransactionalBox.Inbox.Storage.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Decompression.Brotli\TransactionalBox.Inbox.Decompression.Brotli.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Decompression.CustomDecompression\TransactionalBox.Inbox.Decompression.CustomDecompression.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Decompression.GZip\TransactionalBox.Inbox.Decompression.GZip.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Transport.Kafka\TransactionalBox.Inbox.Transport.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Storage.EntityFramework\TransactionalBox.Outbox.Storage.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Storage.InMemory\TransactionalBox.Outbox.Storage.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Compression.Brotli\TransactionalBox.OutboxWorker.Compression.Brotli.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Compression.CustomCompression\TransactionalBox.OutboxWorker.Compression.CustomCompression.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Storage.EntityFramework\TransactionalBox.OutboxWorker.Storage.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Compression.GZip\TransactionalBox.OutboxWorker.Compression.GZip.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Storage.InMemory\TransactionalBox.OutboxWorker.Storage.InMemory.csproj" />

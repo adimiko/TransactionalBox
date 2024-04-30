@@ -3,10 +3,9 @@ using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
 using TransactionalBox.Outbox.Internals.Configurators;
-using TransactionalBox.Outbox.Internals.Serializers;
-using TransactionalBox.Outbox.Serialization;
 using TransactionalBox.Outbox.Settings;
 using TransactionalBox.Base.Outbox.DependencyBuilder;
+using TransactionalBox.Outbox.Internals.Serialization;
 
 namespace TransactionalBox.Outbox
 {

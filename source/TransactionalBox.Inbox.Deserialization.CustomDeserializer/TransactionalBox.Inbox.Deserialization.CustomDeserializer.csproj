@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
-  </ItemGroup>
-
-</Project>

@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
-using TransactionalBox.Inbox.Deserialization;
 
-namespace TransactionalBox.Inbox.Internals.Deserializers
+namespace TransactionalBox.Inbox.Internals.Deserialization
 {
     internal sealed class InboxDeserializer : IInboxDeserializer
     {

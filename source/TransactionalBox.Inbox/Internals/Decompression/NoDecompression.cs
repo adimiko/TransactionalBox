@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Inbox.Decompression;
-
-namespace TransactionalBox.Inbox.Internals.Decompression
+﻿namespace TransactionalBox.Inbox.Internals.Decompression
 {
     internal sealed class NoDecompression : IDecompressionAlgorithm
     {

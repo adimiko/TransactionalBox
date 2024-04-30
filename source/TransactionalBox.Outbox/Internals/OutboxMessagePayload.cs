@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Outbox.Serialization;
+﻿using TransactionalBox.Outbox.Internals.Serialization;
 
 namespace TransactionalBox.Outbox.Internals
 {
