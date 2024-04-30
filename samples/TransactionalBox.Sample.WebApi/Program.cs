@@ -10,13 +10,13 @@ using TransactionalBox.Inbox.Transport.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
 using TransactionalBox.Outbox.Storage.InMemory;
-using TransactionalBox.Base.Outbox.StorageModel.Internals;
 using TransactionalBox.Outbox.Compression.Brotli;
 using TransactionalBox.Outbox.Compression.GZip;
 using TransactionalBox.Inbox.Decompression.Brotli;
 using TransactionalBox.Outbox.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.Inbox.Internals.Storage;
+using TransactionalBox.Outbox.Internals.Storage;
 
 
 var postgreSqlContainer = new PostgreSqlBuilder()

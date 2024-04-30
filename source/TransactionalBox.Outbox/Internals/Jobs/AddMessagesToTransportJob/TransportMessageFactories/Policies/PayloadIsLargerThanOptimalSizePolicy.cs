@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text;
-using TransactionalBox.Base.Outbox.StorageModel.Internals;
 using TransactionalBox.Outbox.Internals.Compression;
 using TransactionalBox.Outbox.Internals.Contracts;
+using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies
 {
