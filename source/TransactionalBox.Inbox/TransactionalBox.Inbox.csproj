@@ -18,7 +18,6 @@
 	<InternalsVisibleTo Include="$(AssemblyName).Deserialization.CustomDeserializer" />
 	<InternalsVisibleTo Include="$(AssemblyName).Decompression.Brotli" />
 	<InternalsVisibleTo Include="$(AssemblyName).Decompression.GZip" />
-	<InternalsVisibleTo Include="$(AssemblyName).Decompression.CustomDecompression" />
 	<InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
 
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
