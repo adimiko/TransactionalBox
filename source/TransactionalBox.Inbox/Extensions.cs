@@ -20,7 +20,7 @@ namespace TransactionalBox.Inbox
     {
         public static IInboxDependencyBuilder AddInbox(
             this ITransactionalBoxBuilder builder,
-            Action<IInboxStorageConfigurator> storageConfiguration, //TODO null ?
+            Action<IInboxStorageConfigurator> storageConfiguration, //TODO add null (when null use inMemory)
             Action<InboxSettings>? settingsConfiguration = null,
             Action<IInboxAssemblyConfigurator>? assemblyConfiguraton = null)
         {
