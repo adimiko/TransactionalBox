@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Launchers
+﻿namespace TransactionalBox.Inbox.Internals.Launchers.InboxWorker
 {
     internal interface ICleanUpProcessedInboxMessagesLauncherSettings
     {
