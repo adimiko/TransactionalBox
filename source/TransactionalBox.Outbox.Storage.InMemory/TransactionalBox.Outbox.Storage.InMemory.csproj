@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.Base.Outbox.Storage.InMemory\TransactionalBox.Base.Outbox.Storage.InMemory.csproj" />
     <ProjectReference Include="..\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
   </ItemGroup>
 </Project>

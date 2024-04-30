@@ -4,7 +4,7 @@ using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.Va
 using TransactionalBox.KeyedInMemoryLock;
 using TransactionalBox.Outbox.Internals.Contracts;
 
-namespace TransactionalBox.Base.Outbox.Storage.InMemory.Internals
+namespace TransactionalBox.Outbox.Storage.InMemory.Internals
 {
     internal sealed class InMemoryOutboxStorage : IOutboxStorage, IOutboxWorkerStorage, IOutboxStorageReadOnly
     {
