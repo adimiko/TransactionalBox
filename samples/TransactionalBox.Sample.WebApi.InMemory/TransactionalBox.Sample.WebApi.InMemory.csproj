@@ -15,7 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Storage.InMemory\TransactionalBox.Inbox.Storage.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Transport.InMemory\TransactionalBox.Inbox.Transport.InMemory.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Storage.InMemory\TransactionalBox.Outbox.Storage.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Transport.InMemory\TransactionalBox.Outbox.Transport.InMemory.csproj" />
   </ItemGroup>
 

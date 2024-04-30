@@ -9,7 +9,6 @@ using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.Inbox.Transport.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
-using TransactionalBox.Outbox.Storage.InMemory;
 using TransactionalBox.Outbox.Compression.Brotli;
 using TransactionalBox.Outbox.Compression.GZip;
 using TransactionalBox.Inbox.Decompression.Brotli;
