@@ -2,6 +2,7 @@
 using TransactionalBox.KeyedInMemoryLock;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
+using TransactionalBox.Outbox.Internals.Contracts;
 using TransactionalBox.OutboxWorker.Configurators;
 using TransactionalBox.OutboxWorker.Internals.Contracts;
 

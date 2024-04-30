@@ -1,6 +1,7 @@
 ﻿using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals;
 
-namespace TransactionalBox.Outbox.Settings
+namespace TransactionalBox.Outbox.Settings.Outbox
 {
     public sealed class OutboxSettings
     {
