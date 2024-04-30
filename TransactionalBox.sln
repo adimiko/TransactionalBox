@@ -41,8 +41,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWork
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Compression.GZip", "source\TransactionalBox.OutboxWorker.Compression.GZip\TransactionalBox.OutboxWorker.Compression.GZip.csproj", "{F8910D3E-7FA1-4AFB-AC26-E7FD3DC318F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Compression.CustomCompression", "source\TransactionalBox.OutboxWorker.Compression.CustomCompression\TransactionalBox.OutboxWorker.Compression.CustomCompression.csproj", "{2C74C098-E561-41CB-8D76-0E0563546D1C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Storage.EntityFramework", "source\TransactionalBox.Outbox.Storage.EntityFramework\TransactionalBox.Outbox.Storage.EntityFramework.csproj", "{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.OutboxWorker.Storage.EntityFramework", "source\TransactionalBox.OutboxWorker.Storage.EntityFramework\TransactionalBox.OutboxWorker.Storage.EntityFramework.csproj", "{E5D7930D-A74A-40F4-829E-5917DF4861F7}"
@@ -153,10 +151,6 @@ Global
 		{F8910D3E-7FA1-4AFB-AC26-E7FD3DC318F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8910D3E-7FA1-4AFB-AC26-E7FD3DC318F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8910D3E-7FA1-4AFB-AC26-E7FD3DC318F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C74C098-E561-41CB-8D76-0E0563546D1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C74C098-E561-41CB-8D76-0E0563546D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C74C098-E561-41CB-8D76-0E0563546D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C74C098-E561-41CB-8D76-0E0563546D1C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -258,7 +252,6 @@ Global
 		{91AFF9A3-BA61-4616-B416-D3EE5275368C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{C4E7ABF3-1F6E-4F79-8C06-3FAA3459A42C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{F8910D3E-7FA1-4AFB-AC26-E7FD3DC318F6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{2C74C098-E561-41CB-8D76-0E0563546D1C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{EB71D5CF-376B-4FC4-B4C7-6878B55E2704} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{E5D7930D-A74A-40F4-829E-5917DF4861F7} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{26B38DB2-902E-4294-9D05-469A8AF701DA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
