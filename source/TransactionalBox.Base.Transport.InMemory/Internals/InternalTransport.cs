@@ -1,6 +1,6 @@
 ﻿using System.Threading.Channels;
 using TransactionalBox.Inbox.Internals.Contracts;
-using TransactionalBox.OutboxWorker.Internals.Contracts;
+using TransactionalBox.Outbox.Internals.Contracts;
 
 namespace TransactionalBox.Base.Transport.InMemory.Internals
 {

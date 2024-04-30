@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Contracts;
-using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.OutboxWorker.Internals.Contracts;
+using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Contracts;
+
 
 namespace TransactionalBox.Base.Transport.InMemory.Internals
 {

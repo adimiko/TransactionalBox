@@ -3,7 +3,7 @@ using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.InMemory;
 using TransactionalBox.OutboxWorker;
 using TransactionalBox.OutboxWorker.Storage.InMemory;
-using TransactionalBox.OutboxWorker.Transport.InMemory;
+using TransactionalBox.Outbox.Transport.InMemory;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Transport.InMemory;
 using TransactionalBox.Inbox.Storage.InMemory;

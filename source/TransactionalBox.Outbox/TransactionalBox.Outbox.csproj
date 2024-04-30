@@ -9,7 +9,8 @@
 
   <ItemGroup>
 	<InternalsVisibleTo Include="TransactionalBox.Base.Outbox.Storage.InMemory" />
-    <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
+	<InternalsVisibleTo Include="TransactionalBox.Base.Transport.InMemory" />
+	<InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
 	<InternalsVisibleTo Include="$(AssemblyName).Storage.InMemory" />
 	<InternalsVisibleTo Include="$(AssemblyName).Serialization.CustomSerializer" />
 	<InternalsVisibleTo Include="$(AssemblyName).Compression.Brotli" />
