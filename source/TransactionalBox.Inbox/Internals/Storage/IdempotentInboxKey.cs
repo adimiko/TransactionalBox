@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Inbox.Internals.Storage
 {
-    public sealed class IdempotentInboxKey
+    internal sealed class IdempotentInboxKey
     {
         public Guid Id { get; }
 

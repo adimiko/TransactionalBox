@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Storage.EntityFramework\TransactionalBox.Inbox.Storage.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Storage.InMemory\TransactionalBox.Inbox.Storage.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Decompression.Brotli\TransactionalBox.Inbox.Decompression.Brotli.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Decompression.GZip\TransactionalBox.Inbox.Decompression.GZip.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Transport.Kafka\TransactionalBox.Inbox.Transport.Kafka.csproj" />

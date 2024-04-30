@@ -20,8 +20,4 @@
 	<InternalsVisibleTo Include="TransactionalBox.Sample.OutboxWithWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="asd\" />
-  </ItemGroup>
 </Project>
