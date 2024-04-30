@@ -5,12 +5,9 @@ using TransactionalBox.Inbox.Internals.Launchers.Inbox;
 
 namespace TransactionalBox.Inbox.Settings.Inbox
 {
-    public sealed class InboxSettings : IProcessMessageFromInboxJobSettings, IInboxLauncherSettings
+    public sealed class InboxSettings
     {
-        //TODO to standalone settings ProcessingMessagesFromInbox
-        public int NumberOfInstances { get; set; } = 4;
-
-        public TimeSpan DelayWhenInboxIsEmpty { get; set; } = TimeSpan.FromMilliseconds(100);
+        public ProcessingMessagesFromInboxSettings ProcessingMessagesFromInboxSettings { get; } = new ProcessingMessagesFromInboxSettings();
 
         public Action<IInboxDeserializationConfigurator> ConfigureDeserialization { get; set; } = x => x.UseSystemTextJson();
 

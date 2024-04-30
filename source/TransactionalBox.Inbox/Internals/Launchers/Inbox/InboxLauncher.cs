@@ -7,7 +7,7 @@ namespace TransactionalBox.Inbox.Internals.Launchers.Inbox
     {
         public InboxLauncher(
             IServiceProvider serviceProvider,
-            IInboxLauncherSettings settings)
+            IProcessingMessagesFromInboxLauncherSettings settings)
             : base(serviceProvider)
         {
             Launch<ProcessMessageFromInbox>(settings.NumberOfInstances);

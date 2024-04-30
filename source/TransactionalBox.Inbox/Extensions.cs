@@ -46,8 +46,8 @@ namespace TransactionalBox.Inbox
 
             settings.Configure(serialization);
 
-            services.AddSingleton<IInboxLauncherSettings>(settings);
-            services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings);
+            services.AddSingleton<IProcessingMessagesFromInboxLauncherSettings>(settings.ProcessingMessagesFromInboxSettings);
+            services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings.ProcessingMessagesFromInboxSettings);
 
             var assemblies = assemblyConfigurator.Assemblies;
 

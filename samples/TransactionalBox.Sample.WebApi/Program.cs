@@ -69,7 +69,7 @@ x =>
     x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(),
         settings =>
     {
-        settings.NumberOfInstances = 4;
+        settings.ProcessingMessagesFromInboxSettings.NumberOfInstances = 4;
     })
     .WithWorker(transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings =>
     {

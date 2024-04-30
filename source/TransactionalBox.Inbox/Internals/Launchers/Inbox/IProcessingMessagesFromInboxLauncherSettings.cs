@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Inbox.Internals.Launchers.Inbox
 {
-    internal interface IInboxLauncherSettings
+    internal interface IProcessingMessagesFromInboxLauncherSettings
     {
         int NumberOfInstances { get; }
     }
