@@ -1,8 +1,8 @@
 ﻿using Confluent.Kafka;
 using System.Text.Json;
 using TransactionalBox.Base.Outbox.StorageModel;
-using TransactionalBox.OutboxWorker.Internals;
-using TransactionalBox.OutboxWorker.Internals.Contracts;
+using TransactionalBox.Outbox.Internals;
+using TransactionalBox.Outbox.Internals.Contracts;
 
 namespace TransactionalBox.Outbox.Transport.Kafka.Internals
 {

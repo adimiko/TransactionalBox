@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Base.Outbox.StorageModel;
-
-namespace TransactionalBox.Outbox.Internals.Contracts
+﻿namespace TransactionalBox.Outbox.Internals.Contracts
 {
     internal interface IOutboxWorkerTransport
     {

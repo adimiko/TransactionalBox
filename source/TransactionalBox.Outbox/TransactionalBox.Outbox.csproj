@@ -15,5 +15,7 @@
 	<InternalsVisibleTo Include="$(AssemblyName).Serialization.CustomSerializer" />
 	<InternalsVisibleTo Include="$(AssemblyName).Compression.Brotli" />
 	<InternalsVisibleTo Include="$(AssemblyName).Compression.GZip" />
+	<InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
+	  
   </ItemGroup>
 </Project>

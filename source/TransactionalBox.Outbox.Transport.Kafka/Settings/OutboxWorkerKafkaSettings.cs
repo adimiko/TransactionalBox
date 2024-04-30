@@ -1,5 +1,4 @@
-﻿using TransactionalBox.OutboxWorker.Internals.Contracts;
-using TransactionalBox.Outbox.Transport.Kafka.Internals;
+﻿using TransactionalBox.Outbox.Transport.Kafka.Internals;
 
 namespace TransactionalBox.Outbox.Transport.Kafka.Settings
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.OutboxWorker.Internals.Contracts;
+using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Contracts;
 using TransactionalBox.Outbox.Transport.Kafka.Internals;
 using TransactionalBox.Outbox.Transport.Kafka.Settings;
 

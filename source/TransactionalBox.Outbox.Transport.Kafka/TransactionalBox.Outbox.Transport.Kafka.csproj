@@ -4,4 +4,8 @@
     <PackageReference Include="Confluent.Kafka" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
+  </ItemGroup>
+
 </Project>
