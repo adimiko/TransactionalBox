@@ -3,8 +3,8 @@ using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Inbox.Contexts;
-using TransactionalBox.Inbox.Deserialization;
 using TransactionalBox.Inbox.Internals.Contracts;
+using TransactionalBox.Inbox.Internals.Deserialization;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
