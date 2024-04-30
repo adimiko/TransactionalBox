@@ -28,7 +28,6 @@
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Compression.GZip\TransactionalBox.Outbox.Compression.GZip.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Transport.InMemory\TransactionalBox.Outbox.Transport.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker.Transport.Kafka\TransactionalBox.OutboxWorker.Transport.Kafka.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj" />
   </ItemGroup>
 
 </Project>

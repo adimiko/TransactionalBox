@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.KeyedInMemoryLock\TransactionalBox.KeyedInMemoryLock.csproj" />
-    <ProjectReference Include="..\TransactionalBox.OutboxWorker\TransactionalBox.OutboxWorker.csproj" />
     <ProjectReference Include="..\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
   </ItemGroup>
 
