@@ -3,8 +3,6 @@ using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals;
 using TransactionalBox.Outbox.Internals.Configurators;
-using TransactionalBox.Base.Outbox.DependencyBuilder;
-using TransactionalBox.Outbox.Internals.Serialization;
 using TransactionalBox.Outbox.Settings.Outbox;
 using TransactionalBox.Outbox.Settings.OutboxWorker;
 using TransactionalBox.Base.BackgroundService;
@@ -14,6 +12,8 @@ using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob;
 using TransactionalBox.Outbox.Internals.Launchers;
 using TransactionalBox.Outbox.Internals.Jobs;
 using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies;
+using TransactionalBox.Outbox.Builders;
+using TransactionalBox.Outbox.Internals.Builders;
 
 namespace TransactionalBox.Outbox
 {

@@ -45,8 +45,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Transport.InMemory", "source\TransactionalBox.Base.Transport.InMemory\TransactionalBox.Base.Transport.InMemory.csproj", "{E1275999-220F-489C-8536-002E02FFE10B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.DependencyBuilder", "source\TransactionalBox.Base.Outbox.DependencyBuilder\TransactionalBox.Base.Outbox.DependencyBuilder.csproj", "{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.StorageModel", "source\TransactionalBox.Base.Outbox.StorageModel\TransactionalBox.Base.Outbox.StorageModel.csproj", "{AAC2397B-EAC1-439A-8A18-1883871794BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Base.Outbox.StorageModel.EntityFramework", "source\TransactionalBox.Base.Outbox.StorageModel.EntityFramework\TransactionalBox.Base.Outbox.StorageModel.EntityFramework.csproj", "{6D508C6F-0721-4C1A-A599-8E83465DF684}"
@@ -153,10 +151,6 @@ Global
 		{E1275999-220F-489C-8536-002E02FFE10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1275999-220F-489C-8536-002E02FFE10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1275999-220F-489C-8536-002E02FFE10B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAC2397B-EAC1-439A-8A18-1883871794BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -236,7 +230,6 @@ Global
 		{1BF21145-4651-40BD-897A-0CDFB2913FA6} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{5C2EB157-F976-42F9-8B26-42A50898714C} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{E1275999-220F-489C-8536-002E02FFE10B} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{C5CFB823-C390-47DD-B71A-2FF5104DBEDA} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{AAC2397B-EAC1-439A-8A18-1883871794BF} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{6D508C6F-0721-4C1A-A599-8E83465DF684} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{8AD071DF-96DB-4D36-AC14-1E1549C8CDD8} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
