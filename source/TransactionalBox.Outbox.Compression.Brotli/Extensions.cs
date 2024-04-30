@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
-using TransactionalBox.OutboxWorker.Compression.Brotli.Internals;
-using TransactionalBox.OutboxWorker.Compression.Brotli.Settings;
-using TransactionalBox.OutboxWorker.Compression;
-using TransactionalBox.OutboxWorker.Configurators;
+using TransactionalBox.Outbox.Compression.Brotli.Internals;
+using TransactionalBox.Outbox.Compression.Brotli.Settings;
+using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Compression;
 
-namespace TransactionalBox.OutboxWorker.Compression.Brotli
+namespace TransactionalBox.Outbox.Compression.Brotli
 {
     public static class Extensions
     {

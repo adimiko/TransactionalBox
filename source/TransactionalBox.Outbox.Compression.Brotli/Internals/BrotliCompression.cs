@@ -1,8 +1,8 @@
 ﻿using Microsoft.IO;
 using System.IO.Compression;
-using TransactionalBox.OutboxWorker.Compression;
+using TransactionalBox.Outbox.Internals.Compression;
 
-namespace TransactionalBox.OutboxWorker.Compression.Brotli.Internals
+namespace TransactionalBox.Outbox.Compression.Brotli.Internals
 {
     internal sealed class BrotliCompression : ICompressionAlgorithm
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
-using TransactionalBox.OutboxWorker.Compression;
-using TransactionalBox.OutboxWorker.Configurators;
-using TransactionalBox.OutboxWorker.Compression.GZip.Internals;
-using TransactionalBox.OutboxWorker.Compression.GZip.Settings;
+using TransactionalBox.Outbox.Compression.GZip.Internals;
+using TransactionalBox.Outbox.Compression.GZip.Settings;
+using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Compression;
 
-namespace TransactionalBox.OutboxWorker.Compression.GZip
+namespace TransactionalBox.Outbox.Compression.GZip
 {
     public static class Extensions
     {

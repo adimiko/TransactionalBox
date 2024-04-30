@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
 
-namespace TransactionalBox.OutboxWorker.Compression.GZip.Internals
+namespace TransactionalBox.Outbox.Compression.GZip.Internals
 {
     internal interface IGZipCompressionSettings
     {
