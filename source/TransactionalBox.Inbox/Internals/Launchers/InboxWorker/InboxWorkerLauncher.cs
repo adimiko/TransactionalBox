@@ -1,19 +1,17 @@
 ﻿using TransactionalBox.Base.BackgroundService.Internals.Launchers;
 using TransactionalBox.Inbox.Internals.Jobs;
 
-namespace TransactionalBox.Inbox.Internals.Launchers
+namespace TransactionalBox.Inbox.Internals.Launchers.InboxWorker
 {
-    internal sealed class InboxLauncher : Launcher
+    internal sealed class InboxWorkerLauncher : Launcher
     {
-        public InboxLauncher(
+        public InboxWorkerLauncher(
             IServiceProvider serviceProvider,
-            IInboxLauncherSettings settings,
             IAddMessagesToInboxStorageLauncherSettings addMessagesToInboxStorageLauncherSettings,
             ICleanUpProcessedInboxMessagesLauncherSettings cleanUpProcessedInboxMessagesLauncherSettings,
             ICleanUpExpiredIdempotencyKeysLauncherSettings cleanUpExpiredIdempotencyKeysLauncherSettings)
             : base(serviceProvider)
         {
-            Launch<ProcessMessageFromInbox>(settings.NumberOfInstances);
             Launch<AddMessagesToInboxStorage>(addMessagesToInboxStorageLauncherSettings.NumberOfInstances);
             Launch<CleanUpProcessedInboxMessages>(cleanUpProcessedInboxMessagesLauncherSettings.NumberOfInstances);
             Launch<CleanUpExpiredIdempotencyKeys>(cleanUpExpiredIdempotencyKeysLauncherSettings.NumberOfInstances);

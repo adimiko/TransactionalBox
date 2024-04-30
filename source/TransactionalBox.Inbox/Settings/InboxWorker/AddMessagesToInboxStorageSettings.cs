@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.Inbox.Internals.Jobs;
-using TransactionalBox.Inbox.Internals.Launchers;
+using TransactionalBox.Inbox.Internals.Launchers.InboxWorker;
 
-namespace TransactionalBox.Inbox.Settings
+namespace TransactionalBox.Inbox.Settings.InboxWorker
 {
     public sealed class AddMessagesToInboxStorageSettings : IAddMessagesToInboxStorageLauncherSettings, IAddMessagesToInboxStorageJobSettings
     {
