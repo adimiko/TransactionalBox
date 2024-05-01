@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\TransactionalBox.Inbox.Transport.InMemory\TransactionalBox.Inbox.Transport.InMemory.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Transport.InMemory\TransactionalBox.Outbox.Transport.InMemory.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
+    <ProjectReference Include="..\..\source\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Outbox.Internals.Contracts;
 
-namespace TransactionalBox.Base.Transport.InMemory.Internals
+namespace TransactionalBox.Outbox.Internals.Transport.InMemory
 {
     internal sealed class InMemoryTransportMessageSizeSettings : ITransportMessageSizeSettings
     {

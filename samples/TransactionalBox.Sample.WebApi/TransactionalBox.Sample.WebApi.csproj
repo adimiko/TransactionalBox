@@ -24,7 +24,6 @@
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Storage.EntityFramework\TransactionalBox.Outbox.Storage.EntityFramework.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Compression.Brotli\TransactionalBox.Outbox.Compression.Brotli.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Compression.GZip\TransactionalBox.Outbox.Compression.GZip.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Transport.InMemory\TransactionalBox.Outbox.Transport.InMemory.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Transport.Kafka\TransactionalBox.Outbox.Transport.Kafka.csproj" />
   </ItemGroup>
 

@@ -14,6 +14,7 @@ using TransactionalBox.Inbox.Settings.Inbox;
 using TransactionalBox.Inbox.Internals.Launchers.Inbox;
 using TransactionalBox.Inbox.Internals.Launchers.InboxWorker;
 using TransactionalBox.Inbox.Internals.Storage.InMemory;
+using TransactionalBox.Inbox.Internals.Transport.InMemory;
 
 namespace TransactionalBox.Inbox
 {
@@ -86,7 +87,7 @@ namespace TransactionalBox.Inbox
 
         public static void WithWorker(
             this IInboxDependencyBuilder builder,
-            Action<IInboxTransportConfigurator> transportConfiguration,
+            Action<IInboxTransportConfigurator>? transportConfiguration = null,
             Action<InboxWorkerSettings>? settingsConfiguration = null)
         {
             var services = builder.Services;
@@ -100,8 +101,15 @@ namespace TransactionalBox.Inbox
                 settingsConfiguration(settings);
             }
 
-            transportConfiguration(transport);
-
+            if (transportConfiguration is not null) 
+            {
+                transportConfiguration(transport);
+            }
+            else
+            {
+                transport.UseInternalInMemory();
+            }
+            
             settings.Configure(decompressionConfigurator);
 
             //TODO register topics service, and messages (lisen event from another services)

@@ -15,6 +15,7 @@ using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.Transport
 using TransactionalBox.Outbox.Builders;
 using TransactionalBox.Outbox.Internals.Builders;
 using TransactionalBox.Outbox.Internals.Storage.InMemory;
+using TransactionalBox.Outbox.Internals.Transport.InMemory;
 
 namespace TransactionalBox.Outbox
 {
@@ -56,7 +57,7 @@ namespace TransactionalBox.Outbox
 
         public static void WithWorker(
             this IOutboxDependencyBuilder builder,
-            Action<IOutboxWorkerTransportConfigurator> transportConfiguration,
+            Action<IOutboxWorkerTransportConfigurator>? transportConfiguration = null,
             Action<OutboxWorkerSettings>? settingsConfiguration = null)
         {
             var services = builder.Services;
@@ -64,7 +65,14 @@ namespace TransactionalBox.Outbox
             var transport = new OutboxWorkerTransportConfigurator(services);
             var settings = new OutboxWorkerSettings();
 
-            transportConfiguration(transport);
+            if (transportConfiguration is not null) 
+            {
+                transportConfiguration(transport);
+            }
+            else
+            {
+                transport.UseInternalInMemory();
+            }
 
             if (settingsConfiguration is not null)
             {
