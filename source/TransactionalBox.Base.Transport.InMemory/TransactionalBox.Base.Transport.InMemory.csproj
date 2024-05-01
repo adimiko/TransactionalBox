@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
-    <ProjectReference Include="..\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
-  </ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="TransactionalBox.Outbox.Transport.InMemory" />
-		<InternalsVisibleTo Include="TransactionalBox.Inbox.Transport.InMemory" />
+		<InternalsVisibleTo Include="TransactionalBox.Outbox" />
+		<InternalsVisibleTo Include="TransactionalBox.Inbox" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+	</ItemGroup>
+	
 </Project>

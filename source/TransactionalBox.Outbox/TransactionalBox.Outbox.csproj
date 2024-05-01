@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Base.Transport.InMemory\TransactionalBox.Base.Transport.InMemory.csproj" />
     <ProjectReference Include="..\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>

@@ -1,8 +1,6 @@
 using TransactionalBox;
 using TransactionalBox.Outbox;
-using TransactionalBox.Outbox.Transport.InMemory;
 using TransactionalBox.Inbox;
-using TransactionalBox.Inbox.Transport.InMemory;
 using Microsoft.AspNetCore.Mvc;
 using TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox;
 using TransactionalBox.Outbox.Internals.Storage.InMemory;
@@ -16,9 +14,9 @@ builder.Services.AddScoped<ExampleServiceWithOutbox>();
 
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox().WithWorker(transport => transport.UseInMemory());
+    x.AddOutbox().WithWorker();
 
-    x.AddInbox().WithWorker(transport => transport.UseInMemory());
+    x.AddInbox().WithWorker();
 }, 
 configuration: builder.Configuration);
 
