@@ -60,7 +60,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
             var messageTypeName = inboxMessage.Topic.Split('.')[1]; //TODO
 
-            _inboxMessageTypes.Types.TryGetValue(messageTypeName, out var type);
+            _inboxMessageTypes.DictionaryMessageTypes.TryGetValue(messageTypeName, out var type);
 
             // (Error case) TODO what when type does not exist
 

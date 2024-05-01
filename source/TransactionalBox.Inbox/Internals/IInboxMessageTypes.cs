@@ -2,6 +2,8 @@
 {
     internal interface IInboxMessageTypes
     {
-        IReadOnlyDictionary<string, Type> Types { get; }
+        IReadOnlyDictionary<string, Type> DictionaryMessageTypes { get; }
+
+        IEnumerable<Type> MessageTypes { get; }
     }
 }

@@ -73,7 +73,6 @@ app.UseHttpsRedirection();
 
 app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger) =>
 {
-    Log.Error("test");
     for (var i = 0; i < 100; i++)
     {
         //TODO AddRange
@@ -81,6 +80,17 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
         {
             m.Receiver = "ServiceWithInbox";
         });
+    }
+
+    await dbContext.SaveChangesAsync();
+});
+
+app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IOutbox outbox, DbContext dbContext, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger) =>
+{
+    Log.Error("test");
+    for (var i = 0; i < 100; i++)
+    {
+        await outbox.Add(message);
     }
 
     await dbContext.SaveChangesAsync();
