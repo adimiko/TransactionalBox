@@ -32,15 +32,15 @@ Examples of problems that occur during network communication:
 - [ ] Get messages from inbox and process them
 
 #### Storage
+- [x] InMemory (Default)
 - [x] Entity Framework (Relational)
     - [x] Migrations
     - [X] Distributed Lock (Based on atomic write operation, Standalone Package)
-- [x] InMemory (Default)
 - [ ] MongoDB
 
 #### Transport
+- [x] InMemory (Default)
 - [x] Apache Kafka
-- [x] InMemory
 - [ ] RabbitMQ
 - [ ] Iggy
 
