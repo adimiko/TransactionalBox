@@ -4,46 +4,28 @@ sidebar_position: 2
 
 # Getting Started
 
-Let's discover **TransactionalBox in less than 5 minutes**.   
-Don't worry about the number of packages and if you don't understand something. I will try to introduce you step by step to the transactional box.
+Let's discover **TransactionalBox in less than 3 minutes**.
+Example shows in-memory implementation.
 
 ## Configuration
 ### Install packages
 ```csharp
-dotnet add package TransactionalBox.Outbox.Storage.InMemory
-dotnet add package TransactionalBox.OutboxWorker.Storage.InMemory
-dotnet add package TransactionalBox.OutboxWorker.Transport.InMemory
-dotnet add package TransactionalBox.InboxWorker.Transport.InMemory
-dotnet add package TransactionalBox.InboxWorker.Storage.InMemory
-dotnet add package TransactionalBox.Inbox.Storage.InMemory
+dotnet add package TransactionalBox.Outbox
+dotnet add package TransactionalBox.Inbox
 ```
 ### Register
 ```csharp
 using TransactionalBox;
 using TransactionalBox.Outbox;
-using TransactionalBox.Outbox.Storage.InMemory;
-using TransactionalBox.OutboxWorker;
-using TransactionalBox.OutboxWorker.Storage.InMemory;
-using TransactionalBox.OutboxWorker.Transport.InMemory;
-using TransactionalBox.InboxWorker;
-using TransactionalBox.InboxWorker.Transport.InMemory;
-using TransactionalBox.InboxWorker.Storage.InMemory;
 using TransactionalBox.Inbox;
-using TransactionalBox.Inbox.Storage.InMemory;
 ```
 
 ```csharp
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox(storage => storage.UseInMemory())
-     .WithWorker(
-        storage => storage.UseInMemory(),
-        transport => transport.UseInMemory());
+    x.AddOutbox().WithWorker();
 
-    x.AddInbox(storage => storage.UseInMemory())
-     .WithWorker(
-        storage => storage.UseInMemory(),
-        transport => transport.UseInMemory());
+    x.AddInbox().WithWorker();
 },
 settings => settings.ServiceId = "ServiceName");
 ```
