@@ -2,9 +2,13 @@
 {
     internal sealed class InboxMessageTypes : IInboxMessageTypes
     {
-        private readonly Dictionary<string, Type> _types = new Dictionary<string, Type>();
+        private readonly Dictionary<string, Type> _dictionaryMessageTypes = new Dictionary<string, Type>();
 
-        public IReadOnlyDictionary<string, Type> Types => _types;
+        private readonly HashSet<Type> _messageTypes = new HashSet<Type>();
+
+        public IReadOnlyDictionary<string, Type> DictionaryMessageTypes => _dictionaryMessageTypes;
+
+        public IEnumerable<Type> MessageTypes => _messageTypes;
 
         internal InboxMessageTypes(IEnumerable<Type> inboxMessageHandlerTypes, Type handlerGenericType)
         {
@@ -18,7 +22,8 @@
                 {
                     var messageType = handlerType.GetGenericArguments()[0];
 
-                    _types.Add(messageType.Name, messageType);
+                    _dictionaryMessageTypes.Add(messageType.Name, messageType);
+                    _messageTypes.Add(messageType);
                 }
             }
         }
