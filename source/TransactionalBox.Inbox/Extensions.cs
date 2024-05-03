@@ -16,6 +16,7 @@ using TransactionalBox.Inbox.Internals.Storage.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
+using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 
 namespace TransactionalBox.Inbox
 {
@@ -77,6 +78,7 @@ namespace TransactionalBox.Inbox
             services.AddBackgroundServiceBase();
 
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
+            services.AddSingleton<ICompiledInboxHandlers, CompiledInboxHandlers>();
 
             // Jobs
             services.AddHostedService<InboxLauncher>();

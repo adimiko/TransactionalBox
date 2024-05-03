@@ -3,6 +3,7 @@ using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Inbox.Contexts;
+using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Deserialization;
 using TransactionalBox.Inbox.Internals.Storage;
@@ -13,6 +14,8 @@ namespace TransactionalBox.Inbox.Internals.Jobs
     internal sealed class ProcessMessageFromInbox : Job
     {
         private readonly IServiceProvider _serviceProvider;
+
+        private readonly ICompiledInboxHandlers _compiledInboxHandlers;
 
         private readonly IInboxStorage _inboxStorage;
 
@@ -28,6 +31,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         public ProcessMessageFromInbox(
             IServiceProvider serviceProvider,
+            ICompiledInboxHandlers compiledInboxHandlers,
             IInboxStorage inboxStorage,
             IInboxDeserializer deserializer,
             IInboxMessageTypes inboxMessageTypes,
@@ -36,6 +40,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             IProcessMessageFromInboxJobSettings settings)
         {
             _serviceProvider = serviceProvider;
+            _compiledInboxHandlers = compiledInboxHandlers;
             _inboxStorage = inboxStorage;
             _deserializer = deserializer;
             _inboxMessageTypes = inboxMessageTypes;
@@ -85,10 +90,9 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
             IExecutionContext executionContext = new Contexts.ExecutionContext(metadata, stoppingToken);
 
-            //TODO #39 (Performance) when program start below code can be compiled to lambda expresion
-            await (Task)handlerType
-                .GetMethod("Handle")?
-                .Invoke(handler, new object[] { message, executionContext });
+            var compiledHandler = _compiledInboxHandlers.GetCompiledInboxHandler(type);
+
+            await compiledHandler(handler, message, executionContext);
         }
     }
 }
