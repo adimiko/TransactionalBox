@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System.Data;
 using TransactionalBox.Inbox.Internals.Contexts;
+using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Transport.Topics
 {
@@ -13,7 +14,7 @@ namespace TransactionalBox.Inbox.Internals.Transport.Topics
         public TopicsProvider(
             IInboxWorkerContext inboxWorkerContext,
             IInboxMessageTypes inboxMessageTypes,
-            ITransportTopicWithWildCard transportTopicWithWildCard)
+            IServiceContext serviceContext)
         {
             var topics = new List<string>();
 
@@ -23,12 +24,21 @@ namespace TransactionalBox.Inbox.Internals.Transport.Topics
 
             var publishedMessageTypes = messageTypes.Where(x => Attribute.IsDefined(x, _attributeType));
             var sentMessageTypes = messageTypes.Where(x => !Attribute.IsDefined(x, _attributeType));
-
+            /*
             if (sentMessageTypes.Any())
             {
                 //TODO when create without wildcard
                 var topicWithWildCard = transportTopicWithWildCard.GetTopicWithWildCard(service);
                 topics.Add(topicWithWildCard); //TODO
+            }
+            */
+            foreach(var sentMessageType in sentMessageTypes)
+            {
+                var serviceName = serviceContext.Id;
+                var messageName = sentMessageType.Name;
+
+                //TODO TopicFactory
+                topics.Add(serviceName + '.' + messageName);
             }
 
             foreach (var publishedMessageType in publishedMessageTypes)
