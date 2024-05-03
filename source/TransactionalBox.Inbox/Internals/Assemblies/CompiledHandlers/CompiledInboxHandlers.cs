@@ -22,6 +22,7 @@ namespace TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers
 
         public Func<object, object, IExecutionContext, Task>? GetCompiledInboxHandler(Type messageType)
         {
+            //TODO not found compiled handler
             return _compiledInboxHandlers.GetValueOrDefault(messageType);
         }
 
