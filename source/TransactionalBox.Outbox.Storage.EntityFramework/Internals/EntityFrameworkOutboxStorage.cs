@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Outbox.Internals;
 using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals

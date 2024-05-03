@@ -1,5 +1,5 @@
-﻿using TransactionalBox.Outbox.Internals.Contracts;
-using TransactionalBox.Outbox.Internals.Storage;
+﻿using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Outbox.Internals.Transport;
 
 namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies
 {

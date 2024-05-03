@@ -4,9 +4,10 @@ using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Compression;
-using TransactionalBox.Outbox.Internals.Contracts;
 using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Loggers;
+using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Outbox.Internals.Transport;
 
 namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob
 {

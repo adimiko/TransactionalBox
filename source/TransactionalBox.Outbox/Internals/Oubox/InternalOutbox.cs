@@ -1,8 +1,9 @@
 ﻿using TransactionalBox.Internals;
+using TransactionalBox.Outbox.Envelopes;
 using TransactionalBox.Outbox.Internals.Serialization;
 using TransactionalBox.Outbox.Internals.Storage;
 
-namespace TransactionalBox.Outbox.Internals
+namespace TransactionalBox.Outbox.Internals.Oubox
 {
     internal sealed class InternalOutbox : IOutbox
     {
@@ -21,7 +22,7 @@ namespace TransactionalBox.Outbox.Internals
             IOutboxStorage outbox,
             IOutboxSerializer serializer,
             ISystemClock systemClock,
-            ITopicFactory topicFactory) 
+            ITopicFactory topicFactory)
         {
             _serviceContext = serviceContext;
             _outboxStorage = outbox;
@@ -83,7 +84,7 @@ namespace TransactionalBox.Outbox.Internals
 
             var metadata = new Metadata(envelope, _serviceContext.Id, _systemClock.UtcNow);
 
-            foreach (var message in messages) 
+            foreach (var message in messages)
             {
                 var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
 

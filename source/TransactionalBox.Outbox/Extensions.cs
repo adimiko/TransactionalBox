@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
-using TransactionalBox.Outbox.Internals;
 using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Settings.Outbox;
 using TransactionalBox.Outbox.Settings.OutboxWorker;
@@ -16,6 +15,7 @@ using TransactionalBox.Outbox.Builders;
 using TransactionalBox.Outbox.Internals.Builders;
 using TransactionalBox.Outbox.Internals.Storage.InMemory;
 using TransactionalBox.Outbox.Internals.Transport.InMemory;
+using TransactionalBox.Outbox.Internals.Oubox;
 
 namespace TransactionalBox.Outbox
 {

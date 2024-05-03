@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Contracts
+﻿namespace TransactionalBox.Outbox.Internals.Transport
 {
     internal enum TransportResult
     {

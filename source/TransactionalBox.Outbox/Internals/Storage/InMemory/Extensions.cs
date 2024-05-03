@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.KeyedInMemoryLock;
 using TransactionalBox.Outbox.Configurators;
-using TransactionalBox.Outbox.Internals.Contracts;
 
 namespace TransactionalBox.Outbox.Internals.Storage.InMemory
 {
