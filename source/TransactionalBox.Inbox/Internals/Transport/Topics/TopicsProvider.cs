@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System.Data;
+﻿using System.Data;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Internals;
 
@@ -12,13 +11,12 @@ namespace TransactionalBox.Inbox.Internals.Transport.Topics
         public IEnumerable<string> Topics { get; }
 
         public TopicsProvider(
-            IInboxWorkerContext inboxWorkerContext,
+            IInboxWorkerContext inboxWorkerContext, //TODO remove ?
             IInboxMessageTypes inboxMessageTypes,
-            IServiceContext serviceContext)
+            IServiceContext serviceContext,
+            ITopicFactory topicFactory)
         {
             var topics = new List<string>();
-
-            var service = inboxWorkerContext.Id;
 
             var messageTypes = inboxMessageTypes.MessageTypes;
 
@@ -27,22 +25,18 @@ namespace TransactionalBox.Inbox.Internals.Transport.Topics
 
             foreach(var sentMessageType in sentMessageTypes)
             {
-                var serviceName = serviceContext.Id;
-                var messageName = sentMessageType.Name;
+                var topic = topicFactory.Create(serviceContext.Id, sentMessageType.Name);
 
-                //TODO TopicFactory
-                topics.Add(serviceName + '.' + messageName);
+                topics.Add(topic);
             }
 
             foreach (var publishedMessageType in publishedMessageTypes)
             {
                 PublishedByAttribute publishedByAttributes = (PublishedByAttribute)Attribute.GetCustomAttribute(publishedMessageType, _attributeType);
 
-                var publishedByName = publishedByAttributes.PublishedBy;
-                var messageName = publishedMessageType.Name;
+                var topic = topicFactory.Create(publishedByAttributes.PublishedBy, publishedMessageType.Name);
 
-                //TODO TopicFactory
-                topics.Add(publishedByName + '.' + messageName);
+                topics.Add(topic);
             }
 
             Topics = topics;

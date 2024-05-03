@@ -49,7 +49,6 @@ namespace TransactionalBox.Outbox
 
             settings.Configure(serialization);
 
-            services.AddSingleton<TopicFactory>();
             services.AddScoped<IOutbox, InternalOutbox>();
 
             return new OutboxDependencyBuilder(services);
