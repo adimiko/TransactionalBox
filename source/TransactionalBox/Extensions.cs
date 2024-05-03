@@ -38,6 +38,8 @@ namespace TransactionalBox
             services.AddSingleton(TimeProvider.System);
             services.AddSingleton<ISystemClock, SystemClock>();
 
+            services.AddSingleton<ITopicFactory, TopicFactory>();
+
             return services;
         }
     }

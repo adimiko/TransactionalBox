@@ -16,4 +16,8 @@
 	<InternalsVisibleTo Include="$(AssemblyName).Inbox" />
 	<InternalsVisibleTo Include="$(AssemblyName).InboxWorker" /> 
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="asd\" />
+  </ItemGroup>
 </Project>

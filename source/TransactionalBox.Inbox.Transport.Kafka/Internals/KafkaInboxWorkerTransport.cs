@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using System.Runtime.CompilerServices;
 using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Inbox.Internals.Contracts;
+using TransactionalBox.Inbox.Internals.Transport;
 
 namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {

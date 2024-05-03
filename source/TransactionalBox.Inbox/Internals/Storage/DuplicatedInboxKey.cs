@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Inbox.Internals.Storage;
-
-namespace TransactionalBox.Inbox.Internals
+﻿namespace TransactionalBox.Inbox.Internals.Storage
 {
     internal sealed record DuplicatedInboxKey
     {

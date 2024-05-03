@@ -6,7 +6,6 @@ using TransactionalBox.Inbox.Internals.Configurators;
 using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Inbox.Internals.Topics;
 using TransactionalBox.Inbox.Builders;
 using TransactionalBox.Inbox.Internals.Builders;
 using TransactionalBox.Inbox.Settings.InboxWorker;
@@ -15,6 +14,7 @@ using TransactionalBox.Inbox.Internals.Launchers.Inbox;
 using TransactionalBox.Inbox.Internals.Launchers.InboxWorker;
 using TransactionalBox.Inbox.Internals.Storage.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.InMemory;
+using TransactionalBox.Inbox.Internals.Transport.Topics;
 
 namespace TransactionalBox.Inbox
 {

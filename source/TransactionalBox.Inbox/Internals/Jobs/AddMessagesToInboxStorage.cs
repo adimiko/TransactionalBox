@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
-using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Inbox.Internals.Decompression;
 using TransactionalBox.Inbox.Internals.Storage;
-using TransactionalBox.Inbox.Internals.Topics;
+using TransactionalBox.Inbox.Internals.Transport;
+using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs

@@ -14,14 +14,14 @@ namespace TransactionalBox.Outbox.Internals
 
         private readonly ISystemClock _systemClock;
 
-        private readonly TopicFactory _topicFactory;
+        private readonly ITopicFactory _topicFactory;
 
         public InternalOutbox(
             IServiceContext serviceContext,
             IOutboxStorage outbox,
             IOutboxSerializer serializer,
             ISystemClock systemClock,
-            TopicFactory topicFactory) 
+            ITopicFactory topicFactory) 
         {
             _serviceContext = serviceContext;
             _outboxStorage = outbox;
@@ -55,7 +55,7 @@ namespace TransactionalBox.Outbox.Internals
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = metadata.OccurredUtc,
                 IsProcessed = false,
-                Topic = _topicFactory.Create(receiver, message),
+                Topic = _topicFactory.Create(receiver, message.GetType().Name),
                 Payload = _serializer.Serialize(outboxMessagePayload),
             };
 
@@ -92,7 +92,7 @@ namespace TransactionalBox.Outbox.Internals
                     Id = Guid.NewGuid(), //TODO Sequential GUID #14
                     OccurredUtc = metadata.OccurredUtc,
                     IsProcessed = false,
-                    Topic = _topicFactory.Create(receiver, message),
+                    Topic = _topicFactory.Create(receiver, message.GetType().Name),
                     Payload = _serializer.Serialize(outboxMessagePayload),
                 };
 

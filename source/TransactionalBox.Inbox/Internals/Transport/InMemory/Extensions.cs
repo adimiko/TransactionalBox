@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Base.Transport.InMemory.Internals;
 using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.Internals.Contracts;
 
 namespace TransactionalBox.Inbox.Internals.Transport.InMemory
 {
@@ -12,7 +11,6 @@ namespace TransactionalBox.Inbox.Internals.Transport.InMemory
             var services = configurator.Services;
 
             services.UseInternalInMemoryTransport();
-            services.AddSingleton<ITransportTopicWithWildCard, InMemoryTransportTopicWithWildCard>();
             services.AddSingleton<IInboxWorkerTransport, InMemoryInboxWorkerTransport>();
         }
     }

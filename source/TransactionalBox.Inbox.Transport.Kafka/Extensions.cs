@@ -1,9 +1,8 @@
-﻿using Confluent.Kafka;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Transport.Kafka.Internals;
 using TransactionalBox.Inbox.Transport.Kafka.Settings;
-using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Inbox.Configurators;
+using TransactionalBox.Inbox.Internals.Transport;
 
 namespace TransactionalBox.Inbox.Transport.Kafka
 {
@@ -24,8 +23,6 @@ namespace TransactionalBox.Inbox.Transport.Kafka
             services.AddSingleton<IInboxWorkerKafkaSettings>(settings);
             services.AddSingleton<KafkaConfigFactory>();
             services.AddSingleton<IInboxWorkerTransport, KafkaInboxWorkerTransport>();
-
-            services.AddSingleton<ITransportTopicWithWildCard, KafkaTransportTopicWithWildCard>();
         }
     }
 }

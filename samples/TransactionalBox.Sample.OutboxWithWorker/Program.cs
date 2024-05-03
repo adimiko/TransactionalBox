@@ -58,8 +58,11 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-
-    scope.ServiceProvider.GetRequiredService<ServiceWithOutboxDbContext>().Database.EnsureCreated();
+    try
+    {
+        scope.ServiceProvider.GetRequiredService<ServiceWithOutboxDbContext>().Database.EnsureCreated();
+    }
+    finally { }
 }
 
 // Configure the HTTP request pipeline.
@@ -87,7 +90,6 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
 
 app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IOutbox outbox, DbContext dbContext, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger) =>
 {
-    Log.Error("test");
     for (var i = 0; i < 100; i++)
     {
         await outbox.Add(message);

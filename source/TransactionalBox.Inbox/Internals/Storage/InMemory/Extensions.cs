@@ -1,7 +1,6 @@
 ﻿using TransactionalBox.Inbox.Configurators;
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.KeyedInMemoryLock;
-using TransactionalBox.Inbox.Internals.Contracts;
 
 namespace TransactionalBox.Inbox.Internals.Storage.InMemory
 {
