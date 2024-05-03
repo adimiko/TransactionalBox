@@ -60,7 +60,11 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    scope.ServiceProvider.GetRequiredService<ServiceWithInboxDbContext>().Database.EnsureCreated();
+    try
+    {
+        scope.ServiceProvider.GetRequiredService<ServiceWithInboxDbContext>().Database.EnsureCreated();
+    }
+    finally { }
 }
 
 // Configure the HTTP request pipeline.
