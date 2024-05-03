@@ -15,6 +15,7 @@ using TransactionalBox.Inbox.Internals.Launchers.InboxWorker;
 using TransactionalBox.Inbox.Internals.Storage.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
+using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 
 namespace TransactionalBox.Inbox
 {

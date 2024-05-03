@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Internals;
 
