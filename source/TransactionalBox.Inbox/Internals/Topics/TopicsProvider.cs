@@ -29,7 +29,7 @@ namespace TransactionalBox.Inbox.Internals.Topics
             {
                 //TODO when create without wildcard
                 var topicWithWildCard = transportTopicWithWildCard.GetTopicWithWildCard(service);
-                topics.Add(topicWithWildCard);
+               //topics.Add(topicWithWildCard); //TODO
             }
 
             foreach(var publishedMessageType in  publishedMessageTypes) 
