@@ -5,11 +5,17 @@ namespace TransactionalBox.Sample.InboxWithWorker
 {
     internal sealed class PublishableMessageHandler : IInboxMessageHandler<PublishableMessage>
     {
-        public Task Handle(PublishableMessage message, IExecutionContext executionContext)
+        private readonly ServiceWithInboxDbContext _context;
+
+        public PublishableMessageHandler(ServiceWithInboxDbContext dbContext)
+        {
+            _context = dbContext;
+        }
+
+        public async Task Handle(PublishableMessage message, IExecutionContext executionContext)
         {
             //Logic
-            //throw new NotImplementedException();
-            return Task.CompletedTask;
+            await _context.SaveChangesAsync();
         }
     }
 }
