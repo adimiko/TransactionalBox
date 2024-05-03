@@ -84,6 +84,7 @@ Examples of problems that occur during network communication:
 - [x] Unordered messages
 - [X] Internal high-performance logging (Source Generators)
 - [x] Execution context in Inbox
+- [x] High-performance invoking of inbox message handlers from assemblies (Compiled Lambda Expressions)
 - [x] Grouping of messages
     - [x] Group by topic outbox messages to a single transport message from batch (better compression)
     - [x] Adjusting optimal transport message size
