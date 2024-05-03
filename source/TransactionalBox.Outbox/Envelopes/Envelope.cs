@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox
+﻿namespace TransactionalBox.Outbox.Envelopes
 {
     public sealed class Envelope
     {

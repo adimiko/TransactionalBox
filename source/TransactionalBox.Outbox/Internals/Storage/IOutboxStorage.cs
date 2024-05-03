@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Outbox.Internals.Storage;
-
-namespace TransactionalBox.Outbox.Internals
+﻿namespace TransactionalBox.Outbox.Internals.Storage
 {
     internal interface IOutboxStorage
     {

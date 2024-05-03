@@ -1,4 +1,6 @@
-﻿namespace TransactionalBox.Outbox
+﻿using TransactionalBox.Outbox.Envelopes;
+
+namespace TransactionalBox.Outbox
 {
     public interface IOutbox
     {

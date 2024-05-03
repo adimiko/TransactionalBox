@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Outbox.Internals.Serialization;
 
-namespace TransactionalBox.Outbox.Internals
+namespace TransactionalBox.Outbox.Internals.Oubox
 {
     internal sealed class OutboxMessagePayload<T> : IOutboxMessagePayload
         where T : class, IOutboxMessage
