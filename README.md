@@ -25,7 +25,7 @@ Examples of problems that occur during network communication:
 ## ✨ Features
 #### Actions
 - [x] Add a message to send to the outbox
-- [ ] Add a message to publish to the outbox
+- [x] Add a message to publish to the outbox
 - [x] Get messages from outbox and add them to transport
 - [x] Get a message from transport and add them to the inbox
 - [x] Get a message from inbox and process it
