@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Contracts
+﻿namespace TransactionalBox.Inbox.Internals.Transport
 {
     internal interface ITransportTopicWithWildCard
     {

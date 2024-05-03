@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Inbox.Internals.Contracts;
+﻿using TransactionalBox.Inbox.Internals.Transport;
 
 namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {

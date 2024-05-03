@@ -1,7 +1,5 @@
-﻿using TransactionalBox.Inbox.Internals.Contracts;
-using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
+﻿using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 using TransactionalBox.KeyedInMemoryLock;
-using TransactionalBox.Inbox.Internals.Storage;
 
 namespace TransactionalBox.Inbox.Internals.Storage.InMemory
 {

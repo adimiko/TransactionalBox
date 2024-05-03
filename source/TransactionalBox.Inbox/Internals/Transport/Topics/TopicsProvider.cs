@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualBasic;
 using System.Data;
 using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Inbox.Internals.Contracts;
 
-namespace TransactionalBox.Inbox.Internals.Topics
+namespace TransactionalBox.Inbox.Internals.Transport.Topics
 {
     internal sealed class TopicsProvider : ITopicsProvider
     {
@@ -25,16 +24,16 @@ namespace TransactionalBox.Inbox.Internals.Topics
             var publishedMessageTypes = messageTypes.Where(x => Attribute.IsDefined(x, _attributeType));
             var sentMessageTypes = messageTypes.Where(x => !Attribute.IsDefined(x, _attributeType));
 
-            if (sentMessageTypes.Any()) 
+            if (sentMessageTypes.Any())
             {
                 //TODO when create without wildcard
                 var topicWithWildCard = transportTopicWithWildCard.GetTopicWithWildCard(service);
-               //topics.Add(topicWithWildCard); //TODO
+                topics.Add(topicWithWildCard); //TODO
             }
 
-            foreach(var publishedMessageType in  publishedMessageTypes) 
+            foreach (var publishedMessageType in publishedMessageTypes)
             {
-                PublishedByAttribute publishedByAttributes = (PublishedByAttribute) Attribute.GetCustomAttribute(publishedMessageType, _attributeType);
+                PublishedByAttribute publishedByAttributes = (PublishedByAttribute)Attribute.GetCustomAttribute(publishedMessageType, _attributeType);
 
                 var publishedByName = publishedByAttributes.PublishedBy;
                 var messageName = publishedMessageType.Name;

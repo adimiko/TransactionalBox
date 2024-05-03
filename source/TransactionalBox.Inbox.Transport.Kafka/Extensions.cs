@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Transport.Kafka.Internals;
 using TransactionalBox.Inbox.Transport.Kafka.Settings;
-using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Inbox.Configurators;
+using TransactionalBox.Inbox.Internals.Transport;
 
 namespace TransactionalBox.Inbox.Transport.Kafka
 {

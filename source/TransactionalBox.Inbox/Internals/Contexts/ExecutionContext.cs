@@ -1,11 +1,11 @@
 ﻿using TransactionalBox.Inbox.Contexts;
 using TransactionalBox.Inbox.Internals.Deserialization;
 
-namespace TransactionalBox.Inbox.Internals
+namespace TransactionalBox.Inbox.Internals.Contexts
 {
     internal sealed class ExecutionContext : IExecutionContext
     {
-        public string Source { get;  }
+        public string Source { get; }
 
         public DateTime OccurredUtc { get; }
 

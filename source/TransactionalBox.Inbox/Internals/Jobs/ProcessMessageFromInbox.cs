@@ -3,8 +3,8 @@ using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Inbox.Contexts;
-using TransactionalBox.Inbox.Internals.Contracts;
 using TransactionalBox.Inbox.Internals.Deserialization;
+using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
@@ -82,7 +82,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             var metadata = _deserializer.DeserializeMetadata(metadataJson);
             var message = _deserializer.DeserializeMessage(messageJson, type);
 
-            IExecutionContext executionContext = new ExecutionContext(metadata, stoppingToken);
+            IExecutionContext executionContext = new Contexts.ExecutionContext(metadata, stoppingToken);
 
             //TODO #39 (Performance) when program start below code can be compiled to lambda expresion
             await (Task)handlerType

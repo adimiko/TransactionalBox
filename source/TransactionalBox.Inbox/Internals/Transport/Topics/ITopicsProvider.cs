@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Topics
+﻿namespace TransactionalBox.Inbox.Internals.Transport.Topics
 {
     internal interface ITopicsProvider
     {
