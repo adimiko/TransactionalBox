@@ -24,6 +24,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
             var parallelExecutor = _serviceProvider.GetRequiredService<IParallelExecutor>();
             var logger = _serviceProvider.GetRequiredService<ILauncherLogger<Launcher>>();
             //TODO log settings
+            //TODO evenDistribtuion
 
             try
             {

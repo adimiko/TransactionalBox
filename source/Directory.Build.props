@@ -26,8 +26,9 @@
     </None>
   </ItemGroup>
 
-  	<ItemGroup>
+  <ItemGroup>
 		<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
 	</ItemGroup>
 
 </Project>
