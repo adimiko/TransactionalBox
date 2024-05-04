@@ -1,59 +1,21 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Builders;
+﻿using TransactionalBox.Outbox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Configurators;
-using TransactionalBox.Outbox.Settings.Outbox;
-using TransactionalBox.Outbox.Settings.OutboxWorker;
-using TransactionalBox.Base.BackgroundService;
-using TransactionalBox.Outbox.Internals.Loggers;
+using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies;
 using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob;
-using TransactionalBox.Outbox.Internals.Launchers;
 using TransactionalBox.Outbox.Internals.Jobs;
-using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies;
-using TransactionalBox.Outbox.Builders;
-using TransactionalBox.Outbox.Internals.Builders;
-using TransactionalBox.Outbox.Internals.Storage.InMemory;
+using TransactionalBox.Outbox.Internals.Launchers;
+using TransactionalBox.Outbox.Internals.Loggers;
+using TransactionalBox.Outbox.Settings.OutboxWorker;
 using TransactionalBox.Outbox.Internals.Transport.InMemory;
-using TransactionalBox.Outbox.Internals.Oubox;
+using TransactionalBox.Base.BackgroundService;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TransactionalBox.Outbox
 {
-    public static class Extensions
+    public static class ExtensionWithWorker
     {
-        public static IOutboxDependencyBuilder AddOutbox(
-            this ITransactionalBoxBuilder builder,
-            Action<IOutboxStorageConfigurator>? storageConfiguration = null,
-            Action<OutboxSettings>? configureSettings = null)
-        {
-            var services = builder.Services;
-
-            var storage = new OutboxStorageConfigurator(services);
-            var settings = new OutboxSettings();
-
-            var serialization = new OutboxSerializationConfigurator(services);
-
-            if (storageConfiguration is not null)
-            {
-                storageConfiguration(storage);
-            }
-            else
-            {
-                storage.UseInternalInMemory();
-            }
-
-            if (configureSettings is not null)
-            {
-                configureSettings(settings);
-            }
-
-            settings.Configure(serialization);
-
-            services.AddScoped<IOutbox, InternalOutbox>();
-
-            return new OutboxDependencyBuilder(services);
-        }
-
         public static void WithWorker(
             this IOutboxDependencyBuilder builder,
             Action<IOutboxWorkerTransportConfigurator>? transportConfiguration = null,
@@ -61,10 +23,18 @@ namespace TransactionalBox.Outbox
         {
             var services = builder.Services;
 
+            services.AddInternalOutboxWorker(transportConfiguration, settingsConfiguration);
+        }
+
+        internal static void AddInternalOutboxWorker(
+            this IServiceCollection services,
+            Action<IOutboxWorkerTransportConfigurator>? transportConfiguration = null,
+            Action<OutboxWorkerSettings>? settingsConfiguration = null)
+        {
             var transport = new OutboxWorkerTransportConfigurator(services);
             var settings = new OutboxWorkerSettings();
 
-            if (transportConfiguration is not null) 
+            if (transportConfiguration is not null)
             {
                 transportConfiguration(transport);
             }

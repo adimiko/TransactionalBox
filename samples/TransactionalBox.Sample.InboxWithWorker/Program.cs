@@ -57,7 +57,7 @@ builder.Services.AddTransactionalBox(x =>
         settings =>
         {
             settings.CleanUpExpiredIdempotencyKeysSettings.NumberOfInstances = 0;
-            settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
+            settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 1;
         });
 },
 settings => settings.ServiceId = "ServiceWithInbox");
