@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.Inbox.Internals.Jobs;
-using TransactionalBox.Inbox.Internals.Launchers.Inbox;
+using TransactionalBox.Inbox.Internals.Launchers;
 
-namespace TransactionalBox.Inbox.Settings.Inbox
+namespace TransactionalBox.Inbox.Settings
 {
     public sealed class ProcessingMessagesFromInboxSettings : IProcessingMessagesFromInboxLauncherSettings, IProcessMessageFromInboxJobSettings
     {

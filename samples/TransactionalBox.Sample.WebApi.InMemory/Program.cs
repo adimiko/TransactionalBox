@@ -16,7 +16,7 @@ builder.Services.AddTransactionalBox(x =>
 {
     x.AddOutbox().WithWorker();
 
-    x.AddInbox().WithWorker();
+    x.AddInbox();
 }, 
 configuration: builder.Configuration);
 

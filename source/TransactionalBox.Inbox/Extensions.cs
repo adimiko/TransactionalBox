@@ -1,40 +1,33 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Builders;
 using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.Internals;
 using TransactionalBox.Inbox.Internals.Configurators;
 using TransactionalBox.Inbox.Internals.Jobs;
 using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Inbox.Builders;
-using TransactionalBox.Inbox.Internals.Builders;
-using TransactionalBox.Inbox.Settings.InboxWorker;
-using TransactionalBox.Inbox.Settings.Inbox;
-using TransactionalBox.Inbox.Internals.Launchers.Inbox;
-using TransactionalBox.Inbox.Internals.Launchers.InboxWorker;
 using TransactionalBox.Inbox.Internals.Storage.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
+using TransactionalBox.Inbox.Settings;
+using TransactionalBox.Inbox.Internals.Launchers;
 
 namespace TransactionalBox.Inbox
 {
     public static class Extensions
     {
-        public static IInboxDependencyBuilder AddInbox(
+        public static void AddInbox(
             this ITransactionalBoxBuilder builder,
             Action<IInboxStorageConfigurator>? storageConfiguration = null,
+            Action<IInboxTransportConfigurator>? transportConfiguration = null,
             Action<InboxSettings>? settingsConfiguration = null,
             Action<IInboxAssemblyConfigurator>? assemblyConfiguraton = null)
         {
             var services = builder.Services;
 
+            // Storage
             var storage = new InboxStorageConfigurator(services);
-            
-            var serialization = new InboxDeserializationConfigurator(services);
-            var assemblyConfigurator = new InboxAssemblyConfigurator();
-            var settings = new InboxSettings();
 
             if (storageConfiguration is not null)
             {
@@ -45,20 +38,43 @@ namespace TransactionalBox.Inbox
                 storage.UseInternalInMemory();
             }
 
-            if (assemblyConfiguraton is not null)
+            // Transport
+            var transport = new InboxTransportConfigurator(services);
+
+            if (transportConfiguration is not null)
             {
-                assemblyConfiguraton(assemblyConfigurator);
+                transportConfiguration(transport);
+            }
+            else
+            {
+                transport.UseInternalInMemory();
             }
 
-            if (settingsConfiguration is not null) 
+            // Settings
+            var settings = new InboxSettings();
+
+            if (settingsConfiguration is not null)
             {
                 settingsConfiguration(settings);
             }
 
+            // Serialization
+            var serialization = new InboxDeserializationConfigurator(services);
+
             settings.Configure(serialization);
 
-            services.AddSingleton<IProcessingMessagesFromInboxLauncherSettings>(settings.ProcessingMessagesFromInboxSettings);
-            services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings.ProcessingMessagesFromInboxSettings);
+            // Decompression
+            var decompressionConfigurator = new InboxDecompressionAlgorithmConfigurator(services);
+
+            settings.Configure(decompressionConfigurator);
+
+            // Assembly
+            var assemblyConfigurator = new InboxAssemblyConfigurator();
+
+            if (assemblyConfiguraton is not null)
+            {
+                assemblyConfiguraton(assemblyConfigurator);
+            }
 
             var assemblies = assemblyConfigurator.Assemblies;
 
@@ -80,48 +96,17 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
             services.AddSingleton<ICompiledInboxHandlers, CompiledInboxHandlers>();
 
-            // Jobs
+            // Launchers
             services.AddHostedService<InboxLauncher>();
 
-            services.AddScoped<ProcessMessageFromInbox>();
-
-            return new InboxDependencyBuilder(services);
-        }
-
-        public static void WithWorker(
-            this IInboxDependencyBuilder builder,
-            Action<IInboxTransportConfigurator>? transportConfiguration = null,
-            Action<InboxWorkerSettings>? settingsConfiguration = null)
-        {
-            var services = builder.Services;
-
-            var settings = new InboxWorkerSettings();
-            var transport = new InboxTransportConfigurator(services);
-            var decompressionConfigurator = new InboxDecompressionAlgorithmConfigurator(services);
-
-            if (settingsConfiguration is not null)
-            {
-                settingsConfiguration(settings);
-            }
-
-            if (transportConfiguration is not null) 
-            {
-                transportConfiguration(transport);
-            }
-            else
-            {
-                transport.UseInternalInMemory();
-            }
-            
-            settings.Configure(decompressionConfigurator);
-
-            //TODO register topics service, and messages (lisen event from another services)
             services.AddSingleton<ITopicsProvider, TopicsProvider>();
 
-            //TODO
-            services.AddSingleton<IInboxWorkerContext, InboxWorkerContext>();
+            services.AddSingleton<IInboxContext, InboxContext>();
 
-            // Settings
+            // Job Settings
+            services.AddSingleton<IProcessingMessagesFromInboxLauncherSettings>(settings.ProcessingMessagesFromInboxSettings);
+            services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings.ProcessingMessagesFromInboxSettings);
+
             services.AddSingleton<IAddMessagesToInboxStorageJobSettings>(settings.AddMessagesToInboxStorageSettings);
             services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
 
@@ -132,8 +117,7 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<ICleanUpExpiredIdempotencyKeysLauncherSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
 
             // Jobs
-            services.AddHostedService<InboxWorkerLauncher>();
-
+            services.AddScoped<ProcessMessageFromInbox>();
             services.AddScoped<AddMessagesToInboxStorage>();
             services.AddScoped<CleanUpProcessedInboxMessages>();
             services.AddScoped<CleanUpExpiredIdempotencyKeys>();

@@ -1,9 +1,9 @@
 ﻿using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals;
 
-namespace TransactionalBox.Inbox.Settings.InboxWorker
+namespace TransactionalBox.Inbox.Settings
 {
-    public sealed class InboxWorkerSettings
+    public sealed class InboxSettings
     {
         public AddMessagesToInboxStorageSettings AddMessagesToInboxStorageSettings { get; } = new AddMessagesToInboxStorageSettings();
 
@@ -11,9 +11,19 @@ namespace TransactionalBox.Inbox.Settings.InboxWorker
 
         public CleanUpExpiredIdempotencyKeysSettings CleanUpExpiredIdempotencyKeysSettings { get; } = new CleanUpExpiredIdempotencyKeysSettings();
 
+        public ProcessingMessagesFromInboxSettings ProcessingMessagesFromInboxSettings { get; } = new ProcessingMessagesFromInboxSettings();
+
+        public Action<IInboxDeserializationConfigurator> ConfigureDeserialization { get; set; } = x => x.UseSystemTextJson();
+
         public Action<IInboxDecompressionAlgorithmConfigurator> ConfigureDecompressionAlgorithm { get; set; } = x => x.UseNoDecompression();
 
-        internal InboxWorkerSettings() { }
+        internal InboxSettings() { }
+
+        internal void Configure(
+            IInboxDeserializationConfigurator deserializationConfigurator)
+        {
+            ConfigureDeserialization(deserializationConfigurator);
+        }
 
         internal void Configure(
             IInboxDecompressionAlgorithmConfigurator decompressionConfigurator)

@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Inbox.Internals.Contexts
 {
-    internal sealed class InboxWorkerContext : IInboxWorkerContext
+    internal sealed class InboxContext : IInboxContext
     {
         private readonly IServiceContext _serviceContext;
 
@@ -10,7 +10,7 @@ namespace TransactionalBox.Inbox.Internals.Contexts
 
         public string InstanceId => _serviceContext.InstanceId;
 
-        public InboxWorkerContext(IServiceContext serviceContext) => _serviceContext = serviceContext;
+        public InboxContext(IServiceContext serviceContext) => _serviceContext = serviceContext;
 
     }
 }
