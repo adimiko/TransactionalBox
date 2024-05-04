@@ -1,19 +1,18 @@
 ﻿using Confluent.Kafka;
 using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {
     internal sealed class KafkaConfigFactory
     {
-        private readonly IInboxWorkerContext _inboxWorkerContext;
+        private readonly IInboxContext _inboxWorkerContext;
 
         private readonly IInboxWorkerKafkaSettings _inboxWorkerKafkaSettings;
 
         private ConsumerConfig? _config = null;
 
         public KafkaConfigFactory(
-            IInboxWorkerContext inboxWorkerContext,
+            IInboxContext inboxWorkerContext,
             IInboxWorkerKafkaSettings inboxWorkerKafkaSettings) 
         {
             _inboxWorkerContext = inboxWorkerContext;

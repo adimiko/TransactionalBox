@@ -12,7 +12,7 @@ namespace TransactionalBox.Inbox.Internals.Transport.Topics
         public IEnumerable<string> Topics { get; }
 
         public TopicsProvider(
-            IInboxWorkerContext inboxWorkerContext, //TODO remove ?
+            IInboxContext inboxWorkerContext, //TODO remove ?
             IInboxMessageTypes inboxMessageTypes,
             IServiceContext serviceContext,
             ITopicFactory topicFactory)

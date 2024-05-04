@@ -7,12 +7,12 @@ namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {
     internal sealed class KafkaInboxWorkerTransport : IInboxWorkerTransport
     {
-        private readonly IInboxWorkerContext _inboxWorkerContext;
+        private readonly IInboxContext _inboxWorkerContext;
 
         private readonly KafkaConfigFactory _configFactory;
 
         public KafkaInboxWorkerTransport(
-            IInboxWorkerContext inboxWorkerContext,
+            IInboxContext inboxWorkerContext,
             KafkaConfigFactory configFactory) 
         {
             _inboxWorkerContext = inboxWorkerContext;

@@ -60,13 +60,12 @@ x =>
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
-    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>(),
+    x.AddInbox(
+        storage => storage.UseEntityFramework<SampleDbContext>(),
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
     {
         settings.ProcessingMessagesFromInboxSettings.NumberOfInstances = 4;
-    })
-    .WithWorker(transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers), settings =>
-    {
         settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
         settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
         settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();

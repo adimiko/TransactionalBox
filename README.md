@@ -55,7 +55,7 @@ Examples of problems that occur during network communication:
     - [x] Multiple instances of the same service 
     - [x] Multiple processes in the same service
 - [ ] Standalone outbox worker
-- [ ] Standalone inbox worker
+- [x] Standalone inbox
 - [ ] Memory hook from service to outbox worker
 - [x] Error handling in background services
 - [ ] Task throttling in background services

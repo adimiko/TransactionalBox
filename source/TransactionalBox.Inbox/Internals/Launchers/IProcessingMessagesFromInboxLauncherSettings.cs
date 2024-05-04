@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Launchers.Inbox
+﻿namespace TransactionalBox.Inbox.Internals.Launchers
 {
     internal interface IProcessingMessagesFromInboxLauncherSettings
     {

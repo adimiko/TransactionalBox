@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Inbox.Internals.Contexts
 {
-    internal interface IInboxWorkerContext
+    internal interface IInboxContext
     {
         string Id { get; }
 

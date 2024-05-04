@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.Inbox.Internals.Jobs;
-using TransactionalBox.Inbox.Internals.Launchers.InboxWorker;
+using TransactionalBox.Inbox.Internals.Launchers;
 
-namespace TransactionalBox.Inbox.Settings.InboxWorker
+namespace TransactionalBox.Inbox.Settings
 {
     public sealed class CleanUpProcessedInboxMessagesSettings : ICleanUpProcessedInboxMessagesJobSettings, ICleanUpProcessedInboxMessagesLauncherSettings
     {
