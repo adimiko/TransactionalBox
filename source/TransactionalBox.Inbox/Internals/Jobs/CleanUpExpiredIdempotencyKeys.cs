@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals;
+﻿using TransactionalBox.Base.BackgroundService.Internals.Jobs;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 

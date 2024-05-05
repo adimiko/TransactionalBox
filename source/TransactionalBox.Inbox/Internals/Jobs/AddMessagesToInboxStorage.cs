@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using TransactionalBox.Base.BackgroundService.Internals;
+using TransactionalBox.Base.BackgroundService.Internals.Jobs;
 using TransactionalBox.Inbox.Internals.Decompression;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.Internals.Transport;
@@ -9,7 +9,7 @@ using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
 {
-    internal sealed class AddMessagesToInboxStorage : Job
+    internal sealed class AddMessagesToInboxStorage : LongRunningJob
     {
         private readonly IServiceProvider _serviceProvider;
 

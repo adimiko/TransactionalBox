@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Base.BackgroundService.Internals.Jobs;
+using TransactionalBox.Base.BackgroundService.Internals.Throttling;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
 {
@@ -6,44 +8,72 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
     {
         private readonly List<JobLaunchSettings> _jobLaunchSettings;
 
+        private readonly List<JobLaunchSettings> _longRunningJobLaunchSettings;
+
         private readonly IServiceProvider _serviceProvider;
 
         protected Launcher(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _jobLaunchSettings = new List<JobLaunchSettings>();
+            _longRunningJobLaunchSettings = new List<JobLaunchSettings>();
         }
 
-        protected void Launch<T>(int numberOfInstances) where T : Job
+        protected void LaunchJob<T>(int numberOfInstances) 
+            where T : Job
         {
             _jobLaunchSettings.Add(new JobLaunchSettings(typeof(T), numberOfInstances));
         }
 
+        protected void LaunchLongRunningJob<T>(int numberOfInstances) 
+            where T : LongRunningJob
+        {
+            _longRunningJobLaunchSettings.Add(new JobLaunchSettings(typeof(T), numberOfInstances));
+        }
+
         protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var parallelExecutor = _serviceProvider.GetRequiredService<IParallelExecutor>();
+            var parallelExecutor = _serviceProvider.GetRequiredService<ILongRunningJobRunner>();
             var logger = _serviceProvider.GetRequiredService<ILauncherLogger<Launcher>>();
+            var infinityJobsIteration = _serviceProvider.GetRequiredService<IInfinityJobsIteration>();
             //TODO log settings
             //TODO evenDistribtuion
 
+            // Long Running Jobs
+            var longRunningJobs = new List<Task>();
+
             try
             {
-                var startedTasks = new List<Task>();
-
                 foreach (var settings in _jobLaunchSettings)
                 {
                     var tasks = await parallelExecutor.Run(settings.JobType, settings.NumberOfInstances, stoppingToken);
 
-                    startedTasks.AddRange(tasks);
+                    longRunningJobs.AddRange(tasks);
                 }
-
-                await Task.WhenAll(startedTasks);
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
                 logger.UnexpectedError(ex);
             }
+
+            var limit = 3; //TODO
+            var listOfTasks = new List<Task>();
+
+            await foreach (var job in infinityJobsIteration.GetJobType(_jobLaunchSettings, stoppingToken))
+            {
+                var toRemove = listOfTasks.Where(x => x.IsCompleted);
+                listOfTasks.AddRange(toRemove);
+
+                if (listOfTasks.Count >= limit)
+                {
+                    await Task.WhenAny(listOfTasks);
+                }
+
+                //TODO JobRunner and add to list
+            }
+
+            await Task.WhenAll(longRunningJobs);
         }
     }
 }

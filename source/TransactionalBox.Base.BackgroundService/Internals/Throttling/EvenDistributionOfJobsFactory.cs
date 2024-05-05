@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TransactionalBox.Base.BackgroundService.Internals.Launchers;
+﻿using TransactionalBox.Base.BackgroundService.Internals.Launchers;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Throttling
 {
-    internal sealed class EvenDistributionOfJobsFactory
+    internal sealed class EvenDistributionOfJobsFactory : IEvenDistributionOfJobsFactory
     {
         //TODO refactor algorithm
-        internal IEnumerable<Type> Create(IEnumerable<JobLaunchSettings> jobLaunchSettings)
+        public IEnumerable<Type> Create(IEnumerable<JobLaunchSettings> jobLaunchSettings)
         {
             double expectedSize = jobLaunchSettings.Sum(x => x.NumberOfInstances);
             

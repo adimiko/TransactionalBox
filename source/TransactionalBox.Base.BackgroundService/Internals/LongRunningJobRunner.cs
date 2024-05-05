@@ -4,7 +4,7 @@ using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 
 namespace TransactionalBox.Base.BackgroundService.Internals
 {
-    internal sealed class ParallelExecutor : IParallelExecutor
+    internal sealed class LongRunningJobRunner : ILongRunningJobRunner
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -12,7 +12,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals
 
         private readonly JobIdGenerator _jobIdGenerator;
 
-        public ParallelExecutor(
+        public LongRunningJobRunner(
             IServiceProvider serviceProvider,
             IEnvironmentContext environmentContext,
             JobIdGenerator jobIdGenerator)
@@ -33,7 +33,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals
             {
                 var jobId = _jobIdGenerator.GetId(_environmentContext.MachineName, jobType.Name, i);
 
-                var task = await Task.Factory.StartNew(() => serviceProvider.GetRequiredService<JobExecutor>().Execute(jobType, jobId, stoppingToken), TaskCreationOptions.LongRunning);
+                var task = await Task.Factory.StartNew(() => serviceProvider.GetRequiredService<LongRunningJobExecutor>().Execute(jobType, jobId, stoppingToken), TaskCreationOptions.LongRunning);
 
                 _tasks.Add(task);
             }

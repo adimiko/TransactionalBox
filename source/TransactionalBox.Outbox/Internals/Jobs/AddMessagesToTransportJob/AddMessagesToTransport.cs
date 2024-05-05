@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
+using TransactionalBox.Base.BackgroundService.Internals.Jobs;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Compression;
 using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories;

@@ -2,17 +2,18 @@
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 using TransactionalBox.Base.BackgroundService.Internals.JobExecutors.Loggers;
+using TransactionalBox.Base.BackgroundService.Internals.Jobs;
 using TransactionalBox.Base.BackgroundService.Internals.Loggers;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 {
-    internal sealed class JobExecutor
+    internal sealed class LongRunningJobExecutor
     {
         private readonly IServiceProvider _serviceProvider;
 
         private readonly TimeProvider _timeProvider;
 
-        public JobExecutor(
+        public LongRunningJobExecutor(
             IServiceProvider serviceProvider,
             TimeProvider timeProvider)
         {
@@ -48,7 +49,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
                         jobExecutionContextConstructor.JobName = jobName;
                         jobExecutionContextConstructor.ProcessingState = processingState;
 
-                        Job job = scope.ServiceProvider.GetRequiredService(jobType) as Job;
+                        var job = scope.ServiceProvider.GetRequiredService(jobType) as GeneralJob;
 
                         logger.StartedJob(jobExecutorId, localJobId);
 

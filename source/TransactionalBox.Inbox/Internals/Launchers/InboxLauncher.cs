@@ -13,10 +13,10 @@ namespace TransactionalBox.Inbox.Internals.Launchers
             ICleanUpExpiredIdempotencyKeysLauncherSettings cleanUpExpiredIdempotencyKeysLauncherSettings)
             : base(serviceProvider)
         {
-            Launch<ProcessMessageFromInbox>(processMessageFromInboxSettings.NumberOfInstances);
-            Launch<AddMessagesToInboxStorage>(addMessagesToInboxStorageLauncherSettings.NumberOfInstances);
-            Launch<CleanUpProcessedInboxMessages>(cleanUpProcessedInboxMessagesLauncherSettings.NumberOfInstances);
-            Launch<CleanUpExpiredIdempotencyKeys>(cleanUpExpiredIdempotencyKeysLauncherSettings.NumberOfInstances);
+            LaunchJob<ProcessMessageFromInbox>(processMessageFromInboxSettings.NumberOfInstances);
+            LaunchLongRunningJob<AddMessagesToInboxStorage>(addMessagesToInboxStorageLauncherSettings.NumberOfInstances);
+            LaunchJob<CleanUpProcessedInboxMessages>(cleanUpProcessedInboxMessagesLauncherSettings.NumberOfInstances);
+            LaunchJob<CleanUpExpiredIdempotencyKeys>(cleanUpExpiredIdempotencyKeysLauncherSettings.NumberOfInstances);
         }
     }
 }
