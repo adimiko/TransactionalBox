@@ -53,10 +53,12 @@ Examples of problems that occur during network communication:
     - [x] Multiple processes in the same service
 - [x] Standalone outbox worker
 - [x] Standalone inbox
-- [ ] Memory hook from service to outbox worker
 - [x] Error handling in background services
 - [ ] Task throttling in background services
 - [ ] Dead messages
+- [ ] Memory hook from service to outbox worker
+    - [ ] InMemory
+    - [ ] SignalR
 
 #### Observability
 - [ ] Support for OpenTelemetry
