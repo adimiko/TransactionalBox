@@ -56,7 +56,7 @@ Examples of problems that occur during network communication:
 - [x] Error handling in background services
 - [ ] Task throttling in background services
 - [ ] Dead messages
-- [ ] Memory hook from service to outbox worker
+- [ ] Hook from service to outbox worker (when service add new message to outbox)
     - [ ] InMemory
     - [ ] SignalR
 
