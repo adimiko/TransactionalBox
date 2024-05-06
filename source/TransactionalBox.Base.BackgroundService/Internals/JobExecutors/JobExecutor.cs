@@ -83,7 +83,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 
                 logger.UnexpectedError(ex, attempt, delay);
 
-                await Task.Delay(delay, _timeProvider, stoppingToken);
+                //TODO await Task.Delay(delay, _timeProvider, stoppingToken);
             }
         }
     }

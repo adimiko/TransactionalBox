@@ -45,7 +45,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
 
             try
             {
-                foreach (var settings in _jobLaunchSettings)
+                foreach (var settings in _longRunningJobLaunchSettings)
                 {
                     var tasks = await parallelExecutor.Run(settings.JobType, settings.NumberOfInstances, stoppingToken);
 
@@ -60,7 +60,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
 
             var jobRunner = _serviceProvider.GetRequiredService<JobRunner>();
 
-            var limit = 1; //TODO
+            var limit = 3; //TODO
             var listOfTasks = new List<Task>();
 
             await foreach (var job in infinityJobsIteration.GetJobType(_jobLaunchSettings, stoppingToken))
