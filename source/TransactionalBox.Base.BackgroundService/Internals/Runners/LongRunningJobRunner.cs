@@ -2,7 +2,7 @@
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.Environment;
 using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 
-namespace TransactionalBox.Base.BackgroundService.Internals
+namespace TransactionalBox.Base.BackgroundService.Internals.Runners
 {
     internal sealed class LongRunningJobRunner : ILongRunningJobRunner
     {

@@ -56,7 +56,7 @@ x =>
      {
          settings.AddMessagesToTransportSettings.LockTimeout = TimeSpan.FromSeconds(1);
          settings.AddMessagesToTransportSettings.NumberOfInstances = 1;
-         settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 0;
+         settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 1;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
@@ -65,8 +65,8 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
     {
-        settings.ProcessingMessagesFromInboxSettings.NumberOfInstances = 4;
-        settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
+        settings.ProcessingMessagesFromInboxSettings.NumberOfInstances = 1;
+        settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 1;
         settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
         settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
     });

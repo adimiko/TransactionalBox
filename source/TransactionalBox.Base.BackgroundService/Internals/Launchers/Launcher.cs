@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Base.BackgroundService.Internals.Jobs;
+using TransactionalBox.Base.BackgroundService.Internals.Runners;
 using TransactionalBox.Base.BackgroundService.Internals.Throttling;
 
 namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
@@ -57,20 +58,32 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
                 logger.UnexpectedError(ex);
             }
 
-            var limit = 3; //TODO
+            var jobRunner = _serviceProvider.GetRequiredService<JobRunner>();
+
+            var limit = 1; //TODO
             var listOfTasks = new List<Task>();
 
             await foreach (var job in infinityJobsIteration.GetJobType(_jobLaunchSettings, stoppingToken))
             {
-                var toRemove = listOfTasks.Where(x => x.IsCompleted);
-                listOfTasks.AddRange(toRemove);
+                var toRemove = listOfTasks.Where(x => x.IsCompleted).ToList();
+
+                foreach (var x in toRemove) 
+                {
+                    listOfTasks.Remove(x);
+                }
 
                 if (listOfTasks.Count >= limit)
                 {
-                    await Task.WhenAny(listOfTasks);
+                    try
+                    {
+                        await Task.WhenAny(listOfTasks);
+                    }
+                    finally { }
                 }
 
-                //TODO JobRunner and add to list
+                var task = jobRunner.Run(job, stoppingToken);
+
+                listOfTasks.Add(task);
             }
 
             await Task.WhenAll(longRunningJobs);

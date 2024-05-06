@@ -6,6 +6,7 @@ using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 using TransactionalBox.Base.BackgroundService.Internals.JobExecutors.Loggers;
 using TransactionalBox.Base.BackgroundService.Internals.Launchers;
 using TransactionalBox.Base.BackgroundService.Internals.Loggers;
+using TransactionalBox.Base.BackgroundService.Internals.Runners;
 using TransactionalBox.Base.BackgroundService.Internals.Throttling;
 
 namespace TransactionalBox.Base.BackgroundService
@@ -16,6 +17,8 @@ namespace TransactionalBox.Base.BackgroundService
         {
             services.AddSingleton<JobIdGenerator>();
             services.AddSingleton<LongRunningJobExecutor>();
+            services.AddSingleton<JobExecutor>();
+            services.AddSingleton<JobRunner>();
             services.AddSingleton<ILongRunningJobRunner, LongRunningJobRunner>();
             services.AddSingleton<IEvenDistributionOfJobsFactory, EvenDistributionOfJobsFactory>();
             services.AddSingleton<IInfinityJobsIteration, InfinityJobsIteration>();
