@@ -54,7 +54,7 @@ Examples of problems that occur during network communication:
 - [x] Standalone outbox worker
 - [x] Standalone inbox
 - [x] Error handling in background services
-- [ ] Task throttling in background services
+- [ ] Task throttling in background services (Long Running Jobs and Max Degree of Parallelism for Jobs)
 - [ ] Dead messages
 - [ ] Hook from service to outbox worker (when service add new message to outbox)
     - [ ] InMemory
