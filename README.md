@@ -106,7 +106,7 @@ Examples of problems that occur during network communication:
 Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the `TransactionalBox.Sample.WebApi` as startup and then run. You should see the following view.
 
 <div align="center">
-    <img src="assets/samples/web-api-sample.png">
+    <img src="assets/samples/api-sample.png">
 </div>
 
 Have fun :smiley:!
