@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Outbox.Internals.Loggers
 {
-    internal sealed class OutboxWorkerLogger<T> : IOutboxWorkerLogger<T>
+    internal sealed partial class OutboxWorkerLogger<T> : IOutboxWorkerLogger<T>
     {
         private readonly ILogger<T> _logger;
 
@@ -11,8 +11,7 @@ namespace TransactionalBox.Outbox.Internals.Loggers
             _logger = logger;
         }
 
-        private static Action<ILogger, Exception?> _failureAddToTransportAction = LoggerMessage.Define(LogLevel.Error, 0, "Failed to add messages to transport");
-
-        public void FailedToAddMessagesToTransport() => _failureAddToTransportAction(_logger, null);
+        [LoggerMessage(0, LogLevel.Error, "Failed to add messages to transport", SkipEnabledCheck = true)]
+        public partial void FailedToAddMessagesToTransport();
     }
 }
