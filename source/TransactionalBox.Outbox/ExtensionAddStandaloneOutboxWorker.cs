@@ -1,14 +1,14 @@
 ﻿using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Configurators;
-using TransactionalBox.Outbox.Internals.Storage.InMemory;
+using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Outbox.Settings.OutboxWorker;
 
 namespace TransactionalBox.Outbox
 {
-    public static class ExtensionAddOutboxWorker
+    public static class ExtensionAddStandaloneOutboxWorker
     {
-        public static void AddOutboxWorker(
+        public static void AddStandaloneOutboxWorker(
             this ITransactionalBoxBuilder builder,
             Action<IOutboxStorageConfigurator>? storageConfiguration = null,
             Action<IOutboxWorkerTransportConfigurator>? transportConfiguration = null,
@@ -24,7 +24,7 @@ namespace TransactionalBox.Outbox
             }
             else
             {
-                storage.UseInternalInMemory();
+                storage.UseInMemoryStorage();
             }
 
             services.AddInternalOutboxWorker(transportConfiguration, settingsConfiguration);

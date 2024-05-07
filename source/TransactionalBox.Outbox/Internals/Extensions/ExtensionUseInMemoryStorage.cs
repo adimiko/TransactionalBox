@@ -1,12 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Storage.InMemory;
+using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.KeyedInMemoryLock;
-using TransactionalBox.Outbox.Configurators;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Outbox.Internals.Storage.InMemory
+namespace TransactionalBox.Outbox.Internals.Extensions
 {
-    internal static class Extensions
+    internal static class ExtensionUseInMemoryStorage
     {
-        internal static void UseInternalInMemory(this IOutboxStorageConfigurator configurator)
+        internal static void UseInMemoryStorage(this IOutboxStorageConfigurator configurator)
         {
             var services = configurator.Services;
 

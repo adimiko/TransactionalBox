@@ -59,6 +59,7 @@ Examples of problems that occur during network communication:
 - [ ] Hook from service to outbox worker (when service add new message to outbox)
     - [ ] InMemory
     - [ ] SignalR
+- [ ] When the inbox adds messages to the storage, it should notify the service that the messages should be processed
 
 #### Observability
 - [ ] Support for OpenTelemetry
@@ -98,6 +99,7 @@ Examples of problems that occur during network communication:
 - [ ] Own transport message serialier and deseralizer (with StringBuilder)
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
+- [ ] Transport discriminator (one outbox many transport, tagged message) 
 
 ## :clapper: Run Sample
 > [!NOTE]

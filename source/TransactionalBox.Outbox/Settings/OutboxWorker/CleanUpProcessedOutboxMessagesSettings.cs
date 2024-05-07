@@ -1,5 +1,5 @@
 ﻿using TransactionalBox.Outbox.Internals.Jobs;
-using TransactionalBox.Outbox.Internals.Launchers;
+using TransactionalBox.Outbox.Internals.Launchers.Settings;
 
 namespace TransactionalBox.Outbox.Settings.OutboxWorker
 {
