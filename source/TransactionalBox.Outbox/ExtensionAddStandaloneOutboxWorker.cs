@@ -6,9 +6,9 @@ using TransactionalBox.Outbox.Settings.OutboxWorker;
 
 namespace TransactionalBox.Outbox
 {
-    public static class ExtensionAddOutboxWorker
+    public static class ExtensionAddStandaloneOutboxWorker
     {
-        public static void AddOutboxWorker(
+        public static void AddStandaloneOutboxWorker(
             this ITransactionalBoxBuilder builder,
             Action<IOutboxStorageConfigurator>? storageConfiguration = null,
             Action<IOutboxWorkerTransportConfigurator>? transportConfiguration = null,
