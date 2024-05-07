@@ -3,7 +3,7 @@ using TransactionalBox.Outbox;
 
 namespace TransactionalBox.Sample.WebApi
 {
-    public sealed class ExampleMessage : IOutboxMessage, IInboxMessage
+    public sealed class ExampleMessage : OutboxMessage, IInboxMessage
     {
         public string Name { get; set; }
 

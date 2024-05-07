@@ -25,7 +25,7 @@ namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.Trans
             _transportMessageSizeSettings = transportMessageSizeSettings;
         }
 
-        public async Task<IEnumerable<TransportMessage>> Create(IEnumerable<OutboxMessage> outboxMessages)
+        public async Task<IEnumerable<TransportMessage>> Create(IEnumerable<OutboxMessageStorage> outboxMessages)
         {
             var groupedOutboxMessagesByTopic = outboxMessages
             .GroupBy(x => x.Topic)

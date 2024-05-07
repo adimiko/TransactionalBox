@@ -6,7 +6,7 @@ namespace TransactionalBox.Outbox.Internals.Storage
     {
         Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout);
 
-        Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId);
+        Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(JobId jobId);
 
         Task MarkAsProcessed(JobId jobId, DateTime processedUtc);
 

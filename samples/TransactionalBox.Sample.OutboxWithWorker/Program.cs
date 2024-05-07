@@ -100,7 +100,7 @@ app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IO
 
 app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
 {
-    var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
+    var messages = await dbContext.Set<OutboxMessageStorage>().AsNoTracking().ToListAsync();
 
     return messages;
 });

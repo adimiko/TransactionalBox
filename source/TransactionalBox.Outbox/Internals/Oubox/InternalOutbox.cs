@@ -32,7 +32,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
         }
 
         public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
-            where TOutboxMessage : class, IOutboxMessage
+            where TOutboxMessage : OutboxMessage
         {
             var envelope = new Envelope();
 
@@ -51,7 +51,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             var metadata = new Metadata(envelope, _serviceContext.Id, _systemClock.UtcNow);
             var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
 
-            var outboxMessage = new OutboxMessage
+            var outboxMessage = new OutboxMessageStorage
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = metadata.OccurredUtc,
@@ -64,7 +64,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
         }
 
         public async Task AddRange<TOutboxMessage>(IEnumerable<TOutboxMessage> messages, Action<Envelope>? envelopeConfiguration)
-            where TOutboxMessage : class, IOutboxMessage
+            where TOutboxMessage : OutboxMessage
         {
             var envelope = new Envelope();
 
@@ -80,7 +80,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
                 receiver = _serviceContext.Id;
             }
 
-            var outboxMessages = new List<OutboxMessage>();
+            var outboxMessages = new List<OutboxMessageStorage>();
 
             var metadata = new Metadata(envelope, _serviceContext.Id, _systemClock.UtcNow);
 
@@ -88,7 +88,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             {
                 var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
 
-                var outboxMessage = new OutboxMessage
+                var outboxMessage = new OutboxMessageStorage
                 {
                     Id = Guid.NewGuid(), //TODO Sequential GUID #14
                     OccurredUtc = metadata.OccurredUtc,

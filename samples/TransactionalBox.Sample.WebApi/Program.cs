@@ -109,7 +109,7 @@ app.MapPost("/add-messages-to-outbox", async ([FromBody] ExampleMessage message,
 
 app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
 {
-    var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
+    var messages = await dbContext.Set<OutboxMessageStorage>().AsNoTracking().ToListAsync();
 
     return messages;
 });

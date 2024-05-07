@@ -6,6 +6,6 @@ namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.Trans
     {
         internal required string Topic { get; init; }
 
-        internal required IEnumerable<OutboxMessage> Messages { get; init; }
+        internal required IEnumerable<OutboxMessageStorage> Messages { get; init; }
     }
 }

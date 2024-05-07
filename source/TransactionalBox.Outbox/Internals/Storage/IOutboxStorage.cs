@@ -2,8 +2,8 @@
 {
     internal interface IOutboxStorage
     {
-        Task Add(OutboxMessage message);
+        Task Add(OutboxMessageStorage message);
 
-        Task AddRange(IEnumerable<OutboxMessage> messages);
+        Task AddRange(IEnumerable<OutboxMessageStorage> messages);
     }
 }

@@ -6,6 +6,6 @@ namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.Trans
     {
         bool IsApplicable(int compressedPayloadSize);
 
-        Task<IEnumerable<byte[]>> Execute(byte[] compressedPayload, IEnumerable<OutboxMessage> outboxMessages);
+        Task<IEnumerable<byte[]>> Execute(byte[] compressedPayload, IEnumerable<OutboxMessageStorage> outboxMessages);
     }
 }
