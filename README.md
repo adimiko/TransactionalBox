@@ -99,6 +99,7 @@ Examples of problems that occur during network communication:
 - [ ] Own transport message serialier and deseralizer (with StringBuilder)
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
+- [ ] Transport discriminator (one outbox many transport, tagged message) 
 
 ## :clapper: Run Sample
 > [!NOTE]
