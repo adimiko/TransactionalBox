@@ -45,13 +45,11 @@ builder.Services.AddTransactionalBox(
 x =>
 {
     x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
-    //x.AddOutbox(storage => storage.UseInMemory())
      .WithWorker(
         transport => transport.UseKafka(settings =>
         {
             settings.BootstrapServers = bootstrapServers;
         }),
-        //transport => transport.UseInMemory(),
         settings =>
      {
          settings.AddMessagesToTransportSettings.LockTimeout = TimeSpan.FromSeconds(1);
@@ -65,9 +63,10 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
     {
+        settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
         settings.ProcessingMessagesFromInboxSettings.NumberOfInstances = 4;
         settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
-        settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
+        settings.CleanUpExpiredIdempotencyKeysSettings.NumberOfInstances = 0;
         settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
     });
 },
@@ -91,7 +90,7 @@ app.UseHttpsRedirection();
 
 
 
-app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
+app.MapPost("/add-messages-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
     var messages = new List<ExampleMessage>();
 
