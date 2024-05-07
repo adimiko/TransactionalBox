@@ -25,7 +25,7 @@ builder.Services.AddTransactionalBox(x =>
 {
     x.AddOutbox().WithWorker();
 
-    x.AddInbox().WithWorker();
+    x.AddInbox();
 },
 settings => settings.ServiceId = "ServiceName");
 ```
