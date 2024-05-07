@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithInbox
 {
-    public sealed class ExampleMessage : IInboxMessage
+    public sealed class ExampleMessage : InboxMessage
     {
         public string Name { get; init; }
 

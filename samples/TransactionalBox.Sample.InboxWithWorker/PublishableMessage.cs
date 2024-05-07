@@ -3,7 +3,7 @@
 namespace TransactionalBox.Sample.InboxWithWorker
 {
     [PublishedBy("ServiceWithOutbox")]
-    public class PublishableMessage : IInboxMessage
+    public class PublishableMessage : InboxMessage
     {
         public string Name { get; init; }
 
