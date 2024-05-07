@@ -48,18 +48,17 @@ Examples of problems that occur during network communication:
 - [x] Support for multiple outbox worker instances
     - [x] Multiple instances of the same service 
     - [x] Multiple processes in the same service
-- [x] Support for multiple inbox worker instances
-    - [x] Multiple instances of the same service 
-    - [x] Multiple processes in the same service
 - [x] Support for multiple inbox instances
     - [x] Multiple instances of the same service 
     - [x] Multiple processes in the same service
 - [x] Standalone outbox worker
 - [x] Standalone inbox
-- [ ] Memory hook from service to outbox worker
 - [x] Error handling in background services
-- [ ] Task throttling in background services
+- [ ] Task throttling in background services (Long Running Jobs and Max Degree of Parallelism for Jobs)
 - [ ] Dead messages
+- [ ] Hook from service to outbox worker (when service add new message to outbox)
+    - [ ] InMemory
+    - [ ] SignalR
 
 #### Observability
 - [ ] Support for OpenTelemetry
