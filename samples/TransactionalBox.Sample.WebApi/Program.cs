@@ -90,19 +90,14 @@ app.UseHttpsRedirection();
 
 
 
-app.MapPost("/add-messages-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
+app.MapPost("/send-messages-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, DbContext dbContext) =>
 {
     var messages = new List<ExampleMessage>();
 
     for (var i = 0; i < 100; i++)
     {
-        messages.Add(message);
+        await outbox.Send(message, "Registrations");
     }
-
-    await outbox.AddRange(messages, m =>
-    {
-        m.Receiver = "Registrations";
-    });
 
     await dbContext.SaveChangesAsync();
 });
