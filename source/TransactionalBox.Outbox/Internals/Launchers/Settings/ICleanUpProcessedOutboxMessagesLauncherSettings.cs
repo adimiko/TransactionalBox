@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Launchers
+﻿namespace TransactionalBox.Outbox.Internals.Launchers.Settings
 {
     internal interface ICleanUpProcessedOutboxMessagesLauncherSettings
     {

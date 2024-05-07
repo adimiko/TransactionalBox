@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Compression;
-using TransactionalBox.Outbox.Internals.Serialization;
 
-namespace TransactionalBox.Outbox.Internals
+namespace TransactionalBox.Outbox.Internals.Extensions
 {
-    internal static class Extensions
+    internal static class ExtensionUseNoCompression
     {
         internal static void UseNoCompression(
             this IOutboxWorkerCompressionAlgorithmConfigurator configurator)
@@ -13,14 +12,6 @@ namespace TransactionalBox.Outbox.Internals
             var services = configurator.Services;
 
             services.AddSingleton<ICompressionAlgorithm, NoCompression>();
-        }
-
-        internal static void UseSystemTextJson(
-            this IOutboxSerializationConfigurator configurator)
-        {
-            var services = configurator.Services;
-
-            services.AddSingleton<IOutboxSerializer, OutboxSerializer>();
         }
     }
 }

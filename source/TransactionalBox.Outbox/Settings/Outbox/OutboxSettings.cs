@@ -1,5 +1,5 @@
 ﻿using TransactionalBox.Outbox.Configurators;
-using TransactionalBox.Outbox.Internals;
+using TransactionalBox.Outbox.Internals.Extensions;
 
 namespace TransactionalBox.Outbox.Settings.Outbox
 {

@@ -5,9 +5,8 @@ using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Settings.Outbox;
 using TransactionalBox.Outbox.Builders;
 using TransactionalBox.Outbox.Internals.Builders;
-using TransactionalBox.Outbox.Internals.Storage.InMemory;
-using TransactionalBox.Outbox.Internals.Transport.InMemory;
 using TransactionalBox.Outbox.Internals.Oubox;
+using TransactionalBox.Outbox.Internals.Extensions;
 
 namespace TransactionalBox.Outbox
 {
@@ -31,7 +30,7 @@ namespace TransactionalBox.Outbox
             }
             else
             {
-                storage.UseInternalInMemory();
+                storage.UseInMemoryStorage();
             }
 
             if (configureSettings is not null)

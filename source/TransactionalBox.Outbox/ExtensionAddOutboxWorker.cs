@@ -1,7 +1,7 @@
 ﻿using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Configurators;
-using TransactionalBox.Outbox.Internals.Storage.InMemory;
+using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Outbox.Settings.OutboxWorker;
 
 namespace TransactionalBox.Outbox
@@ -24,7 +24,7 @@ namespace TransactionalBox.Outbox
             }
             else
             {
-                storage.UseInternalInMemory();
+                storage.UseInMemoryStorage();
             }
 
             services.AddInternalOutboxWorker(transportConfiguration, settingsConfiguration);
