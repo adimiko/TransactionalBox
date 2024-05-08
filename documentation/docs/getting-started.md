@@ -33,7 +33,7 @@ settings => settings.ServiceId = "ServiceName");
 ### Outbox
 #### Declare outbox message
 ```csharp
-public sealed class ExampleMessage : IOutboxMessage
+public sealed class ExampleMessage : OutboxMessage
 {
     public string Name { get; init; }
 
@@ -60,7 +60,7 @@ public sealed class AddMessageToOutbox
             Age = 25,
         };
 
-        await _outbox.Add(message, envelope => envelope.Receiver = "ServiceName");
+        await _outbox.Send(message, "ServiceName");
     }
 }
 ```
@@ -68,7 +68,7 @@ public sealed class AddMessageToOutbox
 ### Inbox
 #### Declare inbox message
 ```csharp
-public sealed class ExampleMessage : IInboxMessage
+public sealed class ExampleMessage : InboxMessage
 {
     public string Name { get; init; }
 
