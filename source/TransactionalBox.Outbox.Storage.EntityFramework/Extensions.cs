@@ -18,6 +18,8 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
 
+            services.AddScoped<IEntityFrameworkOutboxUnitOfWork, EntityFrameworkUnitOfWork>();
+
             services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
 
             services.AddScoped<IOutboxWorkerStorage, EntityFrameworkOutboxWorkerStorage>();
