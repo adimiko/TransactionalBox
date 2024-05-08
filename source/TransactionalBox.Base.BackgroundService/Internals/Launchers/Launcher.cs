@@ -33,12 +33,12 @@ namespace TransactionalBox.Base.BackgroundService.Internals.Launchers
 
                 foreach (var settings in _jobLaunchSettings)
                 {
-                    var tasks = await parallelExecutor.Run(settings.JobType, settings.NumberOfInstances, stoppingToken);
+                    var tasks = await parallelExecutor.Run(settings.JobType, settings.NumberOfInstances, stoppingToken).ConfigureAwait(false);
 
                     startedTasks.AddRange(tasks);
                 }
 
-                await Task.WhenAll(startedTasks);
+                await Task.WhenAll(startedTasks).ConfigureAwait(false);
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)

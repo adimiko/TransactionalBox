@@ -41,17 +41,17 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken))
+            await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var decompressedMessagesFromTransport = await _decompressionAlgorithm.Decompress(messagesFromTransport);
+                    var decompressedMessagesFromTransport = await _decompressionAlgorithm.Decompress(messagesFromTransport).ConfigureAwait(false);
                     //TODO #27
                     var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
 
                     var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
 
-                    var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages);
+                    var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
 
                     if (!existIdempotentInboxKeys.Any())
                     {
@@ -59,7 +59,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
                         var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
 
-                        var result = await inboxStorage.AddRange(inboxMessages, idempotentMessages);
+                        var result = await inboxStorage.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
 
                         if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
                         {
@@ -74,7 +74,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
                     {
                         var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
 
-                        existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages);
+                        existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
 
                         var existIds = existIdempotentInboxKeys.Select(x => x.Id);
 

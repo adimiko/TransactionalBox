@@ -21,17 +21,17 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         protected override async Task Execute(CancellationToken stoppingToken)
         {
-            var numberOfRemovedMessages = await _inboxStorage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow);
+            var numberOfRemovedMessages = await _inboxStorage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
 
             if (numberOfRemovedMessages == 0) // IsBatchEmpty
             {
-                await Task.Delay(_settings.DelayWhenBatchIsEmpty, _systemClock.TimeProvider, stoppingToken);
+                await Task.Delay(_settings.DelayWhenBatchIsEmpty, _systemClock.TimeProvider, stoppingToken).ConfigureAwait(false);
                 return;
             }
 
             if (numberOfRemovedMessages < _settings.BatchSize) // IsBatchNotFull
             {
-                await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken);
+                await Task.Delay(_settings.DelayWhenBatchIsNotFull, _systemClock.TimeProvider, stoppingToken).ConfigureAwait(false);
             }
         }
     }

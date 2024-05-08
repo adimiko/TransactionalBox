@@ -52,7 +52,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 
                         logger.StartedJob(jobExecutorId, localJobId);
 
-                        await job.Execute(stoppingToken);
+                        await job.Execute(stoppingToken).ConfigureAwait(false);
 
                         logger.EndedJob(localJobId);
                     }
@@ -80,7 +80,7 @@ namespace TransactionalBox.Base.BackgroundService.Internals.JobExecutors
 
                     logger.UnexpectedError(ex, attempt, delay);
 
-                    await Task.Delay(delay, _timeProvider, stoppingToken);
+                    await Task.Delay(delay, _timeProvider, stoppingToken).ConfigureAwait(false);
                 }
             }
         }

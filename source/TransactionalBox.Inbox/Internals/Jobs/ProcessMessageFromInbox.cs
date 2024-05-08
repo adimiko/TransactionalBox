@@ -55,11 +55,11 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             var jobName = _jobExecutionContext.JobName;
             var nowUtc = _systemClock.UtcNow;
 
-            var inboxMessage = await _inboxStorage.GetMessage(jobId, jobName, _systemClock.TimeProvider, TimeSpan.FromMinutes(1));
+            var inboxMessage = await _inboxStorage.GetMessage(jobId, jobName, _systemClock.TimeProvider, TimeSpan.FromMinutes(1)).ConfigureAwait(false);
 
             if (inboxMessage is null)
             {
-                await Task.Delay(_settings.DelayWhenInboxIsEmpty, _systemClock.TimeProvider);
+                await Task.Delay(_settings.DelayWhenInboxIsEmpty, _systemClock.TimeProvider).ConfigureAwait(false);
 
                 return;
             }
