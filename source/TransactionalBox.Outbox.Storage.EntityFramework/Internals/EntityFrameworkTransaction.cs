@@ -23,12 +23,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 
             await _transaction.CommitAsync().ConfigureAwait(false);
 
-            //TODO hook
-            //TODO obserability
-            // TODO użyć interfejsu z warstwy wyżej, która wykona ten kod :)
-            // hook
-            // observability
-            //TransactionCommited service i tyle :P
+            //TODO notify when transaction is commited (hook & obserability)
         }
 
         public async Task RollbackAsync()
