@@ -4,10 +4,10 @@ namespace TransactionalBox.Outbox
 {
     public interface IOutbox
     {
-        Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
-            where TOutboxMessage : class, IOutboxMessage;
+        Task Send<TOutboxMessage>(TOutboxMessage message, string receiver, Action<Envelope>? envelopeConfiguration = null)
+            where TOutboxMessage : OutboxMessage;
 
-        Task AddRange<TOutboxMessage>(IEnumerable<TOutboxMessage> messages, Action<Envelope>? envelopeConfiguration = null)
-            where TOutboxMessage : class, IOutboxMessage;
+        Task Publish<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
+            where TOutboxMessage : OutboxMessage;
     }
 }

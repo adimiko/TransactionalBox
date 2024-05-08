@@ -1,4 +1,4 @@
 ﻿namespace TransactionalBox.Outbox
 {
-    public interface IOutboxMessage;
+    public abstract class OutboxMessage;
 }

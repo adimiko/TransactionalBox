@@ -4,9 +4,9 @@ using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals.EntityTypeConfigurations
 {
-    internal sealed class OutboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<OutboxMessage>
+    internal sealed class OutboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<OutboxMessageStorage>
     {
-        public void Configure(EntityTypeBuilder<OutboxMessage> builder)
+        public void Configure(EntityTypeBuilder<OutboxMessageStorage> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.OccurredUtc).IsRequired();

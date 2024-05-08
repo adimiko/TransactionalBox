@@ -12,7 +12,7 @@ namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.Trans
             _settings = settings;
         }
 
-        public Task<IEnumerable<byte[]>> Execute(byte[] compressedPayload, IEnumerable<OutboxMessage> outboxMessages)
+        public Task<IEnumerable<byte[]>> Execute(byte[] compressedPayload, IEnumerable<OutboxMessageStorage> outboxMessages)
         {
             return Task.FromResult<IEnumerable<byte[]>>(new List<byte[]> { compressedPayload });
         }

@@ -31,9 +31,14 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             _topicFactory = topicFactory;
         }
 
-        public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
-            where TOutboxMessage : class, IOutboxMessage
+        public async Task Send<TOutboxMessage>(
+            TOutboxMessage message,
+            string receiver,
+            Action<Envelope>? envelopeConfiguration = null)
+            where TOutboxMessage : OutboxMessage
         {
+            ArgumentNullException.ThrowIfNull(receiver);
+
             var envelope = new Envelope();
 
             if (envelopeConfiguration is not null)
@@ -41,17 +46,10 @@ namespace TransactionalBox.Outbox.Internals.Oubox
                 envelopeConfiguration(envelope);
             }
 
-            var receiver = envelope.Receiver;
-
-            if (receiver is null)
-            {
-                receiver = _serviceContext.Id;
-            }
-
-            var metadata = new Metadata(envelope, _serviceContext.Id, _systemClock.UtcNow);
+            var metadata = new Metadata(envelope.CorrelationId, _serviceContext.Id, _systemClock.UtcNow);
             var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
 
-            var outboxMessage = new OutboxMessage
+            var outboxMessage = new OutboxMessageStorage
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = metadata.OccurredUtc,
@@ -63,8 +61,8 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             await _outboxStorage.Add(outboxMessage);
         }
 
-        public async Task AddRange<TOutboxMessage>(IEnumerable<TOutboxMessage> messages, Action<Envelope>? envelopeConfiguration)
-            where TOutboxMessage : class, IOutboxMessage
+        public async Task Publish<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
+            where TOutboxMessage : OutboxMessage
         {
             var envelope = new Envelope();
 
@@ -73,34 +71,20 @@ namespace TransactionalBox.Outbox.Internals.Oubox
                 envelopeConfiguration(envelope);
             }
 
-            var receiver = envelope.Receiver;
+            var metadata = new Metadata(envelope.CorrelationId, _serviceContext.Id, _systemClock.UtcNow);
 
-            if (receiver is null)
+            var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
+
+            var outboxMessage = new OutboxMessageStorage
             {
-                receiver = _serviceContext.Id;
-            }
+                Id = Guid.NewGuid(), //TODO Sequential GUID #14
+                OccurredUtc = metadata.OccurredUtc,
+                IsProcessed = false,
+                Topic = _topicFactory.Create(_serviceContext.Id, message.GetType().Name),
+                Payload = _serializer.Serialize(outboxMessagePayload),
+            };
 
-            var outboxMessages = new List<OutboxMessage>();
-
-            var metadata = new Metadata(envelope, _serviceContext.Id, _systemClock.UtcNow);
-
-            foreach (var message in messages)
-            {
-                var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
-
-                var outboxMessage = new OutboxMessage
-                {
-                    Id = Guid.NewGuid(), //TODO Sequential GUID #14
-                    OccurredUtc = metadata.OccurredUtc,
-                    IsProcessed = false,
-                    Topic = _topicFactory.Create(receiver, message.GetType().Name),
-                    Payload = _serializer.Serialize(outboxMessagePayload),
-                };
-
-                outboxMessages.Add(outboxMessage);
-            }
-
-            await _outboxStorage.AddRange(outboxMessages);
+            await _outboxStorage.Add(outboxMessage);
         }
     }
 }

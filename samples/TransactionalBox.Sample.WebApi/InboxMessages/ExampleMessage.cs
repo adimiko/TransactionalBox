@@ -1,9 +1,8 @@
 ﻿using TransactionalBox.Inbox;
-using TransactionalBox.Outbox;
 
-namespace TransactionalBox.Sample.WebApi
+namespace TransactionalBox.Sample.WebApi.InboxMessages
 {
-    public sealed class ExampleMessage : OutboxMessage
+    public sealed class ExampleMessage : InboxMessage
     {
         public string Name { get; set; }
 

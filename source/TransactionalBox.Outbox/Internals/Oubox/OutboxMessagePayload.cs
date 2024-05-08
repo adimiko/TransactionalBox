@@ -3,7 +3,7 @@
 namespace TransactionalBox.Outbox.Internals.Oubox
 {
     internal sealed class OutboxMessagePayload<T> : IOutboxMessagePayload
-        where T : class, IOutboxMessage
+        where T : OutboxMessage
     {
         public Metadata Metadata { get; }
 

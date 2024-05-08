@@ -3,7 +3,7 @@
 namespace TransactionalBox.Inbox
 {
     public interface IInboxMessageHandler<TInboxMessage>
-        where TInboxMessage : IInboxMessage, new() 
+        where TInboxMessage : InboxMessage, new() 
     {
         Task Handle(TInboxMessage message, IExecutionContext executionContext);
     }

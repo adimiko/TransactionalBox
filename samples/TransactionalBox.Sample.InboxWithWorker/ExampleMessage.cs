@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Sample.InboxWithWorker
 {
-    public class ExampleMessage : IInboxMessage
+    public class ExampleMessage : InboxMessage
     {
         public string Name { get; set; }
 

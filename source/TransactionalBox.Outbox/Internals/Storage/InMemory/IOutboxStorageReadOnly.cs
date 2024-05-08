@@ -2,6 +2,6 @@
 {
     internal interface IOutboxStorageReadOnly
     {
-        IReadOnlyCollection<OutboxMessage> OutboxMessages { get; }
+        IReadOnlyCollection<OutboxMessageStorage> OutboxMessages { get; }
     }
 }

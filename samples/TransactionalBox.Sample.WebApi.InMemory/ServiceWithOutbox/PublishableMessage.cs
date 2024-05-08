@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
 {
-    public class PublishableMessage : IOutboxMessage
+    public class PublishableMessage : OutboxMessage
     {
         public string Name { get; set; } = "Adrian";
 

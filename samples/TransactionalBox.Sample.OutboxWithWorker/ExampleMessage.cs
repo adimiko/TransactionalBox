@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Sample.OutboxWithWorker
 {
-    public sealed class ExampleMessage : IOutboxMessage
+    public sealed class ExampleMessage : OutboxMessage
     {
         public string Name { get; set; } = "Adrian";
 

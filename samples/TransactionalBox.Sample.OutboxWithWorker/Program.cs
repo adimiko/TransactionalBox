@@ -78,11 +78,7 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
 {
     for (var i = 0; i < 100; i++)
     {
-        //TODO AddRange
-        await outbox.Add(message, m =>
-        {
-            m.Receiver = "ServiceWithInbox";
-        });
+        await outbox.Send(message, "ServiceWithInbox");
     }
 
     await dbContext.SaveChangesAsync();
@@ -92,7 +88,7 @@ app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IO
 {
     for (var i = 0; i < 100; i++)
     {
-        await outbox.Add(message);
+        await outbox.Publish(message);
     }
 
     await dbContext.SaveChangesAsync();
@@ -100,7 +96,7 @@ app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IO
 
 app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
 {
-    var messages = await dbContext.Set<OutboxMessage>().AsNoTracking().ToListAsync();
+    var messages = await dbContext.Set<OutboxMessageStorage>().AsNoTracking().ToListAsync();
 
     return messages;
 });

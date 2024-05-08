@@ -5,9 +5,9 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
 {
     internal sealed class InMemoryOutboxStorage : IOutboxStorage, IOutboxWorkerStorage, IOutboxStorageReadOnly
     {
-        private static readonly List<OutboxMessage> _outboxMessages = new List<OutboxMessage>();
+        private static readonly List<OutboxMessageStorage> _outboxMessages = new List<OutboxMessageStorage>();
 
-        public IReadOnlyCollection<OutboxMessage> OutboxMessages => _outboxMessages.AsReadOnly();
+        public IReadOnlyCollection<OutboxMessageStorage> OutboxMessages => _outboxMessages.AsReadOnly();
 
         private readonly IKeyedInMemoryLock _keyedInMemoryLock;
 
@@ -16,7 +16,7 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
             _keyedInMemoryLock = keyedInMemoryLock;
         }
 
-        public async Task Add(OutboxMessage message)
+        public async Task Add(OutboxMessageStorage message)
         {
             using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {
@@ -24,7 +24,7 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
             }
         }
 
-        public async Task AddRange(IEnumerable<OutboxMessage> messages)
+        public async Task AddRange(IEnumerable<OutboxMessageStorage> messages)
         {
             using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {
@@ -32,9 +32,9 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
             }
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId)
+        public async Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(JobId jobId)
         {
-            IEnumerable<OutboxMessage> messages;
+            IEnumerable<OutboxMessageStorage> messages;
 
             using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {
@@ -63,7 +63,7 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
         {
             var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
-            List<OutboxMessage> messages;
+            List<OutboxMessageStorage> messages;
 
             using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {

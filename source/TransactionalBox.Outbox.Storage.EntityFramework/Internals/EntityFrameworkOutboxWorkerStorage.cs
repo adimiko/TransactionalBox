@@ -12,7 +12,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 
         private readonly DbContext _dbContext;
 
-        private readonly DbSet<OutboxMessage> _outboxMessages;
+        private readonly DbSet<OutboxMessageStorage> _outboxMessages;
 
         private readonly IDistributedLock<OutboxDistributedLock> _distributedLock;
 
@@ -21,7 +21,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
             IDistributedLock<OutboxDistributedLock> distributedLock)
         {
             _dbContext = dbContext;
-            _outboxMessages = dbContext.Set<OutboxMessage>();
+            _outboxMessages = dbContext.Set<OutboxMessageStorage>();
             _distributedLock = distributedLock;
         }
         public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
@@ -49,9 +49,9 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
             return rowCount;
         }
 
-        public async Task<IEnumerable<OutboxMessage>> GetMarkedMessages(JobId jobId)
+        public async Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(JobId jobId)
         {
-            IEnumerable<OutboxMessage> messages;
+            IEnumerable<OutboxMessageStorage> messages;
 
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
             {

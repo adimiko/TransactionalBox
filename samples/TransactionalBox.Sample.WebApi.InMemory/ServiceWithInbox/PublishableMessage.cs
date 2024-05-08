@@ -3,7 +3,7 @@
 namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithInbox
 {
     [PublishedBy("ExampleServiceId")]
-    public class PublishableMessage : IInboxMessage
+    public class PublishableMessage : InboxMessage
     {
         public string Name { get; init; }
 
