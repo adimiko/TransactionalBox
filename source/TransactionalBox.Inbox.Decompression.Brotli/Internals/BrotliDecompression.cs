@@ -20,9 +20,9 @@ namespace TransactionalBox.Inbox.Decompression.Brotli.Internals
             using (var memoryStreamOutput = _streamManager.GetStream())
             using (var brotliStream = new BrotliStream(memoryStreamInput, CompressionMode.Decompress))
             {
-                await brotliStream.CopyToAsync(memoryStreamOutput);
+                await brotliStream.CopyToAsync(memoryStreamOutput).ConfigureAwait(false);
 
-                await brotliStream.FlushAsync();
+                await brotliStream.FlushAsync().ConfigureAwait(false);
 
                 return memoryStreamOutput.ToArray();
             }

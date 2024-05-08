@@ -19,9 +19,9 @@ namespace TransactionalBox.Inbox.Decompression.GZip.Internals
             using (var memoryStreamOutput = _streamManager.GetStream())
             using (var gZipStream = new GZipStream(memoryStreamInput, CompressionMode.Decompress))
             {
-                await gZipStream.CopyToAsync(memoryStreamOutput);
+                await gZipStream.CopyToAsync(memoryStreamOutput).ConfigureAwait(false);
 
-                await gZipStream.FlushAsync();
+                await gZipStream.FlushAsync().ConfigureAwait(false);
 
                 return memoryStreamOutput.ToArray();
             }

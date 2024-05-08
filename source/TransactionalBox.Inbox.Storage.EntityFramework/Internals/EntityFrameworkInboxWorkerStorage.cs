@@ -47,9 +47,9 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
         {
             try
             {
-                await _idempotentInboxKeys.AddRangeAsync(idempotentInboxKeys);
+                await _idempotentInboxKeys.AddRangeAsync(idempotentInboxKeys).ConfigureAwait(false);
 
-                await _inboxMessages.AddRangeAsync(messages);
+                await _inboxMessages.AddRangeAsync(messages).ConfigureAwait(false);
 
                 await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 

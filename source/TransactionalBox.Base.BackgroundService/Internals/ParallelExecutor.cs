@@ -33,7 +33,8 @@ namespace TransactionalBox.Base.BackgroundService.Internals
             {
                 var jobId = _jobIdGenerator.GetId(_environmentContext.MachineName, jobType.Name, i);
 
-                var task = await Task.Factory.StartNew(() => serviceProvider.GetRequiredService<JobExecutor>().Execute(jobType, jobId, stoppingToken), TaskCreationOptions.LongRunning);
+                var task = await Task.Factory.StartNew(() => serviceProvider.GetRequiredService<JobExecutor>().Execute(jobType, jobId, stoppingToken), TaskCreationOptions.LongRunning)
+                    .ConfigureAwait(false);
 
                 _tasks.Add(task);
             }
