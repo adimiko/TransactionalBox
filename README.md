@@ -146,6 +146,7 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 
 ### Topics
 - Distributed lock (prevent race condition)
+- Hook processing
 - Concurrency control
 - Scaling and parallel processing (distributed processing)
 - Synchronization primitives
