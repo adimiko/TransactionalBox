@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Outbox.Builders
+namespace TransactionalBox.Outbox.Configurators
 {
-    public interface IOutboxDependencyBuilder
+    public interface IOutboxTransportConfigurator
     {
         internal IServiceCollection Services { get; }
     }

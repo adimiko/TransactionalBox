@@ -44,8 +44,7 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.UseNpgsql(connectionSt
 builder.Services.AddTransactionalBox(
 x =>
 {
-    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>())
-     .WithWorker(
+    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>(),
         transport => transport.UseKafka(settings =>
         {
             settings.BootstrapServers = bootstrapServers;

@@ -10,7 +10,7 @@ namespace TransactionalBox.Outbox.Compression.GZip
     public static class Extensions
     {
         public static void UseGZipCompression(
-            this IOutboxWorkerCompressionAlgorithmConfigurator configurator,
+            this IOutboxCompressionAlgorithmConfigurator configurator,
             Action<GZipCompressionSettings>? configureSettings = null)
         {
             var services = configurator.Services;
