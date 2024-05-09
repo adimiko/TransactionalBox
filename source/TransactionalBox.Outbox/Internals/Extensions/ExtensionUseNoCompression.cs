@@ -7,7 +7,7 @@ namespace TransactionalBox.Outbox.Internals.Extensions
     internal static class ExtensionUseNoCompression
     {
         internal static void UseNoCompression(
-            this IOutboxWorkerCompressionAlgorithmConfigurator configurator)
+            this IOutboxCompressionAlgorithmConfigurator configurator)
         {
             var services = configurator.Services;
 

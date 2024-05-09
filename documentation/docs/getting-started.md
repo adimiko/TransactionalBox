@@ -23,7 +23,7 @@ using TransactionalBox.Inbox;
 ```csharp
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox().WithWorker();
+    x.AddOutbox();
 
     x.AddInbox();
 },

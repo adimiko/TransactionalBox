@@ -13,9 +13,7 @@ builder.Services.AddScoped<ExampleServiceWithOutbox>();
 
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox().WithWorker();
-
-    //x.AddOutboxWorker();
+    x.AddOutbox();
 
     x.AddInbox();
 }, 

@@ -8,7 +8,7 @@ namespace TransactionalBox.Outbox.Internals.Extensions
 {
     internal static class ExtensionUseInMemoryTransport
     {
-        internal static void UseInMemoryTransport(this IOutboxWorkerTransportConfigurator configurator)
+        internal static void UseInMemoryTransport(this IOutboxTransportConfigurator configurator)
         {
             var services = configurator.Services;
 

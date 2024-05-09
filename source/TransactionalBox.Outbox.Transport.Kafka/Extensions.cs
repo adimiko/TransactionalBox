@@ -9,7 +9,7 @@ namespace TransactionalBox.Outbox.Transport.Kafka
     public static class Extensions
     {
         public static void UseKafka(
-            this IOutboxWorkerTransportConfigurator outboxWorkerTransportConfigurator,
+            this IOutboxTransportConfigurator outboxWorkerTransportConfigurator,
             Action<OutboxWorkerKafkaSettings> settingsConfiguration)
         {
             var services = outboxWorkerTransportConfigurator.Services;

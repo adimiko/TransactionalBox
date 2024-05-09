@@ -10,7 +10,7 @@ namespace TransactionalBox.Outbox.Compression.Brotli
     public static class Extensions
     {
         public static void UseBrotliCompression(
-            this IOutboxWorkerCompressionAlgorithmConfigurator configurator,
+            this IOutboxCompressionAlgorithmConfigurator configurator,
             Action<BrotliCompressionSettings>? configureCompressionSettings = null)
         {
             var services = configurator.Services;
