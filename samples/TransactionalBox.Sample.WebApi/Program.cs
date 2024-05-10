@@ -52,7 +52,6 @@ x =>
         settings =>
      {
          settings.AddMessagesToTransportSettings.LockTimeout = TimeSpan.FromSeconds(1);
-         settings.CleanUpProcessedOutboxMessagesSettings.NumberOfInstances = 0;
          settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 

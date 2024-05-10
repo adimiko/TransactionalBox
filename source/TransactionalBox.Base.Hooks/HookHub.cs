@@ -10,7 +10,7 @@ namespace TransactionalBox.Base.Hooks
             FullMode = BoundedChannelFullMode.DropOldest,
             SingleReader = true,
             SingleWriter = false,
-            AllowSynchronousContinuations = false, //TODO
+            AllowSynchronousContinuations = false,
         });
 
         private ChannelWriter<DateTime> _writer => _channel.Writer;
