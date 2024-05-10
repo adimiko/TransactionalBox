@@ -68,7 +68,6 @@ namespace TransactionalBox.Outbox
             services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
             services.AddSingleton<TransportMessageFactory>();
 
-
             // Settings
             services.AddSingleton<IAddMessagesToTransportHookSettings>(settings.AddMessagesToTransportSettings);
 
@@ -79,7 +78,6 @@ namespace TransactionalBox.Outbox
 
             services.AddHook<AddMessagesToTransportHook>();
             // Jobs
-            //TODO services.AddScoped<AddMessagesToTransport>();
             services.AddScoped<CleanUpProcessedOutboxMessages>();
 
             // Policies
