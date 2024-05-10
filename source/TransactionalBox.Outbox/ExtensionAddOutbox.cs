@@ -13,6 +13,8 @@ using TransactionalBox.Outbox.Internals.Launchers.Settings;
 using TransactionalBox.Outbox.Internals.Launchers;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Settings;
+using TransactionalBox.Outbox.Internals.Hooks;
+using TransactionalBox.Base.Hooks;
 
 namespace TransactionalBox.Outbox
 {
@@ -76,8 +78,9 @@ namespace TransactionalBox.Outbox
 
             services.AddHostedService<OutboxWorkerLauncher>();
 
+            services.AddHook<AddMessagesToTransportHook>();
             // Jobs
-            services.AddScoped<AddMessagesToTransport>();
+            //TODO services.AddScoped<AddMessagesToTransport>();
             services.AddScoped<CleanUpProcessedOutboxMessages>();
 
             // Policies
@@ -85,6 +88,8 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<IPayloadCreationPolicy, PayloadIsLargerThanOptimalSizePolicy>();
 
             services.AddScoped<IOutbox, InternalOutbox>();
+
+            services.AddSingleton<ITranactionCommited, TranactionCommited>();
         }
     }
 }

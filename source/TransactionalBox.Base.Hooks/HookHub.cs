@@ -1,7 +1,6 @@
 ﻿using System.Threading.Channels;
-using TransactionalBox.Internals;
 
-namespace TransactionalBox.Outbox.Internals.Hooks
+namespace TransactionalBox.Base.Hooks
 {
     internal sealed class HookHub<THook> : IHookCaller<THook>, IHookListener<THook>
         where THook : Hook
@@ -18,11 +17,11 @@ namespace TransactionalBox.Outbox.Internals.Hooks
 
         private ChannelReader<DateTime> _reader => _channel.Reader;
 
-        private readonly ISystemClock _systemClock;
+        private readonly TimeProvider _timeProvider;
 
-        public HookHub(ISystemClock systemClock) => _systemClock = systemClock;
+        public HookHub(TimeProvider timeProvider) => _timeProvider = timeProvider;
 
-        public ValueTask CallAsync() => _writer.WriteAsync(_systemClock.UtcNow);
+        public ValueTask CallAsync() => _writer.WriteAsync(_timeProvider.GetUtcNow().UtcDateTime);
 
         public IAsyncEnumerable<DateTime> ListenAsync(CancellationToken cancellationToken) => _reader.ReadAllAsync(cancellationToken);
     }

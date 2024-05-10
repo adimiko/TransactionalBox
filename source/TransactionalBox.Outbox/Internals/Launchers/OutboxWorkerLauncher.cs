@@ -13,7 +13,7 @@ namespace TransactionalBox.Outbox.Internals.Launchers
             ICleanUpProcessedOutboxMessagesLauncherSettings cleanUpProcessedMessagesSettings)
             : base(serviceProvider)
         {
-            Launch<AddMessagesToTransport>(addMessagesToTransportSettings.NumberOfInstances);
+            //Launch<AddMessagesToTransport>(addMessagesToTransportSettings.NumberOfInstances); //TODO
             Launch<CleanUpProcessedOutboxMessages>(cleanUpProcessedMessagesSettings.NumberOfInstances);
         }
     }

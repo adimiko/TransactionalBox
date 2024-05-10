@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Hooks
+﻿namespace TransactionalBox.Base.Hooks
 {
     internal interface IHookCaller<T> where T : Hook
     {
