@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using TransactionalBox.Outbox.Internals.Hooks;
 
 namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 {
@@ -9,12 +10,16 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 
         private readonly IDbContextTransaction _transaction;
 
+        private readonly ITranactionCommited _tranactionCommited;
+
         public EntityFrameworkTransaction(
             DbContext dbContext,
-            IDbContextTransaction transaction) 
+            IDbContextTransaction transaction,
+            ITranactionCommited tranactionCommited) 
         {
             _dbContext = dbContext;
             _transaction = transaction;
+            _tranactionCommited = tranactionCommited;
         }
 
         public async Task CommitAsync()
@@ -23,6 +28,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 
             await _transaction.CommitAsync().ConfigureAwait(false);
 
+            await _tranactionCommited.Commited().ConfigureAwait(false);
             //TODO notify when transaction is commited (hook & obserability)
         }
 

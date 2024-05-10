@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories
+﻿namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories
 {
     internal sealed class TransportMessage
     {

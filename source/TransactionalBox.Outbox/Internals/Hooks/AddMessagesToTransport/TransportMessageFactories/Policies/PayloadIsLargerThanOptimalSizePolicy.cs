@@ -4,7 +4,7 @@ using TransactionalBox.Outbox.Internals.Compression;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
 
-namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies
+namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories.Policies
 {
     internal sealed class PayloadIsLargerThanOptimalSizePolicy : IPayloadCreationPolicy
     {

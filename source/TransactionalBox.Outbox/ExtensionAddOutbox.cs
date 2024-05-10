@@ -5,14 +5,16 @@ using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Internals.Oubox;
 using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Base.BackgroundService;
-using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies;
-using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories;
-using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob;
 using TransactionalBox.Outbox.Internals.Jobs;
 using TransactionalBox.Outbox.Internals.Launchers.Settings;
 using TransactionalBox.Outbox.Internals.Launchers;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Settings;
+using TransactionalBox.Outbox.Internals.Hooks;
+using TransactionalBox.Base.Hooks;
+using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport;
+using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
+using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories.Policies;
 
 namespace TransactionalBox.Outbox
 {
@@ -66,18 +68,16 @@ namespace TransactionalBox.Outbox
             services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
             services.AddSingleton<TransportMessageFactory>();
 
-
             // Settings
-            services.AddSingleton<IAddMessagesToTransportJobSettings>(settings.AddMessagesToTransportSettings);
-            services.AddSingleton<IAddMessagesToTransportLauncherSettings>(settings.AddMessagesToTransportSettings);
+            services.AddSingleton<IAddMessagesToTransportHookSettings>(settings.AddMessagesToTransportSettings);
 
             services.AddSingleton<ICleanUpProcessedOutboxMessagesJobSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
             services.AddSingleton<ICleanUpProcessedOutboxMessagesLauncherSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
 
             services.AddHostedService<OutboxWorkerLauncher>();
 
+            services.AddHook<AddMessagesToTransportHook>();
             // Jobs
-            services.AddScoped<AddMessagesToTransport>();
             services.AddScoped<CleanUpProcessedOutboxMessages>();
 
             // Policies
@@ -85,6 +85,8 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<IPayloadCreationPolicy, PayloadIsLargerThanOptimalSizePolicy>();
 
             services.AddScoped<IOutbox, InternalOutbox>();
+
+            services.AddSingleton<ITranactionCommited, TranactionCommited>();
         }
     }
 }
