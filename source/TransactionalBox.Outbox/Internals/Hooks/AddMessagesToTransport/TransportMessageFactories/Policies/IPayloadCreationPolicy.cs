@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Outbox.Internals.Storage;
 
-namespace TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories.Policies
+namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories.Policies
 {
     internal interface IPayloadCreationPolicy
     {

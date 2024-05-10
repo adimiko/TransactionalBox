@@ -1,16 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Runtime;
-using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
-using TransactionalBox.Base.BackgroundService.Internals.JobExecutors;
 using TransactionalBox.Base.Hooks;
 using TransactionalBox.Internals;
-using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob;
-using TransactionalBox.Outbox.Internals.Jobs.AddMessagesToTransportJob.TransportMessageFactories;
+using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
+using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
 
-namespace TransactionalBox.Outbox.Internals.Hooks
+namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
 {
     internal sealed class AddMessagesToTransportHook : Hook
     {
@@ -18,7 +15,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks
 
         private readonly TransportMessageFactory _factory;
 
-        private readonly IAddMessagesToTransportJobSettings _settings;
+        private readonly IAddMessagesToTransportHookSettings _settings;
 
         private readonly ISystemClock _systemClock;
 
@@ -27,7 +24,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks
         public AddMessagesToTransportHook(
             IHookListener<AddMessagesToTransportHook> hookListener,
             TransportMessageFactory factory,
-            IAddMessagesToTransportJobSettings settings,
+            IAddMessagesToTransportHookSettings settings,
             ISystemClock systemClock,
             IServiceScopeFactory serviceScopeFactory)
         {
@@ -57,6 +54,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks
 
             var storage = scope.ServiceProvider.GetRequiredService<IOutboxWorkerStorage>();
             var transport = scope.ServiceProvider.GetRequiredService<IOutboxWorkerTransport>();
+            var logger = scope.ServiceProvider.GetRequiredService<IOutboxWorkerLogger<AddMessagesToTransportHook>>();
 
             //TODO 
             var jobId = new JobId(Guid.NewGuid().ToString());
@@ -66,6 +64,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks
 
             var numberOfMessages = await storage.MarkMessages(jobId, jobName, batchSize, _systemClock.TimeProvider, _settings.LockTimeout);
 
+            //TODO check when numberofMessages is equal batchSize repeat
             if (numberOfMessages == 0) // IsBatchEmpty
             {
                 return;
@@ -81,10 +80,10 @@ namespace TransactionalBox.Outbox.Internals.Hooks
 
                 if (transportResult == TransportResult.Failure)
                 {
-                    //TODO log
+                    logger.FailedToAddMessagesToTransport();
                     return;
                 }
-                
+
                 await storage.MarkAsProcessed(jobId, _systemClock.UtcNow);
             }
         }

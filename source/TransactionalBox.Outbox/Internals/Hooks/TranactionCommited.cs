@@ -1,4 +1,5 @@
 ﻿using TransactionalBox.Base.Hooks;
+using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport;
 
 namespace TransactionalBox.Outbox.Internals.Hooks
 {

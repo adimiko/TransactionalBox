@@ -48,8 +48,7 @@ builder.Services.AddTransactionalBox(x =>
 {
     x.AddOutbox(
         storage => storage.UseEntityFramework<ServiceWithOutboxDbContext>(),
-        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
-        settings => settings.AddMessagesToTransportSettings.NumberOfInstances = 2);
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
 },
 settings => settings.ServiceId = "ServiceWithOutbox");
 
