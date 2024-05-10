@@ -4,10 +4,6 @@ using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Internals.Oubox;
 using TransactionalBox.Outbox.Internals.Extensions;
-using TransactionalBox.Base.BackgroundService;
-using TransactionalBox.Outbox.Internals.Jobs;
-using TransactionalBox.Outbox.Internals.Launchers.Settings;
-using TransactionalBox.Outbox.Internals.Launchers;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Settings;
 using TransactionalBox.Outbox.Internals.Hooks;
@@ -15,6 +11,7 @@ using TransactionalBox.Base.Hooks;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories.Policies;
+using TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages;
 
 namespace TransactionalBox.Outbox
 {
@@ -63,22 +60,17 @@ namespace TransactionalBox.Outbox
 
             settings.Configure(compressionAlgorithm);
 
-            services.AddBackgroundServiceBase();
-
             services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
             services.AddSingleton<TransportMessageFactory>();
 
             // Settings
             services.AddSingleton<IAddMessagesToTransportHookSettings>(settings.AddMessagesToTransportSettings);
 
-            services.AddSingleton<ICleanUpProcessedOutboxMessagesJobSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
-            services.AddSingleton<ICleanUpProcessedOutboxMessagesLauncherSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
+            services.AddSingleton<ICleanUpProcessedOutboxMessagesHookSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
 
-            services.AddHostedService<OutboxWorkerLauncher>();
-
+            // Hooks
             services.AddHook<AddMessagesToTransportHook>();
-            // Jobs
-            services.AddScoped<CleanUpProcessedOutboxMessages>();
+            services.AddHook<CleanUpProcessedOutboxMessagesHook>();
 
             // Policies
             services.AddSingleton<IPayloadCreationPolicy, PayloadHasOptimalSizePolicy>();

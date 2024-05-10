@@ -3,6 +3,7 @@ using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.Va
 using TransactionalBox.Base.Hooks;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
+using TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
@@ -12,6 +13,8 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
     internal sealed class AddMessagesToTransportHook : Hook
     {
         private readonly IHookListener<AddMessagesToTransportHook> _hookListener;
+
+        private readonly IHookCaller<CleanUpProcessedOutboxMessagesHook> _hookCaller;
 
         private readonly TransportMessageFactory _factory;
 
@@ -23,12 +26,14 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
 
         public AddMessagesToTransportHook(
             IHookListener<AddMessagesToTransportHook> hookListener,
+            IHookCaller<CleanUpProcessedOutboxMessagesHook> hookCaller,
             TransportMessageFactory factory,
             IAddMessagesToTransportHookSettings settings,
             ISystemClock systemClock,
             IServiceScopeFactory serviceScopeFactory)
         {
             _hookListener = hookListener;
+            _hookCaller = hookCaller;
             _factory = factory;
             _settings = settings;
             _systemClock = systemClock;
@@ -42,7 +47,9 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
             await foreach (var lastHook in _hookListener.ListenAsync(cancellationToken).ConfigureAwait(false))
             {
                 //TODO logic
-                await Process(cancellationToken);
+                await Process(cancellationToken).ConfigureAwait(false);
+
+                await _hookCaller.CallAsync().ConfigureAwait(false);
             }
 
             //TODO execute on end
