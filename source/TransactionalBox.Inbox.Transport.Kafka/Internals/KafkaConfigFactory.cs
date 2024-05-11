@@ -28,6 +28,7 @@ namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 
             _config = new ConsumerConfig()
             {
+                ClientId = _inboxWorkerContext.Id + Guid.NewGuid().ToString(), //TODO
                 GroupId = _inboxWorkerContext.Id,
                 BootstrapServers = _inboxWorkerKafkaSettings.BootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest,

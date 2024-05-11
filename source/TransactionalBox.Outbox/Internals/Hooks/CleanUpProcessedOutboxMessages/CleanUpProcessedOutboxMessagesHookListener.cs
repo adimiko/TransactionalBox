@@ -17,7 +17,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages
             _settings = settings;
         }
 
-        public async Task ListenAsync(DateTime lastHook, CancellationToken cancellationToken)
+        public async Task ListenAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
             if(!_settings.IsEnabled) 
             {

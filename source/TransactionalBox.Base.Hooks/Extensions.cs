@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Base.Hooks.Internals;
+using TransactionalBox.Base.Hooks.Internals.Loggers;
 
 namespace TransactionalBox.Base.Hooks
 {
@@ -16,6 +17,8 @@ namespace TransactionalBox.Base.Hooks
             services.AddSingleton<IHookCaller<THook>>(sp => sp.GetRequiredService<HookHub<THook>>());
 
             services.AddScoped<IHookListener<THook>, THookListener>();
+
+            services.AddSingleton(typeof(IHookListnerLogger<THook>), typeof(HookListnerLogger<THook>));
 
             services.AddHostedService<Startup>();
         }
