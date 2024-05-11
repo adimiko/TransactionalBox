@@ -65,6 +65,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
 
                 if (transportResult == TransportResult.Failure)
                 {
+                    //TODO retry 
                     _logger.FailedToAddMessagesToTransport();
                     return;
                 }
