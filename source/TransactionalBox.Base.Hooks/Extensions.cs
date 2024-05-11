@@ -10,10 +10,8 @@ namespace TransactionalBox.Base.Hooks
             where THook : Hook, new()
         {
             services.AddSingleton<HookHub<THook>>();
-            services.AddSingleton<IInternalHookListenersLauncher, HookListenersLauncher<THook>>();
 
-            services.AddSingleton<THook>();
-            services.AddSingleton<Hook, THook>();
+            services.AddSingleton<IInternalHookListenersLauncher, HookListenersLauncher<THook>>();
 
             services.AddSingleton<IHookCaller<THook>>(sp => sp.GetRequiredService<HookHub<THook>>());
 
