@@ -1,7 +1,4 @@
 ﻿namespace TransactionalBox.Base.Hooks
 {
-    internal abstract class Hook
-    {
-        protected internal abstract Task StartAsync(CancellationToken cancellationToken);
-    }
+    internal abstract class Hook;
 }

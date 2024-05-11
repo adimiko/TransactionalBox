@@ -69,8 +69,8 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<ICleanUpProcessedOutboxMessagesHookSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
 
             // Hooks
-            services.AddHook<AddMessagesToTransportHook>();
-            services.AddHook<CleanUpProcessedOutboxMessagesHook>();
+            services.AddHookListener<AddMessagesToTransportHookListener, AddMessagesToTransportHook>();
+            services.AddHookListener<CleanUpProcessedOutboxMessagesHookListener, CleanUpProcessedOutboxMessagesHook>();
 
             // Policies
             services.AddSingleton<IPayloadCreationPolicy, PayloadHasOptimalSizePolicy>();
