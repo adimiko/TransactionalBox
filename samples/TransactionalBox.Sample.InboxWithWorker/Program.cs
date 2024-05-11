@@ -56,10 +56,7 @@ builder.Services.AddTransactionalBox(x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
         {
-            settings.CleanUpExpiredIdempotencyKeysSettings.NumberOfInstances = 0;
-            settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
-            settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
-            settings.ProcessingMessagesFromInboxSettings.NumberOfInstances = 1;
+            settings.CleanUpProcessedInboxMessagesSettings.IsEnabled = false;
         });
 },
 settings => settings.ServiceId = "ServiceWithInbox");

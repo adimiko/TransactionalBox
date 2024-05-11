@@ -1,8 +1,6 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
-using TransactionalBox.Base.EventHooks;
+﻿using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
-using TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages;
 using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Internals.Storage;

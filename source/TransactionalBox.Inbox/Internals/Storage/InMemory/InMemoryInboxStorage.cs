@@ -1,5 +1,4 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
-using TransactionalBox.KeyedInMemoryLock;
+﻿using TransactionalBox.KeyedInMemoryLock;
 
 namespace TransactionalBox.Inbox.Internals.Storage.InMemory
 {
@@ -47,7 +46,7 @@ namespace TransactionalBox.Inbox.Internals.Storage.InMemory
             return idempotentInboxKeys;
         }
 
-        public async Task<InboxMessageStorage?> GetMessage(JobId jobId, JobName jobName, TimeProvider timeProvider, TimeSpan lockTimeout)
+        public async Task<InboxMessageStorage?> GetMessage(Guid hookId, string hookName, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 

@@ -11,8 +11,6 @@ namespace TransactionalBox.Inbox.Settings
 
         public CleanUpExpiredIdempotencyKeysSettings CleanUpExpiredIdempotencyKeysSettings { get; } = new CleanUpExpiredIdempotencyKeysSettings();
 
-        public ProcessingMessagesFromInboxSettings ProcessingMessagesFromInboxSettings { get; } = new ProcessingMessagesFromInboxSettings();
-
         public Action<IInboxDeserializationConfigurator> ConfigureDeserialization { get; set; } = x => x.UseSystemTextJson();
 
         public Action<IInboxDecompressionAlgorithmConfigurator> ConfigureDecompressionAlgorithm { get; set; } = x => x.UseNoDecompression();

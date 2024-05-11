@@ -2,8 +2,6 @@
 using TransactionalBox.Builders;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Configurators;
-using TransactionalBox.Inbox.Internals.Jobs;
-using TransactionalBox.Base.BackgroundService;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.Storage.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.InMemory;
@@ -11,7 +9,9 @@ using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Settings;
-using TransactionalBox.Inbox.Internals.Launchers;
+using TransactionalBox.Inbox.Internals.Hooks;
+using TransactionalBox.Base.EventHooks;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses;
 
 namespace TransactionalBox.Inbox
 {
@@ -91,36 +91,31 @@ namespace TransactionalBox.Inbox
                 .WithScopedLifetime());
 
 
-            services.AddBackgroundServiceBase();
-
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
             services.AddSingleton<ICompiledInboxHandlers, CompiledInboxHandlers>();
-
-            // Launchers
-            services.AddHostedService<InboxLauncher>();
 
             services.AddSingleton<ITopicsProvider, TopicsProvider>();
 
             services.AddSingleton<IInboxContext, InboxContext>();
 
             // Job Settings
-            services.AddSingleton<IProcessingMessagesFromInboxLauncherSettings>(settings.ProcessingMessagesFromInboxSettings);
-            services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings.ProcessingMessagesFromInboxSettings);
-
             services.AddSingleton<IAddMessagesToInboxStorageJobSettings>(settings.AddMessagesToInboxStorageSettings);
-            services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
 
             services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
-            services.AddSingleton<ICleanUpProcessedInboxMessagesLauncherSettings>(settings.CleanUpProcessedInboxMessagesSettings);
 
             services.AddSingleton<ICleanUpExpiredIdempotencyKeysJobSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
-            services.AddSingleton<ICleanUpExpiredIdempotencyKeysLauncherSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
 
             // Jobs
-            services.AddScoped<ProcessMessageFromInbox>();
-            services.AddScoped<AddMessagesToInboxStorage>();
-            services.AddScoped<CleanUpProcessedInboxMessages>();
-            services.AddScoped<CleanUpExpiredIdempotencyKeys>();
+            services.AddHostedService<AddMessagesToInboxStorage>();
+            services.AddHostedService<CleanUpExpiredIdempotencyKeys>();
+
+            services.AddEventHookHandler<ProcessMessageFromInbox, AddedMessagesToInboxEventHook>();
+
+            if (settings.CleanUpProcessedInboxMessagesSettings.IsEnabled)
+            {
+                services.AddEventHookHandler<CleanUpProcessedInboxMessages, ProcessedMessageFromInboxEventHook>();
+            }
+           
         }
     }
 }

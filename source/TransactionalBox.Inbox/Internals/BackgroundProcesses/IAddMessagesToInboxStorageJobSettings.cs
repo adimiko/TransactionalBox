@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Jobs
+﻿namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
 {
     internal interface IAddMessagesToInboxStorageJobSettings
     {
