@@ -10,9 +10,9 @@ namespace TransactionalBox.Base.EventHooks
             where THookListener : class, IEventHookHandler<THook>
             where THook : EventHook, new()
         {
-            services.AddSingleton<HookHub<THook>>();
+            services.AddSingleton<EventHookHub<THook>>();
 
-            services.AddSingleton<IInternalHookListenersLauncher, HookListenersLauncher<THook>>();
+            services.AddSingleton<IInternalHookListenersLauncher, EventHookLauncher<THook>>();
 
             services.AddSingleton<IEventHookPublisher, EventHookPublisher>();
 

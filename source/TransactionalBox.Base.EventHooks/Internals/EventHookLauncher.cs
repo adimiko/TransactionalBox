@@ -4,17 +4,17 @@ using TransactionalBox.Base.EventHooks.Internals.Loggers;
 
 namespace TransactionalBox.Base.EventHooks.Internals
 {
-    internal sealed class HookListenersLauncher<THook> : IInternalHookListenersLauncher
+    internal sealed class EventHookLauncher<THook> : IInternalHookListenersLauncher
         where THook : EventHook, new()
     {
-        private readonly HookHub<THook> _hookHub;
+        private readonly EventHookHub<THook> _hookHub;
 
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private readonly IHookListnerLogger<THook> _logger;
 
-        public HookListenersLauncher(
-            HookHub<THook> hookHub,
+        public EventHookLauncher(
+            EventHookHub<THook> hookHub,
             IServiceScopeFactory serviceScopeFactory,
             IHookListnerLogger<THook> logger) 
         {

@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Base.EventHooks.Internals
 {
-    internal sealed class HookHub<TEventHook> where TEventHook : EventHook, new()
+    internal sealed class EventHookHub<TEventHook> where TEventHook : EventHook, new()
     {
         private static Channel<DateTime> _channel = Channel.CreateBounded<DateTime>(new BoundedChannelOptions(1)
         {
@@ -18,7 +18,7 @@ namespace TransactionalBox.Base.EventHooks.Internals
 
         private readonly TimeProvider _timeProvider;
 
-        public HookHub(TimeProvider timeProvider) => _timeProvider = timeProvider;
+        public EventHookHub(TimeProvider timeProvider) => _timeProvider = timeProvider;
 
         public ValueTask PublishAsync() => _writer.WriteAsync(_timeProvider.GetUtcNow().UtcDateTime);
 

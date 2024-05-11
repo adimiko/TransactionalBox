@@ -14,7 +14,7 @@ namespace TransactionalBox.Base.EventHooks.Internals
         public async Task PublishAsync<TEventHook>() 
             where TEventHook : EventHook, new()
         {
-            var eventHookHub = _serviceProvider.GetService<HookHub<TEventHook>>();
+            var eventHookHub = _serviceProvider.GetService<EventHookHub<TEventHook>>();
 
             if (eventHookHub is not null)
             {
