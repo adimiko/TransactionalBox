@@ -6,12 +6,13 @@ using TransactionalBox.Outbox.Internals.Oubox;
 using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Settings;
-using TransactionalBox.Outbox.Internals.Hooks;
-using TransactionalBox.Base.Hooks;
+using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories.Policies;
 using TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages;
+using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
+using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox
 {
@@ -69,8 +70,12 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<ICleanUpProcessedOutboxMessagesHookSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
 
             // Hooks
-            services.AddHookListener<AddMessagesToTransportHookListener, AddMessagesToTransportHook>();
-            services.AddHookListener<CleanUpProcessedOutboxMessagesHookListener, CleanUpProcessedOutboxMessagesHook>();
+            services.AddEventHookHandler<AddMessagesToTransport, AddedMessagesToOutboxEventHook>();
+
+            if (settings.CleanUpProcessedOutboxMessagesSettings.IsEnabled)
+            {
+                services.AddEventHookHandler<CleanUpProcessedOutboxMessages, AddedMessagesToTransportEventHook>();
+            }
 
             // Policies
             services.AddSingleton<IPayloadCreationPolicy, PayloadHasOptimalSizePolicy>();

@@ -55,7 +55,7 @@ Examples of problems that occur during network communication:
 - [x] Error handling in background services
 - [ ] Dead messages
 - [ ] Hook processing
-    - [ ] Outbox
+    - [x] Outbox
     - [ ] Inbox
 
 #### Observability
