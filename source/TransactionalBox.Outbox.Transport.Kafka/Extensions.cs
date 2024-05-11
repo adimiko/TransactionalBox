@@ -10,14 +10,14 @@ namespace TransactionalBox.Outbox.Transport.Kafka
     {
         public static void UseKafka(
             this IOutboxTransportConfigurator outboxWorkerTransportConfigurator,
-            Action<OutboxWorkerKafkaSettings> settingsConfiguration)
+            Action<OutboxKafkaSettings> settingsConfiguration)
         {
             var services = outboxWorkerTransportConfigurator.Services;
-            var settings = new OutboxWorkerKafkaSettings();
+            var settings = new OutboxKafkaSettings();
 
             settingsConfiguration(settings);
 
-            services.AddSingleton<IOutboxWorkerKafkaSettings>(settings);
+            services.AddSingleton<IOutboxKafkaSettings>(settings);
             services.AddSingleton<ITransportMessageSizeSettings>(settings.TransportMessageSizeSettings);
 
             services.AddSingleton<KafkaConfigFactory>();

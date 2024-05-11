@@ -4,12 +4,12 @@ namespace TransactionalBox.Outbox.Transport.Kafka.Internals
 {
     internal sealed class KafkaConfigFactory
     {
-        private readonly IOutboxWorkerKafkaSettings _outboxWorkerKafkaSettings;
+        private readonly IOutboxKafkaSettings _outboxWorkerKafkaSettings;
 
         private ProducerConfig? _config = null;
 
         public KafkaConfigFactory(
-            IOutboxWorkerKafkaSettings outboxWorkerKafkaSettings) 
+            IOutboxKafkaSettings outboxWorkerKafkaSettings) 
         {
             _outboxWorkerKafkaSettings = outboxWorkerKafkaSettings;
         }
