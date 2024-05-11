@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
 using TransactionalBox.DistributedLock;
-using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 using TransactionalBox.Outbox.Internals.Storage;
 using System.Net;
 
