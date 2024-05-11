@@ -1,9 +1,9 @@
 ﻿using System.Threading.Channels;
 
-namespace TransactionalBox.Base.Hooks
+namespace TransactionalBox.Base.Hooks.Internals
 {
-    internal sealed class HookHub<THook> : IHookCaller<THook>, IHookListener<THook>
-        where THook : Hook
+    internal sealed class HookHub<THook> : IHookCaller<THook>
+        where THook : Hook, new()
     {
         private static Channel<DateTime> _channel = Channel.CreateBounded<DateTime>(new BoundedChannelOptions(1)
         {

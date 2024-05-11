@@ -1,7 +1,8 @@
 ﻿namespace TransactionalBox.Base.Hooks
 {
-    internal interface IHookListener<T> where T : Hook
+    internal interface IHookListener<T>
+        where T : Hook, new()
     {
-        IAsyncEnumerable<DateTime> ListenAsync(CancellationToken cancellationToken);
+        Task ListenAsync(DateTime lastHook, CancellationToken cancellationToken);
     }
 }
