@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals;
-using TransactionalBox.Base.EventHooks;
-using TransactionalBox.Inbox.Internals.Jobs;
+﻿using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Inbox.Internals.Storage;
 
 namespace TransactionalBox.Inbox.Internals.Hooks

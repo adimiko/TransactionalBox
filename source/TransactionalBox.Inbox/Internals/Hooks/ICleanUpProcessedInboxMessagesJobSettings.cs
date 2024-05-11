@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Jobs
+﻿namespace TransactionalBox.Inbox.Internals.Hooks
 {
     internal interface ICleanUpProcessedInboxMessagesJobSettings
     {

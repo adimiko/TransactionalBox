@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
-
-namespace TransactionalBox.Inbox.Internals.Storage
+﻿namespace TransactionalBox.Inbox.Internals.Storage
 {
     internal interface IInboxStorage
     {

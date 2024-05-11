@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
-using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Inbox.Internals.Decompression;
 using TransactionalBox.Inbox.Internals.Hooks;
@@ -10,7 +9,7 @@ using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Internals;
 
-namespace TransactionalBox.Inbox.Internals.Jobs
+namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
 {
     internal sealed class AddMessagesToInboxStorage : BackgroundService
     {
@@ -48,7 +47,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested) 
+            while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {

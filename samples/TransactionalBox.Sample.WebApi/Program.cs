@@ -61,7 +61,6 @@ x =>
         settings =>
     {
         settings.CleanUpProcessedInboxMessagesSettings.IsEnabled = false;
-        settings.CleanUpExpiredIdempotencyKeysSettings.NumberOfInstances = 0;
         settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
     });
 },

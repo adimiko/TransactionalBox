@@ -5,7 +5,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.Base.BackgroundService\TransactionalBox.Base.BackgroundService.csproj" />
     <ProjectReference Include="..\TransactionalBox.Base.EventHooks\TransactionalBox.Base.EventHooks.csproj" />
     <ProjectReference Include="..\TransactionalBox.Base.Transport.InMemory\TransactionalBox.Base.Transport.InMemory.csproj" />
     <ProjectReference Include="..\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
@@ -24,6 +23,10 @@
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Internals\Jobs\" />
   </ItemGroup>
 	
 </Project>

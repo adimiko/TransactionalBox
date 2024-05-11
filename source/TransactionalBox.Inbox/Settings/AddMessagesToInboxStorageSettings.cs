@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Inbox.Internals.Jobs;
+﻿using TransactionalBox.Inbox.Internals.BackgroundProcesses;
 
 namespace TransactionalBox.Inbox.Settings
 {
