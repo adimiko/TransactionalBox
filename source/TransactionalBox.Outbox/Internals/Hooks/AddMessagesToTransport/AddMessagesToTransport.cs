@@ -3,15 +3,16 @@ using TransactionalBox.Base.Hooks;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages;
+using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
 {
-    internal sealed class AddMessagesToTransportHookListener : IHookListener<AddMessagesToTransportHook>
+    internal sealed class AddMessagesToTransport : IEventHookHandler<AddedMessagesToOutboxEventHook>
     {
-        private readonly IHookCaller<CleanUpProcessedOutboxMessagesHook> _hookCaller;
+        private readonly IEventHookPublisher _eventHookPublisher;
 
         private readonly TransportMessageFactory _factory;
 
@@ -23,18 +24,18 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
 
         private readonly IOutboxWorkerTransport _transport;
 
-        private readonly IOutboxWorkerLogger<AddMessagesToTransportHookListener> _logger;
+        private readonly IOutboxWorkerLogger<AddMessagesToTransport> _logger;
 
-        public AddMessagesToTransportHookListener(
-            IHookCaller<CleanUpProcessedOutboxMessagesHook> hookCaller,
+        public AddMessagesToTransport(
+            IEventHookPublisher eventHookPublisher,
             TransportMessageFactory factory,
             IAddMessagesToTransportHookSettings settings,
             ISystemClock systemClock,
             IOutboxWorkerStorage storage,
             IOutboxWorkerTransport transport,
-            IOutboxWorkerLogger<AddMessagesToTransportHookListener> logger)
+            IOutboxWorkerLogger<AddMessagesToTransport> logger)
         {
-            _hookCaller = hookCaller;
+            _eventHookPublisher = eventHookPublisher;
             _factory = factory;
             _settings = settings;
             _clock = systemClock;
@@ -43,7 +44,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
             _logger = logger;
         }
 
-        public async Task ListenAsync(IHookExecutionContext context, CancellationToken cancellationToken)
+        public async Task HandleAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
             var batchSize = _settings.BatchSize;
 
@@ -73,7 +74,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
                 await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
             }
 
-            await _hookCaller.CallAsync().ConfigureAwait(false);
+            await _eventHookPublisher.PublishAsync<AddedMessagesToTransportEventHook>().ConfigureAwait(false);
         }
     }
 }

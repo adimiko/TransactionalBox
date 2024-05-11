@@ -5,7 +5,7 @@ using TransactionalBox.Base.Hooks.Internals.Loggers;
 namespace TransactionalBox.Base.Hooks.Internals
 {
     internal sealed class HookListenersLauncher<THook> : IInternalHookListenersLauncher
-        where THook : Hook, new()
+        where THook : EventHook, new()
     {
         private readonly HookHub<THook> _hookHub;
 
@@ -33,16 +33,16 @@ namespace TransactionalBox.Base.Hooks.Internals
                     {
                         using (var scope = _serviceScopeFactory.CreateScope())
                         {
-                            var hookListner = scope.ServiceProvider.GetRequiredService<IHookListener<THook>>();
+                            var eventHookHandler = scope.ServiceProvider.GetRequiredService<IEventHookHandler<THook>>();
 
                             var id = Guid.NewGuid();
-                            var name = typeof(THook).Name;
+                            var name = eventHookHandler.GetType().Name;
 
                             var context = new HookExecutionContext(id, name, lastOccurredUtc);
 
                             _logger.Started(context.Name, context.Id);
 
-                            await hookListner.ListenAsync(context, cancellationToken).ConfigureAwait(false);
+                            await eventHookHandler.HandleAsync(context, cancellationToken).ConfigureAwait(false);
 
                             _logger.Ended(context.Id);
                         }

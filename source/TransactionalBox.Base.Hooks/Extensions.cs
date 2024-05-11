@@ -6,17 +6,17 @@ namespace TransactionalBox.Base.Hooks
 {
     internal static class Extensions
     {
-        internal static void AddHookListener<THookListener, THook>(this IServiceCollection services)
-            where THookListener : class, IHookListener<THook>
-            where THook : Hook, new()
+        internal static void AddEventHookHandler<THookListener, THook>(this IServiceCollection services)
+            where THookListener : class, IEventHookHandler<THook>
+            where THook : EventHook, new()
         {
             services.AddSingleton<HookHub<THook>>();
 
             services.AddSingleton<IInternalHookListenersLauncher, HookListenersLauncher<THook>>();
 
-            services.AddSingleton<IHookCaller<THook>>(sp => sp.GetRequiredService<HookHub<THook>>());
+            services.AddSingleton<IEventHookPublisher, EventHookPublisher>();
 
-            services.AddScoped<IHookListener<THook>, THookListener>();
+            services.AddScoped<IEventHookHandler<THook>, THookListener>();
 
             services.AddSingleton(typeof(IHookListnerLogger<THook>), typeof(HookListnerLogger<THook>));
 

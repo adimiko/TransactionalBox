@@ -2,8 +2,7 @@
 
 namespace TransactionalBox.Base.Hooks.Internals
 {
-    internal sealed class HookHub<THook> : IHookCaller<THook>
-        where THook : Hook, new()
+    internal sealed class HookHub<TEventHook> where TEventHook : EventHook, new()
     {
         private static Channel<DateTime> _channel = Channel.CreateBounded<DateTime>(new BoundedChannelOptions(1)
         {
@@ -21,7 +20,7 @@ namespace TransactionalBox.Base.Hooks.Internals
 
         public HookHub(TimeProvider timeProvider) => _timeProvider = timeProvider;
 
-        public ValueTask CallAsync() => _writer.WriteAsync(_timeProvider.GetUtcNow().UtcDateTime);
+        public ValueTask PublishAsync() => _writer.WriteAsync(_timeProvider.GetUtcNow().UtcDateTime);
 
         public IAsyncEnumerable<DateTime> ListenAsync(CancellationToken cancellationToken) => _reader.ReadAllAsync(cancellationToken);
     }

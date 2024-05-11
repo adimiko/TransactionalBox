@@ -1,15 +1,16 @@
 ﻿using TransactionalBox.Base.Hooks;
+using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
 using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages
 {
-    internal sealed class CleanUpProcessedOutboxMessagesHookListener : IHookListener<CleanUpProcessedOutboxMessagesHook>
+    internal sealed class CleanUpProcessedOutboxMessages : IEventHookHandler<AddedMessagesToTransportEventHook>
     {
         private readonly IOutboxWorkerStorage _storage;
 
         private readonly ICleanUpProcessedOutboxMessagesHookSettings _settings;
 
-        public CleanUpProcessedOutboxMessagesHookListener(
+        public CleanUpProcessedOutboxMessages(
             IOutboxWorkerStorage storage,
             ICleanUpProcessedOutboxMessagesHookSettings settings) 
         {
@@ -17,12 +18,8 @@ namespace TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages
             _settings = settings;
         }
 
-        public async Task ListenAsync(IHookExecutionContext context, CancellationToken cancellationToken)
+        public async Task HandleAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
-            if(!_settings.IsEnabled) 
-            {
-                return;
-            }
 
             await _storage.RemoveProcessedMessages(_settings.BatchSize).ConfigureAwait(false);
 
