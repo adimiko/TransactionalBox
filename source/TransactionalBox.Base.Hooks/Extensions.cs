@@ -18,7 +18,7 @@ namespace TransactionalBox.Base.Hooks
 
             services.AddScoped<IHookListener<THook>, THookListener>();
 
-            services.AddSingleton<IHookListnerLogger, HookListnerLogger>();
+            services.AddSingleton(typeof(IHookListnerLogger<THook>), typeof(HookListnerLogger<THook>));
 
             services.AddHostedService<Startup>();
         }

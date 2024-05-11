@@ -4,19 +4,19 @@ using TransactionalBox.Base.Hooks.Internals.Loggers;
 
 namespace TransactionalBox.Base.Hooks.Internals
 {
-    internal sealed class HookListenersLauncher<T> : IInternalHookListenersLauncher
-        where T : Hook, new()
+    internal sealed class HookListenersLauncher<THook> : IInternalHookListenersLauncher
+        where THook : Hook, new()
     {
-        private readonly HookHub<T> _hookHub;
+        private readonly HookHub<THook> _hookHub;
 
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        private readonly IHookListnerLogger _logger;
+        private readonly IHookListnerLogger<THook> _logger;
 
         public HookListenersLauncher(
-            HookHub<T> hookHub,
+            HookHub<THook> hookHub,
             IServiceScopeFactory serviceScopeFactory,
-            IHookListnerLogger logger) 
+            IHookListnerLogger<THook> logger) 
         {
             _hookHub = hookHub;
             _serviceScopeFactory = serviceScopeFactory;
@@ -25,23 +25,32 @@ namespace TransactionalBox.Base.Hooks.Internals
 
         public async Task LaunchAsync(CancellationToken cancellationToken)
         {
-            await foreach(var lastOccurredUtc in _hookHub.ListenAsync(cancellationToken).ConfigureAwait(false)) 
+            while (!cancellationToken.IsCancellationRequested)
             {
-                //TODO exception handling
-                using (var scope = _serviceScopeFactory.CreateScope()) 
+                try
                 {
-                    var hookListner = scope.ServiceProvider.GetRequiredService<IHookListener<T>>();
+                    await foreach (var lastOccurredUtc in _hookHub.ListenAsync(cancellationToken).ConfigureAwait(false))
+                    {
+                        using (var scope = _serviceScopeFactory.CreateScope())
+                        {
+                            var hookListner = scope.ServiceProvider.GetRequiredService<IHookListener<THook>>();
 
-                    var id = Guid.NewGuid();
-                    var name = typeof(T).Name;
+                            var id = Guid.NewGuid();
+                            var name = typeof(THook).Name;
 
-                    var context = new HookExecutionContext(id, name, lastOccurredUtc);
+                            var context = new HookExecutionContext(id, name, lastOccurredUtc);
 
-                    _logger.Started(context.Name, context.Id);
+                            _logger.Started(context.Name, context.Id);
 
-                    await hookListner.ListenAsync(context, cancellationToken).ConfigureAwait(false);
+                            await hookListner.ListenAsync(context, cancellationToken).ConfigureAwait(false);
 
-                    _logger.Ended(context.Id);
+                            _logger.Ended(context.Id);
+                        }
+                    }
+                }
+                catch (Exception exception) 
+                {
+                    _logger.UnexpectedError(exception);
                 }
             }
         }
