@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Base.Hooks.Internals.Contexts;
+using TransactionalBox.Base.Hooks.Internals.Loggers;
 
 namespace TransactionalBox.Base.Hooks.Internals
 {
@@ -9,24 +11,37 @@ namespace TransactionalBox.Base.Hooks.Internals
 
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
+        private readonly IHookListnerLogger _logger;
+
         public HookListenersLauncher(
             HookHub<T> hookHub,
-            IServiceScopeFactory serviceScopeFactory) 
+            IServiceScopeFactory serviceScopeFactory,
+            IHookListnerLogger logger) 
         {
             _hookHub = hookHub;
             _serviceScopeFactory = serviceScopeFactory;
+            _logger = logger;
         }
 
         public async Task LaunchAsync(CancellationToken cancellationToken)
         {
-            await foreach(var lastHook in _hookHub.ListenAsync(cancellationToken).ConfigureAwait(false)) 
+            await foreach(var lastOccurredUtc in _hookHub.ListenAsync(cancellationToken).ConfigureAwait(false)) 
             {
                 //TODO exception handling
                 using (var scope = _serviceScopeFactory.CreateScope()) 
                 {
                     var hookListner = scope.ServiceProvider.GetRequiredService<IHookListener<T>>();
 
-                    await hookListner.ListenAsync(lastHook, cancellationToken).ConfigureAwait(false);
+                    var id = Guid.NewGuid();
+                    var name = typeof(T).Name;
+
+                    var context = new HookExecutionContext(id, name, lastOccurredUtc);
+
+                    _logger.Started(context.Name, context.Id);
+
+                    await hookListner.ListenAsync(context, cancellationToken).ConfigureAwait(false);
+
+                    _logger.Ended(context.Id);
                 }
             }
         }

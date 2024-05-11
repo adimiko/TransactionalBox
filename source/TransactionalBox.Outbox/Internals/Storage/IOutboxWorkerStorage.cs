@@ -4,11 +4,11 @@ namespace TransactionalBox.Outbox.Internals.Storage
 {
     internal interface IOutboxWorkerStorage
     {
-        Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout);
+        Task<int> MarkMessages(Guid hookId, string hookName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout);
 
-        Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(JobId jobId);
+        Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(Guid hookId);
 
-        Task MarkAsProcessed(JobId jobId, DateTime processedUtc);
+        Task MarkAsProcessed(Guid hookId, DateTime processedUtc);
 
         Task<int> RemoveProcessedMessages(int batchSize);
     }

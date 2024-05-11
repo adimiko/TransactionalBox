@@ -32,23 +32,23 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
             }
         }
 
-        public async Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(JobId jobId)
+        public async Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(Guid hookId)
         {
             IEnumerable<OutboxMessageStorage> messages;
 
             using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {
-                messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
+                messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == hookId.ToString());
             }
 
             return messages;
         }
 
-        public async Task MarkAsProcessed(JobId jobId, DateTime processedUtc)
+        public async Task MarkAsProcessed(Guid hookId, DateTime processedUtc)
         {
             using (await _keyedInMemoryLock.Acquire(nameof(InMemoryOutboxStorage)))
             {
-                var messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == jobId.ToString());
+                var messages = _outboxMessages.Where(x => !x.IsProcessed && x.JobId == hookId.ToString());
 
                 foreach (var message in messages)
                 {
@@ -59,7 +59,7 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
             }
         }
 
-        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
+        public async Task<int> MarkMessages(Guid hookId, string hookName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
@@ -75,7 +75,7 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
 
                 foreach (var message in messages)
                 {
-                    message.JobId = jobId.ToString();
+                    message.JobId = hookId.ToString();
                     message.LockUtc = nowUtc + lockTimeout;
                 }
             }

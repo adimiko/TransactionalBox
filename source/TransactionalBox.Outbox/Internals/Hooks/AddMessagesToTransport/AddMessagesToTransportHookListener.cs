@@ -43,15 +43,11 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
             _logger = logger;
         }
 
-        public async Task ListenAsync(DateTime lastHook, CancellationToken cancellationToken)
+        public async Task ListenAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
-            //TODO 
-            var jobId = new JobId(Guid.NewGuid().ToString());
-            var jobName = new JobName(nameof(AddMessagesToTransportHook));
-
             var batchSize = _settings.BatchSize;
 
-            var numberOfMessages = await _storage.MarkMessages(jobId, jobName, batchSize, _clock.TimeProvider, _settings.LockTimeout);
+            var numberOfMessages = await _storage.MarkMessages(context.Id, context.Name, batchSize, _clock.TimeProvider, _settings.LockTimeout).ConfigureAwait(false);
 
             //TODO check when numberofMessages is equal batchSize repeat
             if (numberOfMessages == 0) // IsBatchEmpty
@@ -59,13 +55,13 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
                 return;
             }
 
-            var messages = await _storage.GetMarkedMessages(jobId);
+            var messages = await _storage.GetMarkedMessages(context.Id);
 
-            var transportMessages = await _factory.Create(messages);
+            var transportMessages = await _factory.Create(messages).ConfigureAwait(false);
 
             foreach (var transportMessage in transportMessages)
             {
-                var transportResult = await _transport.Add(transportMessage.Topic, transportMessage.Payload);
+                var transportResult = await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
 
                 if (transportResult == TransportResult.Failure)
                 {
@@ -73,7 +69,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
                     return;
                 }
 
-                await _storage.MarkAsProcessed(jobId, _clock.UtcNow);
+                await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
             }
 
             await _hookCaller.CallAsync().ConfigureAwait(false);

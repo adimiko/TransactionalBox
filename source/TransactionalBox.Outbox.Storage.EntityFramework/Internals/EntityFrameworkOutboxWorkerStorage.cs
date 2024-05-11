@@ -3,6 +3,7 @@ using System.Data;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
 using TransactionalBox.Outbox.Internals.Storage;
+using System.Net;
 
 namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 {
@@ -24,11 +25,11 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
             _outboxMessages = dbContext.Set<OutboxMessageStorage>();
             _distributedLock = distributedLock;
         }
-        public async Task<int> MarkMessages(JobId jobId, JobName jobName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
+        public async Task<int> MarkMessages(Guid hookId, string hookName, int batchSize, TimeProvider timeProvider, TimeSpan lockTimeout)
         {
             int rowCount = 0;
 
-            await using (await _distributedLock.Acquire(jobName.ToString(), timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
+            await using (await _distributedLock.Acquire(hookName, timeProvider, lockTimeout, TimeSpan.FromMicroseconds(50)).ConfigureAwait(false))
             {
                 var nowUtc = timeProvider.GetUtcNow().UtcDateTime;
 
@@ -40,7 +41,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
                     .Take(batchSize)
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(x => x.LockUtc, nowUtc + lockTimeout)
-                        .SetProperty(x => x.JobId, jobId.ToString()));
+                        .SetProperty(x => x.JobId, hookId.ToString()));
 
                     await transaction.CommitAsync();
                 }
@@ -49,7 +50,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
             return rowCount;
         }
 
-        public async Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(JobId jobId)
+        public async Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(Guid hookId)
         {
             IEnumerable<OutboxMessageStorage> messages;
 
@@ -57,7 +58,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
             {
                 messages = await _outboxMessages
                     .AsNoTracking()
-                    .Where(x => !x.IsProcessed && x.JobId == jobId.ToString())
+                    .Where(x => !x.IsProcessed && x.JobId == hookId.ToString())
                     .ToListAsync();
 
                 await transaction.CommitAsync();
@@ -66,12 +67,12 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
             return messages;
         }
 
-        public async Task MarkAsProcessed(JobId jobId, DateTime processedUtc)
+        public async Task MarkAsProcessed(Guid hookId, DateTime processedUtc)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
             {
                 await _outboxMessages
-                    .Where(x => !x.IsProcessed && x.JobId == jobId.ToString())
+                    .Where(x => !x.IsProcessed && x.JobId == hookId.ToString())
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(x => x.IsProcessed, true)
                         .SetProperty(x => x.JobId, (string?)null)
