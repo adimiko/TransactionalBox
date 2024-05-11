@@ -6,7 +6,7 @@ using TransactionalBox.Outbox.Internals.Oubox;
 using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Settings;
-using TransactionalBox.Base.Hooks;
+using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories.Policies;

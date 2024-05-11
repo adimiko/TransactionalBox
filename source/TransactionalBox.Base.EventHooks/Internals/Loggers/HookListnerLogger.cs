@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace TransactionalBox.Base.Hooks.Internals.Loggers
+namespace TransactionalBox.Base.EventHooks.Internals.Loggers
 {
     internal sealed partial class HookListnerLogger<THook> : IHookListnerLogger<THook>
         where THook : EventHook, new()

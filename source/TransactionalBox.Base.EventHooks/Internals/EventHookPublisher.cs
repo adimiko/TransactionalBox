@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Base.Hooks.Internals
+namespace TransactionalBox.Base.EventHooks.Internals
 {
     internal sealed class EventHookPublisher : IEventHookPublisher
     {

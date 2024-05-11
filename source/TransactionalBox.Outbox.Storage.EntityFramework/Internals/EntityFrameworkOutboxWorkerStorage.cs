@@ -90,6 +90,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
             {
                 rowCount = await _outboxMessages
                     .Where(x => x.IsProcessed)
+                    .OrderBy(x => x.OccurredUtc)
                     .Take(batchSize)
                     .ExecuteDeleteAsync();
 

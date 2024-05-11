@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Base.Hooks.Internals
+﻿namespace TransactionalBox.Base.EventHooks.Internals
 {
     internal interface IInternalHookListenersLauncher
     {

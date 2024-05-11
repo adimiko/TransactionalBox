@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Base.Hooks.Internals.Contexts;
-using TransactionalBox.Base.Hooks.Internals.Loggers;
+using TransactionalBox.Base.EventHooks.Internals.Contexts;
+using TransactionalBox.Base.EventHooks.Internals.Loggers;
 
-namespace TransactionalBox.Base.Hooks.Internals
+namespace TransactionalBox.Base.EventHooks.Internals
 {
     internal sealed class HookListenersLauncher<THook> : IInternalHookListenersLauncher
         where THook : EventHook, new()

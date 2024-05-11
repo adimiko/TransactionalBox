@@ -1,5 +1,5 @@
 ﻿using TransactionalBox.Base.BackgroundService.Internals.Contexts.JobExecution.ValueObjects;
-using TransactionalBox.Base.Hooks;
+using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages;
