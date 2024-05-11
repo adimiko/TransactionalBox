@@ -60,7 +60,6 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
     {
-        settings.AddMessagesToInboxStorageSettings.NumberOfInstances = 1;
         settings.ProcessingMessagesFromInboxSettings.NumberOfInstances = 4;
         settings.CleanUpProcessedInboxMessagesSettings.NumberOfInstances = 0;
         settings.CleanUpExpiredIdempotencyKeysSettings.NumberOfInstances = 0;

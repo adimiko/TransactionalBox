@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
 using TransactionalBox.Inbox.Internals.Decompression;
@@ -9,7 +10,7 @@ using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Jobs
 {
-    internal sealed class AddMessagesToInboxStorage : Job
+    internal sealed class AddMessagesToInboxStorage : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -39,56 +40,68 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             _settings = settings;
         }
 
-        protected override async Task Execute(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
+            while (!stoppingToken.IsCancellationRequested) 
             {
-                using (var scope = _serviceProvider.CreateScope())
+                try
                 {
-                    var decompressedMessagesFromTransport = await _decompressionAlgorithm.Decompress(messagesFromTransport).ConfigureAwait(false);
-                    //TODO #27
-                    var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
-
-                    var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
-
-                    var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
-
-                    if (!existIdempotentInboxKeys.Any())
+                    await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
                     {
-                        //TODO result with duplicated messages and log id in inbox-Worker
-
-                        var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
-
-                        var result = await inboxStorage.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
-
-                        if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
+                        using (var scope = _serviceProvider.CreateScope())
                         {
-                            return;
+                            var decompressedMessagesFromTransport = await _decompressionAlgorithm.Decompress(messagesFromTransport).ConfigureAwait(false);
+                            //TODO #27
+                            var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
+
+                            var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
+
+                            var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
+
+                            if (!existIdempotentInboxKeys.Any())
+                            {
+                                //TODO result with duplicated messages and log id in inbox-Worker
+
+                                var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
+
+                                var result = await inboxStorage.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
+
+                                if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
+                                {
+                                    return;
+                                }
+                            }
+
+                            AddRangeToInboxStorageResult result1;
+                            //int numberOfInboxMessages = inboxMessages.Count(); maxRetry then throw error
+
+                            do
+                            {
+                                var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
+
+                                existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
+
+                                var existIds = existIdempotentInboxKeys.Select(x => x.Id);
+
+                                var duplicatedIds = inboxMessages.Where(x => existIds.Contains(x.Id)).Select(x => x.Id);
+
+                                //TODO log duplicatedIds as Warning
+
+                                var inboxMessagesToSave = inboxMessages.Where(x => existIds.Contains(x.Id));
+
+                                var idempotentMessagesToSave = inboxMessagesToSave.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
+
+                                result1 = await inboxStorage.AddRange(inboxMessages, idempotentMessagesToSave);
+                            }
+                            while (result1 == AddRangeToInboxStorageResult.Success);
                         }
                     }
-
-                    AddRangeToInboxStorageResult result1;
-                    //int numberOfInboxMessages = inboxMessages.Count(); maxRetry then throw error
-
-                    do
-                    {
-                        var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
-
-                        existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
-
-                        var existIds = existIdempotentInboxKeys.Select(x => x.Id);
-
-                        var duplicatedIds = inboxMessages.Where(x => existIds.Contains(x.Id)).Select(x => x.Id);
-
-                        //TODO log duplicatedIds as Warning
-
-                        var inboxMessagesToSave = inboxMessages.Where(x => existIds.Contains(x.Id));
-
-                        var idempotentMessagesToSave = inboxMessagesToSave.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
-
-                        result1 = await inboxStorage.AddRange(inboxMessages, idempotentMessagesToSave);
-                    }
-                    while (result1 == AddRangeToInboxStorageResult.Success);
+                }
+                catch (Exception)
+                {
+                    //TODO
+                    await Task.Delay(500, stoppingToken);
+                    //TODO logger
                 }
             }
         }

@@ -108,7 +108,6 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings.ProcessingMessagesFromInboxSettings);
 
             services.AddSingleton<IAddMessagesToInboxStorageJobSettings>(settings.AddMessagesToInboxStorageSettings);
-            services.AddSingleton<IAddMessagesToInboxStorageLauncherSettings>(settings.AddMessagesToInboxStorageSettings);
 
             services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
             services.AddSingleton<ICleanUpProcessedInboxMessagesLauncherSettings>(settings.CleanUpProcessedInboxMessagesSettings);
@@ -117,6 +116,7 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<ICleanUpExpiredIdempotencyKeysLauncherSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
 
             // Jobs
+            services.AddHostedService<AddMessagesToInboxStorage>();
             services.AddScoped<ProcessMessageFromInbox>();
             services.AddScoped<AddMessagesToInboxStorage>();
             services.AddScoped<CleanUpProcessedInboxMessages>();
