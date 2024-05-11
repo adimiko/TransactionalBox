@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using TransactionalBox.Base.BackgroundService.Internals;
+using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Inbox.Internals.Decompression;
+using TransactionalBox.Inbox.Internals.Hooks;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
@@ -24,13 +26,16 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
         private readonly IAddMessagesToInboxStorageJobSettings _settings;
 
+        private readonly IEventHookPublisher _eventHookPublisher;
+
         public AddMessagesToInboxStorage(
             IServiceProvider serviceProvider,
             IDecompressionAlgorithm decompressionAlgorithm,
             IInboxWorkerTransport inboxWorkerTransport,
             ISystemClock systemClock,
             ITopicsProvider topicsProvider,
-            IAddMessagesToInboxStorageJobSettings settings)
+            IAddMessagesToInboxStorageJobSettings settings,
+            IEventHookPublisher eventHookPublisher)
         {
             _serviceProvider = serviceProvider;
             _decompressionAlgorithm = decompressionAlgorithm;
@@ -38,6 +43,7 @@ namespace TransactionalBox.Inbox.Internals.Jobs
             _systemClock = systemClock;
             _topicsProvider = topicsProvider;
             _settings = settings;
+            _eventHookPublisher = eventHookPublisher;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -68,6 +74,8 @@ namespace TransactionalBox.Inbox.Internals.Jobs
 
                                 if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
                                 {
+                                    await _eventHookPublisher.PublishAsync<AddedMessagesToInboxEventHook>().ConfigureAwait(false);
+
                                     return;
                                 }
                             }
@@ -94,6 +102,8 @@ namespace TransactionalBox.Inbox.Internals.Jobs
                                 result1 = await inboxStorage.AddRange(inboxMessages, idempotentMessagesToSave);
                             }
                             while (result1 == AddRangeToInboxStorageResult.Success);
+
+                            await _eventHookPublisher.PublishAsync<AddedMessagesToInboxEventHook>().ConfigureAwait(false);
                         }
                     }
                 }

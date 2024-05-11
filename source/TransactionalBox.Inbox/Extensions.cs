@@ -12,6 +12,8 @@ using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Settings;
 using TransactionalBox.Inbox.Internals.Launchers;
+using TransactionalBox.Inbox.Internals.Hooks;
+using TransactionalBox.Base.EventHooks;
 
 namespace TransactionalBox.Inbox
 {
@@ -104,22 +106,23 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<IInboxContext, InboxContext>();
 
             // Job Settings
-            services.AddSingleton<IProcessingMessagesFromInboxLauncherSettings>(settings.ProcessingMessagesFromInboxSettings);
-            services.AddSingleton<IProcessMessageFromInboxJobSettings>(settings.ProcessingMessagesFromInboxSettings);
-
             services.AddSingleton<IAddMessagesToInboxStorageJobSettings>(settings.AddMessagesToInboxStorageSettings);
 
             services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
-            services.AddSingleton<ICleanUpProcessedInboxMessagesLauncherSettings>(settings.CleanUpProcessedInboxMessagesSettings);
 
             services.AddSingleton<ICleanUpExpiredIdempotencyKeysJobSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
             services.AddSingleton<ICleanUpExpiredIdempotencyKeysLauncherSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
 
             // Jobs
             services.AddHostedService<AddMessagesToInboxStorage>();
-            services.AddScoped<ProcessMessageFromInbox>();
-            services.AddScoped<AddMessagesToInboxStorage>();
-            services.AddScoped<CleanUpProcessedInboxMessages>();
+
+            services.AddEventHookHandler<ProcessMessageFromInbox, AddedMessagesToInboxEventHook>();
+
+            if (settings.CleanUpProcessedInboxMessagesSettings.IsEnabled)
+            {
+                services.AddEventHookHandler<CleanUpProcessedInboxMessages, ProcessedMessageFromInboxEventHook>();
+            }
+            
             services.AddScoped<CleanUpExpiredIdempotencyKeys>();
         }
     }

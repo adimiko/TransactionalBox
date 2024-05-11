@@ -3,7 +3,5 @@
     internal interface ICleanUpProcessedOutboxMessagesHookSettings
     {
         int BatchSize { get; }
-
-        bool IsEnabled { get; }
     }
 }

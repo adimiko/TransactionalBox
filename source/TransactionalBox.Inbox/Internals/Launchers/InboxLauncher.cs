@@ -7,13 +7,9 @@ namespace TransactionalBox.Inbox.Internals.Launchers
     {
         public InboxLauncher(
             IServiceProvider serviceProvider,
-            IProcessingMessagesFromInboxLauncherSettings processMessageFromInboxSettings,
-            ICleanUpProcessedInboxMessagesLauncherSettings cleanUpProcessedInboxMessagesLauncherSettings,
             ICleanUpExpiredIdempotencyKeysLauncherSettings cleanUpExpiredIdempotencyKeysLauncherSettings)
             : base(serviceProvider)
         {
-            Launch<ProcessMessageFromInbox>(processMessageFromInboxSettings.NumberOfInstances);
-            Launch<CleanUpProcessedInboxMessages>(cleanUpProcessedInboxMessagesLauncherSettings.NumberOfInstances);
             Launch<CleanUpExpiredIdempotencyKeys>(cleanUpExpiredIdempotencyKeysLauncherSettings.NumberOfInstances);
         }
     }
