@@ -1,17 +1,18 @@
 ﻿using TransactionalBox.Base.EventHooks;
+using TransactionalBox.Inbox.Internals.Hooks.Events;
 using TransactionalBox.Inbox.Internals.Storage;
 
-namespace TransactionalBox.Inbox.Internals.Hooks
+namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox
 {
-    internal sealed class CleanUpProcessedInboxMessages : IEventHookHandler<ProcessedMessageFromInboxEventHook>
+    internal sealed class CleanUpInbox : IEventHookHandler<ProcessedMessageFromInbox>
     {
         private readonly IInboxWorkerStorage _storage;
 
-        private readonly ICleanUpProcessedInboxMessagesJobSettings _settings;
+        private readonly ICleanUpInboxSettings _settings;
 
-        public CleanUpProcessedInboxMessages(
+        public CleanUpInbox(
             IInboxWorkerStorage storage,
-            ICleanUpProcessedInboxMessagesJobSettings settings)
+            ICleanUpInboxSettings settings)
         {
             _storage = storage;
             _settings = settings;

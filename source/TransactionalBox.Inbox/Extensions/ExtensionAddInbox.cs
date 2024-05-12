@@ -9,9 +9,12 @@ using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Settings;
-using TransactionalBox.Inbox.Internals.Hooks;
 using TransactionalBox.Base.EventHooks;
-using TransactionalBox.Inbox.Internals.BackgroundProcesses;
+using TransactionalBox.Inbox.Internals.Hooks.Events;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys;
 
 namespace TransactionalBox.Inbox
 {
@@ -99,21 +102,21 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<IInboxContext, InboxContext>();
 
             // Job Settings
-            services.AddSingleton<IAddMessagesToInboxStorageJobSettings>(settings.AddMessagesToInboxStorageSettings);
+            services.AddSingleton<IAddMessagesToInboxSettings>(settings.AddMessagesToInboxStorageSettings);
 
-            services.AddSingleton<ICleanUpProcessedInboxMessagesJobSettings>(settings.CleanUpProcessedInboxMessagesSettings);
+            services.AddSingleton<ICleanUpInboxSettings>(settings.CleanUpProcessedInboxMessagesSettings);
 
-            services.AddSingleton<ICleanUpExpiredIdempotencyKeysJobSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
+            services.AddSingleton<ICleanUpIdempotencyKeysSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
 
             // Jobs
             services.AddHostedService<AddMessagesToInbox>();
-            services.AddHostedService<CleanUpExpiredIdempotencyKeys>();
+            services.AddHostedService<CleanUpIdempotencyKeys>();
 
-            services.AddEventHookHandler<ProcessMessageFromInbox, AddedMessagesToInboxEventHook>();
+            services.AddEventHookHandler<ProcessMessage, AddedMessagesToInbox>();
 
             if (settings.CleanUpProcessedInboxMessagesSettings.IsEnabled)
             {
-                services.AddEventHookHandler<CleanUpProcessedInboxMessages, ProcessedMessageFromInboxEventHook>();
+                services.AddEventHookHandler<CleanUpInbox, ProcessedMessageFromInbox>();
             }
            
         }

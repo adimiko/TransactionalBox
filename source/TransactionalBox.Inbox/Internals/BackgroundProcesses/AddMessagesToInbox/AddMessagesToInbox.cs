@@ -3,13 +3,13 @@ using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Inbox.Internals.Decompression;
-using TransactionalBox.Inbox.Internals.Hooks;
+using TransactionalBox.Inbox.Internals.Hooks.Events;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Internals;
 
-namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
+namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox
 {
     internal sealed class AddMessagesToInbox : BackgroundService
     {
@@ -23,7 +23,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
 
         private readonly ITopicsProvider _topicsProvider;
 
-        private readonly IAddMessagesToInboxStorageJobSettings _settings;
+        private readonly IAddMessagesToInboxSettings _settings;
 
         private readonly IEventHookPublisher _eventHookPublisher;
 
@@ -33,7 +33,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
             IInboxWorkerTransport inboxWorkerTransport,
             ISystemClock systemClock,
             ITopicsProvider topicsProvider,
-            IAddMessagesToInboxStorageJobSettings settings,
+            IAddMessagesToInboxSettings settings,
             IEventHookPublisher eventHookPublisher)
         {
             _serviceProvider = serviceProvider;
@@ -68,7 +68,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
 
                             if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
                             {
-                                await _eventHookPublisher.PublishAsync<AddedMessagesToInboxEventHook>().ConfigureAwait(false);
+                                await _eventHookPublisher.PublishAsync<AddedMessagesToInbox>().ConfigureAwait(false);
 
                                 continue;
                             }
@@ -94,7 +94,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
                             while (result == AddRangeToInboxStorageResult.Failure);
                             //int numberOfInboxMessages = inboxMessages.Count(); maxRetry then throw error
 
-                            await _eventHookPublisher.PublishAsync<AddedMessagesToInboxEventHook>().ConfigureAwait(false);
+                            await _eventHookPublisher.PublishAsync<AddedMessagesToInbox>().ConfigureAwait(false);
                         }
                     }
                 }

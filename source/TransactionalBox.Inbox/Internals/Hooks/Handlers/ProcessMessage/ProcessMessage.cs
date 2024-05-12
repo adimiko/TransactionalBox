@@ -5,12 +5,13 @@ using TransactionalBox.Inbox.Contexts;
 using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Deserialization;
+using TransactionalBox.Inbox.Internals.Hooks.Events;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 
-namespace TransactionalBox.Inbox.Internals.Hooks
+namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
 {
-    internal sealed class ProcessMessageFromInbox : IEventHookHandler<AddedMessagesToInboxEventHook>
+    internal sealed class ProcessMessage : IEventHookHandler<AddedMessagesToInbox>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -26,7 +27,7 @@ namespace TransactionalBox.Inbox.Internals.Hooks
 
         private readonly IEventHookPublisher _eventHookPublisher;
 
-        public ProcessMessageFromInbox(
+        public ProcessMessage(
             IServiceProvider serviceProvider,
             ICompiledInboxHandlers compiledInboxHandlers,
             IInboxStorage inboxStorage,
@@ -58,7 +59,7 @@ namespace TransactionalBox.Inbox.Internals.Hooks
 
                 if (inboxMessage is null)
                 {
-                    await _eventHookPublisher.PublishAsync<ProcessedMessageFromInboxEventHook>().ConfigureAwait(false);
+                    await _eventHookPublisher.PublishAsync<ProcessedMessageFromInbox>().ConfigureAwait(false);
                     return;
                 }
 
@@ -95,7 +96,7 @@ namespace TransactionalBox.Inbox.Internals.Hooks
             while (inboxMessage is not null);
             //TODO now always when end because this hooks can long running
 
-            await _eventHookPublisher.PublishAsync<ProcessedMessageFromInboxEventHook>().ConfigureAwait(false);
+            await _eventHookPublisher.PublishAsync<ProcessedMessageFromInbox>().ConfigureAwait(false);
             //TODO create handler
         }
     }

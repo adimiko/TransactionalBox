@@ -5,11 +5,11 @@ namespace TransactionalBox.Inbox.Settings
 {
     public sealed class InboxSettings
     {
-        public AddMessagesToInboxStorageSettings AddMessagesToInboxStorageSettings { get; } = new AddMessagesToInboxStorageSettings();
+        public AddMessagesToInboxSettings AddMessagesToInboxStorageSettings { get; } = new AddMessagesToInboxSettings();
 
-        public CleanUpProcessedInboxMessagesSettings CleanUpProcessedInboxMessagesSettings { get; } = new CleanUpProcessedInboxMessagesSettings();
+        public CleanUpInboxSettings CleanUpProcessedInboxMessagesSettings { get; } = new CleanUpInboxSettings();
 
-        public CleanUpExpiredIdempotencyKeysSettings CleanUpExpiredIdempotencyKeysSettings { get; } = new CleanUpExpiredIdempotencyKeysSettings();
+        public CleanUpIdempotencyKeysSettings CleanUpExpiredIdempotencyKeysSettings { get; } = new CleanUpIdempotencyKeysSettings();
 
         public Action<IInboxDeserializationConfigurator> ConfigureDeserialization { get; set; } = x => x.UseSystemTextJson();
 

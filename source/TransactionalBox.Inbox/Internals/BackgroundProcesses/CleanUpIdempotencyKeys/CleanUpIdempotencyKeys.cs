@@ -3,20 +3,20 @@ using Microsoft.Extensions.Hosting;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 
-namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
+namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys
 {
-    internal sealed class CleanUpExpiredIdempotencyKeys : BackgroundService
+    internal sealed class CleanUpIdempotencyKeys : BackgroundService
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private readonly ISystemClock _systemClock;
 
-        private readonly ICleanUpExpiredIdempotencyKeysJobSettings _settings;
+        private readonly ICleanUpIdempotencyKeysSettings _settings;
 
-        public CleanUpExpiredIdempotencyKeys(
+        public CleanUpIdempotencyKeys(
             IServiceScopeFactory serviceScopeFactory,
             ISystemClock systemClock,
-            ICleanUpExpiredIdempotencyKeysJobSettings settings)
+            ICleanUpIdempotencyKeysSettings settings)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _systemClock = systemClock;
@@ -28,7 +28,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
             //TODO to refactor
             var periodicTimer = new PeriodicTimer(_settings.Period, _systemClock.TimeProvider);
 
-            while (!stoppingToken.IsCancellationRequested) 
+            while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
