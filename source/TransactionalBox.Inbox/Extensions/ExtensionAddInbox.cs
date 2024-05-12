@@ -102,11 +102,11 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<IInboxContext, InboxContext>();
 
             // Job Settings
-            services.AddSingleton<IAddMessagesToInboxSettings>(settings.AddMessagesToInboxStorageSettings);
+            services.AddSingleton<IAddMessagesToInboxSettings>(settings.AddMessagesToInboxSettings);
 
-            services.AddSingleton<ICleanUpInboxSettings>(settings.CleanUpProcessedInboxMessagesSettings);
+            services.AddSingleton<ICleanUpInboxSettings>(settings.CleanUpInboxSettings);
 
-            services.AddSingleton<ICleanUpIdempotencyKeysSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
+            services.AddSingleton<ICleanUpIdempotencyKeysSettings>(settings.CleanUpIdempotencyKeysSettings);
 
             // Jobs
             services.AddHostedService<AddMessagesToInbox>();
@@ -114,7 +114,7 @@ namespace TransactionalBox.Inbox
 
             services.AddEventHookHandler<ProcessMessage, AddedMessagesToInbox>();
 
-            if (settings.CleanUpProcessedInboxMessagesSettings.IsEnabled)
+            if (settings.CleanUpInboxSettings.IsEnabled)
             {
                 services.AddEventHookHandler<CleanUpInbox, ProcessedMessageFromInbox>();
             }

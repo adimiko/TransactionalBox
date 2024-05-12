@@ -7,7 +7,7 @@ namespace TransactionalBox.Outbox.Settings
     {
         public AddMessagesToTransportSettings AddMessagesToTransportSettings { get; } = new AddMessagesToTransportSettings();
 
-        public CleanUpOutboxSettings CleanUpProcessedOutboxMessagesSettings { get; } = new CleanUpOutboxSettings();
+        public CleanUpOutboxSettings CleanUpOutboxSettings { get; } = new CleanUpOutboxSettings();
 
         public Action<IOutboxSerializationConfigurator> ConfigureSerialization { get; set; } = x => x.UseSystemTextJson();
 

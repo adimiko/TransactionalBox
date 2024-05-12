@@ -56,7 +56,7 @@ builder.Services.AddTransactionalBox(x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
         {
-            settings.CleanUpProcessedInboxMessagesSettings.IsEnabled = false;
+            settings.CleanUpInboxSettings.IsEnabled = false;
         });
 },
 settings => settings.ServiceId = "ServiceWithInbox");
