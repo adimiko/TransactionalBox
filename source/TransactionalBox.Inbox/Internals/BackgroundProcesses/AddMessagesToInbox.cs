@@ -11,7 +11,7 @@ using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
 {
-    internal sealed class AddMessagesToInboxStorage : BackgroundService
+    internal sealed class AddMessagesToInbox : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -27,7 +27,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
 
         private readonly IEventHookPublisher _eventHookPublisher;
 
-        public AddMessagesToInboxStorage(
+        public AddMessagesToInbox(
             IServiceProvider serviceProvider,
             IDecompressionAlgorithm decompressionAlgorithm,
             IInboxWorkerTransport inboxWorkerTransport,
@@ -51,6 +51,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
             {
                 try
                 {
+                    //TODO log per pentla
                     await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
                     {
                         using (var scope = _serviceProvider.CreateScope())
@@ -59,34 +60,24 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
                             //TODO #27
                             var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
 
-                            var inboxStorage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
+                            var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
 
-                            var existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
+                            var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
 
-                            if (!existIdempotentInboxKeys.Any())
+                            var result = await storage.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
+
+                            if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
                             {
-                                //TODO result with duplicated messages and log id in inbox-Worker
+                                await _eventHookPublisher.PublishAsync<AddedMessagesToInboxEventHook>().ConfigureAwait(false);
 
-                                var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
-
-                                var result = await inboxStorage.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
-
-                                if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
-                                {
-                                    await _eventHookPublisher.PublishAsync<AddedMessagesToInboxEventHook>().ConfigureAwait(false);
-
-                                    return;
-                                }
+                                continue;
                             }
-
-                            AddRangeToInboxStorageResult result1;
-                            //int numberOfInboxMessages = inboxMessages.Count(); maxRetry then throw error
 
                             do
                             {
                                 var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
 
-                                existIdempotentInboxKeys = await inboxStorage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
+                                var existIdempotentInboxKeys = await storage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
 
                                 var existIds = existIdempotentInboxKeys.Select(x => x.Id);
 
@@ -98,9 +89,10 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses
 
                                 var idempotentMessagesToSave = inboxMessagesToSave.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
 
-                                result1 = await inboxStorage.AddRange(inboxMessages, idempotentMessagesToSave);
+                                result = await storage.AddRange(inboxMessages, idempotentMessagesToSave);
                             }
-                            while (result1 == AddRangeToInboxStorageResult.Success);
+                            while (result == AddRangeToInboxStorageResult.Failure);
+                            //int numberOfInboxMessages = inboxMessages.Count(); maxRetry then throw error
 
                             await _eventHookPublisher.PublishAsync<AddedMessagesToInboxEventHook>().ConfigureAwait(false);
                         }
