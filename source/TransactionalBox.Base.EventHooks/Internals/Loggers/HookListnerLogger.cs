@@ -9,13 +9,16 @@ namespace TransactionalBox.Base.EventHooks.Internals.Loggers
 
         public HookListnerLogger(ILogger<THook> logger) => _logger = logger;
 
-        [LoggerMessage(0, LogLevel.Information, "Started '{eventHookHandlerName}' ('{hookId}')", SkipEnabledCheck = true)]
+        [LoggerMessage(0, LogLevel.Information, "{eventHookHandlerName} '{hookId}' started", SkipEnabledCheck = true)]
         public partial void Started(string eventHookHandlerName, Guid hookId);
 
-        [LoggerMessage(0, LogLevel.Information, "Ended '{hookId}'", SkipEnabledCheck = true)]
-        public partial void Ended(Guid hookId);
+        [LoggerMessage(0, LogLevel.Information, "{eventHookHandlerName} '{hookId}' ended", SkipEnabledCheck = true)]
+        public partial void Ended(string eventHookHandlerName, Guid hookId);
+
+        [LoggerMessage(0, LogLevel.Error, "{eventHookHandlerName} '{hookId}' (Attempt: {attempt}) unexpected exception", SkipEnabledCheck = true)]
+        public partial void UnexpectedException(string eventHookHandlerName, Guid hookId, long attempt, Exception exception);
 
         [LoggerMessage(0, LogLevel.Error, "Unexpected exception", SkipEnabledCheck = true)]
-        public partial void UnexpectedError(Exception exception);
+        public partial void UnexpectedException(Exception exception);
     }
 }
