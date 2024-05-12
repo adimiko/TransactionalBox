@@ -50,19 +50,9 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
             if (context.IsError)
             {
-                var msDelay = context.Attempt * 100;
-
-                if (msDelay > 5000) //TODO max delay
-                {
-                    msDelay = 5000;
-                }
-                //TODO log delay etc
-
-                await Task.Delay(TimeSpan.FromMilliseconds(msDelay), _clock.TimeProvider, cancellationToken).ConfigureAwait(false);
                 batchSize = ErrorBatchSize;
             }
 
-            
             var firstIteration = true;
             var numberOfMessages = 0;
 

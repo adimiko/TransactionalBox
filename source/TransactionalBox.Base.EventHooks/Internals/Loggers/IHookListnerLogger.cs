@@ -7,7 +7,7 @@
 
         void Ended(string eventHookHandlerName, Guid hookId);
 
-        void UnexpectedException(string eventHookHandlerName, Guid hookId, long attempt, Exception exception);
+        void UnexpectedException(string eventHookHandlerName, Guid hookId, long attempt, long msDelay, Exception exception);
 
         void UnexpectedException(Exception exception);
     }
