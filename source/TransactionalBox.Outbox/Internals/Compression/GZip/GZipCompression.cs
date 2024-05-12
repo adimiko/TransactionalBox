@@ -4,7 +4,7 @@ using TransactionalBox.Outbox.Internals.Compression;
 
 namespace TransactionalBox.Outbox.Internals.Compression.GZip
 {
-    internal sealed class GZipCompression : ICompressionAlgorithm
+    internal sealed class GZipCompression : ICompression
     {
         private readonly IGZipCompressionSettings _settings;
 

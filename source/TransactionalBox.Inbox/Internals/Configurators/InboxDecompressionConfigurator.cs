@@ -3,11 +3,11 @@ using TransactionalBox.Inbox.Configurators;
 
 namespace TransactionalBox.Inbox.Internals.Configurators
 {
-    internal sealed class InboxDecompressionAlgorithmConfigurator : IInboxDecompressionAlgorithmConfigurator
+    internal sealed class InboxDecompressionConfigurator : IInboxDecompressionConfigurator
     {
         public IServiceCollection Services { get; }
 
-        internal InboxDecompressionAlgorithmConfigurator(IServiceCollection services)
+        internal InboxDecompressionConfigurator(IServiceCollection services)
         {
             Services = services;
         }

@@ -8,15 +8,15 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 {
     internal sealed class PayloadIsLargerThanOptimalSizePolicy : IPayloadCreationPolicy
     {
-        private readonly ICompressionAlgorithm _compressionAlgorithm;
+        private readonly ICompression _compression;
 
         private readonly ITransportMessageSizeSettings _settings;
 
         public PayloadIsLargerThanOptimalSizePolicy(
-            ICompressionAlgorithm compressionAlgorithm,
+            ICompression compression,
             ITransportMessageSizeSettings settings)
         {
-            _compressionAlgorithm = compressionAlgorithm;
+            _compression = compression;
             _settings = settings;
         }
 
@@ -44,7 +44,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
             {
                 var payload = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(chunk)); //TODO TransportSerializer with StringBuilder
 
-                var cpayload = await _compressionAlgorithm.Compress(payload);
+                var cpayload = await _compression.Compress(payload);
 
                 payloads.Add(cpayload);
             }

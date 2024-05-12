@@ -10,23 +10,23 @@ namespace TransactionalBox.Outbox
     public static class ExtensionUseBrotliCompression
     {
         public static void UseBrotliCompression(
-            this IOutboxCompressionAlgorithmConfigurator configurator,
-            Action<BrotliCompressionSettings>? configureCompressionSettings = null)
+            this IOutboxCompressionConfigurator configurator,
+            Action<BrotliCompressionSettings>? settingsConfiguration = null)
         {
             var services = configurator.Services;
 
             var settings = new BrotliCompressionSettings();
 
-            if (configureCompressionSettings is not null)
+            if (settingsConfiguration is not null)
             {
-                configureCompressionSettings(settings);
+                settingsConfiguration(settings);
             }
 
             services.AddSingleton(new RecyclableMemoryStreamManager());
 
             services.AddSingleton<IBrotliCompressionSettings>(settings);
 
-            services.AddSingleton<ICompressionAlgorithm, BrotliCompression>();
+            services.AddSingleton<ICompression, BrotliCompression>();
         }
     }
 }

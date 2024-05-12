@@ -8,11 +8,11 @@ namespace TransactionalBox.Inbox.Internals
     internal static class Extensions
     {
         internal static void UseNoDecompression(
-            this IInboxDecompressionAlgorithmConfigurator configurator)
+            this IInboxDecompressionConfigurator configurator)
         {
             var services = configurator.Services;
 
-            services.AddSingleton<IDecompressionAlgorithm, NoDecompression>();
+            services.AddSingleton<IDecompression, NoDecompression>();
         }
 
         internal static void UseSystemTextJson(this IInboxDeserializationConfigurator configurator)

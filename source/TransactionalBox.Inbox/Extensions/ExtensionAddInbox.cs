@@ -67,7 +67,7 @@ namespace TransactionalBox.Inbox
             settings.Configure(serialization);
 
             // Decompression
-            var decompressionConfigurator = new InboxDecompressionAlgorithmConfigurator(services);
+            var decompressionConfigurator = new InboxDecompressionConfigurator(services);
 
             settings.Configure(decompressionConfigurator);
 

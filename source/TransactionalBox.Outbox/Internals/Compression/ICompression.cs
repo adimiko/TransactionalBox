@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Outbox.Internals.Compression
 {
-    internal interface ICompressionAlgorithm
+    internal interface ICompression
     {
         Task<byte[]> Compress(byte[] data);
     }

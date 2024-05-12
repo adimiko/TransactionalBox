@@ -57,9 +57,9 @@ namespace TransactionalBox.Outbox
                 transport.UseInMemoryTransport();
             }
 
-            var compressionAlgorithm = new OutboxCompressionAlgorithmConfigurator(services);
+            var compression = new OutboxCompressionConfigurator(services);
 
-            settings.Configure(compressionAlgorithm);
+            settings.Configure(compression);
 
             services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
             services.AddSingleton<TransportMessageFactory>();
