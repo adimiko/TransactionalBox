@@ -21,4 +21,8 @@
 	<InternalsVisibleTo Include="TransactionalBox.Sample.OutboxWithWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" />
+  </ItemGroup>
 </Project>

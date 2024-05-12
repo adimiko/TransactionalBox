@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
 
-namespace TransactionalBox.Outbox.Compression.Brotli.Internals
+namespace TransactionalBox.Outbox.Internals.Compression.Brotli
 {
     internal interface IBrotliCompressionSettings
     {

@@ -1,7 +1,7 @@
 ﻿using System.IO.Compression;
-using TransactionalBox.Outbox.Compression.Brotli.Internals;
+using TransactionalBox.Outbox.Internals.Compression.Brotli;
 
-namespace TransactionalBox.Outbox.Compression.Brotli.Settings
+namespace TransactionalBox.Outbox.Settings.Compression
 {
     public sealed class BrotliCompressionSettings : IBrotliCompressionSettings
     {
