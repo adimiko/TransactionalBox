@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Outbox.Configurators
 {
-    public interface IOutboxCompressionAlgorithmConfigurator
+    public interface IOutboxCompressionConfigurator
     {
         internal IServiceCollection Services { get; }
     }

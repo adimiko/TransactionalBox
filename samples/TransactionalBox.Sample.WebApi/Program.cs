@@ -49,7 +49,7 @@ x =>
         settings =>
      {
          settings.AddMessagesToTransportSettings.LockTimeout = TimeSpan.FromSeconds(1);
-         settings.ConfigureCompressionAlgorithm = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
+         settings.ConfigureCompression = x => x.UseBrotliCompression(x => x.CompressionLevel = CompressionLevel.Fastest);
      });
 
     x.AddInbox(

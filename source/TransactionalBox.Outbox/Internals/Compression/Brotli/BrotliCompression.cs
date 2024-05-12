@@ -3,7 +3,7 @@ using System.IO.Compression;
 
 namespace TransactionalBox.Outbox.Internals.Compression.Brotli
 {
-    internal sealed class BrotliCompression : ICompressionAlgorithm
+    internal sealed class BrotliCompression : ICompression
     {
         private readonly IBrotliCompressionSettings _settings;
 

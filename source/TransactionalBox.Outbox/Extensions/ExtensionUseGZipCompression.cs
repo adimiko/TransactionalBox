@@ -10,7 +10,7 @@ namespace TransactionalBox.Outbox
     public static class ExtensionUseGZipCompression
     {
         public static void UseGZipCompression(
-            this IOutboxCompressionAlgorithmConfigurator configurator,
+            this IOutboxCompressionConfigurator configurator,
             Action<GZipCompressionSettings>? configureSettings = null)
         {
             var services = configurator.Services;
@@ -26,7 +26,7 @@ namespace TransactionalBox.Outbox
 
             services.AddSingleton<IGZipCompressionSettings>(settings);
 
-            services.AddSingleton<ICompressionAlgorithm, GZipCompression>();
+            services.AddSingleton<ICompression, GZipCompression>();
         }
     }
 }

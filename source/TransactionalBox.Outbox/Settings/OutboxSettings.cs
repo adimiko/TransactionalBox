@@ -11,7 +11,7 @@ namespace TransactionalBox.Outbox.Settings
 
         public Action<IOutboxSerializationConfigurator> ConfigureSerialization { get; set; } = x => x.UseSystemTextJson();
 
-        public Action<IOutboxCompressionAlgorithmConfigurator> ConfigureCompressionAlgorithm { get; set; } = x => x.UseNoCompression();
+        public Action<IOutboxCompressionConfigurator> ConfigureCompression { get; set; } = x => x.UseNoCompression();
 
         internal OutboxSettings() { }
 
@@ -20,9 +20,9 @@ namespace TransactionalBox.Outbox.Settings
             ConfigureSerialization(serializationConfigurator);
         }
 
-        internal void Configure(IOutboxCompressionAlgorithmConfigurator compressionAlgorithmConfigurator)
+        internal void Configure(IOutboxCompressionConfigurator compressionConfigurator)
         {
-            ConfigureCompressionAlgorithm(compressionAlgorithmConfigurator);
+            ConfigureCompression(compressionConfigurator);
         }
     }
 }

@@ -3,11 +3,11 @@ using TransactionalBox.Outbox.Configurators;
 
 namespace TransactionalBox.Outbox.Internals.Configurators
 {
-    internal sealed class OutboxCompressionAlgorithmConfigurator : IOutboxCompressionAlgorithmConfigurator
+    internal sealed class OutboxCompressionConfigurator : IOutboxCompressionConfigurator
     {
         public IServiceCollection Services { get; }
 
-        internal OutboxCompressionAlgorithmConfigurator(IServiceCollection services)
+        internal OutboxCompressionConfigurator(IServiceCollection services)
         {
             Services = services;
         }
