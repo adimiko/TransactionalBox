@@ -51,6 +51,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
             if (context.IsError)
             {
                 batchSize = ErrorBatchSize;
+                //TODO logg changed batchSize
             }
 
             var firstIteration = true;
@@ -61,6 +62,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                 if (!firstIteration)
                 {
                     batchSize = _settings.BatchSize;
+                    //TODO logg changed batchSize
                 }
 
                 numberOfMessages = await _storage.MarkMessages(context.Id, context.Name, batchSize, _clock.TimeProvider, _settings.LockTimeout).ConfigureAwait(false);
@@ -70,21 +72,13 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                     return;
                 }
 
-                var messages = await _storage.GetMarkedMessages(context.Id);
+                var messages = await _storage.GetMarkedMessages(context.Id).ConfigureAwait(false);
 
                 var transportMessages = await _factory.Create(messages).ConfigureAwait(false);
 
                 foreach (var transportMessage in transportMessages)
                 {
-                    var transportResult = await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
-
-                    if (transportResult == TransportResult.Failure)
-                    {
-                        //TODO retry
-                        //TODO exception in transport
-                        _logger.FailedToAddMessagesToTransport();
-                        return;
-                    }
+                    await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
 
                     await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
                 }

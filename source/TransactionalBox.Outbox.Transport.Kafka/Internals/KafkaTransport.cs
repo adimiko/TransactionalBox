@@ -14,20 +14,19 @@ namespace TransactionalBox.Outbox.Transport.Kafka.Internals
             _configFactory = configFactory;
         }
 
-        public async Task<TransportResult> Add(string topic, byte[] payload)
+        public async Task Add(string topic, byte[] payload)
         {
             var config = _configFactory.Create();
 
+            //TODO create one producer and hold connection ?
             using (var producer = new ProducerBuilder<Null, byte[]>(config).Build())
             {
                 var result = await producer.ProduceAsync(topic, new Message<Null, byte[]> { Value = payload });
 
                 if (result.Status != PersistenceStatus.Persisted)
                 {
-                    return TransportResult.Failure;
+                    throw new FailedAddMessagesToTransportException();
                 }
-
-                return TransportResult.Success;
             }
         }
     }
