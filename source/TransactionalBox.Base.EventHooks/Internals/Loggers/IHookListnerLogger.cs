@@ -5,8 +5,10 @@
     {
         void Started(string eventHookHandlerName, Guid hookId);
 
-        void Ended(Guid hookId);
+        void Ended(string eventHookHandlerName, Guid hookId);
 
-        void UnexpectedError(Exception exception);
+        void UnexpectedException(string eventHookHandlerName, Guid hookId, long attempt, Exception exception);
+
+        void UnexpectedException(Exception exception);
     }
 }

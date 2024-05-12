@@ -7,5 +7,9 @@
         string Name { get; }
 
         DateTime LastOccurredUtc { get; }
+
+        bool IsError { get; }
+
+        long Attempt { get; }
     }
 }

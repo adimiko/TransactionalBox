@@ -10,6 +10,8 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 {
     internal sealed class AddMessagesToTransport : IEventHookHandler<AddedMessagesToOutbox>
     {
+        private const int ErrorBatchSize = 1;
+
         private readonly IEventHookPublisher _eventHookPublisher;
 
         private readonly TransportMessageFactory _factory;
@@ -46,33 +48,62 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
         {
             var batchSize = _settings.BatchSize;
 
-            var numberOfMessages = await _storage.MarkMessages(context.Id, context.Name, batchSize, _clock.TimeProvider, _settings.LockTimeout).ConfigureAwait(false);
-
-            //TODO check when numberofMessages is equal batchSize repeat
-            if (numberOfMessages == 0) // IsBatchEmpty
+            if (context.IsError)
             {
-                return;
+                var msDelay = context.Attempt * 100;
+
+                if (msDelay > 5000) //TODO max delay
+                {
+                    msDelay = 5000;
+                }
+                //TODO log delay etc
+
+                await Task.Delay(TimeSpan.FromMilliseconds(msDelay), _clock.TimeProvider, cancellationToken).ConfigureAwait(false);
+                batchSize = ErrorBatchSize;
             }
 
-            var messages = await _storage.GetMarkedMessages(context.Id);
+            
+            var firstIteration = true;
+            var numberOfMessages = 0;
 
-            var transportMessages = await _factory.Create(messages).ConfigureAwait(false);
-
-            foreach (var transportMessage in transportMessages)
+            do
             {
-                var transportResult = await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
-
-                if (transportResult == TransportResult.Failure)
+                if (!firstIteration)
                 {
-                    //TODO retry 
-                    _logger.FailedToAddMessagesToTransport();
+                    batchSize = _settings.BatchSize;
+                }
+
+                numberOfMessages = await _storage.MarkMessages(context.Id, context.Name, batchSize, _clock.TimeProvider, _settings.LockTimeout).ConfigureAwait(false);
+
+                if (numberOfMessages == 0)
+                {
                     return;
                 }
 
-                await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
-            }
+                var messages = await _storage.GetMarkedMessages(context.Id);
 
-            await _eventHookPublisher.PublishAsync<AddedMessagesToTransport>().ConfigureAwait(false);
+                var transportMessages = await _factory.Create(messages).ConfigureAwait(false);
+
+                foreach (var transportMessage in transportMessages)
+                {
+                    var transportResult = await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
+
+                    if (transportResult == TransportResult.Failure)
+                    {
+                        //TODO retry
+                        //TODO exception in transport
+                        _logger.FailedToAddMessagesToTransport();
+                        return;
+                    }
+
+                    await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
+                }
+
+                await _eventHookPublisher.PublishAsync<AddedMessagesToTransport>().ConfigureAwait(false);
+
+                firstIteration = false;
+            }
+            while (!cancellationToken.IsCancellationRequested && numberOfMessages >= batchSize);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using TransactionalBox.Base.EventHooks.Internals.Contexts;
 using TransactionalBox.Base.EventHooks.Internals.Loggers;
 
@@ -38,19 +39,41 @@ namespace TransactionalBox.Base.EventHooks.Internals
                             var id = Guid.NewGuid();
                             var name = eventHookHandler.GetType().Name;
 
-                            var context = new HookExecutionContext(id, name, lastOccurredUtc);
+                            var isError = false;
+                            long attempt = 0;
+
+                            var context = new HookExecutionContext(id, name, lastOccurredUtc, isError, attempt);
 
                             _logger.Started(context.Name, context.Id);
 
-                            await eventHookHandler.HandleAsync(context, cancellationToken).ConfigureAwait(false);
+                            do
+                            {
+                                try
+                                {
+                                    await eventHookHandler.HandleAsync(context, cancellationToken).ConfigureAwait(false);
 
-                            _logger.Ended(context.Id);
+                                    isError = false;
+                                    attempt = 0;
+                                }
+                                catch (Exception exception)
+                                {
+                                    isError = true;
+                                    attempt++;
+
+                                    context = new HookExecutionContext(id, name, lastOccurredUtc, isError, attempt);
+
+                                    _logger.UnexpectedException(context.Name, context.Id, context.Attempt, exception);
+                                }
+                            }
+                            while (isError);
+
+                            _logger.Ended(context.Name, context.Id);
                         }
                     }
                 }
                 catch (Exception exception) 
                 {
-                    _logger.UnexpectedError(exception);
+                    _logger.UnexpectedException(exception);
                 }
             }
         }
