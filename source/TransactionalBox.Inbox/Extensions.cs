@@ -106,7 +106,7 @@ namespace TransactionalBox.Inbox
             services.AddSingleton<ICleanUpExpiredIdempotencyKeysJobSettings>(settings.CleanUpExpiredIdempotencyKeysSettings);
 
             // Jobs
-            services.AddHostedService<AddMessagesToInboxStorage>();
+            services.AddHostedService<AddMessagesToInbox>();
             services.AddHostedService<CleanUpExpiredIdempotencyKeys>();
 
             services.AddEventHookHandler<ProcessMessageFromInbox, AddedMessagesToInboxEventHook>();
