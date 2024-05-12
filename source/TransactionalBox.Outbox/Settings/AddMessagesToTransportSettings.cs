@@ -1,8 +1,8 @@
-﻿using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport;
+﻿using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport;
 
 namespace TransactionalBox.Outbox.Settings
 {
-    public sealed class AddMessagesToTransportSettings : IAddMessagesToTransportHookSettings
+    public sealed class AddMessagesToTransportSettings : IAddMessagesToTransportSettings
     {
         public int BatchSize { get; set; } = 5000;
 
