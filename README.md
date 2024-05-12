@@ -54,9 +54,9 @@ Examples of problems that occur during network communication:
 - [x] Standalone inbox
 - [x] Error handling in background services
 - [ ] Dead messages
-- [ ] Hook processing
+- [x] Hook processing
     - [x] Outbox
-    - [ ] Inbox
+    - [x] Inbox
 
 #### Observability
 - [ ] Support for OpenTelemetry
