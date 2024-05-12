@@ -1,8 +1,7 @@
 ﻿using Microsoft.IO;
 using System.IO.Compression;
-using TransactionalBox.Inbox.Internals.Decompression;
 
-namespace TransactionalBox.Inbox.Decompression.GZip.Internals
+namespace TransactionalBox.Inbox.Internals.Decompression
 {
     internal sealed class GZipDecompression : IDecompressionAlgorithm
     {

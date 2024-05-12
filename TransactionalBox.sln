@@ -45,15 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.KeyedInMem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.DistributedLock.EntityFramework.Tests", "tests\TransactionalBox.DistributedLock.EntityFramework.Tests\TransactionalBox.DistributedLock.EntityFramework.Tests.csproj", "{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Decompression.Brotli", "source\TransactionalBox.Inbox.Decompression.Brotli\TransactionalBox.Inbox.Decompression.Brotli.csproj", "{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Decompression.GZip", "source\TransactionalBox.Inbox.Decompression.GZip\TransactionalBox.Inbox.Decompression.GZip.csproj", "{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Transport.Kafka", "source\TransactionalBox.Inbox.Transport.Kafka\TransactionalBox.Inbox.Transport.Kafka.csproj", "{EADA69BF-75D0-462A-870B-663DA4C1EB0F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Compression.Brotli", "source\TransactionalBox.Outbox.Compression.Brotli\TransactionalBox.Outbox.Compression.Brotli.csproj", "{96EBBB14-3BA9-4613-8E15-D1AE24B38C1C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Compression.GZip", "source\TransactionalBox.Outbox.Compression.GZip\TransactionalBox.Outbox.Compression.GZip.csproj", "{3D5E31DE-CC38-4B7E-ABB0-594C55E70514}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Outbox.Transport.Kafka", "source\TransactionalBox.Outbox.Transport.Kafka\TransactionalBox.Outbox.Transport.Kafka.csproj", "{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}"
 EndProject
@@ -137,26 +129,10 @@ Global
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96EBBB14-3BA9-4613-8E15-D1AE24B38C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96EBBB14-3BA9-4613-8E15-D1AE24B38C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96EBBB14-3BA9-4613-8E15-D1AE24B38C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96EBBB14-3BA9-4613-8E15-D1AE24B38C1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D5E31DE-CC38-4B7E-ABB0-594C55E70514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D5E31DE-CC38-4B7E-ABB0-594C55E70514}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D5E31DE-CC38-4B7E-ABB0-594C55E70514}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D5E31DE-CC38-4B7E-ABB0-594C55E70514}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -188,11 +164,7 @@ Global
 		{D9F3EEEB-5307-4CF4-97FF-BDBFDEC77D6A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{CF1E2553-3259-42E2-8E3D-6B3A3382F847} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{6DAFA38A-758D-4B16-B7F0-9A65338BD9D5} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
-		{89904051-F76E-4B4D-B187-CB2DAB2D7B1A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{0ED5DF87-1C2E-4234-8BCB-7FA6F0C145C8} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{EADA69BF-75D0-462A-870B-663DA4C1EB0F} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{96EBBB14-3BA9-4613-8E15-D1AE24B38C1C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{3D5E31DE-CC38-4B7E-ABB0-594C55E70514} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{1A893CE2-4F2C-40BD-82A7-B8C0E778FA99} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{3800FA56-BA24-4988-B086-D49852C94B0A} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 	EndGlobalSection

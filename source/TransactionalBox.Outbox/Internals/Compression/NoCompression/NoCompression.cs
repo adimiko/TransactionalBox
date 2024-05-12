@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Compression
+﻿namespace TransactionalBox.Outbox.Internals.Compression.NoCompression
 {
     internal sealed class NoCompression : ICompressionAlgorithm
     {

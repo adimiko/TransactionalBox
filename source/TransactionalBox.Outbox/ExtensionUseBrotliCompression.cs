@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IO;
-using TransactionalBox.Outbox.Compression.Brotli.Internals;
-using TransactionalBox.Outbox.Compression.Brotli.Settings;
-using TransactionalBox.Outbox.Configurators;
+﻿using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Compression.Brotli;
 using TransactionalBox.Outbox.Internals.Compression;
+using TransactionalBox.Outbox.Settings.Compression;
+using Microsoft.IO;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Outbox.Compression.Brotli
+namespace TransactionalBox.Outbox
 {
-    public static class Extensions
+    public static class ExtensionUseBrotliCompression
     {
         public static void UseBrotliCompression(
             this IOutboxCompressionAlgorithmConfigurator configurator,
@@ -26,7 +26,7 @@ namespace TransactionalBox.Outbox.Compression.Brotli
 
             services.AddSingleton<IBrotliCompressionSettings>(settings);
 
-            services.AddSingleton<ICompressionAlgorithm, Internals.BrotliCompression>();
+            services.AddSingleton<ICompressionAlgorithm, BrotliCompression>();
         }
     }
 }

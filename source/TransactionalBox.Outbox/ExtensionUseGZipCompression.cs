@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IO;
-using TransactionalBox.Outbox.Compression.GZip.Internals;
-using TransactionalBox.Outbox.Compression.GZip.Settings;
-using TransactionalBox.Outbox.Configurators;
+﻿using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Compression.GZip;
 using TransactionalBox.Outbox.Internals.Compression;
+using TransactionalBox.Outbox.Settings.Compression;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IO;
 
-namespace TransactionalBox.Outbox.Compression.GZip
+namespace TransactionalBox.Outbox
 {
-    public static class Extensions
+    public static class ExtensionUseGZipCompression
     {
         public static void UseGZipCompression(
             this IOutboxCompressionAlgorithmConfigurator configurator,
@@ -26,7 +26,7 @@ namespace TransactionalBox.Outbox.Compression.GZip
 
             services.AddSingleton<IGZipCompressionSettings>(settings);
 
-            services.AddSingleton<ICompressionAlgorithm, Internals.GZipCompression>();
+            services.AddSingleton<ICompressionAlgorithm, GZipCompression>();
         }
     }
 }

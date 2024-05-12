@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Compression;
+using TransactionalBox.Outbox.Internals.Compression.NoCompression;
 
 namespace TransactionalBox.Outbox.Internals.Extensions
 {
