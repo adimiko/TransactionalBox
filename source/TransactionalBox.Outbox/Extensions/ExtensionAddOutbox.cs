@@ -67,12 +67,12 @@ namespace TransactionalBox.Outbox
             // Settings
             services.AddSingleton<IAddMessagesToTransportSettings>(settings.AddMessagesToTransportSettings);
 
-            services.AddSingleton<ICleanUpOutboxSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
+            services.AddSingleton<ICleanUpOutboxSettings>(settings.CleanUpOutboxSettings);
 
             // Hooks
             services.AddEventHookHandler<AddMessagesToTransport, AddedMessagesToOutbox>();
 
-            if (settings.CleanUpProcessedOutboxMessagesSettings.IsEnabled)
+            if (settings.CleanUpOutboxSettings.IsEnabled)
             {
                 services.AddEventHookHandler<CleanUpOutbox, AddedMessagesToTransport>();
             }

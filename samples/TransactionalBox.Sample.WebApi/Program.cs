@@ -57,7 +57,7 @@ x =>
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         settings =>
     {
-        settings.CleanUpProcessedInboxMessagesSettings.IsEnabled = false;
+        settings.CleanUpInboxSettings.IsEnabled = false;
         settings.ConfigureDecompression = x => x.UseBrotliDecompression();
     });
 },
