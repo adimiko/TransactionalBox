@@ -9,7 +9,6 @@ using TransactionalBox.Inbox.Storage.EntityFramework;
 using TransactionalBox.Inbox.Transport.Kafka;
 using TransactionalBox.Outbox;
 using TransactionalBox.Outbox.Storage.EntityFramework;
-using TransactionalBox.Inbox.Decompression.Brotli;
 using TransactionalBox.Outbox.Transport.Kafka;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.Inbox.Internals.Storage;

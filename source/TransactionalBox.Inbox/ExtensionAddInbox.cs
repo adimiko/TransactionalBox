@@ -15,7 +15,7 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses;
 
 namespace TransactionalBox.Inbox
 {
-    public static class Extensions
+    public static class ExtensionAddInbox
     {
         public static void AddInbox(
             this ITransactionalBoxBuilder builder,
