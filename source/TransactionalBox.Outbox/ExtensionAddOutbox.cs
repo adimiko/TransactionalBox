@@ -7,12 +7,12 @@ using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Settings;
 using TransactionalBox.Base.EventHooks;
-using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport;
-using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
-using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories.Policies;
-using TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages;
-using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
 using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Outbox.Internals.Hooks.Events;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories.Policies;
 
 namespace TransactionalBox.Outbox
 {
@@ -65,16 +65,16 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<TransportMessageFactory>();
 
             // Settings
-            services.AddSingleton<IAddMessagesToTransportHookSettings>(settings.AddMessagesToTransportSettings);
+            services.AddSingleton<IAddMessagesToTransportSettings>(settings.AddMessagesToTransportSettings);
 
-            services.AddSingleton<ICleanUpProcessedOutboxMessagesHookSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
+            services.AddSingleton<ICleanUpOutboxSettings>(settings.CleanUpProcessedOutboxMessagesSettings);
 
             // Hooks
-            services.AddEventHookHandler<AddMessagesToTransport, AddedMessagesToOutboxEventHook>();
+            services.AddEventHookHandler<AddMessagesToTransport, AddedMessagesToOutbox>();
 
             if (settings.CleanUpProcessedOutboxMessagesSettings.IsEnabled)
             {
-                services.AddEventHookHandler<CleanUpProcessedOutboxMessages, AddedMessagesToTransportEventHook>();
+                services.AddEventHookHandler<CleanUpOutbox, AddedMessagesToTransport>();
             }
 
             // Policies

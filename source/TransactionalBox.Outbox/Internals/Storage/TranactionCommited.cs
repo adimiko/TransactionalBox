@@ -1,5 +1,5 @@
 ﻿using TransactionalBox.Base.EventHooks;
-using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
+using TransactionalBox.Outbox.Internals.Hooks.Events;
 
 namespace TransactionalBox.Outbox.Internals.Storage
 {
@@ -14,7 +14,7 @@ namespace TransactionalBox.Outbox.Internals.Storage
 
         public async Task Commited()
         {
-            await _eventHookPublisher.PublishAsync<AddedMessagesToOutboxEventHook>().ConfigureAwait(false);
+            await _eventHookPublisher.PublishAsync<AddedMessagesToOutbox>().ConfigureAwait(false);
             //TODO observability
         }
     }

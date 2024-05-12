@@ -1,20 +1,20 @@
 ﻿using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Internals;
-using TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories;
-using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
+using TransactionalBox.Outbox.Internals.Hooks.Events;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
 
-namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
+namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport
 {
-    internal sealed class AddMessagesToTransport : IEventHookHandler<AddedMessagesToOutboxEventHook>
+    internal sealed class AddMessagesToTransport : IEventHookHandler<AddedMessagesToOutbox>
     {
         private readonly IEventHookPublisher _eventHookPublisher;
 
         private readonly TransportMessageFactory _factory;
 
-        private readonly IAddMessagesToTransportHookSettings _settings;
+        private readonly IAddMessagesToTransportSettings _settings;
 
         private readonly ISystemClock _clock;
 
@@ -27,7 +27,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
         public AddMessagesToTransport(
             IEventHookPublisher eventHookPublisher,
             TransportMessageFactory factory,
-            IAddMessagesToTransportHookSettings settings,
+            IAddMessagesToTransportSettings settings,
             ISystemClock systemClock,
             IOutboxWorkerStorage storage,
             IOutboxWorkerTransport transport,
@@ -72,7 +72,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport
                 await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
             }
 
-            await _eventHookPublisher.PublishAsync<AddedMessagesToTransportEventHook>().ConfigureAwait(false);
+            await _eventHookPublisher.PublishAsync<AddedMessagesToTransport>().ConfigureAwait(false);
         }
     }
 }

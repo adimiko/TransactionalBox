@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Hooks.AddMessagesToTransport.TransportMessageFactories
+﻿namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories
 {
     internal sealed class TransportMessage
     {

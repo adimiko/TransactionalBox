@@ -1,18 +1,18 @@
 ﻿using TransactionalBox.Base.EventHooks;
-using TransactionalBox.Outbox.Internals.Hooks.EventHooks;
+using TransactionalBox.Outbox.Internals.Hooks.Events;
 using TransactionalBox.Outbox.Internals.Storage;
 
-namespace TransactionalBox.Outbox.Internals.Hooks.CleanUpProcessedOutboxMessages
+namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
 {
-    internal sealed class CleanUpProcessedOutboxMessages : IEventHookHandler<AddedMessagesToTransportEventHook>
+    internal sealed class CleanUpOutbox : IEventHookHandler<AddedMessagesToTransport>
     {
         private readonly IOutboxWorkerStorage _storage;
 
-        private readonly ICleanUpProcessedOutboxMessagesHookSettings _settings;
+        private readonly ICleanUpOutboxSettings _settings;
 
-        public CleanUpProcessedOutboxMessages(
+        public CleanUpOutbox(
             IOutboxWorkerStorage storage,
-            ICleanUpProcessedOutboxMessagesHookSettings settings) 
+            ICleanUpOutboxSettings settings)
         {
             _storage = storage;
             _settings = settings;
