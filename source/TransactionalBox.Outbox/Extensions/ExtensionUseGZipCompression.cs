@@ -11,15 +11,15 @@ namespace TransactionalBox.Outbox
     {
         public static void UseGZipCompression(
             this IOutboxCompressionConfigurator configurator,
-            Action<GZipCompressionSettings>? configureSettings = null)
+            Action<GZipCompressionSettings>? settingsConfiguration = null)
         {
             var services = configurator.Services;
 
             var settings = new GZipCompressionSettings();
 
-            if (configureSettings is not null)
+            if (settingsConfiguration is not null)
             {
-                configureSettings(settings);
+                settingsConfiguration(settings);
             }
 
             services.AddSingleton(new RecyclableMemoryStreamManager());

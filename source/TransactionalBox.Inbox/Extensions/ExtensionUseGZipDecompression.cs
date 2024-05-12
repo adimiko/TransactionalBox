@@ -7,8 +7,7 @@ namespace TransactionalBox.Inbox
 {
     public static class ExtensionUseGZipDecompression
     {
-        public static void UseGZipDecompression(
-            this IInboxDecompressionConfigurator configurator)
+        public static void UseGZipDecompression(this IInboxDecompressionConfigurator configurator)
         {
             var services = configurator.Services;
 

@@ -11,15 +11,15 @@ namespace TransactionalBox.Outbox
     {
         public static void UseBrotliCompression(
             this IOutboxCompressionConfigurator configurator,
-            Action<BrotliCompressionSettings>? configureCompressionSettings = null)
+            Action<BrotliCompressionSettings>? settingsConfiguration = null)
         {
             var services = configurator.Services;
 
             var settings = new BrotliCompressionSettings();
 
-            if (configureCompressionSettings is not null)
+            if (settingsConfiguration is not null)
             {
-                configureCompressionSettings(settings);
+                settingsConfiguration(settings);
             }
 
             services.AddSingleton(new RecyclableMemoryStreamManager());

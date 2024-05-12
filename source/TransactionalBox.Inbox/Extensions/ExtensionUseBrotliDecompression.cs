@@ -7,8 +7,7 @@ namespace TransactionalBox.Inbox
 {
     public static class ExtensionUseBrotliDecompression
     {
-        public static void UseBrotliDecompression(
-            this IInboxDecompressionConfigurator configurator)
+        public static void UseBrotliDecompression(this IInboxDecompressionConfigurator configurator)
         {
             var services = configurator.Services;
 

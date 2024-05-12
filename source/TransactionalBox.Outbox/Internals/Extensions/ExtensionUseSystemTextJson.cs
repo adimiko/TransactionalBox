@@ -6,8 +6,7 @@ namespace TransactionalBox.Outbox.Internals.Extensions
 {
     internal static class ExtensionUseSystemTextJson
     {
-        internal static void UseSystemTextJson(
-            this IOutboxSerializationConfigurator configurator)
+        internal static void UseSystemTextJson(this IOutboxSerializationConfigurator configurator)
         {
             var services = configurator.Services;
 
