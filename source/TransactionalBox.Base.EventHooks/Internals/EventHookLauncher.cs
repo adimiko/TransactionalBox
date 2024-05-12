@@ -14,14 +14,18 @@ namespace TransactionalBox.Base.EventHooks.Internals
 
         private readonly IHookListnerLogger<THook> _logger;
 
+        private readonly TimeProvider _timeProvider;
+
         public EventHookLauncher(
             EventHookHub<THook> hookHub,
             IServiceScopeFactory serviceScopeFactory,
-            IHookListnerLogger<THook> logger) 
+            IHookListnerLogger<THook> logger,
+            TimeProvider timeProvider) 
         {
             _hookHub = hookHub;
             _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
+            _timeProvider = timeProvider;
         }
 
         public async Task LaunchAsync(CancellationToken cancellationToken)
@@ -62,7 +66,17 @@ namespace TransactionalBox.Base.EventHooks.Internals
 
                                     context = new HookExecutionContext(id, name, lastOccurredUtc, isError, attempt);
 
-                                    _logger.UnexpectedException(context.Name, context.Id, context.Attempt, exception);
+                                    long msDelay = context.Attempt * 100;
+                                    const long maxMsDelay = 3000;
+
+                                    if (msDelay > maxMsDelay) 
+                                    {
+                                        msDelay = maxMsDelay;
+                                    }
+
+                                    _logger.UnexpectedException(context.Name, context.Id, context.Attempt, msDelay, exception);
+
+                                    await Task.Delay(TimeSpan.FromMilliseconds(msDelay), _timeProvider, cancellationToken).ConfigureAwait(false);
                                 }
                             }
                             while (isError);

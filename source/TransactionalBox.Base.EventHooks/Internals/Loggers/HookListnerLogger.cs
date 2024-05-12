@@ -15,8 +15,8 @@ namespace TransactionalBox.Base.EventHooks.Internals.Loggers
         [LoggerMessage(0, LogLevel.Information, "{eventHookHandlerName} '{hookId}' ended", SkipEnabledCheck = true)]
         public partial void Ended(string eventHookHandlerName, Guid hookId);
 
-        [LoggerMessage(0, LogLevel.Error, "{eventHookHandlerName} '{hookId}' (Attempt: {attempt}) unexpected exception", SkipEnabledCheck = true)]
-        public partial void UnexpectedException(string eventHookHandlerName, Guid hookId, long attempt, Exception exception);
+        [LoggerMessage(0, LogLevel.Error, "{eventHookHandlerName} '{hookId}' (Attempt: {attempt} Delay: {msDelay}ms) unexpected exception", SkipEnabledCheck = true)]
+        public partial void UnexpectedException(string eventHookHandlerName, Guid hookId, long attempt, long msDelay, Exception exception);
 
         [LoggerMessage(0, LogLevel.Error, "Unexpected exception", SkipEnabledCheck = true)]
         public partial void UnexpectedException(Exception exception);
