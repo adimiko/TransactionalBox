@@ -20,10 +20,13 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
 
         public async Task HandleAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
+            int numberOfRemovedMessages = 0;
 
-            await _storage.RemoveProcessedMessages(_settings.BatchSize).ConfigureAwait(false);
-
-            //TODO when is Equal batch size repeat
+            do
+            {
+                numberOfRemovedMessages = await _storage.RemoveProcessedMessages(_settings.BatchSize).ConfigureAwait(false);
+            }
+            while (!cancellationToken.IsCancellationRequested && numberOfRemovedMessages >= _settings.BatchSize);
         }
     }
 }
