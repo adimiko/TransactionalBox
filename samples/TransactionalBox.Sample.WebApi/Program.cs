@@ -58,7 +58,7 @@ x =>
         settings =>
     {
         settings.CleanUpProcessedInboxMessagesSettings.IsEnabled = false;
-        settings.ConfigureDecompressionAlgorithm = x => x.UseBrotliDecompression();
+        settings.ConfigureDecompression = x => x.UseBrotliDecompression();
     });
 },
 settings => settings.ServiceId = "Registrations");

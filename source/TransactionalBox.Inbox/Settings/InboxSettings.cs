@@ -13,7 +13,7 @@ namespace TransactionalBox.Inbox.Settings
 
         public Action<IInboxDeserializationConfigurator> ConfigureDeserialization { get; set; } = x => x.UseSystemTextJson();
 
-        public Action<IInboxDecompressionAlgorithmConfigurator> ConfigureDecompressionAlgorithm { get; set; } = x => x.UseNoDecompression();
+        public Action<IInboxDecompressionConfigurator> ConfigureDecompression { get; set; } = x => x.UseNoDecompression();
 
         internal InboxSettings() { }
 
@@ -24,9 +24,9 @@ namespace TransactionalBox.Inbox.Settings
         }
 
         internal void Configure(
-            IInboxDecompressionAlgorithmConfigurator decompressionConfigurator)
+            IInboxDecompressionConfigurator decompressionConfigurator)
         {
-            ConfigureDecompressionAlgorithm(decompressionConfigurator);
+            ConfigureDecompression(decompressionConfigurator);
         }
     }
 }

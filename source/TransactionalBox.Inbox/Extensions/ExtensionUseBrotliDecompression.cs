@@ -8,12 +8,12 @@ namespace TransactionalBox.Inbox
     public static class ExtensionUseBrotliDecompression
     {
         public static void UseBrotliDecompression(
-            this IInboxDecompressionAlgorithmConfigurator configurator)
+            this IInboxDecompressionConfigurator configurator)
         {
             var services = configurator.Services;
 
             services.AddSingleton(new RecyclableMemoryStreamManager());
-            services.AddSingleton<IDecompressionAlgorithm, BrotliDecompression>();
+            services.AddSingleton<IDecompression, BrotliDecompression>();
         }
     }
 }

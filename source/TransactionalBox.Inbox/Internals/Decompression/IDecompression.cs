@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Inbox.Internals.Decompression
 {
-    internal interface IDecompressionAlgorithm
+    internal interface IDecompression
     {
         Task<byte[]> Decompress(byte[] data);
     }

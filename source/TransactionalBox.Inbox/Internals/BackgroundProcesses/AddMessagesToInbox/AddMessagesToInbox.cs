@@ -15,7 +15,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly IDecompressionAlgorithm _decompressionAlgorithm;
+        private readonly IDecompression _decompression;
 
         private readonly IInboxWorkerTransport _inboxWorkerTransport;
 
@@ -29,7 +29,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
 
         public AddMessagesToInbox(
             IServiceProvider serviceProvider,
-            IDecompressionAlgorithm decompressionAlgorithm,
+            IDecompression decompression,
             IInboxWorkerTransport inboxWorkerTransport,
             ISystemClock systemClock,
             ITopicsProvider topicsProvider,
@@ -37,7 +37,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             IEventHookPublisher eventHookPublisher)
         {
             _serviceProvider = serviceProvider;
-            _decompressionAlgorithm = decompressionAlgorithm;
+            _decompression = decompression;
             _inboxWorkerTransport = inboxWorkerTransport;
             _systemClock = systemClock;
             _topicsProvider = topicsProvider;
@@ -56,7 +56,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
                     {
                         using (var scope = _serviceProvider.CreateScope())
                         {
-                            var decompressedMessagesFromTransport = await _decompressionAlgorithm.Decompress(messagesFromTransport).ConfigureAwait(false);
+                            var decompressedMessagesFromTransport = await _decompression.Decompress(messagesFromTransport).ConfigureAwait(false);
                             //TODO #27
                             var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
 

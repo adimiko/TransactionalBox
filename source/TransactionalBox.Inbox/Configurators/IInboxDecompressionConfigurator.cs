@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Inbox.Configurators
 {
-    public interface IInboxDecompressionAlgorithmConfigurator
+    public interface IInboxDecompressionConfigurator
     {
         internal IServiceCollection Services { get; }
     }

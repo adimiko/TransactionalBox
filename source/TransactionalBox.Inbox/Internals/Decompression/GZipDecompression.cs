@@ -3,7 +3,7 @@ using System.IO.Compression;
 
 namespace TransactionalBox.Inbox.Internals.Decompression
 {
-    internal sealed class GZipDecompression : IDecompressionAlgorithm
+    internal sealed class GZipDecompression : IDecompression
     {
         private readonly RecyclableMemoryStreamManager _streamManager;
 

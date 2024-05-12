@@ -3,7 +3,7 @@ using System.IO.Compression;
 
 namespace TransactionalBox.Inbox.Internals.Decompression
 {
-    internal sealed class BrotliDecompression : IDecompressionAlgorithm
+    internal sealed class BrotliDecompression : IDecompression
     {
         private readonly RecyclableMemoryStreamManager _streamManager;
 
