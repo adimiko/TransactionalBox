@@ -6,7 +6,7 @@ using System.Net;
 
 namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 {
-    internal sealed class EntityFrameworkOutboxWorkerStorage : IOutboxWorkerStorage
+    internal sealed class EntityFrameworkAddMessagesToTransportRepository : IAddMessagesToTransportRepository
     {
         private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
 
@@ -16,7 +16,7 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 
         private readonly IDistributedLock<OutboxDistributedLock> _distributedLock;
 
-        public EntityFrameworkOutboxWorkerStorage(
+        public EntityFrameworkAddMessagesToTransportRepository(
             DbContext dbContext,
             IDistributedLock<OutboxDistributedLock> distributedLock)
         {
@@ -79,24 +79,6 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
 
                 await transaction.CommitAsync();
             }
-        }
-
-        public async Task<int> RemoveProcessedMessages(int batchSize)
-        {
-            int rowCount = 0;
-
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel))
-            {
-                rowCount = await _outboxMessages
-                    .Where(x => x.IsProcessed)
-                    .OrderBy(x => x.OccurredUtc)
-                    .Take(batchSize)
-                    .ExecuteDeleteAsync();
-
-                await transaction.CommitAsync();
-            }
-
-            return rowCount;
         }
     }
 }

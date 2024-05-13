@@ -12,6 +12,8 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories.Policies;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Loggers;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Loggers;
 
 namespace TransactionalBox.Outbox
 {
@@ -79,9 +81,13 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<IPayloadCreationPolicy, PayloadHasOptimalSizePolicy>();
             services.AddSingleton<IPayloadCreationPolicy, PayloadIsLargerThanOptimalSizePolicy>();
 
-            services.AddScoped<IOutbox, InternalOutbox>();
+            services.AddScoped<IOutbox, Internals.Oubox.Outbox>();
 
             services.AddSingleton<ITranactionCommited, TranactionCommited>();
+
+            // Loggers
+            services.AddSingleton<ICleanUpOutboxLogger, CleanUpOutboxLogger>();
+            services.AddSingleton<IAddMessagesToTransportLogger, AddMessagesToTransportLogger>();
         }
     }
 }

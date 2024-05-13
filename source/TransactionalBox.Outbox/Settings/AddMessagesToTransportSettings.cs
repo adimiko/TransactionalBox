@@ -4,7 +4,7 @@ namespace TransactionalBox.Outbox.Settings
 {
     public sealed class AddMessagesToTransportSettings : IAddMessagesToTransportSettings
     {
-        public int BatchSize { get; set; } = 5000;
+        public int MaxBatchSize { get; set; } = 5000;
 
         public TimeSpan LockTimeout { get; set; } = TimeSpan.FromSeconds(10);
 

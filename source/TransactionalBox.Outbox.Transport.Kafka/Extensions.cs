@@ -21,7 +21,7 @@ namespace TransactionalBox.Outbox.Transport.Kafka
             services.AddSingleton<ITransportMessageSizeSettings>(settings.TransportMessageSizeSettings);
 
             services.AddSingleton<KafkaConfigFactory>();
-            services.AddScoped<IOutboxWorkerTransport, KafkaTransport>();
+            services.AddScoped<IOutboxTransport, KafkaOutboxTransport>();
         }
     }
 }

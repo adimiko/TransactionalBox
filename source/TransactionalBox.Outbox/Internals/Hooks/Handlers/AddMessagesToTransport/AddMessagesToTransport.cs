@@ -1,6 +1,7 @@
 ﻿using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.Events;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Loggers;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
@@ -19,53 +20,57 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
         private readonly ISystemClock _clock;
 
-        private readonly IOutboxWorkerStorage _storage;
+        private readonly IAddMessagesToTransportRepository _repository;
 
-        private readonly IOutboxWorkerTransport _transport;
+        private readonly IOutboxTransport _transport;
+
+        private readonly IAddMessagesToTransportLogger _logger;
 
         public AddMessagesToTransport(
             IEventHookPublisher eventHookPublisher,
             TransportMessageFactory factory,
             IAddMessagesToTransportSettings settings,
             ISystemClock systemClock,
-            IOutboxWorkerStorage storage,
-            IOutboxWorkerTransport transport)
+            IAddMessagesToTransportRepository repository,
+            IOutboxTransport transport,
+            IAddMessagesToTransportLogger logger)
         {
             _eventHookPublisher = eventHookPublisher;
             _factory = factory;
             _settings = settings;
             _clock = systemClock;
-            _storage = storage;
+            _repository = repository;
             _transport = transport;
+            _logger = logger;
         }
 
         public async Task HandleAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
-            var batchSize = _settings.BatchSize;
+            var maxBatchSize = _settings.MaxBatchSize;
 
             if (context.IsError)
             {
-                batchSize = ErrorBatchSize;
+                maxBatchSize = ErrorBatchSize;
             }
 
-            var firstIteration = true;
+            long iteration = 1;
             var numberOfMessages = 0;
 
             do
             {
-                if (!firstIteration)
+                if (iteration > 1)
                 {
-                    batchSize = _settings.BatchSize;
+                    maxBatchSize = _settings.MaxBatchSize;
                 }
 
-                numberOfMessages = await _storage.MarkMessages(context.Id, context.Name, batchSize, _clock.TimeProvider, _settings.LockTimeout).ConfigureAwait(false);
+                numberOfMessages = await _repository.MarkMessages(context.Id, context.Name, maxBatchSize, _clock.TimeProvider, _settings.LockTimeout).ConfigureAwait(false);
 
                 if (numberOfMessages == 0)
                 {
                     return;
                 }
 
-                var messages = await _storage.GetMarkedMessages(context.Id).ConfigureAwait(false);
+                var messages = await _repository.GetMarkedMessages(context.Id).ConfigureAwait(false);
 
                 var transportMessages = await _factory.Create(messages).ConfigureAwait(false);
 
@@ -74,13 +79,15 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                     await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
                 }
 
-                await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
+                await _repository.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
+
+                _logger.Added(context.Name, context.Id, iteration, numberOfMessages, maxBatchSize);
 
                 await _eventHookPublisher.PublishAsync<AddedMessagesToTransport>().ConfigureAwait(false);
 
-                firstIteration = false;
+                iteration++;
             }
-            while (!cancellationToken.IsCancellationRequested && numberOfMessages >= batchSize);
+            while (!cancellationToken.IsCancellationRequested && numberOfMessages >= maxBatchSize);
         }
     }
 }

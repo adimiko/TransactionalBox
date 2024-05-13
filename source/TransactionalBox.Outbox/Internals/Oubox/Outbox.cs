@@ -5,7 +5,7 @@ using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.Internals.Oubox
 {
-    internal sealed class InternalOutbox : IOutbox
+    internal sealed class Outbox : IOutbox
     {
         private readonly IServiceContext _serviceContext;
 
@@ -17,7 +17,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
         private readonly ITopicFactory _topicFactory;
 
-        public InternalOutbox(
+        public Outbox(
             IServiceContext serviceContext,
             IOutboxStorage outbox,
             IOutboxSerializer serializer,
