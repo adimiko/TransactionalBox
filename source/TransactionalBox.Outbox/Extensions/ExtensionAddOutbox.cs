@@ -13,6 +13,7 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories.Policies;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Loggers;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Loggers;
 
 namespace TransactionalBox.Outbox
 {
@@ -86,6 +87,7 @@ namespace TransactionalBox.Outbox
 
             // Loggers
             services.AddSingleton<ICleanUpOutboxLogger, CleanUpOutboxLogger>();
+            services.AddSingleton<IAddMessagesToTransportLogger, AddMessagesToTransportLogger>();
         }
     }
 }

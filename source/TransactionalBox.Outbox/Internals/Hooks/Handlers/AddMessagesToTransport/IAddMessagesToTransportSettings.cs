@@ -2,7 +2,7 @@
 {
     internal interface IAddMessagesToTransportSettings
     {
-        int BatchSize { get; }
+        int MaxBatchSize { get; }
 
         TimeSpan LockTimeout { get; }
     }
