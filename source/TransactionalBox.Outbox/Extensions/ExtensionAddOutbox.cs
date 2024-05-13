@@ -4,7 +4,6 @@ using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Internals.Oubox;
 using TransactionalBox.Outbox.Internals.Extensions;
-using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Settings;
 using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Outbox.Internals.Storage;
@@ -61,7 +60,6 @@ namespace TransactionalBox.Outbox
 
             settings.Configure(compression);
 
-            services.AddSingleton(typeof(IOutboxWorkerLogger<>), typeof(OutboxWorkerLogger<>));
             services.AddSingleton<TransportMessageFactory>();
 
             // Settings
