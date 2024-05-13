@@ -72,9 +72,9 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                 foreach (var transportMessage in transportMessages)
                 {
                     await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
-
-                    await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
                 }
+
+                await _storage.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
 
                 await _eventHookPublisher.PublishAsync<AddedMessagesToTransport>().ConfigureAwait(false);
 
