@@ -2,11 +2,11 @@
 
 namespace TransactionalBox.Outbox.Internals.Transport.InMemory
 {
-    internal sealed class InMemoryOutboxWorkerTransport : IOutboxWorkerTransport
+    internal sealed class InMemoryOutboxTransport : IOutboxTransport
     {
         private readonly IInMemoryTransport _inMemoryTransport;
 
-        public InMemoryOutboxWorkerTransport(IInMemoryTransport inMemoryTransport)
+        public InMemoryOutboxTransport(IInMemoryTransport inMemoryTransport)
         {
             _inMemoryTransport = inMemoryTransport;
         }

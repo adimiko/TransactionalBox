@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Outbox.Internals.Transport
 {
-    internal interface IOutboxWorkerTransport
+    internal interface IOutboxTransport
     {
         Task Add(string topic, byte[] payload);
     }

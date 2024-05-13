@@ -1,15 +1,13 @@
 ﻿using Confluent.Kafka;
-using System.Text.Json;
-using TransactionalBox.Outbox.Internals;
 using TransactionalBox.Outbox.Internals.Transport;
 
 namespace TransactionalBox.Outbox.Transport.Kafka.Internals
 {
-    internal sealed class KafkaTransport : IOutboxWorkerTransport
+    internal sealed class KafkaOutboxTransport : IOutboxTransport
     {
         private readonly KafkaConfigFactory _configFactory;
 
-        public KafkaTransport(KafkaConfigFactory configFactory) 
+        public KafkaOutboxTransport(KafkaConfigFactory configFactory) 
         {
             _configFactory = configFactory;
         }
