@@ -22,7 +22,8 @@ namespace TransactionalBox.Outbox.Storage.EntityFramework
 
             services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
 
-            services.AddScoped<IOutboxWorkerStorage, EntityFrameworkOutboxWorkerStorage>();
+            services.AddScoped<IAddMessagesToTransportRepository, EntityFrameworkAddMessagesToTransportRepository>();
+            services.AddScoped<ICleanUpOutboxRepository, EntityFrameworkCleanUpOutboxRepository>();
 
             services.AddDistributedLock<OutboxDistributedLock>(x => x.UseEntityFramework());
         }

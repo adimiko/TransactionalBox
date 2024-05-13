@@ -6,15 +6,15 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
 {
     internal sealed class CleanUpOutbox : IEventHookHandler<AddedMessagesToTransport>
     {
-        private readonly IOutboxWorkerStorage _storage;
+        private readonly ICleanUpOutboxRepository _repository;
 
         private readonly ICleanUpOutboxSettings _settings;
 
         public CleanUpOutbox(
-            IOutboxWorkerStorage storage,
+            ICleanUpOutboxRepository repository,
             ICleanUpOutboxSettings settings)
         {
-            _storage = storage;
+            _repository = repository;
             _settings = settings;
         }
 
@@ -24,7 +24,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
 
             do
             {
-                numberOfRemovedMessages = await _storage.RemoveProcessedMessages(_settings.BatchSize).ConfigureAwait(false);
+                numberOfRemovedMessages = await _repository.RemoveProcessedMessages(_settings.BatchSize).ConfigureAwait(false);
             }
             while (!cancellationToken.IsCancellationRequested && numberOfRemovedMessages >= _settings.BatchSize);
         }

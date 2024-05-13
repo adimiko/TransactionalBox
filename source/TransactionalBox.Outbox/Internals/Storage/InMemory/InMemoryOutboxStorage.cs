@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Outbox.Internals.Storage.InMemory
 {
-    internal sealed class InMemoryOutboxStorage : IOutboxStorage, IOutboxWorkerStorage, IOutboxStorageReadOnly
+    internal sealed class InMemoryOutboxStorage : IOutboxStorage, IAddMessagesToTransportRepository, ICleanUpOutboxRepository, IOutboxStorageReadOnly
     {
         private static readonly List<OutboxMessageStorage> _outboxMessages = new List<OutboxMessageStorage>();
 

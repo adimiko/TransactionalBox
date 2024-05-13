@@ -15,7 +15,8 @@ namespace TransactionalBox.Outbox.Internals.Extensions
             services.AddKeyedInMemoryLock();
             services.AddSingleton<IOutboxStorageReadOnly, InMemoryOutboxStorage>();
             services.AddSingleton<IOutboxStorage, InMemoryOutboxStorage>();
-            services.AddSingleton<IOutboxWorkerStorage, InMemoryOutboxStorage>();
+            services.AddSingleton<IAddMessagesToTransportRepository, InMemoryOutboxStorage>();
+            services.AddSingleton<ICleanUpOutboxRepository, InMemoryOutboxStorage>();
         }
     }
 }
