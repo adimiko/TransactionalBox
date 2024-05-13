@@ -2,7 +2,6 @@
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.Events;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
-using TransactionalBox.Outbox.Internals.Loggers;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
 
@@ -24,16 +23,13 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
         private readonly IOutboxWorkerTransport _transport;
 
-        private readonly IOutboxWorkerLogger<AddMessagesToTransport> _logger;
-
         public AddMessagesToTransport(
             IEventHookPublisher eventHookPublisher,
             TransportMessageFactory factory,
             IAddMessagesToTransportSettings settings,
             ISystemClock systemClock,
             IOutboxWorkerStorage storage,
-            IOutboxWorkerTransport transport,
-            IOutboxWorkerLogger<AddMessagesToTransport> logger)
+            IOutboxWorkerTransport transport)
         {
             _eventHookPublisher = eventHookPublisher;
             _factory = factory;
@@ -41,7 +37,6 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
             _clock = systemClock;
             _storage = storage;
             _transport = transport;
-            _logger = logger;
         }
 
         public async Task HandleAsync(IHookExecutionContext context, CancellationToken cancellationToken)
@@ -51,7 +46,6 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
             if (context.IsError)
             {
                 batchSize = ErrorBatchSize;
-                //TODO logg changed batchSize
             }
 
             var firstIteration = true;
@@ -62,7 +56,6 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                 if (!firstIteration)
                 {
                     batchSize = _settings.BatchSize;
-                    //TODO logg changed batchSize
                 }
 
                 numberOfMessages = await _storage.MarkMessages(context.Id, context.Name, batchSize, _clock.TimeProvider, _settings.LockTimeout).ConfigureAwait(false);
