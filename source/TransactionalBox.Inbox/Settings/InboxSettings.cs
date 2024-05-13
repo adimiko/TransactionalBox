@@ -1,5 +1,5 @@
 ﻿using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.Internals;
+using TransactionalBox.Inbox.Internals.Extensions;
 
 namespace TransactionalBox.Inbox.Settings
 {
