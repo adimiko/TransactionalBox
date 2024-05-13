@@ -79,7 +79,7 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<IPayloadCreationPolicy, PayloadHasOptimalSizePolicy>();
             services.AddSingleton<IPayloadCreationPolicy, PayloadIsLargerThanOptimalSizePolicy>();
 
-            services.AddScoped<IOutbox, InternalOutbox>();
+            services.AddScoped<IOutbox, Internals.Oubox.Outbox>();
 
             services.AddSingleton<ITranactionCommited, TranactionCommited>();
         }
