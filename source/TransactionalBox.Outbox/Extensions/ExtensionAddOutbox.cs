@@ -12,6 +12,7 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories.Policies;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Loggers;
 
 namespace TransactionalBox.Outbox
 {
@@ -82,6 +83,9 @@ namespace TransactionalBox.Outbox
             services.AddScoped<IOutbox, Internals.Oubox.Outbox>();
 
             services.AddSingleton<ITranactionCommited, TranactionCommited>();
+
+            // Loggers
+            services.AddSingleton<ICleanUpOutboxLogger, CleanUpOutboxLogger>();
         }
     }
 }

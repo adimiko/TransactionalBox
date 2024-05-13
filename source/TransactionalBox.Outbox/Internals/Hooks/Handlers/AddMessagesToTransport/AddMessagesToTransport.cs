@@ -76,6 +76,8 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
                 await _repository.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
 
+                //TODO logg numberOfMessages and iteration number
+
                 await _eventHookPublisher.PublishAsync<AddedMessagesToTransport>().ConfigureAwait(false);
 
                 firstIteration = false;

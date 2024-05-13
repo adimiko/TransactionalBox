@@ -1,5 +1,6 @@
 ﻿using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Outbox.Internals.Hooks.Events;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Loggers;
 using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
@@ -10,21 +11,30 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
 
         private readonly ICleanUpOutboxSettings _settings;
 
+        private readonly ICleanUpOutboxLogger _logger;
+
         public CleanUpOutbox(
             ICleanUpOutboxRepository repository,
-            ICleanUpOutboxSettings settings)
+            ICleanUpOutboxSettings settings,
+            ICleanUpOutboxLogger logger)
         {
             _repository = repository;
             _settings = settings;
+            _logger = logger;
         }
 
         public async Task HandleAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
+            long iteration = 1;
             int numberOfRemovedMessages = 0;
 
             do
             {
                 numberOfRemovedMessages = await _repository.RemoveProcessedMessages(_settings.BatchSize).ConfigureAwait(false);
+
+                _logger.CleanedUp(context.Name, context.Id, iteration, numberOfRemovedMessages);
+
+                iteration++;
             }
             while (!cancellationToken.IsCancellationRequested && numberOfRemovedMessages >= _settings.BatchSize);
         }
