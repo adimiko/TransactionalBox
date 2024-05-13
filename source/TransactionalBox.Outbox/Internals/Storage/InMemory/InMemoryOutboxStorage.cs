@@ -10,9 +10,14 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
 
         private readonly IKeyedInMemoryLock _keyedInMemoryLock;
 
-        public InMemoryOutboxStorage(IKeyedInMemoryLock keyedInMemoryLock)
+        private readonly ITranactionCommited _tranactionCommited;
+
+        public InMemoryOutboxStorage(
+            IKeyedInMemoryLock keyedInMemoryLock,
+            ITranactionCommited tranactionCommited)
         {
             _keyedInMemoryLock = keyedInMemoryLock;
+            _tranactionCommited = tranactionCommited;
         }
 
         public async Task Add(OutboxMessageStorage message)
@@ -21,6 +26,8 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
             {
                 _outboxMessages.Add(message);
             }
+
+            await _tranactionCommited.Commited().ConfigureAwait(false);
         }
 
         public async Task AddRange(IEnumerable<OutboxMessageStorage> messages)
@@ -29,6 +36,8 @@ namespace TransactionalBox.Outbox.Internals.Storage.InMemory
             {
                 _outboxMessages.AddRange(messages);
             }
+
+            await _tranactionCommited.Commited().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<OutboxMessageStorage>> GetMarkedMessages(Guid hookId)
