@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Loggers
+namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger
 {
     internal sealed partial class ProcessMessageLogger : IProcessMessageLogger
     {

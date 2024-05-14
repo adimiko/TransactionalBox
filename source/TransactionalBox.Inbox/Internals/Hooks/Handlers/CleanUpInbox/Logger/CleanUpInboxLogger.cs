@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Loggers
+namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger
 {
     internal sealed partial class CleanUpInboxLogger : ICleanUpInboxLogger
     {

@@ -6,7 +6,7 @@ using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Deserialization;
 using TransactionalBox.Inbox.Internals.Hooks.Events;
-using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Loggers;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 

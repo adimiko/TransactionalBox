@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Loggers
+﻿namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger
 {
     internal interface IProcessMessageLogger
     {

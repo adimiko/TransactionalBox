@@ -32,4 +32,9 @@
 	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
   </ItemGroup>
 	
+  <ItemGroup>
+    <Folder Include="Internals\BackgroundProcesses\AddMessagesToInbox\Logger\" />
+    <Folder Include="Internals\Hooks\Handlers\ProcessMessage\Loggers\" />
+  </ItemGroup>
+	
 </Project>

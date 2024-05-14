@@ -14,8 +14,8 @@ using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys;
 using TransactionalBox.Inbox.Internals.Extensions;
-using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Loggers;
-using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Loggers;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger;
 
 namespace TransactionalBox.Inbox
 {

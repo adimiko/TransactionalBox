@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Inbox.Internals.Hooks.Events;
-using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Loggers;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger;
 using TransactionalBox.Inbox.Internals.Storage;
 
 namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox

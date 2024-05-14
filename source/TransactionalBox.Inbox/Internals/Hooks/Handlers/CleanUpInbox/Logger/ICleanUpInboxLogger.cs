@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Loggers
+﻿namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger
 {
     internal interface ICleanUpInboxLogger
     {
