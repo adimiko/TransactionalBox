@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys.Logger;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 
@@ -13,14 +14,19 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotenc
 
         private readonly ICleanUpIdempotencyKeysSettings _settings;
 
+        private readonly ICleanUpIdempotencyKeysLogger _logger;
+
         public CleanUpIdempotencyKeys(
             IServiceScopeFactory serviceScopeFactory,
             ISystemClock systemClock,
-            ICleanUpIdempotencyKeysSettings settings)
+            ICleanUpIdempotencyKeysSettings settings,
+            ICleanUpIdempotencyKeysLogger logger)
+            :base(logger)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _systemClock = systemClock;
             _settings = settings;
+            _logger = logger;
         }
 
         protected override async Task Process(CancellationToken stoppingToken)
@@ -31,12 +37,20 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotenc
                 {
                     var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
 
-                    var numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
+                    var id = Guid.NewGuid();
+                    var name = typeof(CleanUpIdempotencyKeys).Name;
+                    long iteration = 1;
+                    int numberOfRemovedKeys = 0;
 
-                    while (numberOfRemovedKeys >= _settings.BatchSize)
+                    do
                     {
                         numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
+
+                        _logger.CleanedUp(name, id, iteration, numberOfRemovedKeys);
+
+                        iteration++;
                     }
+                    while (numberOfRemovedKeys >= _settings.BatchSize);
                 }
 
                 await Task.Delay(_settings.Period, _systemClock.TimeProvider, stoppingToken).ConfigureAwait(false);

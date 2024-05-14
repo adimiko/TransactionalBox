@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using TransactionalBox.Base.EventHooks;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox.Logger;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 using TransactionalBox.Inbox.Internals.Decompression;
 using TransactionalBox.Inbox.Internals.Hooks.Events;
@@ -28,6 +28,8 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
 
         private readonly IEventHookPublisher _eventHookPublisher;
 
+        private readonly IAddMessagesToInboxLogger _logger;
+
         public AddMessagesToInbox(
             IServiceProvider serviceProvider,
             IDecompression decompression,
@@ -35,7 +37,9 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             ISystemClock systemClock,
             ITopicsProvider topicsProvider,
             IAddMessagesToInboxSettings settings,
-            IEventHookPublisher eventHookPublisher)
+            IEventHookPublisher eventHookPublisher,
+            IAddMessagesToInboxLogger logger)
+            : base(logger)
         {
             _serviceProvider = serviceProvider;
             _decompression = decompression;
@@ -44,6 +48,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             _topicsProvider = topicsProvider;
             _settings = settings;
             _eventHookPublisher = eventHookPublisher;
+            _logger = logger;
         }
 
         protected override async Task Process(CancellationToken stoppingToken)

@@ -16,6 +16,8 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKey
 using TransactionalBox.Inbox.Internals.Extensions;
 using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger;
 using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox.Logger;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys.Logger;
 
 namespace TransactionalBox.Inbox
 {
@@ -123,6 +125,8 @@ namespace TransactionalBox.Inbox
             //Loggers
             services.AddSingleton<ICleanUpInboxLogger, CleanUpInboxLogger>();
             services.AddSingleton<IProcessMessageLogger, ProcessMessageLogger>();
+            services.AddSingleton<IAddMessagesToInboxLogger, AddMessagesToInboxLogger>();
+            services.AddSingleton<ICleanUpIdempotencyKeysLogger, CleanUpIdempotencyKeysLogger>();
         }
     }
 }
