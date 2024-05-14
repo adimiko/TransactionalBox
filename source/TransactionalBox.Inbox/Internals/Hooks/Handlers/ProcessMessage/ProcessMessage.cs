@@ -92,12 +92,12 @@ namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
                 var compiledHandler = _compiledInboxHandlers.GetCompiledInboxHandler(type);
 
                 await compiledHandler(handler, message, executionContext).ConfigureAwait(false);
+
+                //TODO log
+
+                await _eventHookPublisher.PublishAsync<ProcessedMessageFromInbox>().ConfigureAwait(false);
             }
             while (inboxMessage is not null);
-            //TODO now always when end because this hooks can long running
-
-            await _eventHookPublisher.PublishAsync<ProcessedMessageFromInbox>().ConfigureAwait(false);
-            //TODO create handler
         }
     }
 }
