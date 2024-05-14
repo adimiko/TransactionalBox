@@ -3,8 +3,6 @@ using TransactionalBox.Builders;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Configurators;
 using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Inbox.Internals.Storage.InMemory;
-using TransactionalBox.Inbox.Internals.Transport.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
@@ -15,6 +13,9 @@ using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox;
 using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys;
+using TransactionalBox.Inbox.Internals.Extensions;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger;
 
 namespace TransactionalBox.Inbox
 {
@@ -38,7 +39,7 @@ namespace TransactionalBox.Inbox
             }
             else
             {
-                storage.UseInternalInMemory();
+                storage.UseInMemoryStorage();
             }
 
             // Transport
@@ -50,7 +51,7 @@ namespace TransactionalBox.Inbox
             }
             else
             {
-                transport.UseInternalInMemory();
+                transport.UseInMemoryTransport();
             }
 
             // Settings
@@ -119,6 +120,9 @@ namespace TransactionalBox.Inbox
                 services.AddEventHookHandler<CleanUpInbox, ProcessedMessageFromInbox>();
             }
            
+            //Loggers
+            services.AddSingleton<ICleanUpInboxLogger, CleanUpInboxLogger>();
+            services.AddSingleton<IProcessMessageLogger, ProcessMessageLogger>();
         }
     }
 }

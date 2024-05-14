@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Logger;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Loggers
 {

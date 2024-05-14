@@ -14,6 +14,8 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Tr
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories.Policies;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Loggers;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Loggers;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Logger;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Logger;
 
 namespace TransactionalBox.Outbox
 {
