@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Base.EventHooks;
 using TransactionalBox.Outbox.Internals.Hooks.Events;
-using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Loggers;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Logger;
 using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
