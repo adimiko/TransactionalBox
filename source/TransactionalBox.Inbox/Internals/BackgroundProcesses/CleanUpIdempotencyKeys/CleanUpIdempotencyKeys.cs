@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys
 {
-    internal sealed class CleanUpIdempotencyKeys : BackgroundService
+    internal sealed class CleanUpIdempotencyKeys : BackgroundProcessBase
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -23,35 +23,23 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotenc
             _settings = settings;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task Process(CancellationToken stoppingToken)
         {
-            //TODO to refactor
-            var periodicTimer = new PeriodicTimer(_settings.Period, _systemClock.TimeProvider);
-
             while (!stoppingToken.IsCancellationRequested)
             {
-                try
+                using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    do
+                    var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
+
+                    var numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
+
+                    while (numberOfRemovedKeys >= _settings.BatchSize)
                     {
-                        using (var scope = _serviceScopeFactory.CreateScope())
-                        {
-                            var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
-
-                            var numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
-
-                            while (numberOfRemovedKeys >= _settings.BatchSize)
-                            {
-                                numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
-                            }
-                        }
+                        numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
                     }
-                    while (await periodicTimer.WaitForNextTickAsync(stoppingToken).ConfigureAwait(false));
                 }
-                catch (Exception)
-                {
-                    //TODO logging
-                }
+
+                await Task.Delay(_settings.Period, _systemClock.TimeProvider, stoppingToken).ConfigureAwait(false);
             }
         }
     }
