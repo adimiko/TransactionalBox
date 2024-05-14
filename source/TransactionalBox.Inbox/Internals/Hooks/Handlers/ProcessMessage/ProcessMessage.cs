@@ -6,6 +6,7 @@ using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Deserialization;
 using TransactionalBox.Inbox.Internals.Hooks.Events;
+using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Loggers;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 
@@ -27,6 +28,8 @@ namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
 
         private readonly IEventHookPublisher _eventHookPublisher;
 
+        private readonly IProcessMessageLogger _logger;
+
         public ProcessMessage(
             IServiceProvider serviceProvider,
             ICompiledInboxHandlers compiledInboxHandlers,
@@ -34,7 +37,8 @@ namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
             IInboxDeserializer deserializer,
             IInboxMessageTypes inboxMessageTypes,
             ISystemClock systemClock,
-            IEventHookPublisher eventHookPublisher)
+            IEventHookPublisher eventHookPublisher,
+            IProcessMessageLogger logger)
         {
             _serviceProvider = serviceProvider;
             _compiledInboxHandlers = compiledInboxHandlers;
@@ -43,10 +47,12 @@ namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
             _inboxMessageTypes = inboxMessageTypes;
             _systemClock = systemClock;
             _eventHookPublisher = eventHookPublisher;
+            _logger = logger;
         }
 
         public async Task HandleAsync(IHookExecutionContext context, CancellationToken cancellationToken)
         {
+            long iteration = 1;
             var nowUtc = _systemClock.UtcNow;
 
             //Semaphore (process all with max limit)
@@ -93,11 +99,18 @@ namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
 
                 await compiledHandler(handler, message, executionContext).ConfigureAwait(false);
 
-                //TODO log
+                _logger.Processed(context.Name, context.Id, inboxMessage.Id);
 
-                await _eventHookPublisher.PublishAsync<ProcessedMessageFromInbox>().ConfigureAwait(false);
+                if (iteration % 501 == 500) //TODO
+                {
+                    await _eventHookPublisher.PublishAsync<ProcessedMessageFromInbox>().ConfigureAwait(false);
+                }
+
+                iteration++;
             }
             while (inboxMessage is not null);
+
+            await _eventHookPublisher.PublishAsync<ProcessedMessageFromInbox>().ConfigureAwait(false);
         }
     }
 }
