@@ -2,10 +2,10 @@
 
 namespace TransactionalBox.Inbox.Transport.Kafka.Settings
 {
-    public sealed class InboxWorkerKafkaSettings : IInboxWorkerKafkaSettings
+    public sealed class InboxKafkaSettings : IInboxKafkaSettings
     {
         public string BootstrapServers { get; set; }
 
-        internal InboxWorkerKafkaSettings() { }
+        internal InboxKafkaSettings() { }
     }
 }

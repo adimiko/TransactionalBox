@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {
-    internal interface IInboxWorkerKafkaSettings
+    internal interface IInboxKafkaSettings
     {
         string BootstrapServers { get; }
     }

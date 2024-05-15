@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Inbox.Internals.Transport.InMemory
 {
-    internal sealed class InMemoryInboxWorkerTransport : IInboxWorkerTransport
+    internal sealed class InMemoryInboxWorkerTransport : IInboxTransport
     {
         private readonly IInMemoryTransport _inMemoryTransport;
 

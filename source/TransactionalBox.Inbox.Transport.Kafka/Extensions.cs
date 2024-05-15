@@ -3,6 +3,7 @@ using TransactionalBox.Inbox.Transport.Kafka.Internals;
 using TransactionalBox.Inbox.Transport.Kafka.Settings;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Transport;
+using TransactionalBox.Inbox.Internals.Transport.Topics;
 
 namespace TransactionalBox.Inbox.Transport.Kafka
 {
@@ -10,19 +11,20 @@ namespace TransactionalBox.Inbox.Transport.Kafka
     {
         public static void UseKafka(
             this IInboxTransportConfigurator inboxWorkerTransportConfigurator,
-            Action<InboxWorkerKafkaSettings> settingsConfiguration = null)
+            Action<InboxKafkaSettings> settingsConfiguration = null)
         {
             var services = inboxWorkerTransportConfigurator.Services;
-            var settings = new InboxWorkerKafkaSettings();
+            var settings = new InboxKafkaSettings();
 
             if (settingsConfiguration is not null) 
             {
                 settingsConfiguration(settings);
             }
 
-            services.AddSingleton<IInboxWorkerKafkaSettings>(settings);
-            services.AddSingleton<KafkaConfigFactory>();
-            services.AddSingleton<IInboxWorkerTransport, KafkaInboxWorkerTransport>();
+            services.AddSingleton<IInboxKafkaSettings>(settings);
+            services.AddSingleton<KafkaConsumerConfigFactory>();
+            services.AddSingleton<IInboxTransport, KafkaInboxTransport>();
+            services.AddSingleton<ITransportTopicsCreator,  KafkaTransportTopicsCreator>();
         }
     }
 }
