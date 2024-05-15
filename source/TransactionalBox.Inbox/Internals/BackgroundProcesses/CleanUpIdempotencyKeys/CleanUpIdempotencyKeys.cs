@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys.Logger;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys
 {
-    internal sealed class CleanUpIdempotencyKeys : BackgroundService
+    internal sealed class CleanUpIdempotencyKeys : BackgroundProcessBase
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -13,45 +14,46 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotenc
 
         private readonly ICleanUpIdempotencyKeysSettings _settings;
 
+        private readonly ICleanUpIdempotencyKeysLogger _logger;
+
         public CleanUpIdempotencyKeys(
             IServiceScopeFactory serviceScopeFactory,
             ISystemClock systemClock,
-            ICleanUpIdempotencyKeysSettings settings)
+            ICleanUpIdempotencyKeysSettings settings,
+            ICleanUpIdempotencyKeysLogger logger)
+            :base(logger)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _systemClock = systemClock;
             _settings = settings;
+            _logger = logger;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task Process(CancellationToken stoppingToken)
         {
-            //TODO to refactor
-            var periodicTimer = new PeriodicTimer(_settings.Period, _systemClock.TimeProvider);
-
             while (!stoppingToken.IsCancellationRequested)
             {
-                try
+                using (var scope = _serviceScopeFactory.CreateScope())
                 {
+                    var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
+
+                    var id = Guid.NewGuid();
+                    var name = typeof(CleanUpIdempotencyKeys).Name;
+                    long iteration = 1;
+                    int numberOfRemovedKeys = 0;
+
                     do
                     {
-                        using (var scope = _serviceScopeFactory.CreateScope())
-                        {
-                            var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
+                        numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
 
-                            var numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
+                        _logger.CleanedUp(name, id, iteration, numberOfRemovedKeys);
 
-                            while (numberOfRemovedKeys >= _settings.BatchSize)
-                            {
-                                numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
-                            }
-                        }
+                        iteration++;
                     }
-                    while (await periodicTimer.WaitForNextTickAsync(stoppingToken).ConfigureAwait(false));
+                    while (numberOfRemovedKeys >= _settings.BatchSize);
                 }
-                catch (Exception)
-                {
-                    //TODO logging
-                }
+
+                await Task.Delay(_settings.Period, _systemClock.TimeProvider, stoppingToken).ConfigureAwait(false);
             }
         }
     }
