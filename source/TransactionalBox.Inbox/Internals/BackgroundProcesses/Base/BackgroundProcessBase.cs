@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
-using System.Xml.Linq;
-using TransactionalBox.Base.EventHooks.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base.Logger;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.Base
 {
