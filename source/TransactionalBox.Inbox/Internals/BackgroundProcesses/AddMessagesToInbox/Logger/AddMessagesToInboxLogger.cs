@@ -9,7 +9,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
         public AddMessagesToInboxLogger(ILogger<AddMessagesToInbox> logger) => _logger = logger;
 
 
-        [LoggerMessage(0, LogLevel.Error, "Unexpected exception", SkipEnabledCheck = true)]
-        public partial void UnexpectedException(Exception exception);
+        [LoggerMessage(0, LogLevel.Error, "{name} (Attempt: {attempt} Delay: {msDelay}ms) unexpected exception", SkipEnabledCheck = true)]
+        public partial void UnexpectedException(string name, long attempt, long msDelay, Exception exception);
     }
 }

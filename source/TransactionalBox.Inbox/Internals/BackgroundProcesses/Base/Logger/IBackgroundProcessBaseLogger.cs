@@ -2,6 +2,6 @@
 {
     internal interface IBackgroundProcessBaseLogger
     {
-        void UnexpectedException(Exception exception);
+        void UnexpectedException(string name, long attempt, long msDelay, Exception exception);
     }
 }

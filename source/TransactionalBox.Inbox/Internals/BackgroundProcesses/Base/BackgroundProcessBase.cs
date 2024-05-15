@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Hosting;
+using System.Xml.Linq;
+using TransactionalBox.Base.EventHooks.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base.Logger;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.Base
 {
@@ -14,18 +17,33 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.Base
 
         protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var name = GetType().Name;
+
+            long attempt = 0;
+
             while (!stoppingToken.IsCancellationRequested) 
             {
                 try
                 {
                     await Process(stoppingToken).ConfigureAwait(false);
-                }
-                catch (Exception exception) 
-                {
-                    _logger.UnexpectedException(exception);
 
-                    //TODO delay
-                    await Task.Delay(TimeSpan.FromSeconds(1), TimeProvider.System, stoppingToken).ConfigureAwait(false);
+                    attempt = 0;
+                }
+                catch (Exception exception)
+                {
+                    attempt++;
+
+                    long msDelay = attempt * 100;
+                    const long maxMsDelay = 3000;
+
+                    if (msDelay > maxMsDelay)
+                    {
+                        msDelay = maxMsDelay;
+                    }
+
+                    _logger.UnexpectedException(name, attempt, msDelay, exception);
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(msDelay), stoppingToken).ConfigureAwait(false);
                 }
             }
         }
