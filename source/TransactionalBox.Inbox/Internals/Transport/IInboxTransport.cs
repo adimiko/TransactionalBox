@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Inbox.Internals.Transport
 {
-    internal interface IInboxWorkerTransport
+    internal interface IInboxTransport
     {
         IAsyncEnumerable<byte[]> GetMessages(IEnumerable<string> topics, CancellationToken cancellationToken);
     }

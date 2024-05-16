@@ -13,7 +13,7 @@ namespace TransactionalBox.Inbox.Internals.Extensions
             var services = configurator.Services;
 
             services.UseInternalInMemoryTransport();
-            services.AddSingleton<IInboxWorkerTransport, InMemoryInboxWorkerTransport>();
+            services.AddSingleton<IInboxTransport, InMemoryInboxWorkerTransport>();
         }
     }
 }

@@ -18,6 +18,9 @@ using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger;
 using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox.Logger;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys.Logger;
+using TransactionalBox.Base.EventHooks.Internals;
+using TransactionalBox.Inbox.Internals;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 
 namespace TransactionalBox.Inbox
 {
@@ -96,7 +99,6 @@ namespace TransactionalBox.Inbox
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
-
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
             services.AddSingleton<ICompiledInboxHandlers, CompiledInboxHandlers>();
 
@@ -104,17 +106,14 @@ namespace TransactionalBox.Inbox
 
             services.AddSingleton<IInboxContext, InboxContext>();
 
-            // Job Settings
+            // Settings
             services.AddSingleton<IAddMessagesToInboxSettings>(settings.AddMessagesToInboxSettings);
 
             services.AddSingleton<ICleanUpInboxSettings>(settings.CleanUpInboxSettings);
 
             services.AddSingleton<ICleanUpIdempotencyKeysSettings>(settings.CleanUpIdempotencyKeysSettings);
 
-            // Jobs
-            services.AddHostedService<AddMessagesToInbox>();
-            services.AddHostedService<CleanUpIdempotencyKeys>();
-
+            services.AddHostedService<InboxStartup>();
             services.AddEventHookHandler<ProcessMessage, AddedMessagesToInbox>();
 
             if (settings.CleanUpInboxSettings.IsEnabled)
@@ -122,11 +121,17 @@ namespace TransactionalBox.Inbox
                 services.AddEventHookHandler<CleanUpInbox, ProcessedMessageFromInbox>();
             }
            
-            //Loggers
+            // Loggers
             services.AddSingleton<ICleanUpInboxLogger, CleanUpInboxLogger>();
             services.AddSingleton<IProcessMessageLogger, ProcessMessageLogger>();
             services.AddSingleton<IAddMessagesToInboxLogger, AddMessagesToInboxLogger>();
             services.AddSingleton<ICleanUpIdempotencyKeysLogger, CleanUpIdempotencyKeysLogger>();
+
+
+            // BackgroundProcesses
+            services.AddSingleton<BackgroundProcessBase, AddMessagesToInbox>();
+            services.AddSingleton<BackgroundProcessBase, CleanUpIdempotencyKeys>();
+
         }
     }
 }

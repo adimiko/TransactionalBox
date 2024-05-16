@@ -18,7 +18,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
 
         private readonly IDecompression _decompression;
 
-        private readonly IInboxWorkerTransport _inboxWorkerTransport;
+        private readonly IInboxTransport _inboxWorkerTransport;
 
         private readonly ISystemClock _systemClock;
 
@@ -33,7 +33,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
         public AddMessagesToInbox(
             IServiceProvider serviceProvider,
             IDecompression decompression,
-            IInboxWorkerTransport inboxWorkerTransport,
+            IInboxTransport inboxWorkerTransport,
             ISystemClock systemClock,
             ITopicsProvider topicsProvider,
             IAddMessagesToInboxSettings settings,

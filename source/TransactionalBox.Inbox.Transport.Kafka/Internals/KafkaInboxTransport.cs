@@ -5,15 +5,15 @@ using TransactionalBox.Inbox.Internals.Transport;
 
 namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {
-    internal sealed class KafkaInboxWorkerTransport : IInboxWorkerTransport
+    internal sealed class KafkaInboxTransport : IInboxTransport
     {
         private readonly IInboxContext _inboxWorkerContext;
 
-        private readonly KafkaConfigFactory _configFactory;
+        private readonly KafkaConsumerConfigFactory _configFactory;
 
-        public KafkaInboxWorkerTransport(
+        public KafkaInboxTransport(
             IInboxContext inboxWorkerContext,
-            KafkaConfigFactory configFactory) 
+            KafkaConsumerConfigFactory configFactory) 
         {
             _inboxWorkerContext = inboxWorkerContext;
             _configFactory = configFactory;

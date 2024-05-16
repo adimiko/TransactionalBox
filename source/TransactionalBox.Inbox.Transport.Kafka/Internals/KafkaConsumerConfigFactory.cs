@@ -3,17 +3,17 @@ using TransactionalBox.Inbox.Internals.Contexts;
 
 namespace TransactionalBox.Inbox.Transport.Kafka.Internals
 {
-    internal sealed class KafkaConfigFactory
+    internal sealed class KafkaConsumerConfigFactory
     {
         private readonly IInboxContext _inboxWorkerContext;
 
-        private readonly IInboxWorkerKafkaSettings _inboxWorkerKafkaSettings;
+        private readonly IInboxKafkaSettings _inboxWorkerKafkaSettings;
 
         private ConsumerConfig? _config = null;
 
-        public KafkaConfigFactory(
+        public KafkaConsumerConfigFactory(
             IInboxContext inboxWorkerContext,
-            IInboxWorkerKafkaSettings inboxWorkerKafkaSettings) 
+            IInboxKafkaSettings inboxWorkerKafkaSettings) 
         {
             _inboxWorkerContext = inboxWorkerContext;
             _inboxWorkerKafkaSettings = inboxWorkerKafkaSettings;
