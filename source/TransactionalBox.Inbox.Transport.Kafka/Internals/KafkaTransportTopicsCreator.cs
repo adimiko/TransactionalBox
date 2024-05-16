@@ -26,11 +26,12 @@ namespace TransactionalBox.Inbox.Transport.Kafka.Internals
             {
                 try
                 {
+                    //TODO only one (if exist don't create)
                     await client.CreateTopicsAsync(topicSpecifications).ConfigureAwait(false);
                 }
-                catch (Exception e)
+                catch (CreateTopicsException)
                 {
-                    //TODO
+                    
                 }
             };
         }
