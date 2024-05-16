@@ -30,7 +30,7 @@ namespace TransactionalBox.Inbox.Transport.Kafka.Internals
                 }
                 catch (Exception e)
                 {
-
+                    //TODO
                 }
             };
         }
