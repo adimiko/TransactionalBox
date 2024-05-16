@@ -20,6 +20,7 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox.Lo
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys.Logger;
 using TransactionalBox.Base.EventHooks.Internals;
 using TransactionalBox.Inbox.Internals;
+using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 
 namespace TransactionalBox.Inbox
 {
@@ -128,8 +129,8 @@ namespace TransactionalBox.Inbox
 
 
             // BackgroundProcesses
-            services.AddHostedService<AddMessagesToInbox>();
-            services.AddHostedService<CleanUpIdempotencyKeys>();
+            services.AddSingleton<BackgroundProcessBase, AddMessagesToInbox>();
+            services.AddSingleton<BackgroundProcessBase, CleanUpIdempotencyKeys>();
 
         }
     }

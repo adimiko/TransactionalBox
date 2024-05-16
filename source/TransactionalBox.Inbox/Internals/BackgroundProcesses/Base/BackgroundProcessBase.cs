@@ -4,7 +4,7 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base.Logger;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.Base
 {
-    internal abstract class BackgroundProcessBase : BackgroundService
+    internal abstract class BackgroundProcessBase
     {
         private readonly IBackgroundProcessBaseLogger _logger;
 
@@ -13,7 +13,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.Base
             _logger = logger;
         }
 
-        protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
+        internal async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var name = GetType().Name;
 
