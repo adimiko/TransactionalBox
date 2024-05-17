@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.Storage.EntityFramework.Internals;
 using TransactionalBox.DistributedLock;
 using TransactionalBox.DistributedLock.EntityFramework;
-using TransactionalBox.Inbox.Storage.EntityFramework.Internals.EntityTypeConfigurations;
+using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Storage;
+using TransactionalBox.Inbox.Storage.EntityFramework.Internals;
 
-namespace TransactionalBox.Inbox.Storage.EntityFramework
+namespace TransactionalBox.Inbox
 {
-    public static class Extensions
+    public static class ExtensionUseEntityFramework
     {
         public static void UseEntityFramework<TDbContext>(this IInboxStorageConfigurator storageConfigurator)
             where TDbContext : DbContext
@@ -21,13 +20,6 @@ namespace TransactionalBox.Inbox.Storage.EntityFramework
             services.AddScoped<IInboxWorkerStorage, EntityFrameworkInboxWorkerStorage>();
 
             services.AddDistributedLock<InboxDistributedLock>(x => x.UseEntityFramework<TDbContext>());
-        }
-
-        public static void AddInbox(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new InboxMessageEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new IdempotentInboxKeyEntityTypeConfiguration());
-            modelBuilder.AddDistributedLock<InboxDistributedLock>();
         }
     }
 }
