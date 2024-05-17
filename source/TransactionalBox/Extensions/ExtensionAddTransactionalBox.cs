@@ -7,7 +7,7 @@ using TransactionalBox.Settings;
 
 namespace TransactionalBox
 {
-    public static class Extensions
+    public static class ExtensionAddTransactionalBox
     {
         private const string _packageName = "TransactionalBox";
 
