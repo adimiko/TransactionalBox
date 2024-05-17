@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using TransactionalBox.Inbox.Configurators;
+using TransactionalBox.Inbox.Internals.Transport.Topics;
+using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Transport.Kafka.Internals;
 using TransactionalBox.Inbox.Transport.Kafka.Settings;
-using TransactionalBox.Inbox.Configurators;
-using TransactionalBox.Inbox.Internals.Transport;
-using TransactionalBox.Inbox.Internals.Transport.Topics;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Inbox.Transport.Kafka
+namespace TransactionalBox.Inbox
 {
-    public static class Extensions
+    public static class ExtensionUseKafka
     {
         public static void UseKafka(
             this IInboxTransportConfigurator inboxWorkerTransportConfigurator,
@@ -16,7 +16,7 @@ namespace TransactionalBox.Inbox.Transport.Kafka
             var services = inboxWorkerTransportConfigurator.Services;
             var settings = new InboxKafkaSettings();
 
-            if (settingsConfiguration is not null) 
+            if (settingsConfiguration is not null)
             {
                 settingsConfiguration(settings);
             }
@@ -24,7 +24,7 @@ namespace TransactionalBox.Inbox.Transport.Kafka
             services.AddSingleton<IInboxKafkaSettings>(settings);
             services.AddSingleton<KafkaConsumerConfigFactory>();
             services.AddSingleton<IInboxTransport, KafkaInboxTransport>();
-            services.AddSingleton<ITransportTopicsCreator,  KafkaTransportTopicsCreator>();
+            services.AddSingleton<ITransportTopicsCreator, KafkaTransportTopicsCreator>();
         }
     }
 }

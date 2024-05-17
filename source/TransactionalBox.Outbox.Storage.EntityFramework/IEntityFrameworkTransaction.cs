@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Storage.EntityFramework
+﻿namespace TransactionalBox.Outbox
 {
     public interface IEntityFrameworkTransaction
     {
