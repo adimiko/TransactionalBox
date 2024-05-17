@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TransactionalBox;
 using TransactionalBox.Inbox;
 using TransactionalBox.Inbox.Storage.EntityFramework;
-using TransactionalBox.Inbox.Transport.Kafka;
+using TransactionalBox.Inbox.Kafka;
 using TransactionalBox.Sample.InboxWithWorker;
 using TransactionalBox.Inbox.Internals.Storage;
 using System.Reflection;

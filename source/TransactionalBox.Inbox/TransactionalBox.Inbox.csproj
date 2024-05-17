@@ -20,12 +20,10 @@
 	
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
-	<InternalsVisibleTo Include="$(AssemblyName).Storage.InMemory" />
 	<InternalsVisibleTo Include="TransactionalBox.Base.Inbox.Storage.InMemory" />
 	<InternalsVisibleTo Include="TransactionalBox.Base.Transport.InMemory" />
-	<InternalsVisibleTo Include="$(AssemblyName).Decompression.Brotli" />
-	<InternalsVisibleTo Include="$(AssemblyName).Decompression.GZip" />
-	<InternalsVisibleTo Include="$(AssemblyName).Transport.Kafka" />
+
+	<InternalsVisibleTo Include="$(AssemblyName).Kafka" />
 
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />

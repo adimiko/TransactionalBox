@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.Transport;
 
-namespace TransactionalBox.Inbox.Transport.Kafka.Internals
+namespace TransactionalBox.Inbox.Kafka.Internals
 {
     internal sealed class KafkaInboxTransport : IInboxTransport
     {
