@@ -6,21 +6,34 @@
 
 [![🚧 - Under Development](https://img.shields.io/badge/🚧-Under_Development-orange)](https://)
 ![Licence - MIT](https://img.shields.io/badge/Licence-MIT-2ea44f)
-[![Documentation](https://img.shields.io/badge/Documentation-2ea44f?logo=googledocs&logoColor=white)](https://transactionalbox.com/)
 [![Nugets](https://img.shields.io/badge/Nugets-2ea44f?logo=nuget)](https://www.nuget.org/packages?q=TransactionalBox)
 [![Linkedin](https://img.shields.io/badge/Linkedin-2ea44f?logo=linkedin)](https://www.linkedin.com/in/adimiko/)
 
 </div>
 
-:star: - The star motivates me a lot!   
+#### :star: - The star motivates me a lot!   
 
 **Transactional box is an implementation of the outbox and inbox pattern in .NET.**   
 **Ensures eventual consistency when modules need to communicate with each other over the network.**
+
+### [:book: Documentation](https://transactionalbox.com/)   
 
 Examples of problems that occur during network communication:
 - lost messages
 - the same messages were processed again
 - unavailable services
+
+## :clapper: Run Sample
+> [!NOTE]
+> Docker is required.
+
+Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the `TransactionalBox.Sample.WebApi` as startup and then run. You should see the following view.
+
+<div align="center">
+    <img src="assets/samples/web-api-sample.png">
+</div>
+
+Have fun :smiley:!
 
 ## ✨ Features
 #### Actions
@@ -96,19 +109,7 @@ Examples of problems that occur during network communication:
 - [ ] Own transport message serialier and deseralizer (with StringBuilder)
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
-- [ ] Transport discriminator (one outbox many transport, tagged message) 
-
-## :clapper: Run Sample
-> [!NOTE]
-> Docker is required.
-
-Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the `TransactionalBox.Sample.WebApi` as startup and then run. You should see the following view.
-
-<div align="center">
-    <img src="assets/samples/web-api-sample.png">
-</div>
-
-Have fun :smiley:!
+- [ ] Transport discriminator (one outbox many transport, tagged message)
 
 ## :european_castle: Architecture
 The transactional box consists of four basic components.
