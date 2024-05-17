@@ -27,11 +27,5 @@ namespace TransactionalBox.Outbox
 
             services.AddDistributedLock<OutboxDistributedLock>(x => x.UseEntityFramework());
         }
-
-        public static void AddOutbox(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfiguration());
-            modelBuilder.AddDistributedLock<OutboxDistributedLock>();
-        }
     }
 }
