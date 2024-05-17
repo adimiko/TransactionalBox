@@ -4,9 +4,9 @@ using TransactionalBox.Outbox.Internals.Transport;
 using TransactionalBox.Outbox.Transport.Kafka.Internals;
 using TransactionalBox.Outbox.Transport.Kafka.Settings;
 
-namespace TransactionalBox.Outbox.Transport.Kafka
+namespace TransactionalBox.Outbox
 {
-    public static class Extensions
+    public static class ExtensionUseKafka
     {
         public static void UseKafka(
             this IOutboxTransportConfigurator outboxWorkerTransportConfigurator,
