@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using TransactionalBox.Outbox.Internals.Transport;
 
-namespace TransactionalBox.Outbox.Transport.Kafka.Internals
+namespace TransactionalBox.Outbox.Kafka.Internals
 {
     internal sealed class KafkaOutboxTransport : IOutboxTransport
     {

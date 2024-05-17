@@ -1,7 +1,5 @@
 using TransactionalBox;
 using TransactionalBox.Outbox;
-using TransactionalBox.Outbox.Storage.EntityFramework;
-using TransactionalBox.Outbox.Transport.Kafka;
 using TransactionalBox.Sample.OutboxWithWorker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;

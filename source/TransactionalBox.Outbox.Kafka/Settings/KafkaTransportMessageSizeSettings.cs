@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Outbox.Internals.Transport;
 
-namespace TransactionalBox.Outbox.Transport.Kafka.Settings
+namespace TransactionalBox.Outbox.Kafka.Settings
 {
     public sealed class KafkaTransportMessageSizeSettings : ITransportMessageSizeSettings
     {

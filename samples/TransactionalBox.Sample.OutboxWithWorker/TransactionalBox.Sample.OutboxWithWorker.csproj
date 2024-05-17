@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Kafka\TransactionalBox.Outbox.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Storage.EntityFramework\TransactionalBox.Outbox.Storage.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\source\TransactionalBox.Outbox.Transport.Kafka\TransactionalBox.Outbox.Transport.Kafka.csproj" />
     <ProjectReference Include="..\..\source\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
   </ItemGroup>
 

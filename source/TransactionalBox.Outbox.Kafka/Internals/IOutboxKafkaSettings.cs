@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Transport.Kafka.Internals
+﻿namespace TransactionalBox.Outbox.Kafka.Internals
 {
     internal interface IOutboxKafkaSettings
     {
