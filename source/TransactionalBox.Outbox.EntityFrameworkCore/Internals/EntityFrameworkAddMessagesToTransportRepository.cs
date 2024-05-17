@@ -4,7 +4,7 @@ using TransactionalBox.DistributedLock;
 using TransactionalBox.Outbox.Internals.Storage;
 using System.Net;
 
-namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
+namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
 {
     internal sealed class EntityFrameworkAddMessagesToTransportRepository : IAddMessagesToTransportRepository
     {

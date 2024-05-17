@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.Outbox.Internals.Storage;
 
-namespace TransactionalBox.Outbox.Storage.EntityFramework.Internals
+namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
 {
     internal sealed class EntityFrameworkOutboxStorage : IOutboxStorage
     {

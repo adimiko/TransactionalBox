@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.DistributedLock.EntityFramework;
 using TransactionalBox.Outbox.Internals.Storage;
-using TransactionalBox.Outbox.Storage.EntityFramework.Internals.EntityTypeConfigurations;
+using TransactionalBox.Outbox.EntityFrameworkCore.Internals.EntityTypeConfigurations;
 
 namespace TransactionalBox.Outbox
 {
