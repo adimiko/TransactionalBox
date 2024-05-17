@@ -3,7 +3,7 @@ using TransactionalBox.DistributedLock;
 using System.Data;
 using TransactionalBox.Inbox.Internals.Storage;
 
-namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals
+namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals
 {
     internal sealed class EntityFrameworkInboxStorage : IInboxStorage
     {

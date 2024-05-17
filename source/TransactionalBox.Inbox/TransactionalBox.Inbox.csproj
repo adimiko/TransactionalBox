@@ -19,10 +19,9 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <InternalsVisibleTo Include="$(AssemblyName).Storage.EntityFramework" />
-	<InternalsVisibleTo Include="TransactionalBox.Base.Inbox.Storage.InMemory" />
+    
 	<InternalsVisibleTo Include="TransactionalBox.Base.Transport.InMemory" />
-
+	<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />
 	<InternalsVisibleTo Include="$(AssemblyName).Kafka" />
 
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.DistributedLock.EntityFramework;
 using TransactionalBox.Inbox.Internals.Storage;
-using TransactionalBox.Inbox.Storage.EntityFramework.Internals.EntityTypeConfigurations;
+using TransactionalBox.Inbox.EntityFrameworkCore.Internals.EntityTypeConfigurations;
 
 namespace TransactionalBox.Inbox
 {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TransactionalBox.Inbox.Internals.Storage;
 
-namespace TransactionalBox.Inbox.Storage.EntityFramework.Internals.EntityTypeConfigurations
+namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals.EntityTypeConfigurations
 {
     internal sealed class InboxMessageEntityTypeConfiguration : IEntityTypeConfiguration<InboxMessageStorage>
     {
