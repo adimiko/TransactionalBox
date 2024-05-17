@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Configurators;
-using TransactionalBox.Outbox.Storage.EntityFramework.Internals;
-using TransactionalBox.DistributedLock.EntityFramework;
-using TransactionalBox.DistributedLock;
-using TransactionalBox.Outbox.Storage.EntityFramework.Internals.EntityTypeConfigurations;
 using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Outbox.Storage.EntityFramework.Internals.EntityTypeConfigurations;
+using TransactionalBox.Outbox.Storage.EntityFramework.Internals;
+using TransactionalBox.Outbox.Storage.EntityFramework;
+using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.DistributedLock;
+using TransactionalBox.DistributedLock.EntityFramework;
 
-namespace TransactionalBox.Outbox.Storage.EntityFramework
+namespace TransactionalBox.Outbox
 {
-    public static class Extensions
+    public static class ExtensionUseEntityFramework
     {
         public static void UseEntityFramework<TDbContext>(this IOutboxStorageConfigurator outboxStorageConfigurator)
             where TDbContext : DbContext
