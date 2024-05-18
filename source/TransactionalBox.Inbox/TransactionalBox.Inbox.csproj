@@ -12,9 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.Base.EventHooks\TransactionalBox.Base.EventHooks.csproj" />
-    <ProjectReference Include="..\TransactionalBox.Base.Transport.InMemory\TransactionalBox.Base.Transport.InMemory.csproj" />
-    <ProjectReference Include="..\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.Base.EventHooks\TransactionalBox.Base.EventHooks.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.Base.Transport.InMemory\TransactionalBox.Base.Transport.InMemory.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.KeyedInMemoryLock\TransactionalBox.KeyedInMemoryLock.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 	
