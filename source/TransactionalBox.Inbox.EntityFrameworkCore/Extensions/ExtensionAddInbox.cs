@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.DistributedLock.EntityFramework;
+using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.EntityFrameworkCore.Internals.EntityTypeConfigurations;
 

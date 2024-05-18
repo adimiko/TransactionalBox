@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.DistributedLock.Configurators
+namespace TransactionalBox.Internals.DistributedLock.Configurators
 {
     public interface IDistributedLockStorageConfigurator
     {

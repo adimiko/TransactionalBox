@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.DistributedLock
+﻿namespace TransactionalBox.Internals.DistributedLock
 {
     public interface IDistributedLock<T>
         where T : Lock, new()

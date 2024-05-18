@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
-using TransactionalBox.DistributedLock.Internals.Contracts;
+using TransactionalBox.Internals.DistributedLock.Internals.Contracts;
 
-namespace TransactionalBox.DistributedLock.EntityFramework.Internals
+namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Internals
 {
     internal sealed class EntityFrameworkDistributedLockStorage : IDistributedLockStorage
     {

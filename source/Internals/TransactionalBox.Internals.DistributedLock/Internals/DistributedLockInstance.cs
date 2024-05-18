@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.DistributedLock.Internals.Contracts;
+using TransactionalBox.Internals.DistributedLock.Internals.Contracts;
 using TransactionalBox.Internals.KeyedInMemoryLock;
 
-namespace TransactionalBox.DistributedLock.Internals
+namespace TransactionalBox.Internals.DistributedLock.Internals
 {
     internal sealed class DistributedLockInstance<T> : IDistributedLockInstance
         where T : Lock, new()

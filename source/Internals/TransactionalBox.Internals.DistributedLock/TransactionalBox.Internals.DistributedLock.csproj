@@ -4,9 +4,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
   </ItemGroup>
-
+	
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
+    <InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />
   </ItemGroup>
-
+	
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj" />
+  </ItemGroup>
+	
 </Project>

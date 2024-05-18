@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
-using TransactionalBox.DistributedLock.Internals.Contracts;
+using TransactionalBox.Internals.DistributedLock.Internals.Contracts;
 using TransactionalBox.Internals.KeyedInMemoryLock;
 
-namespace TransactionalBox.DistributedLock.Internals
+namespace TransactionalBox.Internals.DistributedLock.Internals
 {
     internal sealed class InternalDistributedLock<T> : IDistributedLock<T>
         where T : Lock, new()

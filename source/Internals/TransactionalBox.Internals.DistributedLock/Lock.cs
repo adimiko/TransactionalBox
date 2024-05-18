@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.DistributedLock
+﻿namespace TransactionalBox.Internals.DistributedLock
 {
     public abstract class Lock
     {

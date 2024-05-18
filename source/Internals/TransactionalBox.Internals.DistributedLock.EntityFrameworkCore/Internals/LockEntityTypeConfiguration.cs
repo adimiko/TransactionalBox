@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace TransactionalBox.DistributedLock.EntityFramework.Internals
+namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Internals
 {
     internal sealed class LockEntityTypeConfiguration<T> : IEntityTypeConfiguration<T>
         where T : Lock

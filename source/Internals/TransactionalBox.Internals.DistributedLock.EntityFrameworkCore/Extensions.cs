@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.DistributedLock.Configurators;
-using TransactionalBox.DistributedLock.EntityFramework.Internals;
-using TransactionalBox.DistributedLock.Internals.Contracts;
+using TransactionalBox.Internals.DistributedLock.Configurators;
+using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Internals;
+using TransactionalBox.Internals.DistributedLock.Internals.Contracts;
 
-namespace TransactionalBox.DistributedLock.EntityFramework
+namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore
 {
     public static class Extensions
     {

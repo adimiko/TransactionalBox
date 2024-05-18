@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.DistributedLock.Configurators;
+using TransactionalBox.Internals.DistributedLock.Configurators;
 
-namespace TransactionalBox.DistributedLock.Internals.Configurators
+namespace TransactionalBox.Internals.DistributedLock.Internals.Configurators
 {
     internal sealed class DistributedLockStorageConfigurator : IDistributedLockStorageConfigurator
     {

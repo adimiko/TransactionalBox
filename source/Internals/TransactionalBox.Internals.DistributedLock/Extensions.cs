@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.DistributedLock.Configurators;
-using TransactionalBox.DistributedLock.Internals;
-using TransactionalBox.DistributedLock.Internals.Configurators;
+using TransactionalBox.Internals.DistributedLock.Configurators;
+using TransactionalBox.Internals.DistributedLock.Internals;
+using TransactionalBox.Internals.DistributedLock.Internals.Configurators;
 using TransactionalBox.Internals.KeyedInMemoryLock;
 
-namespace TransactionalBox.DistributedLock
+namespace TransactionalBox.Internals.DistributedLock
 {
     public static class Extensions
     {

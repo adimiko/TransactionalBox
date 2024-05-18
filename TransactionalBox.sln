@@ -43,15 +43,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Inbox.Enti
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internals", "Internals", "{9C70A8B9-322F-49D5-AF08-889B6BBB161C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.DistributedLock.EntityFramework", "source\Internals\TransactionalBox.DistributedLock.EntityFramework\TransactionalBox.DistributedLock.EntityFramework.csproj", "{8425F9FA-9854-4A2F-B41E-6343D382F23A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.DistributedLock", "source\Internals\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj", "{BFDCAEF5-4016-49E2-9B3A-525034C03708}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.EventHooks", "source\Internals\TransactionalBox.Internals.EventHooks\TransactionalBox.Internals.EventHooks.csproj", "{891F6713-08CE-4FCF-881C-BBA258C18C72}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.KeyedInMemoryLock", "source\Internals\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj", "{59EA3E37-092B-4E7C-A14F-CC6FD58709FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.Transport.InMemory", "source\Internals\TransactionalBox.Internals.Transport.InMemory\TransactionalBox.Internals.Transport.InMemory.csproj", "{876EE663-DA64-460F-91C1-4FC281D17D00}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.DistributedLock.EntityFrameworkCore", "source\Internals\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.csproj", "{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.DistributedLock", "source\Internals\TransactionalBox.Internals.DistributedLock\TransactionalBox.Internals.DistributedLock.csproj", "{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,14 +123,6 @@ Global
 		{5457AED6-0F0B-4585-87B9-45B86B59C87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5457AED6-0F0B-4585-87B9-45B86B59C87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5457AED6-0F0B-4585-87B9-45B86B59C87B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8425F9FA-9854-4A2F-B41E-6343D382F23A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8425F9FA-9854-4A2F-B41E-6343D382F23A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8425F9FA-9854-4A2F-B41E-6343D382F23A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8425F9FA-9854-4A2F-B41E-6343D382F23A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFDCAEF5-4016-49E2-9B3A-525034C03708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFDCAEF5-4016-49E2-9B3A-525034C03708}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFDCAEF5-4016-49E2-9B3A-525034C03708}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFDCAEF5-4016-49E2-9B3A-525034C03708}.Release|Any CPU.Build.0 = Release|Any CPU
 		{891F6713-08CE-4FCF-881C-BBA258C18C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{891F6713-08CE-4FCF-881C-BBA258C18C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{891F6713-08CE-4FCF-881C-BBA258C18C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -143,6 +135,14 @@ Global
 		{876EE663-DA64-460F-91C1-4FC281D17D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{876EE663-DA64-460F-91C1-4FC281D17D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{876EE663-DA64-460F-91C1-4FC281D17D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,11 +165,11 @@ Global
 		{A4B0AC6A-3F7D-402A-BA47-94B00B35DAB5} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{5457AED6-0F0B-4585-87B9-45B86B59C87B} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{9C70A8B9-322F-49D5-AF08-889B6BBB161C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{8425F9FA-9854-4A2F-B41E-6343D382F23A} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
-		{BFDCAEF5-4016-49E2-9B3A-525034C03708} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
 		{891F6713-08CE-4FCF-881C-BBA258C18C72} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
 		{59EA3E37-092B-4E7C-A14F-CC6FD58709FC} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
 		{876EE663-DA64-460F-91C1-4FC281D17D00} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
+		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
+		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}
