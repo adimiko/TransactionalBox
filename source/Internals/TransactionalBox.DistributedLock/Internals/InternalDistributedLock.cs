@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using TransactionalBox.DistributedLock.Internals.Contracts;
-using TransactionalBox.KeyedInMemoryLock;
+using TransactionalBox.Internals.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock.Internals
 {

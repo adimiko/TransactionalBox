@@ -10,7 +10,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\TransactionalBox.KeyedInMemoryLock\TransactionalBox.KeyedInMemoryLock.csproj" />
+    <ProjectReference Include="..\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj" />
   </ItemGroup>
 	
 </Project>

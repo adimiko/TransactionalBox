@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
 using TransactionalBox.DistributedLock.EntityFramework.Tests.SeedWork;
-using TransactionalBox.KeyedInMemoryLock;
+using TransactionalBox.Internals.KeyedInMemoryLock;
 using Xunit;
 
 namespace TransactionalBox.DistributedLock.EntityFramework.Tests

@@ -1,4 +1,4 @@
-﻿using TransactionalBox.KeyedInMemoryLock;
+﻿using TransactionalBox.Internals.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock.EntityFramework.Tests.SeedWork
 {

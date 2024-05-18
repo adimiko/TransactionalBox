@@ -2,7 +2,7 @@
 using TransactionalBox.Inbox.Internals.Storage.InMemory;
 using TransactionalBox.Inbox.Internals.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.KeyedInMemoryLock;
+using TransactionalBox.Internals.KeyedInMemoryLock;
 
 namespace TransactionalBox.Inbox.Internals.Extensions
 {

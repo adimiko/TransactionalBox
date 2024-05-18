@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace TransactionalBox.KeyedInMemoryLock.Internals
+namespace TransactionalBox.Internals.KeyedInMemoryLock.Internals
 {
     internal sealed class InternalKeyedInMemoryLock : IKeyedInMemoryLock
     {

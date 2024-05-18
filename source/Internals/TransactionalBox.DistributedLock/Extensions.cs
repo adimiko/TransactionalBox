@@ -2,7 +2,7 @@
 using TransactionalBox.DistributedLock.Configurators;
 using TransactionalBox.DistributedLock.Internals;
 using TransactionalBox.DistributedLock.Internals.Configurators;
-using TransactionalBox.KeyedInMemoryLock;
+using TransactionalBox.Internals.KeyedInMemoryLock;
 
 namespace TransactionalBox.DistributedLock
 {

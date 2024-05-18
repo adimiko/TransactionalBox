@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.KeyedInMemoryLock.Internals
+﻿namespace TransactionalBox.Internals.KeyedInMemoryLock.Internals
 {
     internal sealed class LockInstance : ILockInstance
     {

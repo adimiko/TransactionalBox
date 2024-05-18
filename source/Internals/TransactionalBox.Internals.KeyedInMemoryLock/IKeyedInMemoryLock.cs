@@ -1,6 +1,6 @@
-﻿using TransactionalBox.KeyedInMemoryLock.Internals;
+﻿using TransactionalBox.Internals.KeyedInMemoryLock.Internals;
 
-namespace TransactionalBox.KeyedInMemoryLock
+namespace TransactionalBox.Internals.KeyedInMemoryLock
 {
     public interface IKeyedInMemoryLock
     {
