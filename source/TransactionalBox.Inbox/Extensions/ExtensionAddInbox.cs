@@ -7,7 +7,7 @@ using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers;
 using TransactionalBox.Inbox.Settings;
-using TransactionalBox.Base.EventHooks;
+using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Inbox.Internals.Hooks.Events;
 using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox;
 using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage;
@@ -18,7 +18,7 @@ using TransactionalBox.Inbox.Internals.Hooks.Handlers.CleanUpInbox.Logger;
 using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox.Logger;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys.Logger;
-using TransactionalBox.Base.EventHooks.Internals;
+using TransactionalBox.Internals.EventHooks.Internals;
 using TransactionalBox.Inbox.Internals;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 

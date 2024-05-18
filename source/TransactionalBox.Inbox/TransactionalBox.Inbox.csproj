@@ -12,16 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Internals\TransactionalBox.Base.EventHooks\TransactionalBox.Base.EventHooks.csproj" />
-    <ProjectReference Include="..\Internals\TransactionalBox.Base.Transport.InMemory\TransactionalBox.Base.Transport.InMemory.csproj" />
-    <ProjectReference Include="..\Internals\TransactionalBox.DistributedLock\TransactionalBox.DistributedLock.csproj" />
-    <ProjectReference Include="..\Internals\TransactionalBox.KeyedInMemoryLock\TransactionalBox.KeyedInMemoryLock.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.Internals.EventHooks\TransactionalBox.Internals.EventHooks.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.Internals.Transport.InMemory\TransactionalBox.Internals.Transport.InMemory.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.Internals.DistributedLock\TransactionalBox.Internals.DistributedLock.csproj" />
+    <ProjectReference Include="..\Internals\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj" />
     <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 	
   <ItemGroup>
     
-	<InternalsVisibleTo Include="TransactionalBox.Base.Transport.InMemory" />
+	<InternalsVisibleTo Include="TransactionalBox.Internals.Transport.InMemory" />
 	<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />
 	<InternalsVisibleTo Include="$(AssemblyName).Kafka" />
 

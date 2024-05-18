@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace TransactionalBox.KeyedInMemoryLock.Tests;
+namespace TransactionalBox.Internals.KeyedInMemoryLock.Tests;
 
 public sealed class KeyedInMemoryLockTest
 {

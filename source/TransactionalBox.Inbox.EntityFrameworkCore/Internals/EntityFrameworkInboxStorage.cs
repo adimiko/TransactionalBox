@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.DistributedLock;
+using TransactionalBox.Internals.DistributedLock;
 using System.Data;
 using TransactionalBox.Inbox.Internals.Storage;
 

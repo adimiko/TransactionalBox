@@ -1,4 +1,4 @@
-﻿using TransactionalBox.DistributedLock;
+﻿using TransactionalBox.Internals.DistributedLock;
 
 namespace TransactionalBox.Inbox.Internals.Storage
 {

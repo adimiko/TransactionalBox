@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Base.EventHooks;
+﻿using TransactionalBox.Internals.EventHooks;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.Events
 {
