@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Base.Transport.InMemory.Internals
+﻿namespace TransactionalBox.Internals.Transport.InMemory.Internals
 {
     internal sealed class TransportObject
     {

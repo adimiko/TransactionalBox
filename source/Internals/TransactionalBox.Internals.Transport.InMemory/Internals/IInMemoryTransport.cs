@@ -1,6 +1,6 @@
 ﻿using System.Threading.Channels;
 
-namespace TransactionalBox.Base.Transport.InMemory.Internals
+namespace TransactionalBox.Internals.Transport.InMemory.Internals
 {
     internal interface IInMemoryTransport
     {
