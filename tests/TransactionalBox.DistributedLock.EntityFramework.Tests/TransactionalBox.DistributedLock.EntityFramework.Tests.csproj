@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\TransactionalBox.DistributedLock.EntityFramework\TransactionalBox.DistributedLock.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\source\Internals\TransactionalBox.DistributedLock.EntityFramework\TransactionalBox.DistributedLock.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>

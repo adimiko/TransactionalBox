@@ -7,6 +7,11 @@ for dir in source/*/
 do
     dir=${dir%*/}
     
+    if [[ ${dir##*/} == 'Internals' ]]
+	then
+		continue
+	fi
+
     echo Deploying package:  ${dir##*/}
 
     exec ./.github/scripts/deploy-package.sh  ${dir##*/} &
