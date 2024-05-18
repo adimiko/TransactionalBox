@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Base.EventHooks.Internals;
-using TransactionalBox.Base.EventHooks.Internals.Loggers;
+using TransactionalBox.Internals.EventHooks.Internals;
+using TransactionalBox.Internals.EventHooks.Internals.Loggers;
 
-namespace TransactionalBox.Base.EventHooks
+namespace TransactionalBox.Internals.EventHooks
 {
     internal static class Extensions
     {

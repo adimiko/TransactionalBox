@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Base.EventHooks
+﻿namespace TransactionalBox.Internals.EventHooks
 {
     internal interface IEventHookPublisher
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace TransactionalBox.Base.EventHooks.Internals
+namespace TransactionalBox.Internals.EventHooks.Internals
 {
     internal sealed class Startup : BackgroundService
     {

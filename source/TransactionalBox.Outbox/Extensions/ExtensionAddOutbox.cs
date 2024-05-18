@@ -5,7 +5,7 @@ using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Internals.Oubox;
 using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Outbox.Settings;
-using TransactionalBox.Base.EventHooks;
+using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Hooks.Events;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox;

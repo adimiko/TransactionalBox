@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Base.EventHooks;
+﻿using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.Events;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Logger;

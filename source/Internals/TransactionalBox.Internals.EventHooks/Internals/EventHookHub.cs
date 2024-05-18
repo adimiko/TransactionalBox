@@ -1,6 +1,6 @@
 ﻿using System.Threading.Channels;
 
-namespace TransactionalBox.Base.EventHooks.Internals
+namespace TransactionalBox.Internals.EventHooks.Internals
 {
     internal sealed class EventHookHub<TEventHook> where TEventHook : EventHook, new()
     {
