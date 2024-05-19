@@ -1,4 +1,6 @@
-﻿namespace TransactionalBox.Internals.EventHooks
+﻿using TransactionalBox.Internals.EventHooks.Contexts;
+
+namespace TransactionalBox.Internals.EventHooks
 {
     internal interface IEventHookHandler<T>
         where T : EventHook, new()
