@@ -19,7 +19,7 @@ namespace TransactionalBox.Inbox
             services.AddScoped<IInboxStorage, EntityFrameworkInboxStorage>();
             services.AddScoped<IInboxWorkerStorage, EntityFrameworkInboxWorkerStorage>();
 
-            services.AddDistributedLock<InboxDistributedLock>(x => x.UseEntityFramework<TDbContext>());
+            services.AddDistributedLock<InboxDistributedLock>(x => x.UseEntityFrameworkCore<TDbContext>());
         }
     }
 }

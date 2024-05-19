@@ -23,7 +23,7 @@ namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests
 
             services.AddDbContextPool<TestDbContext>(x => x.UseNpgsql(connectionString));
 
-            services.AddDistributedLock<TestLock>(x => x.UseEntityFramework<TestDbContext>());
+            services.AddDistributedLock<TestLock>(x => x.UseEntityFrameworkCore<TestDbContext>());
 
             // KeyedInMemoryLock is disabled because we want multiple tasks to query the database
             services.AddSingleton<IKeyedInMemoryLock, DisabledKeyedInMemoryLock>();
