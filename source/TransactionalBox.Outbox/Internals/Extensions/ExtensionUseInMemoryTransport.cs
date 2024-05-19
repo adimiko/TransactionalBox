@@ -1,8 +1,8 @@
 ﻿using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Transport.InMemory;
 using TransactionalBox.Outbox.Internals.Transport;
-using TransactionalBox.Internals.Transport.InMemory.Internals;
 using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Internals.Transport.InMemory;
 
 namespace TransactionalBox.Outbox.Internals.Extensions
 {
