@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Storage;
-using TransactionalBox.Outbox.EntityFrameworkCore.Internals.EntityTypeConfigurations;
 using TransactionalBox.Outbox.EntityFrameworkCore.Internals;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Internals.DistributedLock;
 using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore;
+using TransactionalBox.Internals.DistributedLock.Extensions;
 
 namespace TransactionalBox.Outbox
 {
@@ -25,7 +24,7 @@ namespace TransactionalBox.Outbox
             services.AddScoped<IAddMessagesToTransportRepository, EntityFrameworkAddMessagesToTransportRepository>();
             services.AddScoped<ICleanUpOutboxRepository, EntityFrameworkCleanUpOutboxRepository>();
 
-            services.AddDistributedLock<OutboxDistributedLock>(x => x.UseEntityFramework());
+            services.AddDistributedLock<OutboxDistributedLock>(x => x.UseEntityFrameworkCore());
         }
     }
 }

@@ -5,6 +5,7 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Lo
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Transport;
+using TransactionalBox.Internals.EventHooks.Contexts;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport
 {

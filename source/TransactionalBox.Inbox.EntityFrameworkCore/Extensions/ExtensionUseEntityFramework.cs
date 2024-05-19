@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Internals.DistributedLock;
 using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.EntityFrameworkCore.Internals;
+using TransactionalBox.Internals.DistributedLock.Extensions;
 
 namespace TransactionalBox.Inbox
 {
@@ -19,7 +19,7 @@ namespace TransactionalBox.Inbox
             services.AddScoped<IInboxStorage, EntityFrameworkInboxStorage>();
             services.AddScoped<IInboxWorkerStorage, EntityFrameworkInboxWorkerStorage>();
 
-            services.AddDistributedLock<InboxDistributedLock>(x => x.UseEntityFramework<TDbContext>());
+            services.AddDistributedLock<InboxDistributedLock>(x => x.UseEntityFrameworkCore<TDbContext>());
         }
     }
 }

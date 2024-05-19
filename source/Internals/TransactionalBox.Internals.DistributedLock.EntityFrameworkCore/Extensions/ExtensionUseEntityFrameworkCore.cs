@@ -6,9 +6,9 @@ using TransactionalBox.Internals.DistributedLock.Internals.Contracts;
 
 namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore
 {
-    public static class Extensions
+    internal static class ExtensionUseEntityFrameworkCore
     {
-        public static IServiceCollection UseEntityFramework<TDbContext>(
+        internal static IServiceCollection UseEntityFrameworkCore<TDbContext>(
             this IDistributedLockStorageConfigurator storageConfigurator)
             where TDbContext : DbContext
         {
@@ -20,7 +20,7 @@ namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore
             return services;
         }
 
-        public static IServiceCollection UseEntityFramework(
+        internal static IServiceCollection UseEntityFrameworkCore(
             this IDistributedLockStorageConfigurator storageConfigurator)
         {
             var services = storageConfigurator.Services;
@@ -29,12 +29,5 @@ namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore
 
             return services;
         }
-
-        public static void AddDistributedLock<T>(this ModelBuilder modelBuilder) 
-            where T : Lock, new()
-        {
-            modelBuilder.ApplyConfiguration(new LockEntityTypeConfiguration<T>());
-        }
-
     }
 }

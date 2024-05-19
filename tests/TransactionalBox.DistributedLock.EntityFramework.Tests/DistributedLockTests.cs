@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
 using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests.SeedWork;
+using TransactionalBox.Internals.DistributedLock.Extensions;
 using TransactionalBox.Internals.KeyedInMemoryLock;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests
 
             services.AddDbContextPool<TestDbContext>(x => x.UseNpgsql(connectionString));
 
-            services.AddDistributedLock<TestLock>(x => x.UseEntityFramework<TestDbContext>());
+            services.AddDistributedLock<TestLock>(x => x.UseEntityFrameworkCore<TestDbContext>());
 
             // KeyedInMemoryLock is disabled because we want multiple tasks to query the database
             services.AddSingleton<IKeyedInMemoryLock, DisabledKeyedInMemoryLock>();

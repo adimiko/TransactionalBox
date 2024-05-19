@@ -4,7 +4,7 @@ using TransactionalBox.Internals.EventHooks.Internals.Loggers;
 
 namespace TransactionalBox.Internals.EventHooks
 {
-    internal static class Extensions
+    internal static class ExtensionAddEventHookHandler
     {
         internal static void AddEventHookHandler<THookListener, THook>(this IServiceCollection services)
             where THookListener : class, IEventHookHandler<THook>
@@ -20,7 +20,7 @@ namespace TransactionalBox.Internals.EventHooks
 
             services.AddSingleton(typeof(IHookListnerLogger<THook>), typeof(HookListnerLogger<THook>));
 
-            services.AddHostedService<Startup>();
+            services.AddHostedService<EventHooksStartup>();
         }
 
     }

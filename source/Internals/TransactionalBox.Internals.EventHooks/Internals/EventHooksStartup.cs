@@ -2,11 +2,11 @@
 
 namespace TransactionalBox.Internals.EventHooks.Internals
 {
-    internal sealed class Startup : BackgroundService
+    internal sealed class EventHooksStartup : BackgroundService
     {
         private readonly IEnumerable<IInternalHookListenersLauncher> _hookListenersLauncher;
 
-        public Startup(
+        public EventHooksStartup(
             IEnumerable<IInternalHookListenersLauncher> hookListenersLauncher) 
         {
             _hookListenersLauncher = hookListenersLauncher;

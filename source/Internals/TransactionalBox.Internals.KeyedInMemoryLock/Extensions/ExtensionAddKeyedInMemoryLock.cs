@@ -3,9 +3,9 @@ using TransactionalBox.Internals.KeyedInMemoryLock.Internals;
 
 namespace TransactionalBox.Internals.KeyedInMemoryLock
 {
-    public static class Extensions
+    internal static class ExtensionAddKeyedInMemoryLock
     {
-        public static IServiceCollection AddKeyedInMemoryLock(this IServiceCollection services)
+        internal static IServiceCollection AddKeyedInMemoryLock(this IServiceCollection services)
         {
             services.AddSingleton<IKeyedInMemoryLock, InternalKeyedInMemoryLock>();
 

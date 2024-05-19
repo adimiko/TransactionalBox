@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Internals.DistributedLock
 {
-    public abstract class Lock
+    internal abstract class Lock
     {
         public string Key { get; init; }
 

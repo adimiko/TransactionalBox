@@ -1,8 +1,6 @@
-﻿using TransactionalBox.Internals.KeyedInMemoryLock.Internals;
-
-namespace TransactionalBox.Internals.KeyedInMemoryLock
+﻿namespace TransactionalBox.Internals.KeyedInMemoryLock
 {
-    public interface IKeyedInMemoryLock
+    internal interface IKeyedInMemoryLock
     {
         Task<ILockInstance> Acquire(string key, CancellationToken cancellationToken = default);
     }
