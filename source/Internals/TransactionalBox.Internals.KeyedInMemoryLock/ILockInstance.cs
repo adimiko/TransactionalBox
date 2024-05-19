@@ -1,4 +1,4 @@
 ﻿namespace TransactionalBox.Internals.KeyedInMemoryLock
 {
-    public interface ILockInstance : IDisposable;
+    internal interface ILockInstance : IDisposable;
 }
