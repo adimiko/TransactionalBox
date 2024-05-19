@@ -4,6 +4,14 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
   </ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="TransactionalBox.DistributedLock.EntityFramework.Tests" />
+		<InternalsVisibleTo Include="TransactionalBox.Inbox" />
+		<InternalsVisibleTo Include="TransactionalBox.Outbox" />
+		<InternalsVisibleTo Include="TransactionalBox.Inbox.EntityFrameworkCore" />
+		<InternalsVisibleTo Include="TransactionalBox.Outbox.EntityFrameworkCore" />
+	</ItemGroup>
 	
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />

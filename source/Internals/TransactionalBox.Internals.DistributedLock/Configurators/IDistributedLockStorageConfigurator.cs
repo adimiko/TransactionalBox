@@ -2,7 +2,7 @@
 
 namespace TransactionalBox.Internals.DistributedLock.Configurators
 {
-    public interface IDistributedLockStorageConfigurator
+    internal interface IDistributedLockStorageConfigurator
     {
         internal IServiceCollection Services { get; }
     }

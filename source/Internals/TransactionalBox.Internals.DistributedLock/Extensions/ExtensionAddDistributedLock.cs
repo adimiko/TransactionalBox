@@ -4,11 +4,11 @@ using TransactionalBox.Internals.DistributedLock.Internals;
 using TransactionalBox.Internals.DistributedLock.Internals.Configurators;
 using TransactionalBox.Internals.KeyedInMemoryLock;
 
-namespace TransactionalBox.Internals.DistributedLock
+namespace TransactionalBox.Internals.DistributedLock.Extensions
 {
-    public static class Extensions
+    internal static class ExtensionAddDistributedLock
     {
-        public static void AddDistributedLock<T>(
+        internal static void AddDistributedLock<T>(
             this IServiceCollection services,
             Action<IDistributedLockStorageConfigurator> storageConfiguration)
             where T : Lock, new()

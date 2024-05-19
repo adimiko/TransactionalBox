@@ -1,4 +1,4 @@
 ﻿namespace TransactionalBox.Internals.DistributedLock
 {
-    public interface IDistributedLockInstance : IAsyncDisposable;
+    internal interface IDistributedLockInstance : IAsyncDisposable;
 }
