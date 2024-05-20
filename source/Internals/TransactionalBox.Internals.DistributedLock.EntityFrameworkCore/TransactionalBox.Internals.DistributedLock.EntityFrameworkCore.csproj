@@ -6,7 +6,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="TransactionalBox.DistributedLock.EntityFramework.Tests" />
+		<InternalsVisibleTo Include="TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests" />
 		<InternalsVisibleTo Include="TransactionalBox.Inbox.EntityFrameworkCore" />
 		<InternalsVisibleTo Include="TransactionalBox.Outbox.EntityFrameworkCore" />
 	</ItemGroup>

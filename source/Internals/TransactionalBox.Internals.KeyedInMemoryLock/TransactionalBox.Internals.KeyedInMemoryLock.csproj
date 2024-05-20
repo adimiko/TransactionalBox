@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<InternalsVisibleTo Include="TransactionalBox.Internals.DistributedLock" />
-		<InternalsVisibleTo Include="TransactionalBox.KeyedInMemoryLock.Tests" />
-		<InternalsVisibleTo Include="TransactionalBox.DistributedLock.EntityFramework.Tests" />
+		<InternalsVisibleTo Include="TransactionalBox.Internals.KeyedInMemoryLock.Tests" />
+		<InternalsVisibleTo Include="TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests" />
 		<InternalsVisibleTo Include="TransactionalBox.Inbox" />
 		<InternalsVisibleTo Include="TransactionalBox.Outbox" />
 	</ItemGroup>
