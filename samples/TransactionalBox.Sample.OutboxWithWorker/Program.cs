@@ -1,5 +1,4 @@
 using TransactionalBox;
-using TransactionalBox.Outbox;
 using TransactionalBox.Sample.OutboxWithWorker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;

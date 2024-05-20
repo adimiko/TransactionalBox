@@ -3,7 +3,7 @@ using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.EntityFrameworkCore.Internals.EntityTypeConfigurations;
 
-namespace TransactionalBox.Outbox
+namespace TransactionalBox
 {
     public static class ExtensionAddOutbox
     {

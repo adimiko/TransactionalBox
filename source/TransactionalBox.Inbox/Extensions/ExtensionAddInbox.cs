@@ -21,8 +21,9 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKey
 using TransactionalBox.Inbox.Internals;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 using TransactionalBox.Inbox.Internals.InboxMessageDefinitions;
+using TransactionalBox.Inbox;
 
-namespace TransactionalBox.Inbox
+namespace TransactionalBox
 {
     public static class ExtensionAddInbox
     {

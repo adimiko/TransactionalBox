@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox
+﻿namespace TransactionalBox
 {
     public interface IEntityFrameworkOutboxUnitOfWork
     {

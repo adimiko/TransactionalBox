@@ -1,6 +1,4 @@
 using TransactionalBox;
-using TransactionalBox.Outbox;
-using TransactionalBox.Inbox;
 using TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox;
 using TransactionalBox.Outbox.Internals.Storage.InMemory;
 using TransactionalBox.Inbox.Internals.Storage.InMemory;

@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Inbox.Internals.InboxMessageDefinitions;
 
-namespace TransactionalBox.Inbox
+namespace TransactionalBox
 {
     public abstract class InboxMessageDefinition<TInboxMessage> : IInboxMessageDefinition
         where TInboxMessage : InboxMessage, new()

@@ -3,7 +3,7 @@ using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.EntityFrameworkCore.Internals.EntityTypeConfigurations;
 
-namespace TransactionalBox.Inbox
+namespace TransactionalBox
 {
     public static class ExtensionAddInbox
     {

@@ -5,7 +5,7 @@ using TransactionalBox.Outbox.Settings.Compression;
 using Microsoft.IO;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Outbox
+namespace TransactionalBox
 {
     public static class ExtensionUseBrotliCompression
     {

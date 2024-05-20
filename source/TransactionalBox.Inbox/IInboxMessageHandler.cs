@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Inbox.Contexts;
 
-namespace TransactionalBox.Inbox
+namespace TransactionalBox
 {
     public interface IInboxMessageHandler<TInboxMessage>
         where TInboxMessage : InboxMessage, new() 

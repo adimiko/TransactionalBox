@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Internals.KeyedInMemoryLock;
 using TransactionalBox.Internals.KeyedInMemoryLock.Internals;
 
-namespace TransactionalBox.Internals.KeyedInMemoryLock
+namespace TransactionalBox
 {
     internal static class ExtensionAddKeyedInMemoryLock
     {
