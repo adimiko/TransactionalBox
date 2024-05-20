@@ -9,6 +9,7 @@ using TransactionalBox.Outbox;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Sample.WebApi.OutboxMessages;
 
 
 var postgreSqlContainer = new PostgreSqlBuilder()

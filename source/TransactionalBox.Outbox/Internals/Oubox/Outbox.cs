@@ -1,4 +1,5 @@
-﻿using TransactionalBox.Internals;
+﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Envelopes;
 using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 using TransactionalBox.Outbox.Internals.Serialization;
@@ -18,18 +19,22 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
         private readonly ITopicFactory _topicFactory;
 
+        private readonly IServiceProvider _serviceProvider;
+
         public Outbox(
             IServiceContext serviceContext,
             IOutboxStorage outbox,
             IOutboxSerializer serializer,
             ISystemClock systemClock,
-            ITopicFactory topicFactory)
+            ITopicFactory topicFactory,
+            IServiceProvider serviceProvider)
         {
             _serviceContext = serviceContext;
             _outboxStorage = outbox;
             _serializer = serializer;
             _systemClock = systemClock;
             _topicFactory = topicFactory;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
@@ -46,20 +51,24 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
             var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
 
-            //TODO topic factory based on OutboxMessageDefinition
+            var messageType = message.GetType();
 
-            IOutboxMessageDefinition outboxMessageDefinition = null;
-            //TODO when null use default
+            IOutboxMessageDefinition? outboxMessageDefinition = _serviceProvider.GetKeyedService<IOutboxMessageDefinition>(messageType);
+
+            if (outboxMessageDefinition is null) 
+            {
+                outboxMessageDefinition = new DefaultOutboxMessageDefinition();
+            }
 
             string topic;
 
             if (outboxMessageDefinition.Receiver is not null) 
             {
-                topic = _topicFactory.Create(outboxMessageDefinition.Receiver, message.GetType().Name);
+                topic = _topicFactory.Create(outboxMessageDefinition.Receiver, messageType.Name);
             }
             else
             {
-                topic = _topicFactory.Create(_serviceContext.Id, message.GetType().Name);
+                topic = _topicFactory.Create(_serviceContext.Id, messageType.Name);
             }
 
             var outboxMessage = new OutboxMessageStorage

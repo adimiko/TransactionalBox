@@ -1,7 +1,6 @@
-﻿using TransactionalBox.Inbox;
-using TransactionalBox.Outbox;
+﻿using TransactionalBox.Outbox;
 
-namespace TransactionalBox.Sample.WebApi
+namespace TransactionalBox.Sample.WebApi.OutboxMessages
 {
     public sealed class ExampleMessage : OutboxMessage
     {

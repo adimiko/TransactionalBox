@@ -16,6 +16,7 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Loggers;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Loggers;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Logger;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Logger;
+using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 
 namespace TransactionalBox.Outbox
 {
@@ -71,6 +72,19 @@ namespace TransactionalBox.Outbox
             if (assemblyConfiguraton is not null)
             {
                 assemblyConfiguraton(assemblyConfigurator);
+            }
+
+            var assemblies = assemblyConfigurator.Assemblies;
+
+            var allTypes = assemblyConfigurator.Assemblies.SelectMany(x => x.GetTypes());
+
+            var outboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(OutboxMessageDefinition<>)).ToList();
+
+            foreach (var outboxMessageDefinition in outboxMessageDefinitions)
+            {
+                var messageType = outboxMessageDefinition.BaseType.GetGenericArguments()[0];
+
+                services.AddKeyedSingleton(typeof(IOutboxMessageDefinition), messageType, outboxMessageDefinition);
             }
 
             services.AddSingleton<TransportMessageFactory>();
