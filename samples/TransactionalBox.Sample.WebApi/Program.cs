@@ -4,8 +4,6 @@ using System.IO.Compression;
 using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
 using TransactionalBox;
-using TransactionalBox.Inbox;
-using TransactionalBox.Outbox;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Storage;

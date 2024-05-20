@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Outbox.Envelopes;
 
-namespace TransactionalBox.Outbox
+namespace TransactionalBox
 {
     public interface IOutbox
     {

@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox
+﻿namespace TransactionalBox
 {
     public abstract class InboxMessage;
 }

@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 
-namespace TransactionalBox.Outbox
+namespace TransactionalBox
 {
     public abstract class OutboxMessageDefinition<TOutboxMessage> : IOutboxMessageDefinition
         where TOutboxMessage : OutboxMessage
