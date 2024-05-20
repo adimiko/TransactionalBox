@@ -81,7 +81,7 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
     {
         for (var i = 0; i < 10; i++)
         {
-            await outbox.Send(message, "ServiceWithInbox");
+            await outbox.Add(message);
         }
 
         await tx.CommitAsync();
@@ -100,7 +100,7 @@ app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IO
     {
         for (var i = 0; i < 10; i++)
         {
-            await outbox.Publish(message);
+            await outbox.Add(message);
         }
 
         await tx.CommitAsync();

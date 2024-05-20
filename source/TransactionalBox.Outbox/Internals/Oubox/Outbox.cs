@@ -31,37 +31,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             _topicFactory = topicFactory;
         }
 
-        public async Task Send<TOutboxMessage>(
-            TOutboxMessage message,
-            string receiver,
-            Action<Envelope>? envelopeConfiguration = null)
-            where TOutboxMessage : OutboxMessage
-        {
-            ArgumentNullException.ThrowIfNull(receiver);
-
-            var envelope = new Envelope();
-
-            if (envelopeConfiguration is not null)
-            {
-                envelopeConfiguration(envelope);
-            }
-
-            var metadata = new Metadata(envelope.CorrelationId, _serviceContext.Id, _systemClock.UtcNow);
-            var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
-
-            var outboxMessage = new OutboxMessageStorage
-            {
-                Id = Guid.NewGuid(), //TODO Sequential GUID #14
-                OccurredUtc = metadata.OccurredUtc,
-                IsProcessed = false,
-                Topic = _topicFactory.Create(receiver, message.GetType().Name),
-                Payload = _serializer.Serialize(outboxMessagePayload),
-            };
-
-            await _outboxStorage.Add(outboxMessage);
-        }
-
-        public async Task Publish<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
+        public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
             where TOutboxMessage : OutboxMessage
         {
             var envelope = new Envelope();
@@ -74,6 +44,8 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             var metadata = new Metadata(envelope.CorrelationId, _serviceContext.Id, _systemClock.UtcNow);
 
             var outboxMessagePayload = new OutboxMessagePayload<TOutboxMessage>(metadata, message);
+
+            //TODO topic factory based on OutboxMessageDefinition
 
             var outboxMessage = new OutboxMessageStorage
             {
@@ -86,5 +58,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
             await _outboxStorage.Add(outboxMessage);
         }
+
+        //TODO AddRange
     }
 }

@@ -87,7 +87,7 @@ app.MapPost("/send-messages-outbox", async ([FromBody] ExampleMessage message, I
     {
         for (var i = 0; i < 100; i++)
         {
-            await outbox.Send(message, "Registrations");
+            await outbox.Add(message);
         }
 
         await tx.CommitAsync();
