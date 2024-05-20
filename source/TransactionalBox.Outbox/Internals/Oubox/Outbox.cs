@@ -1,5 +1,6 @@
 ﻿using TransactionalBox.Internals;
 using TransactionalBox.Outbox.Envelopes;
+using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 using TransactionalBox.Outbox.Internals.Serialization;
 using TransactionalBox.Outbox.Internals.Storage;
 
@@ -47,12 +48,26 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
             //TODO topic factory based on OutboxMessageDefinition
 
+            IOutboxMessageDefinition outboxMessageDefinition = null;
+            //TODO when null use default
+
+            string topic;
+
+            if (outboxMessageDefinition.Receiver is not null) 
+            {
+                topic = _topicFactory.Create(outboxMessageDefinition.Receiver, message.GetType().Name);
+            }
+            else
+            {
+                topic = _topicFactory.Create(_serviceContext.Id, message.GetType().Name);
+            }
+
             var outboxMessage = new OutboxMessageStorage
             {
                 Id = Guid.NewGuid(), //TODO Sequential GUID #14
                 OccurredUtc = metadata.OccurredUtc,
                 IsProcessed = false,
-                Topic = _topicFactory.Create(_serviceContext.Id, message.GetType().Name),
+                Topic = topic,
                 Payload = _serializer.Serialize(outboxMessagePayload),
             };
 
