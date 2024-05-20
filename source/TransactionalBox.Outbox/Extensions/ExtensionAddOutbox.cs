@@ -25,7 +25,8 @@ namespace TransactionalBox.Outbox
             this ITransactionalBoxBuilder builder,
             Action<IOutboxStorageConfigurator>? storageConfiguration = null,
             Action<IOutboxTransportConfigurator>? transportConfiguration = null,
-            Action<OutboxSettings>? settingsConfiguration = null)
+            Action<OutboxSettings>? settingsConfiguration = null,
+            Action<IOutboxAssemblyConfigurator>? assemblyConfiguraton = null)
         {
             var services = builder.Services;
 
@@ -63,6 +64,14 @@ namespace TransactionalBox.Outbox
             var compression = new OutboxCompressionConfigurator(services);
 
             settings.Configure(compression);
+
+            // Assembly
+            var assemblyConfigurator = new OutboxAssemblyConfigurator();
+
+            if (assemblyConfiguraton is not null)
+            {
+                assemblyConfiguraton(assemblyConfigurator);
+            }
 
             services.AddSingleton<TransportMessageFactory>();
 
