@@ -62,7 +62,7 @@ namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
 
             do
             {
-                inboxMessage = await _inboxStorage.GetMessage(context.Id, context.Name, _systemClock.TimeProvider, TimeSpan.FromMinutes(1)).ConfigureAwait(false);
+                inboxMessage = await _inboxStorage.GetMessage(context.Id, context.Name, _systemClock.TimeProvider, TimeSpan.FromSeconds(3)).ConfigureAwait(false);
 
                 if (inboxMessage is null)
                 {
