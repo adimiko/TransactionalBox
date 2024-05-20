@@ -54,7 +54,8 @@ x =>
         settings =>
     {
         settings.ConfigureDecompression = x => x.UseBrotliDecompression();
-    });
+    },
+        assembly => assembly.RegisterFromAssemblies(typeof(ExampleMessage).Assembly));
 },
 settings => settings.ServiceId = "Registrations");
 

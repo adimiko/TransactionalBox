@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Inbox;
 
-namespace TransactionalBox.Sample.InboxWithWorker
+namespace TransactionalBox.Sample.WebApi.InboxMessages
 {
     public class PublishableMessage : InboxMessage
     {

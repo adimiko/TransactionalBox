@@ -1,41 +1,59 @@
-﻿using System.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 using TransactionalBox.Inbox.Internals.Contexts;
+using TransactionalBox.Inbox.Internals.Definitions;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Transport.Topics
 {
     internal sealed class TopicsProvider : ITopicsProvider
     {
-        private static readonly Type _attributeType = typeof(PublishedByAttribute);
-
         public IEnumerable<string> Topics { get; }
 
         public TopicsProvider(
             IInboxContext inboxWorkerContext, //TODO remove ?
             IInboxMessageTypes inboxMessageTypes,
             IServiceContext serviceContext,
-            ITopicFactory topicFactory)
+            ITopicFactory topicFactory,
+            IServiceProvider serviceProvider)
         {
             var topics = new List<string>();
 
             var messageTypes = inboxMessageTypes.MessageTypes;
 
-            var publishedMessageTypes = messageTypes.Where(x => Attribute.IsDefined(x, _attributeType));
-            var sentMessageTypes = messageTypes.Where(x => !Attribute.IsDefined(x, _attributeType));
+            var inboxMessageDefinitionDictionary = new Dictionary<Type, IInboxMessageDefinition>();
 
-            foreach(var sentMessageType in sentMessageTypes)
+            var defaultInboxMessageDefinition = new DefautInboxMessageDefinition();
+
+            foreach ( var messageType in messageTypes ) 
             {
-                var topic = topicFactory.Create(serviceContext.Id, sentMessageType.Name);
+                var x = serviceProvider.GetKeyedServices<IInboxMessageDefinition>(messageType);
 
-                topics.Add(topic);
+                //TODO custom Exception
+                var inboxMessageDefinition = x.SingleOrDefault();
+
+                if(inboxMessageDefinition is null)
+                {
+                    inboxMessageDefinitionDictionary.Add(messageType, defaultInboxMessageDefinition);
+                }
+                else
+                {
+                    inboxMessageDefinitionDictionary.Add(messageType, inboxMessageDefinition);
+                }
             }
 
-            foreach (var publishedMessageType in publishedMessageTypes)
+            foreach(var x in inboxMessageDefinitionDictionary) 
             {
-                PublishedByAttribute publishedByAttributes = (PublishedByAttribute)Attribute.GetCustomAttribute(publishedMessageType, _attributeType);
+                string topic;
 
-                var topic = topicFactory.Create(publishedByAttributes.PublishedBy, publishedMessageType.Name);
+                if(x.Value.PublishedBy is null)
+                {
+                    topic = topicFactory.Create(serviceContext.Id, x.Key.Name);
+                }
+                else
+                {
+                    topic = topicFactory.Create(x.Value.PublishedBy, x.Key.Name);
+                }
 
                 topics.Add(topic);
             }

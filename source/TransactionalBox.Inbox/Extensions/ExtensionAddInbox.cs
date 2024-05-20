@@ -21,6 +21,7 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKey
 using TransactionalBox.Internals.EventHooks.Internals;
 using TransactionalBox.Inbox.Internals;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
+using TransactionalBox.Inbox.Internals.Definitions;
 
 namespace TransactionalBox.Inbox
 {
@@ -98,6 +99,15 @@ namespace TransactionalBox.Inbox
                 .AddClasses(c => c.AssignableTo(typeof(IInboxMessageHandler<>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
+
+            var inboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(InboxMessageDefinition<>)).ToList();
+
+            foreach (var inboxMessageDefinition in inboxMessageDefinitions)
+            {
+                var messageType = inboxMessageDefinition.BaseType.GetGenericArguments()[0];
+
+                services.AddKeyedSingleton(typeof(IInboxMessageDefinition), messageType, inboxMessageDefinition);
+            }
 
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
             services.AddSingleton<ICompiledInboxHandlers, CompiledInboxHandlers>();
