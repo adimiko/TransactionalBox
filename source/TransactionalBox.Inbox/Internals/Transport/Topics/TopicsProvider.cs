@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
-using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Inbox.Internals.Definitions;
+using TransactionalBox.Inbox.Internals.InboxMessageDefinitions;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.Transport.Topics
@@ -22,7 +21,7 @@ namespace TransactionalBox.Inbox.Internals.Transport.Topics
 
             var inboxMessageDefinitionDictionary = new Dictionary<Type, IInboxMessageDefinition>();
 
-            var defaultInboxMessageDefinition = new DefautInboxMessageDefinition();
+            var defaultInboxMessageDefinition = new DefaultInboxMessageDefinition();
 
             foreach ( var messageType in messageTypes ) 
             {

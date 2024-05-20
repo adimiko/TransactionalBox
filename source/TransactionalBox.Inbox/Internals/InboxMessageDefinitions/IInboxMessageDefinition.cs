@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Definitions
+﻿namespace TransactionalBox.Inbox.Internals.InboxMessageDefinitions
 {
     internal interface IInboxMessageDefinition
     {

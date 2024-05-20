@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Inbox.Internals.Definitions;
+﻿using TransactionalBox.Inbox.Internals.InboxMessageDefinitions;
 
 namespace TransactionalBox.Inbox
 {
