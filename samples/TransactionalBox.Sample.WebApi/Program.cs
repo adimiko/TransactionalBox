@@ -9,6 +9,7 @@ using TransactionalBox.Outbox;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Sample.WebApi.OutboxMessages;
 
 
 var postgreSqlContainer = new PostgreSqlBuilder()
@@ -87,7 +88,7 @@ app.MapPost("/send-messages-outbox", async ([FromBody] ExampleMessage message, I
     {
         for (var i = 0; i < 100; i++)
         {
-            await outbox.Send(message, "Registrations");
+            await outbox.Add(message);
         }
 
         await tx.CommitAsync();

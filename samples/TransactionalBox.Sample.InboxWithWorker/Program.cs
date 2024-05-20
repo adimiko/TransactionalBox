@@ -9,6 +9,7 @@ using System.Reflection;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Events;
+using System.Security.Cryptography;
 
 const string connectionString = "Server=mssql;Database=msdb;User Id=sa;Password=Password123!@#;TrustServerCertificate=true;";
 const string bootstrapServers = "plaintext://kafka:9092";
@@ -67,7 +68,8 @@ using (var scope = app.Services.CreateScope())
 {
     try
     {
-        scope.ServiceProvider.GetRequiredService<ServiceWithInboxDbContext>().Database.EnsureCreated();
+        await Task.Delay(RandomNumberGenerator.GetInt32(0, 100));
+        await scope.ServiceProvider.GetRequiredService<ServiceWithInboxDbContext>().Database.EnsureCreatedAsync();
     }
     finally { }
 }

@@ -8,6 +8,7 @@ using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
 using TransactionalBox.Outbox.Internals.Storage;
+using System.Security.Cryptography;
 
 const string connectionString = "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres";
 const string bootstrapServers = "plaintext://kafka:9092";
@@ -59,7 +60,8 @@ using (var scope = app.Services.CreateScope())
 {
     try
     {
-        scope.ServiceProvider.GetRequiredService<ServiceWithOutboxDbContext>().Database.EnsureCreated();
+        await Task.Delay(RandomNumberGenerator.GetInt32(0, 100));
+        await scope.ServiceProvider.GetRequiredService<ServiceWithOutboxDbContext>().Database.EnsureCreatedAsync();
     }
     finally { }
 }
@@ -81,7 +83,7 @@ app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, 
     {
         for (var i = 0; i < 10; i++)
         {
-            await outbox.Send(message, "ServiceWithInbox");
+            await outbox.Add(message);
         }
 
         await tx.CommitAsync();
@@ -100,7 +102,7 @@ app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IO
     {
         for (var i = 0; i < 10; i++)
         {
-            await outbox.Publish(message);
+            await outbox.Add(message);
         }
 
         await tx.CommitAsync();
