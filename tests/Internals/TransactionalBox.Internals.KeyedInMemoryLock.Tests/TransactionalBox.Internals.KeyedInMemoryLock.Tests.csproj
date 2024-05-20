@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\Internals\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj" />
+    <ProjectReference Include="..\..\..\source\Internals\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj" />
   </ItemGroup>
 
 </Project>
