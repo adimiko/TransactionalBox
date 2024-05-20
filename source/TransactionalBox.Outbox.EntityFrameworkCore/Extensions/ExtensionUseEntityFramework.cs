@@ -3,10 +3,9 @@ using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.EntityFrameworkCore.Internals;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore;
-using TransactionalBox.Internals.DistributedLock.Extensions;
+using TransactionalBox.Outbox;
 
-namespace TransactionalBox.Outbox
+namespace TransactionalBox
 {
     public static class ExtensionUseEntityFramework
     {

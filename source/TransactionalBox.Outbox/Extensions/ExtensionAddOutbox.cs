@@ -2,7 +2,6 @@
 using TransactionalBox.Builders;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Configurators;
-using TransactionalBox.Outbox.Internals.Oubox;
 using TransactionalBox.Outbox.Internals.Extensions;
 using TransactionalBox.Outbox.Settings;
 using TransactionalBox.Internals.EventHooks;
@@ -17,8 +16,9 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Lo
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Logger;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Logger;
 using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
+using TransactionalBox.Outbox;
 
-namespace TransactionalBox.Outbox
+namespace TransactionalBox
 {
     public static class ExtensionAddOutbox
     {
@@ -106,7 +106,7 @@ namespace TransactionalBox.Outbox
             services.AddSingleton<IPayloadCreationPolicy, PayloadHasOptimalSizePolicy>();
             services.AddSingleton<IPayloadCreationPolicy, PayloadIsLargerThanOptimalSizePolicy>();
 
-            services.AddScoped<IOutbox, Internals.Oubox.Outbox>();
+            services.AddScoped<IOutbox, Outbox.Internals.Oubox.Outbox>();
 
             services.AddSingleton<ITranactionCommited, TranactionCommited>();
 

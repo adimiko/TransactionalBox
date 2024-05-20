@@ -5,7 +5,7 @@ using TransactionalBox.Inbox.Kafka.Internals;
 using TransactionalBox.Inbox.Kafka.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Inbox
+namespace TransactionalBox
 {
     public static class ExtensionUseKafka
     {

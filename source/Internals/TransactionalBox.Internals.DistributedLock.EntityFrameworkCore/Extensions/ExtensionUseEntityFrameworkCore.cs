@@ -4,7 +4,7 @@ using TransactionalBox.Internals.DistributedLock.Configurators;
 using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Internals;
 using TransactionalBox.Internals.DistributedLock.Internals.Contracts;
 
-namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore
+namespace TransactionalBox
 {
     internal static class ExtensionUseEntityFrameworkCore
     {

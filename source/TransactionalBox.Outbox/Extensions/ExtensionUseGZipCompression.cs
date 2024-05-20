@@ -5,7 +5,7 @@ using TransactionalBox.Outbox.Settings.Compression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
 
-namespace TransactionalBox.Outbox
+namespace TransactionalBox
 {
     public static class ExtensionUseGZipCompression
     {

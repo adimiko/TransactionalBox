@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TransactionalBox.Internals.DistributedLock;
 using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Internals;
 
-namespace TransactionalBox.Internals.DistributedLock.EntityFrameworkCore
+namespace TransactionalBox
 {
     internal static class ExtensionAddDistributedLock
     {
