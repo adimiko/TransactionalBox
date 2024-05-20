@@ -3,7 +3,7 @@ using Microsoft.IO;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Decompression;
 
-namespace TransactionalBox.Inbox
+namespace TransactionalBox
 {
     public static class ExtensionUseGZipDecompression
     {
