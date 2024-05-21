@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Outbox;
-using TransactionalBox.Inbox;
 
 namespace TransactionalBox.Sample.WebApi
 {

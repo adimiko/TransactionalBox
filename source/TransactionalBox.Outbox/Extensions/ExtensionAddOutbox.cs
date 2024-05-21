@@ -17,6 +17,8 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Lo
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox.Logger;
 using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 using TransactionalBox.Outbox;
+using TransactionalBox.Internals.SequentialGuid;
+using TransactionalBox.Internals.SequentialGuid.Internals;
 
 namespace TransactionalBox
 {
@@ -88,6 +90,9 @@ namespace TransactionalBox
             }
 
             services.AddSingleton<TransportMessageFactory>();
+
+            services.AddSingleton<SequentialGuidConfigurator>();
+            services.AddSingleton<ISequentialGuidGenerator>(sp => new SequentialGuid(sp.GetRequiredService<SequentialGuidConfigurator>().Create()));
 
             // Settings
             services.AddSingleton<IAddMessagesToTransportSettings>(settings.AddMessagesToTransportSettings);
