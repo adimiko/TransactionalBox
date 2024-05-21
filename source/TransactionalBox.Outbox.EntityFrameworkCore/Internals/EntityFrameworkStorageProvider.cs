@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
 namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
@@ -7,9 +8,12 @@ namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
     {
         public string? ProviderName { get; }
 
-        public EntityFrameworkStorageProvider(DbContext dbContext) 
+        public EntityFrameworkStorageProvider(IServiceProvider serviceProvider) 
         {
-            ProviderName = dbContext.Database.ProviderName;
+            using (var scope = serviceProvider.CreateScope()) 
+            {
+                ProviderName = scope.ServiceProvider.GetRequiredService<DbContext>().Database.ProviderName;
+            }
         }
 
         

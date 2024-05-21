@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Internals;
+using TransactionalBox.Internals.SequentialGuid;
 using TransactionalBox.Outbox.Envelopes;
 using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 using TransactionalBox.Outbox.Internals.Serialization;
@@ -21,13 +22,16 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
         private readonly IServiceProvider _serviceProvider;
 
+        private readonly ISequentialGuidGenerator _sequentialGuidGenerator;
+
         public Outbox(
             IServiceContext serviceContext,
             IOutboxStorage outbox,
             IOutboxSerializer serializer,
             ISystemClock systemClock,
             ITopicFactory topicFactory,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            ISequentialGuidGenerator sequentialGuidGenerator)
         {
             _serviceContext = serviceContext;
             _outboxStorage = outbox;
@@ -35,6 +39,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             _systemClock = systemClock;
             _topicFactory = topicFactory;
             _serviceProvider = serviceProvider;
+            _sequentialGuidGenerator = sequentialGuidGenerator;
         }
 
         public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
@@ -73,7 +78,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
             var outboxMessage = new OutboxMessageStorage
             {
-                Id = Guid.NewGuid(), //TODO Sequential GUID #14
+                Id = _sequentialGuidGenerator.Create(), //TODO Sequential GUID #14
                 OccurredUtc = metadata.OccurredUtc,
                 IsProcessed = false,
                 Topic = topic,
