@@ -1,8 +1,8 @@
 ﻿using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Storage.InMemory;
 using TransactionalBox.Outbox.Internals.Storage;
-using TransactionalBox.Internals.KeyedInMemoryLock;
 using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
 namespace TransactionalBox.Outbox.Internals.Extensions
 {
@@ -15,6 +15,7 @@ namespace TransactionalBox.Outbox.Internals.Extensions
             services.AddKeyedInMemoryLock();
             services.AddSingleton<IOutboxStorageReadOnly, InMemoryOutboxStorage>();
             services.AddSingleton<IOutboxStorage, InMemoryOutboxStorage>();
+            services.AddSingleton<IStorageProvider, InMemoryStorageProvider>();
             services.AddSingleton<IAddMessagesToTransportRepository, InMemoryOutboxStorage>();
             services.AddSingleton<ICleanUpOutboxRepository, InMemoryOutboxStorage>();
         }
