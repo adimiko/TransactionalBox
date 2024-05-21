@@ -3,7 +3,7 @@ using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.EntityFrameworkCore.Internals;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Outbox;
+using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
 namespace TransactionalBox
 {
@@ -24,6 +24,8 @@ namespace TransactionalBox
             services.AddScoped<ICleanUpOutboxRepository, EntityFrameworkCleanUpOutboxRepository>();
 
             services.AddDistributedLock<OutboxDistributedLock>(x => x.UseEntityFrameworkCore());
+
+            services.AddSingleton<IStorageProvider, EntityFrameworkStorageProvider>();
         }
     }
 }
