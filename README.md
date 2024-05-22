@@ -45,6 +45,8 @@ Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the 
     <img src="assets/samples/web-api-sample.png">
 </div>
 
+*Project is at an early stage of life cycle, if you find some bug, let me know* :telephone:.   
+
 Have fun :smiley:!
 
 ## ✨ Features
