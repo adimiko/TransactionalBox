@@ -162,7 +162,7 @@ Name of **TransactionalBox** fits perfectly with the future of the project. It w
 
 Implementation under the competition.
 
-*e.g. Payment service wants to asynchronously send notification of payment to user.*
+*e.g. Payment service asynchronously sends notification of payment to user.*
 
 ### StreamOubox and StreamInbox
 
