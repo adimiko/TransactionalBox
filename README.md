@@ -32,7 +32,8 @@ Examples of problems that occur during network communication:
 
 *Transfer order attempt fails.*
 
-For more information, see the [documentation:book:](https://transactionalbox.com/).   
+For more information, see the [documentation:book:](https://transactionalbox.com/).  
+Packages are hosted by [nuget.org](https://www.nuget.org/packages?q=TransactionalBox).  
 
 ## :clapper: Run Sample
 > [!NOTE]
