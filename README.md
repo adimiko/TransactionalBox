@@ -14,14 +14,26 @@
 ###### :star: - The star motivates me a lot!   
 
 **Transactional box is an implementation of the outbox and inbox pattern in .NET.**   
-**Ensures eventual consistency when modules need to communicate with each other over the network.**
+**Ensures reliable network communication (eventual consistency) between services.**
 
-### [:book: Documentation](https://transactionalbox.com/)   
+All complexity is taken over by the transactional box and simplifies communication between services to the maximum extent possible.   
+It is designed for a low entry threshold and quick learning.
 
 Examples of problems that occur during network communication:
-- lost messages
-- the same messages were processed again
-- unavailable services
+-  **Lost message**
+
+*Amount was taken from bank account and transfer was never executed.*
+
+- **The same message were processed again**
+
+*Transfer was ordered and amount was debited from bank account twice.*
+
+- **Unavailable service**
+
+*Transfer order attempt fails.*
+
+For more information, see the [documentation:book:](https://transactionalbox.com/).  
+Packages are hosted by [nuget.org](https://www.nuget.org/packages?q=TransactionalBox).  
 
 ## :clapper: Run Sample
 > [!NOTE]
@@ -32,6 +44,8 @@ Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the 
 <div align="center">
     <img src="assets/samples/web-api-sample.png">
 </div>
+
+*Project is at an early stage of life cycle, if you find some bug, let me know* :telephone:.   
 
 Have fun :smiley:!
 
@@ -138,6 +152,43 @@ Inbox is responsible for processing messages from the storage.
 <div align="center">
     <img src="assets/diagrams/diagram-inbox.png">
 </div>
+
+## :world_map: Roadmap
+Name of **TransactionalBox** fits perfectly with the future of the project. It will be possible to use different `transactional boxes`. 
+
+### Outbox and Inbox
+
+`No guarantee of message order between services.`
+
+Implementation under the competition.
+
+*e.g. Payment service asynchronously sends notification of payment to user.*
+
+Improvements:
+- Code refactor
+- More tests
+- Support for more storage providers (e.g. Marten, RavenDB)
+- Support for more transport providers (e.g. HTTP, gRPC, Azure Service Bus)
+- Performance optimization
+- Encrypted transport messages
+
+### StreamOubox and StreamInbox
+
+`Guarantee of message order in stream between services.`
+
+**Idea**  
+Ensuring the order of messages within a stream. Messages are sent by StreamOutbox and the order is respected in StreamInbox. Transport provider does not have to support message order.
+
+*e.g. (CQRS Pattern) When transfer is made in the write service, the event asynchronously refreshes the account balance in the read service.*
+
+### InternalBox
+
+`Guarantee of message order in stream inside the service.`
+
+**Idea**   
+Ensuring the order of messages within a stream insite the service. Messages are added to storage provider and then processed. Transport provider is unnecessary.
+
+*e.g. Asynchronous internal communication between Aggregate Roots using domain events in the same service.*
 
 ## :medal_sports: Competition '100commitow'
 The project is part of the competition [100 commitow](https://100commitow.pl).
