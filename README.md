@@ -153,6 +153,35 @@ Inbox is responsible for processing messages from the storage.
     <img src="assets/diagrams/diagram-inbox.png">
 </div>
 
+## :world_map: Roadmap
+Name of **TransactionalBox** fits perfectly with the future of the project. It will be possible to use different `transactional boxes`. 
+
+### Outbox and Inbox
+
+`No guarantee of message order between services.`
+
+Implementation under the competition.
+
+*e.g. Payment service wants to asynchronously send notification of payment to user.*
+
+### StreamOubox and StreamInbox
+
+`Guarantee of message order in stream between services.`
+
+**Idea**  
+Ensuring the order of messages within a stream. Messages are sent by StreamOutbox and the order is respected in StreamInbox. Transport provider does not have to support message order.
+
+*e.g. (CQRS Pattern) When transfer is made in the write service, the event asynchronously refreshes the account balance in the read service.*
+
+### InternalBox
+
+`Guarantee of message order in stream inside the service.`
+
+**Idea**   
+Ensuring the order of messages within a stream insite the service. Messages are added to storage provider and then processed. Transport provider is unnecessary.
+
+*e.g. Asynchronous internal communication between Aggregate Roots using domain events in the same service.*
+
 ## :medal_sports: Competition '100commitow'
 The project is part of the competition [100 commitow](https://100commitow.pl).
 
