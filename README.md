@@ -14,14 +14,25 @@
 ###### :star: - The star motivates me a lot!   
 
 **Transactional box is an implementation of the outbox and inbox pattern in .NET.**   
-**Ensures eventual consistency when modules need to communicate with each other over the network.**
+**Ensures reliable network communication (eventual consistency) between services.**
 
-### [:book: Documentation](https://transactionalbox.com/)   
+All complexity is taken over by the transactional box and simplifies communication between services to the maximum extent possible.   
+It is designed for a low entry threshold and quick learning.
 
 Examples of problems that occur during network communication:
-- lost messages
-- the same messages were processed again
-- unavailable services
+-  **Lost message**
+
+*Amount was taken from bank account and transfer was never executed.*
+
+- **The same message were processed again**
+
+*Transfer was ordered and amount was debited from bank account twice.*
+
+- **Unavailable service**
+
+*Transfer order attempt fails.*
+
+For more information, see the [documentation:book:](https://transactionalbox.com/).   
 
 ## :clapper: Run Sample
 > [!NOTE]
