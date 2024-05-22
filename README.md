@@ -164,6 +164,14 @@ Implementation under the competition.
 
 *e.g. Payment service asynchronously sends notification of payment to user.*
 
+Improvements:
+- Code refactor
+- More tests
+- Support for more storage providers (e.g. Marten, RavenDB)
+- Support for more transport providers (e.g. HTTP, gRPC, Azure Service Bus)
+- Performance optimization
+- Encrypted transport messages
+
 ### StreamOubox and StreamInbox
 
 `Guarantee of message order in stream between services.`
