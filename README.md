@@ -24,7 +24,7 @@ Examples of problems that occur during network communication:
 
 *Amount was taken from bank account and transfer was never executed.*
 
-- **The same message were processed again**
+- **The same message was processed again**
 
 *Transfer was ordered and amount was debited from bank account twice.*
 
