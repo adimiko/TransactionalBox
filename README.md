@@ -124,6 +124,10 @@ Have fun :smiley:!
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 - [ ] Transport discriminator (one outbox many transport, tagged message)
+- [ ] Inbox based on the header, selects the appropriate algorithm to:
+    - [x] Decompression
+    - [ ] Deserialization
+    - [ ] Decryption
 
 ## :european_castle: Architecture
 The transactional box consists of four basic components.
