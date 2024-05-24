@@ -37,8 +37,6 @@ namespace TransactionalBox
             var transport = new OutboxTransportConfigurator(services);
             var settings = new OutboxSettings();
 
-            var serialization = new OutboxSerializationConfigurator(services);
-
             if (storageConfiguration is not null)
             {
                 storageConfiguration(storage);
