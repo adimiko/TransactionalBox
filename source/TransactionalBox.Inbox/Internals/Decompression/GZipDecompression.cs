@@ -5,6 +5,8 @@ namespace TransactionalBox.Inbox.Internals.Decompression
 {
     internal sealed class GZipDecompression : IDecompression
     {
+        public string Name { get; } = "gzip";
+
         private readonly RecyclableMemoryStreamManager _streamManager;
 
         public GZipDecompression(RecyclableMemoryStreamManager streamManager)

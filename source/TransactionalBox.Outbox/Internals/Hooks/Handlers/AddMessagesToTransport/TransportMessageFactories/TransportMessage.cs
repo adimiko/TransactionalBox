@@ -5,5 +5,7 @@
         internal required string Topic { get; init; }
 
         internal required byte[] Payload { get; init; }
+
+        internal required string ContentType { get; init; }
     }
 }

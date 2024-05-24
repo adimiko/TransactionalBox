@@ -1,5 +1,7 @@
 ﻿using Confluent.Kafka;
+using System.Net.Mime;
 using System.Runtime.CompilerServices;
+using System.Text;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.Transport;
 
@@ -19,7 +21,7 @@ namespace TransactionalBox.Inbox.Kafka.Internals
             _configFactory = configFactory;
         }
 
-        public async IAsyncEnumerable<byte[]> GetMessages(IEnumerable<string> topics, [EnumeratorCancellation] CancellationToken cancellationToken)
+        public async IAsyncEnumerable<TransportMessage> GetMessages(IEnumerable<string> topics, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             var config = _configFactory.Create();
 
@@ -31,7 +33,16 @@ namespace TransactionalBox.Inbox.Kafka.Internals
                 {
                     var result = consumer.Consume();
 
-                    yield return result.Message.Value;
+                    //TODO valid
+                    var x = result.Headers.Single(x => x.Key == "ContentType");
+
+                    var transportMessage = new TransportMessage()
+                    {
+                        Payload = result.Message.Value,
+                        Compression = Encoding.UTF8.GetString(x.GetValueBytes()),
+                    };
+
+                    yield return transportMessage;
 
                     consumer.Commit(result);
                 }

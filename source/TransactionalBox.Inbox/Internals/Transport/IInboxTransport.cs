@@ -2,6 +2,6 @@
 {
     internal interface IInboxTransport
     {
-        IAsyncEnumerable<byte[]> GetMessages(IEnumerable<string> topics, CancellationToken cancellationToken);
+        IAsyncEnumerable<TransportMessage> GetMessages(IEnumerable<string> topics, CancellationToken cancellationToken);
     }
 }

@@ -5,6 +5,8 @@ namespace TransactionalBox.Inbox.Internals.Decompression
 {
     internal sealed class BrotliDecompression : IDecompression
     {
+        public string Name { get; } = "brotli";
+
         private readonly RecyclableMemoryStreamManager _streamManager;
 
         public BrotliDecompression(

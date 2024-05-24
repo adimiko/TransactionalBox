@@ -5,5 +5,7 @@
         internal string Topic { get; init; }
 
         internal byte[] Payload { get; init; }
+
+        internal string Compression { get; init; }
     }
 }

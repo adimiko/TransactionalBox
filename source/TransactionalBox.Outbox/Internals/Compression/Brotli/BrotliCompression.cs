@@ -5,6 +5,8 @@ namespace TransactionalBox.Outbox.Internals.Compression.Brotli
 {
     internal sealed class BrotliCompression : ICompression
     {
+        public string Name { get; } = "brotli";
+
         private readonly IBrotliCompressionSettings _settings;
 
         private readonly RecyclableMemoryStreamManager _streamManager;

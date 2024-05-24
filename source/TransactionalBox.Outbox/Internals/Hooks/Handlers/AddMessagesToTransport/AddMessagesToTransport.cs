@@ -77,7 +77,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
                 foreach (var transportMessage in transportMessages)
                 {
-                    await _transport.Add(transportMessage.Topic, transportMessage.Payload).ConfigureAwait(false);
+                    await _transport.Add(transportMessage.Topic, transportMessage.Payload, transportMessage.ContentType).ConfigureAwait(false);
                 }
 
                 await _repository.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);

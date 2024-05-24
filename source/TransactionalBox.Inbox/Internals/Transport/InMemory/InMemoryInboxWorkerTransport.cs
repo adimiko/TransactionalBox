@@ -11,7 +11,7 @@ namespace TransactionalBox.Inbox.Internals.Transport.InMemory
             _inMemoryTransport = inMemoryTransport;
         }
 
-        public async IAsyncEnumerable<byte[]> GetMessages(IEnumerable<string> topics, CancellationToken cancellationToken)
+        public async IAsyncEnumerable<TransportMessage> GetMessages(IEnumerable<string> topics, CancellationToken cancellationToken)
         {
             var topicsWithWildcard = topics.Where(x => x.EndsWith('*'));
 
@@ -21,7 +21,13 @@ namespace TransactionalBox.Inbox.Internals.Transport.InMemory
             {
                 if (topics.Contains(message.Topic) || expectedTopicsStartWith.Where(message.Topic.StartsWith).Any())
                 {
-                    yield return message.Payload;
+                    var transportMessage = new TransportMessage()
+                    {
+                        Payload = message.Payload,
+                        Compression = message.Compression
+                    };
+
+                    yield return transportMessage;
                 }
                 else
                 {
