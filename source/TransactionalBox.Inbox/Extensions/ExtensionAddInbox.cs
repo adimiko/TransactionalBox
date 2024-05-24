@@ -135,7 +135,7 @@ namespace TransactionalBox
             services.AddSingleton<BackgroundProcessBase, AddMessagesToInbox>();
             services.AddSingleton<BackgroundProcessBase, CleanUpIdempotencyKeys>();
 
-            services.AddSingleton<IDecompressionPolicy, DecompressionPolicy>();
+            services.AddSingleton<IDecompressionFactory, DecompressionFactory>();
         }
     }
 }

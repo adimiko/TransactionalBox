@@ -17,7 +17,7 @@ namespace TransactionalBox.Outbox.Internals.Transport.InMemory
             {
                 Topic = topic,
                 Payload = payload,
-                ContentType = contentType
+                Compression = contentType
             };
 
             await _inMemoryTransport.Writer.WriteAsync(transportObject);

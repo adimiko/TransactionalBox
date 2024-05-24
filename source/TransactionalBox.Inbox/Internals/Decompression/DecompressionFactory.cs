@@ -1,10 +1,10 @@
 ﻿namespace TransactionalBox.Inbox.Internals.Decompression
 {
-    internal sealed class DecompressionPolicy : IDecompressionPolicy
+    internal sealed class DecompressionFactory : IDecompressionFactory
     {
         private readonly IEnumerable<IDecompression> _decompressions;
 
-        public DecompressionPolicy(IEnumerable<IDecompression> decompressions)
+        public DecompressionFactory(IEnumerable<IDecompression> decompressions)
         {
             _decompressions = decompressions;
         }

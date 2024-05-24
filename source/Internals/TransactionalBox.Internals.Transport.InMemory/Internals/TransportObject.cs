@@ -6,6 +6,6 @@
 
         internal byte[] Payload { get; init; }
 
-        internal string ContentType { get; init; }
+        internal string Compression { get; init; }
     }
 }

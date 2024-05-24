@@ -24,7 +24,7 @@ namespace TransactionalBox.Inbox.Internals.Transport.InMemory
                     var transportMessage = new TransportMessage()
                     {
                         Payload = message.Payload,
-                        ContentType = message.ContentType
+                        Compression = message.Compression
                     };
 
                     yield return transportMessage;

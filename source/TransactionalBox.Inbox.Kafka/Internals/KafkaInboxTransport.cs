@@ -39,7 +39,7 @@ namespace TransactionalBox.Inbox.Kafka.Internals
                     var transportMessage = new TransportMessage()
                     {
                         Payload = result.Message.Value,
-                        ContentType = Encoding.UTF8.GetString(x.GetValueBytes()),
+                        Compression = Encoding.UTF8.GetString(x.GetValueBytes()),
                     };
 
                     yield return transportMessage;
