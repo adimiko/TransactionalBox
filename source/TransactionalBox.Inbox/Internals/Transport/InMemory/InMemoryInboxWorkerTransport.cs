@@ -21,11 +21,10 @@ namespace TransactionalBox.Inbox.Internals.Transport.InMemory
             {
                 if (topics.Contains(message.Topic) || expectedTopicsStartWith.Where(message.Topic.StartsWith).Any())
                 {
-                    //TODO
                     var transportMessage = new TransportMessage()
                     {
                         Payload = message.Payload,
-                        ContentType = "TODO"
+                        ContentType = message.ContentType
                     };
 
                     yield return transportMessage;
