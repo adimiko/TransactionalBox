@@ -50,10 +50,7 @@ x =>
     x.AddInbox(
         storage => storage.UseEntityFramework<SampleDbContext>(),
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
-        settings =>
-    {
-        settings.ConfigureDecompression = x => x.UseBrotliDecompression();
-    },
+        settings => {},
         assembly => assembly.RegisterFromAssemblies(typeof(ExampleMessage).Assembly));
 },
 settings => settings.ServiceId = "Registrations");
