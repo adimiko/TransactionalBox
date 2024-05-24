@@ -53,7 +53,7 @@ namespace TransactionalBox
                 settingsConfiguration(settings);
             }
 
-            settings.Configure(serialization);
+            settings.ConfigureDelegates(services);
 
             if (transportConfiguration is not null)
             {
@@ -63,10 +63,6 @@ namespace TransactionalBox
             {
                 transport.UseInMemoryTransport();
             }
-
-            var compression = new OutboxCompressionConfigurator(services);
-
-            settings.Configure(compression);
 
             // Assembly
             var assemblyConfigurator = new OutboxAssemblyConfigurator();
