@@ -68,15 +68,7 @@ namespace TransactionalBox
                 settingsConfiguration(settings);
             }
 
-            // Serialization
-            var serialization = new InboxDeserializationConfigurator(services);
-
-            settings.Configure(serialization);
-
-            // Decompression
-            var decompressionConfigurator = new InboxDecompressionConfigurator(services);
-
-            settings.Configure(decompressionConfigurator);
+            settings.ConfigureDelegates(services);
 
             // Assembly
             var assemblyConfigurator = new InboxAssemblyConfigurator();

@@ -1,4 +1,6 @@
-﻿using TransactionalBox.Inbox.Configurators;
+﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Inbox.Configurators;
+using TransactionalBox.Inbox.Internals.Configurators;
 using TransactionalBox.Inbox.Internals.Extensions;
 
 namespace TransactionalBox.Inbox.Settings
@@ -17,16 +19,10 @@ namespace TransactionalBox.Inbox.Settings
 
         internal InboxSettings() { }
 
-        internal void Configure(
-            IInboxDeserializationConfigurator deserializationConfigurator)
+        internal void ConfigureDelegates(IServiceCollection services)
         {
-            ConfigureDeserialization(deserializationConfigurator);
-        }
-
-        internal void Configure(
-            IInboxDecompressionConfigurator decompressionConfigurator)
-        {
-            ConfigureDecompression(decompressionConfigurator);
+            ConfigureDeserialization(new InboxDeserializationConfigurator(services));
+            ConfigureDecompression(new InboxDecompressionConfigurator(services));
         }
     }
 }
