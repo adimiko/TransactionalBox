@@ -22,6 +22,7 @@ using TransactionalBox.Inbox.Internals;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 using TransactionalBox.Inbox.Internals.InboxMessageDefinitions;
 using TransactionalBox.Inbox;
+using TransactionalBox.Inbox.Internals.Decompression;
 
 namespace TransactionalBox
 {
@@ -134,6 +135,7 @@ namespace TransactionalBox
             services.AddSingleton<BackgroundProcessBase, AddMessagesToInbox>();
             services.AddSingleton<BackgroundProcessBase, CleanUpIdempotencyKeys>();
 
+            services.AddSingleton<IDecompressionPolicy, DecompressionPolicy>();
         }
     }
 }

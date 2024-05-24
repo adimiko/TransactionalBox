@@ -16,7 +16,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly IDecompression _decompression;
+        private readonly IDecompressionPolicy _decompressionPolicy;
 
         private readonly IInboxTransport _inboxWorkerTransport;
 
@@ -32,7 +32,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
 
         public AddMessagesToInbox(
             IServiceProvider serviceProvider,
-            IDecompression decompression,
+            IDecompressionPolicy decompressionPolicy,
             IInboxTransport inboxWorkerTransport,
             ISystemClock systemClock,
             ITopicsProvider topicsProvider,
@@ -42,7 +42,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             : base(logger)
         {
             _serviceProvider = serviceProvider;
-            _decompression = decompression;
+            _decompressionPolicy = decompressionPolicy;
             _inboxWorkerTransport = inboxWorkerTransport;
             _systemClock = systemClock;
             _topicsProvider = topicsProvider;
@@ -56,9 +56,13 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             //TODO log per pentla
             await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
             {
+                var decompression = _decompressionPolicy.GetDecompression(messagesFromTransport.ContentType);
+
+                var decompressedMessagesFromTransport = await decompression.Decompress(messagesFromTransport.Payload).ConfigureAwait(false);
+
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var decompressedMessagesFromTransport = await _decompression.Decompress(messagesFromTransport).ConfigureAwait(false);
+                    
                     //TODO #27
                     var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
 

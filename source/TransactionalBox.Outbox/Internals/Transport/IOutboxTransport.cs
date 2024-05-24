@@ -2,6 +2,6 @@
 {
     internal interface IOutboxTransport
     {
-        Task Add(string topic, byte[] payload);
+        Task Add(string topic, byte[] payload, string contentType);
     }
 }

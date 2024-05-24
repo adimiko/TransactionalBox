@@ -1,11 +1,12 @@
 ﻿using Microsoft.IO;
 using System.IO.Compression;
-using TransactionalBox.Outbox.Internals.Compression;
 
 namespace TransactionalBox.Outbox.Internals.Compression.GZip
 {
     internal sealed class GZipCompression : ICompression
     {
+        public string Name { get; } = "gzip";
+
         private readonly IGZipCompressionSettings _settings;
 
         private readonly RecyclableMemoryStreamManager _streamManager;

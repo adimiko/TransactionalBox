@@ -57,6 +57,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                     {
                         Topic = groupedOutboxMessagesWithTheSameTopic.Topic,
                         Payload = p,
+                        ContentType = _compression.Name,
                     };
 
                     transportMessages.Add(transportMessage);

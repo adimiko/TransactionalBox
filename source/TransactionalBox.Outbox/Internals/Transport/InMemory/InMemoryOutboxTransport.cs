@@ -11,7 +11,7 @@ namespace TransactionalBox.Outbox.Internals.Transport.InMemory
             _inMemoryTransport = inMemoryTransport;
         }
 
-        public async Task Add(string topic, byte[] payload)
+        public async Task Add(string topic, byte[] payload, string contentType) //TODO contentType
         {
             var transportObject = new TransportObject()
             {
