@@ -1,4 +1,6 @@
-﻿using TransactionalBox.Outbox.Configurators;
+﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Outbox.Configurators;
+using TransactionalBox.Outbox.Internals.Configurators;
 using TransactionalBox.Outbox.Internals.Extensions;
 
 namespace TransactionalBox.Outbox.Settings
@@ -15,14 +17,10 @@ namespace TransactionalBox.Outbox.Settings
 
         internal OutboxSettings() { }
 
-        internal void Configure(IOutboxSerializationConfigurator serializationConfigurator)
+        internal void ConfigureDelegates(IServiceCollection services)
         {
-            ConfigureSerialization(serializationConfigurator);
-        }
-
-        internal void Configure(IOutboxCompressionConfigurator compressionConfigurator)
-        {
-            ConfigureCompression(compressionConfigurator);
+            ConfigureSerialization(new OutboxSerializationConfigurator(services));
+            ConfigureCompression(new OutboxCompressionConfigurator(services));
         }
     }
 }
