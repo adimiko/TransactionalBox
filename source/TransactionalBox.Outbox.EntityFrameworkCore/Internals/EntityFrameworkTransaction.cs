@@ -36,6 +36,7 @@ namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
             catch
             {
                 await _transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
             }
 
         }
