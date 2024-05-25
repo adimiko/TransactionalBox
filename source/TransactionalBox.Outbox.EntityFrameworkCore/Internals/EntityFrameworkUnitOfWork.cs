@@ -18,13 +18,6 @@ namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
             _tranactionCommited = tranactionCommited;
         }
 
-        public IUnitOfWorkTransaction BeginTransaction()
-        {
-            var transaction = _dbContext.Database.BeginTransaction();
-
-            return new EntityFrameworkTransaction(_dbContext, transaction, _tranactionCommited);
-        }
-
         public async Task<IUnitOfWorkTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
