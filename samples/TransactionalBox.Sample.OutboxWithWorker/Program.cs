@@ -74,41 +74,27 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, IEntityFrameworkOutboxUnitOfWork uow) =>
+app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, IUnitOfWork uow) =>
 {
-    var tx = await uow.BeginTransactionAsync();
-
-    try
+    await using (await uow.BeginTransactionAsync())
     {
         for (var i = 0; i < 10; i++)
         {
             await outbox.Add(message);
         }
-
-        await tx.CommitAsync();
-    }
-    catch (Exception ex)
-    {
-        await tx.RollbackAsync();
     }
 });
 
-app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, IEntityFrameworkOutboxUnitOfWork uow) =>
+app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, IUnitOfWork uow) =>
 {
     var tx = await uow.BeginTransactionAsync();
 
-    try
+    await using (await uow.BeginTransactionAsync())
     {
         for (var i = 0; i < 10; i++)
         {
             await outbox.Add(message);
         }
-
-        await tx.CommitAsync();
-    }
-    catch (Exception ex)
-    {
-        await tx.RollbackAsync();
     }
 });
 

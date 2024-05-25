@@ -4,7 +4,7 @@ using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
 {
-    internal sealed class EntityFrameworkTransaction : IEntityFrameworkTransaction
+    internal sealed class EntityFrameworkTransaction : IUnitOfWorkTransaction
     {
         private readonly DbContext _dbContext;
 
@@ -22,19 +22,23 @@ namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
             _tranactionCommited = tranactionCommited;
         }
 
-        public async Task CommitAsync()
+        public async ValueTask DisposeAsync()
         {
-            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            try
+            {
+                await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            await _transaction.CommitAsync().ConfigureAwait(false);
+                await _transaction.CommitAsync().ConfigureAwait(false);
 
-            await _tranactionCommited.Commited().ConfigureAwait(false);
-            //TODO notify when transaction is commited (hook & obserability)
-        }
+                await _tranactionCommited.Commited().ConfigureAwait(false);
+                //TODO notify when transaction is commited (hook & obserability)
+            }
+            catch
+            {
+                await _transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }
 
-        public async Task RollbackAsync()
-        {
-            await _transaction.RollbackAsync().ConfigureAwait(false);
         }
     }
 }

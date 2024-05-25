@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
+using System.Threading;
 using TransactionalBox.Outbox.Internals.Storage;
 
 namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
 {
-    internal sealed class EntityFrameworkUnitOfWork : IEntityFrameworkOutboxUnitOfWork
+    internal sealed class EntityFrameworkUnitOfWork : IUnitOfWork
     {
         private readonly DbContext _dbContext;
 
@@ -18,7 +18,7 @@ namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
             _tranactionCommited = tranactionCommited;
         }
 
-        public async Task<IEntityFrameworkTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+        public async Task<IUnitOfWorkTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 

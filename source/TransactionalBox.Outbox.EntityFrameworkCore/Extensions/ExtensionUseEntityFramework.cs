@@ -16,7 +16,7 @@ namespace TransactionalBox
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
 
-            services.AddScoped<IEntityFrameworkOutboxUnitOfWork, EntityFrameworkUnitOfWork>();
+            services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork>();
 
             services.AddScoped<IOutboxStorage, EntityFrameworkOutboxStorage>();
 
