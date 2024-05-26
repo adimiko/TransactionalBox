@@ -3,7 +3,7 @@ using TransactionalBox.Inbox.Contexts;
 
 namespace TransactionalBox.Sample.InboxWithWorker
 {
-    internal sealed class PublishableMessageHandler : IInboxMessageHandler<PublishableMessage>
+    internal sealed class PublishableMessageHandler : IInboxHandler<PublishableMessage>
     {
         private readonly ServiceWithInboxDbContext _context;
 

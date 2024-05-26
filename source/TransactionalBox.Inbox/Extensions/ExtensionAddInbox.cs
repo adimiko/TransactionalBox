@@ -85,12 +85,12 @@ namespace TransactionalBox
             var allTypes = assemblyConfigurator.Assemblies.SelectMany(x => x.GetTypes());
 
             var inboxMessageHandlerTypes = allTypes
-            .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IInboxMessageHandler<>)))
+            .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IInboxHandler<>)))
             .ToList();
 
             services.Scan(s =>
             s.FromAssemblies(assemblies)
-                .AddClasses(c => c.AssignableTo(typeof(IInboxMessageHandler<>)))
+                .AddClasses(c => c.AssignableTo(typeof(IInboxHandler<>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
@@ -103,7 +103,7 @@ namespace TransactionalBox
                 services.AddKeyedSingleton(typeof(IInboxMessageDefinition), messageType, inboxMessageDefinition);
             }
 
-            services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxMessageHandler<>)));
+            services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxHandler<>)));
             services.AddSingleton<ICompiledInboxHandlers, CompiledInboxHandlers>();
 
             services.AddSingleton<ITopicsProvider, TopicsProvider>();
