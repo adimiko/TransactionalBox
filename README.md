@@ -128,6 +128,7 @@ Have fun :smiley:!
     - [x] Decompression
     - [ ] Deserialization
     - [ ] Decryption
+    - [ ] Separator
 
 ## :european_castle: Architecture
 The transactional box consists of four basic components.
