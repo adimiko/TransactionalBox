@@ -3,7 +3,7 @@ using TransactionalBox.Inbox.Contexts;
 
 namespace TransactionalBox.Sample.WebApi.InboxMessages
 {
-    internal sealed class ExampleMessageHandler : IInboxMessageHandler<ExampleMessage>
+    internal sealed class ExampleMessageHandler : IInboxHandler<ExampleMessage>
     {
         
         private readonly SampleDbContext _context;

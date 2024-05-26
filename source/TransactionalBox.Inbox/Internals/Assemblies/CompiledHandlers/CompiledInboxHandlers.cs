@@ -33,7 +33,7 @@ namespace TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers
             var inboxHandlerObjectTypeParameter = Expression.Parameter(typeof(object));
 
             var messageTypeExpression = Expression.Convert(messageObjectTypeParameter, messageType);
-            var inboxHandlerTypeExpression = Expression.Convert(inboxHandlerObjectTypeParameter, typeof(IInboxMessageHandler<>).MakeGenericType(messageType));
+            var inboxHandlerTypeExpression = Expression.Convert(inboxHandlerObjectTypeParameter, typeof(IInboxHandler<>).MakeGenericType(messageType));
 
             var body = Expression.Call(inboxHandlerTypeExpression, "Handle", new Type[0], messageTypeExpression, executionContextObjectTypeParameter);
 

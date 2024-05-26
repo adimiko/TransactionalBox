@@ -3,7 +3,7 @@ using TransactionalBox.Inbox.Contexts;
 
 namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithInbox
 {
-    internal sealed class PublishableMessageHandler : IInboxMessageHandler<PublishableMessage>
+    internal sealed class PublishableMessageHandler : IInboxHandler<PublishableMessage>
     {
         public Task Handle(PublishableMessage message, IExecutionContext executionContext)
         {
