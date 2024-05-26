@@ -48,7 +48,7 @@ namespace TransactionalBox.End2EndTests
                 await outbox.Add(outboxMessage);
             }
 
-            await Task.Delay(5000);
+            await Task.Delay(1000);
 
             // add to outbox
 
