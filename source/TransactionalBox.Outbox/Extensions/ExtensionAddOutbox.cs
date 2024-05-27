@@ -83,7 +83,7 @@ namespace TransactionalBox
                 services.AddKeyedSingleton(typeof(IOutboxMessageDefinition), messageType, outboxMessageDefinition);
             }
 
-            services.AddSingleton<TransportMessageFactory>();
+            services.AddSingleton<TransportEnvelopeFactory>();
 
             services.AddSingleton<SequentialGuidConfigurator>();
             services.AddSingleton<ISequentialGuidGenerator>(sp => new SequentialGuid(sp.GetRequiredService<SequentialGuidConfigurator>().Create()));

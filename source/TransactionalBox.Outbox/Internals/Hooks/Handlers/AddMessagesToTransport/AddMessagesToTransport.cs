@@ -15,7 +15,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
         private readonly IEventHookPublisher _eventHookPublisher;
 
-        private readonly TransportMessageFactory _factory;
+        private readonly TransportEnvelopeFactory _factory;
 
         private readonly IAddMessagesToTransportSettings _settings;
 
@@ -29,7 +29,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
         public AddMessagesToTransport(
             IEventHookPublisher eventHookPublisher,
-            TransportMessageFactory factory,
+            TransportEnvelopeFactory factory,
             IAddMessagesToTransportSettings settings,
             ISystemClock systemClock,
             IAddMessagesToTransportRepository repository,
