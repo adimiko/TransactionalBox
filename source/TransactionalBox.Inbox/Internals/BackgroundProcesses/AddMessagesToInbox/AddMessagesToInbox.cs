@@ -62,7 +62,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
 
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    
+                    //const string separator = "⸘";
                     //TODO #27
                     var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
 

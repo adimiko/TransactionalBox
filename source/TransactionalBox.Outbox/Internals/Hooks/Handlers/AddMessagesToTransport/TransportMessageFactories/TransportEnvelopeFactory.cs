@@ -7,7 +7,7 @@ using TransactionalBox.Outbox.Internals.Transport;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories
 {
-    internal sealed class TransportMessageFactory
+    internal sealed class TransportEnvelopeFactory
     {
         private readonly ICompression _compression;
 
@@ -15,7 +15,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
         private readonly ITransportMessageSizeSettings _transportMessageSizeSettings;
 
-        public TransportMessageFactory(
+        public TransportEnvelopeFactory(
             ICompression compression,
             IEnumerable<IPayloadCreationPolicy> payloadCreationPolicies,
             ITransportMessageSizeSettings transportMessageSizeSettings)
@@ -25,7 +25,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
             _transportMessageSizeSettings = transportMessageSizeSettings;
         }
 
-        public async Task<IEnumerable<TransportMessage>> Create(IEnumerable<OutboxMessageStorage> outboxMessages)
+        public async Task<IEnumerable<TransportEnvelope>> Create(IEnumerable<OutboxMessageStorage> outboxMessages)
         {
             var groupedOutboxMessagesByTopic = outboxMessages
             .GroupBy(x => x.Topic)
@@ -35,13 +35,21 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                 Messages = groupedMessagesWithTheSameTopic
             });
 
-            var transportMessages = new List<TransportMessage>();
+            var transportEnvelopes = new List<TransportEnvelope>();
 
             foreach (var groupedOutboxMessagesWithTheSameTopic in groupedOutboxMessagesByTopic)
             {
                 var messages = groupedOutboxMessagesWithTheSameTopic.Messages;
 
-                var payload = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(messages)); //TODO TransportSerializer with StringBuilder
+                var transportMessages = new List<TransportMessage>();
+
+                foreach (var message in messages)
+                {
+                    transportMessages.Add(new TransportMessage(message.Id, message.Topic, message.OccurredUtc, message.Payload));
+                }    
+
+
+                var payload = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(transportMessages)); //TODO TransportSerializer with StringBuilder
 
                 var compressedPayload = await _compression.Compress(payload);
 
@@ -53,18 +61,18 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
                 foreach (var p in payloads)
                 {
-                    var transportMessage = new TransportMessage()
+                    var transportEnvelope= new TransportEnvelope()
                     {
                         Topic = groupedOutboxMessagesWithTheSameTopic.Topic,
                         Payload = p,
-                        ContentType = _compression.Name,
+                        Compression = _compression.Name,
                     };
 
-                    transportMessages.Add(transportMessage);
+                    transportEnvelopes.Add(transportEnvelope);
                 }
             }
 
-            return transportMessages;
+            return transportEnvelopes;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace TransactionalBox.Inbox.Kafka.Internals
                     var result = consumer.Consume();
 
                     //TODO valid
-                    var x = result.Headers.Single(x => x.Key == "ContentType");
+                    var x = result.Headers.Single(x => x.Key == "Compression");
 
                     var transportMessage = new TransportMessage()
                     {

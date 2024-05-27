@@ -1,4 +1,5 @@
 ﻿using TransactionalBox.Internals.Transport.InMemory.Internals;
+using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 
 namespace TransactionalBox.Outbox.Internals.Transport.InMemory
 {
@@ -11,13 +12,13 @@ namespace TransactionalBox.Outbox.Internals.Transport.InMemory
             _inMemoryTransport = inMemoryTransport;
         }
 
-        public async Task Add(string topic, byte[] payload, string contentType)
+        public async Task Add(TransportEnvelope transportEnvelope)
         {
             var transportObject = new TransportObject()
             {
-                Topic = topic,
-                Payload = payload,
-                Compression = contentType
+                Topic = transportEnvelope.Topic,
+                Payload = transportEnvelope.Payload,
+                Compression = transportEnvelope.Compression,
             };
 
             await _inMemoryTransport.Writer.WriteAsync(transportObject);

@@ -1,7 +1,9 @@
-﻿namespace TransactionalBox.Outbox.Internals.Transport
+﻿using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
+
+namespace TransactionalBox.Outbox.Internals.Transport
 {
     internal interface IOutboxTransport
     {
-        Task Add(string topic, byte[] payload, string contentType);
+        Task Add(TransportEnvelope transportEnvelope);
     }
 }
