@@ -25,7 +25,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
             _transportMessageSizeSettings = transportMessageSizeSettings;
         }
 
-        public async Task<IEnumerable<TransportMessage>> Create(IEnumerable<OutboxMessageStorage> outboxMessages)
+        public async Task<IEnumerable<TransportEnvelope>> Create(IEnumerable<OutboxMessageStorage> outboxMessages)
         {
             var groupedOutboxMessagesByTopic = outboxMessages
             .GroupBy(x => x.Topic)
@@ -35,7 +35,7 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
                 Messages = groupedMessagesWithTheSameTopic
             });
 
-            var transportMessages = new List<TransportMessage>();
+            var transportMessages = new List<TransportEnvelope>();
 
             foreach (var groupedOutboxMessagesWithTheSameTopic in groupedOutboxMessagesByTopic)
             {
@@ -53,11 +53,11 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
                 foreach (var p in payloads)
                 {
-                    var transportMessage = new TransportMessage()
+                    var transportMessage = new TransportEnvelope()
                     {
                         Topic = groupedOutboxMessagesWithTheSameTopic.Topic,
                         Payload = p,
-                        ContentType = _compression.Name,
+                        Compression = _compression.Name,
                     };
 
                     transportMessages.Add(transportMessage);

@@ -73,11 +73,12 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTranspor
 
                 var messages = await _repository.GetMarkedMessages(context.Id).ConfigureAwait(false);
 
-                var transportMessages = await _factory.Create(messages).ConfigureAwait(false);
+                //TODO TransportMessageWrapper
+                var transportEnvelopes = await _factory.Create(messages).ConfigureAwait(false);
 
-                foreach (var transportMessage in transportMessages)
+                foreach (var transportEnvelope in transportEnvelopes)
                 {
-                    await _transport.Add(transportMessage.Topic, transportMessage.Payload, transportMessage.ContentType).ConfigureAwait(false);
+                    await _transport.Add(transportEnvelope).ConfigureAwait(false);
                 }
 
                 await _repository.MarkAsProcessed(context.Id, _clock.UtcNow).ConfigureAwait(false);
