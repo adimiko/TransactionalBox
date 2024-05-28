@@ -1,14 +1,14 @@
 ﻿using Confluent.Kafka.Admin;
 using Confluent.Kafka;
-using TransactionalBox.Inbox.Internals.Transport.Topics;
+using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
 
-namespace TransactionalBox.Inbox.Kafka.Internals
+namespace TransactionalBox.Inbox.Kafka.Internals.ImplementedContracts
 {
     internal sealed class KafkaTransportTopicsCreator : ITransportTopicsCreator
     {
         private readonly IInboxKafkaSettings _settings;
 
-        public KafkaTransportTopicsCreator(IInboxKafkaSettings settings) 
+        public KafkaTransportTopicsCreator(IInboxKafkaSettings settings)
         {
             _settings = settings;
         }
@@ -17,9 +17,9 @@ namespace TransactionalBox.Inbox.Kafka.Internals
         {
             var topicSpecifications = new List<TopicSpecification>();
 
-            foreach (var topic in topics) 
+            foreach (var topic in topics)
             {
-                topicSpecifications.Add(new TopicSpecification() { Name =  topic });
+                topicSpecifications.Add(new TopicSpecification() { Name = topic });
             }
 
             using (var client = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = _settings.BootstrapServers }).Build())
@@ -31,7 +31,7 @@ namespace TransactionalBox.Inbox.Kafka.Internals
                 }
                 catch (CreateTopicsException)
                 {
-                    
+
                 }
             };
         }

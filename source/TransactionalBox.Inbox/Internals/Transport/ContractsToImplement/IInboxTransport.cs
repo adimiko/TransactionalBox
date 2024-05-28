@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Transport
+﻿namespace TransactionalBox.Inbox.Internals.Transport.ContractsToImplement
 {
     internal interface IInboxTransport
     {

@@ -6,9 +6,9 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 using TransactionalBox.Inbox.Internals.Decompression;
 using TransactionalBox.Inbox.Internals.Hooks.Events;
 using TransactionalBox.Inbox.Internals.Storage;
-using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Internals;
+using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox
 {
