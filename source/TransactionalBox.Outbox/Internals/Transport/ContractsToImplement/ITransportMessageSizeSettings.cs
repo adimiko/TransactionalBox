@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Transport
+﻿namespace TransactionalBox.Outbox.Internals.Transport.ContractsToImplement
 {
     internal interface ITransportMessageSizeSettings
     {

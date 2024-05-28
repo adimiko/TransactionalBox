@@ -16,6 +16,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.2" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageVersion Include="Confluent.Kafka" Version="2.3.0" />
+    <PackageVersion Include="RabbitMQ.Client" Version="6.8.1" />
     <PackageVersion Include="Scrutor" Version="4.2.2" />
   </ItemGroup>
 </Project>

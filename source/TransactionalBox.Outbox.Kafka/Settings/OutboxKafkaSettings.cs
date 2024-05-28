@@ -6,8 +6,6 @@ namespace TransactionalBox.Outbox.Kafka.Settings
     {
         public string BootstrapServers { get; set; }
 
-        public KafkaTransportMessageSizeSettings TransportMessageSizeSettings { get; } = new KafkaTransportMessageSizeSettings();
-
         internal OutboxKafkaSettings() { }
     }
 }
