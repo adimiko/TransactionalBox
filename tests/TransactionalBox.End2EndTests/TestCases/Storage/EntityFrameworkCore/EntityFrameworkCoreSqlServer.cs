@@ -1,8 +1,9 @@
-﻿using DotNet.Testcontainers.Containers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System.Reflection;
+using Testcontainers.MsSql;
 using Testcontainers.PostgreSql;
 using TransactionalBox.End2EndTests.SeedWork.Inbox;
 using TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore.DbContexts;
@@ -10,35 +11,31 @@ using Xunit.Abstractions;
 
 namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 {
-    internal class EntityFrameworkCorePostgresSql
+    internal sealed class EntityFrameworkCoreSqlServer
     {
-        private Assembly Assembly => typeof(EntityFrameworkCorePostgresSql).Assembly;
+        private Assembly Assembly => typeof(EntityFrameworkCoreSqlServer).Assembly;
 
         private readonly Func<ITestOutputHelper, Task<Dependencies>> _init;
 
         private readonly Func<Task> _cleanUp;
 
-        private PostgreSqlContainer _outboxContainer;
+        private MsSqlContainer _outboxContainer;
 
-        private PostgreSqlContainer _inboxContainer;
+        private MsSqlContainer _inboxContainer;
 
-        public EntityFrameworkCorePostgresSql()
+        public EntityFrameworkCoreSqlServer()
         {
             _init = async (ITestOutputHelper output) =>
             {
-                _outboxContainer = new PostgreSqlBuilder()
-                  .WithImage("postgres:15.1")
-                  .Build();
+                _outboxContainer = new MsSqlBuilder().Build();
 
-                _inboxContainer = new PostgreSqlBuilder()
-                  .WithImage("postgres:15.1")
-                  .Build();
+                _inboxContainer = new MsSqlBuilder().Build();
 
                 await Task.WhenAll(_outboxContainer.StartAsync(), _inboxContainer.StartAsync());
 
                 var outboxDependencies = new ServiceCollection();
 
-                outboxDependencies.AddDbContextPool<OutboxDbContext>(x => x.UseNpgsql(_outboxContainer.GetConnectionString()));
+                outboxDependencies.AddDbContextPool<OutboxDbContext>(x => x.UseSqlServer(_outboxContainer.GetConnectionString()));
 
                 outboxDependencies.AddLogging((builder) => builder.AddXUnit(output));
                 outboxDependencies.AddTransactionalBox(
@@ -49,7 +46,7 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
                 var inboxDependencies = new ServiceCollection();
 
-                inboxDependencies.AddDbContextPool<InboxDbContext>(x => x.UseNpgsql(_inboxContainer.GetConnectionString()));
+                inboxDependencies.AddDbContextPool<InboxDbContext>(x => x.UseSqlServer(_inboxContainer.GetConnectionString()));
 
                 inboxDependencies.AddLogging((builder) => builder.AddXUnit(output));
                 inboxDependencies.AddTransactionalBox(
@@ -81,7 +78,7 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
         public End2EndTestCase GetEnd2EndTestCase()
         {
-            return new End2EndTestCase(_init, _cleanUp, nameof(EntityFrameworkCorePostgresSql));
+            return new End2EndTestCase(_init, _cleanUp, nameof(EntityFrameworkCoreSqlServer));
         }
     }
 }

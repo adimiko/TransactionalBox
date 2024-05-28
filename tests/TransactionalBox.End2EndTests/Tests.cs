@@ -7,8 +7,9 @@ namespace TransactionalBox.End2EndTests
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            //yield return new object[] { new StorageInMemory_TransportInMemory().GetEnd2EndTestCase() };
             yield return new object[] { new EntityFrameworkCorePostgresSql().GetEnd2EndTestCase() };
+            //TODO run without problem 
+            //yield return new object[] { new EntityFrameworkCoreSqlServer().GetEnd2EndTestCase() };
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
