@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TransactionalBox.End2EndTests.TestCases.EntityFramework.DbContexts
+namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore.DbContexts
 {
     internal sealed class OutboxDbContext : DbContext
     {

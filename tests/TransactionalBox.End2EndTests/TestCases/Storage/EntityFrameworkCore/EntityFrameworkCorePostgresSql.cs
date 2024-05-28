@@ -2,15 +2,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
 using TransactionalBox.End2EndTests.SeedWork.Inbox;
-using TransactionalBox.End2EndTests.TestCases.EntityFramework.DbContexts;
+using TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore.DbContexts;
 
-namespace TransactionalBox.End2EndTests.TestCases.EntityFramework
+namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 {
-    internal class StorageEntityFrameworkPostgreSQL_TransportInMemory
+    internal class EntityFrameworkCorePostgresSql
     {
         private readonly Func<Task<Dependencies>> _init;
 
-        public StorageEntityFrameworkPostgreSQL_TransportInMemory()
+        public EntityFrameworkCorePostgresSql()
         {
             _init = async () =>
             {
@@ -64,7 +64,7 @@ namespace TransactionalBox.End2EndTests.TestCases.EntityFramework
 
         public End2EndTestCase GetEnd2EndTestCase()
         {
-            return new End2EndTestCase(_init, "Storage: EntityFrameworkPostgreSQL | Transport: InMemory");
+            return new End2EndTestCase(_init, nameof(EntityFrameworkCorePostgresSql));
         }
     }
 }
