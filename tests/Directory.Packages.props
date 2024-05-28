@@ -4,6 +4,7 @@
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageVersion Include="Testcontainers.Kafka" Version="3.8.0" />

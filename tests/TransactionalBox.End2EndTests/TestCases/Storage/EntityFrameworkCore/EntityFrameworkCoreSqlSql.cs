@@ -1,19 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Testcontainers.PostgreSql;
 using TransactionalBox.End2EndTests.SeedWork.Inbox;
 using TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore.DbContexts;
 
 namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 {
-    internal class EntityFrameworkCorePostgresSql
+    internal class EntityFrameworkCoreSqlSql
     {
-        private Assembly Assembly => typeof(EntityFrameworkCorePostgresSql).Assembly;
-
         private readonly Func<Task<Dependencies>> _init;
 
-        public EntityFrameworkCorePostgresSql()
+        public EntityFrameworkCoreSqlSql()
         {
             _init = async () =>
             {
@@ -33,7 +35,7 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
                 outboxDependencies.AddLogging();
                 outboxDependencies.AddTransactionalBox(
-                    builder => builder.AddOutbox(x => x.UseEntityFramework<OutboxDbContext>(), assemblyConfiguraton: a => a.RegisterFromAssemblies(Assembly)),
+                    builder => builder.AddOutbox(x => x.UseEntityFramework<OutboxDbContext>()),
                     settings => settings.ServiceId = "OUTBOX");
 
                 var outbox = outboxDependencies.BuildServiceProvider();
@@ -44,7 +46,7 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
                 inboxDependencies.AddLogging();
                 inboxDependencies.AddTransactionalBox(
-                    builder => builder.AddInbox(x => x.UseEntityFramework<InboxDbContext>(), assemblyConfiguraton: a => a.RegisterFromAssemblies(Assembly)),
+                    builder => builder.AddInbox(x => x.UseEntityFramework<InboxDbContext>()),
                     settins => settins.ServiceId = "INBOX");
 
                 inboxDependencies.AddSingleton<InboxVerifier>();
