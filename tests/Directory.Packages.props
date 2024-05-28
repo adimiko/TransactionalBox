@@ -4,8 +4,13 @@
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="MartinCostello.Logging.XUnit" Version="0.3.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageVersion Include="Testcontainers.Kafka" Version="3.8.0" />
+    <PackageVersion Include="Testcontainers.MsSql" Version="3.8.0" />
+    <PackageVersion Include="Testcontainers.MySql" Version="3.8.0" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="3.8.0" />
     <PackageVersion Include="xunit" Version="2.5.0" />
     <PackageVersion Include="xunit.assert" Version="2.4.2" />

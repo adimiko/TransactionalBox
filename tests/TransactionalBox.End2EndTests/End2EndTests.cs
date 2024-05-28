@@ -1,75 +1,85 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using TransactionalBox.End2EndTests.SeedWork.Inbox;
 using TransactionalBox.End2EndTests.SeedWork.Outbox;
+using TransactionalBox.End2EndTests.TestCases;
 using Xunit;
+using Xunit.Abstractions;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace TransactionalBox.End2EndTests
 {
     public sealed class End2EndTests
     {
-        private readonly Assembly _assembly = typeof(End2EndTests).Assembly;
+        private readonly ITestOutputHelper _output;
 
+        public End2EndTests(ITestOutputHelper output) 
+        {
+            _output = output;
+        }
         // TODO Action multiple implementation ef, inmemory, mongodb, transport etc.
         // TODO multiple test container per test
-        private readonly IServiceProvider _outboxDependencies;
+        //TODO xunit logger
 
-        private readonly IServiceProvider _inboxDependencies;
 
-        public End2EndTests()
+        [Theory]
+        [ClassData(typeof(Tests))]
+        public async Task Test(End2EndTestCase testCase)
         {
-            var outboxDependencies = new ServiceCollection();
+            var dependencies = await testCase.Init(_output).ConfigureAwait(false);
 
-            outboxDependencies.AddLogging();
+            var outboxDependencies = dependencies.OutboxDependecies;
+            var inboxDependencies = dependencies.InboxDependecies;
 
-            outboxDependencies.AddTransactionalBox(
-                builder => builder.AddOutbox(
-                    assemblyConfiguraton: assebmly => assebmly.RegisterFromAssemblies(_assembly)),
-                settings => settings.ServiceId = "OUTBOX");
-
-            _outboxDependencies = outboxDependencies.BuildServiceProvider();
-
-            var inboxDependencies  = new ServiceCollection();
-
-            inboxDependencies.AddLogging();
-
-            inboxDependencies.AddTransactionalBox(
-                builder => builder.AddInbox(
-                    assemblyConfiguraton: assebmly => assebmly.RegisterFromAssemblies(_assembly)),
-                settins => settins.ServiceId = "INBOX");
-
-            _inboxDependencies = inboxDependencies.BuildServiceProvider();
-        }
-
-        [Fact]
-        public async Task Test()
-        {
-            var outboxHostedServices = _outboxDependencies.GetServices<IHostedService>();
+            var outboxHostedServices = outboxDependencies.GetServices<IHostedService>();
 
             foreach (var outboxHostedService in outboxHostedServices)
             {
-                await outboxHostedService.StartAsync(CancellationToken.None);
+                await outboxHostedService.StartAsync(CancellationToken.None).ConfigureAwait(false); ;
             }
 
-            var inboxHostedServices = _inboxDependencies.GetServices<IHostedService>();
+            var inboxHostedServices = inboxDependencies.GetServices<IHostedService>();
 
             foreach (var inboxHostedService in inboxHostedServices)
             {
-                await inboxHostedService.StartAsync(CancellationToken.None);
+                await inboxHostedService.StartAsync(CancellationToken.None).ConfigureAwait(false); ;
             }
 
-            using (var scope = _outboxDependencies.CreateScope()) 
+            using (var scope = outboxDependencies.CreateScope()) 
             {
-                var outboxMessage = new SendableMessage() { Message  = "Hello" };
+                var outboxMessage = new SeedWork.Outbox.SendableMessage() { Message  = "Hello" };
 
                 var outbox = scope.ServiceProvider.GetRequiredService<IOutbox>();
-                // UoW
-                await outbox.Add(outboxMessage);
+                var uow = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+                await using (await uow.BeginTransactionAsync().ConfigureAwait(false))
+                {
+                    await outbox.Add(outboxMessage).ConfigureAwait(false);
+                }
             }
 
-            await Task.Delay(5000);
+            await Task.Delay(500).ConfigureAwait(false);
 
-            // inbox decorate handler end check
+            using (var scope = inboxDependencies.CreateScope())
+            {
+                var verifier = scope.ServiceProvider.GetRequiredService<InboxVerifier>();
+
+                Assert.True(verifier.IsExecuted);
+            }
+            /*
+            foreach (var outboxHostedService in outboxHostedServices)
+            {
+                await outboxHostedService.StopAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+
+            foreach (var inboxHostedService in inboxHostedServices)
+            {
+                await inboxHostedService.StopAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            */
+            await testCase.CleanUp();
         }
     }
 }
