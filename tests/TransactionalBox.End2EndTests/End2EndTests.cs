@@ -45,8 +45,12 @@ namespace TransactionalBox.End2EndTests
                 var outboxMessage = new SeedWork.Outbox.SendableMessage() { Message  = "Hello" };
 
                 var outbox = scope.ServiceProvider.GetRequiredService<IOutbox>();
-                // UoW
-                await outbox.Add(outboxMessage);
+                var uow = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+                await using (await uow.BeginTransactionAsync())
+                {
+                    await outbox.Add(outboxMessage);
+                }
             }
 
             await Task.Delay(500);
