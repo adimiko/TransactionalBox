@@ -60,7 +60,7 @@ namespace TransactionalBox.End2EndTests
                 }
             }
 
-            await Task.Delay(5000).ConfigureAwait(false);
+            await Task.Delay(500).ConfigureAwait(false);
 
             using (var scope = inboxDependencies.CreateScope())
             {
