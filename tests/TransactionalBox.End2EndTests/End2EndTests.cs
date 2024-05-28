@@ -21,8 +21,10 @@ namespace TransactionalBox.End2EndTests
         [ClassData(typeof(Tests))]
         public async Task Test(End2EndTestCase testCase)
         {
-            var outboxDependencies = testCase.OutboxDependecies;
-            var inboxDependencies = testCase.InboxDependecies;
+            var dependencies = await testCase.Init();
+
+            var outboxDependencies = dependencies.OutboxDependecies;
+            var inboxDependencies = dependencies.InboxDependecies;
 
             var outboxHostedServices = outboxDependencies.GetServices<IHostedService>();
 

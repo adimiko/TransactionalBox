@@ -8,20 +8,21 @@ namespace TransactionalBox.End2EndTests.TestCases
 {
     public sealed class End2EndTestCase
     {
-        public IServiceProvider OutboxDependecies { get; }
-
-        public IServiceProvider InboxDependecies { get; }
+        private readonly Func<Task<Dependencies>> _init;
 
         private readonly string _testName;
 
         public End2EndTestCase(
-            IServiceProvider outboxDependecies, 
-            IServiceProvider inboxDependecies,
+            Func<Task<Dependencies>> init,
             string testName)
         {
-            OutboxDependecies = outboxDependecies;
-            InboxDependecies = inboxDependecies;
+            _init = init;
             _testName = testName;
+        }
+
+        public Task<Dependencies> Init()
+        {
+            return _init();
         }
 
         public override string ToString() => _testName;
