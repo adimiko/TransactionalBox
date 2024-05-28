@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using TransactionalBox.End2EndTests.SeedWork.Inbox;
 using TransactionalBox.End2EndTests.SeedWork.Outbox;
+using TransactionalBox.End2EndTests.TestCases;
 using Xunit;
 
 namespace TransactionalBox.End2EndTests
@@ -12,64 +14,44 @@ namespace TransactionalBox.End2EndTests
 
         // TODO Action multiple implementation ef, inmemory, mongodb, transport etc.
         // TODO multiple test container per test
-        private readonly IServiceProvider _outboxDependencies;
+        //TODO xunit logger
 
-        private readonly IServiceProvider _inboxDependencies;
 
-        public End2EndTests()
+        [Theory]
+        [ClassData(typeof(Tests))]
+        public async Task Test(End2EndTestCase testCase)
         {
-            var outboxDependencies = new ServiceCollection();
+            var outboxDependencies = testCase.OutboxDependecies;
+            var inboxDependencies = testCase.InboxDependecies;
 
-            outboxDependencies.AddLogging();
-
-            outboxDependencies.AddTransactionalBox(
-                builder => builder.AddOutbox(
-                    assemblyConfiguraton: assebmly => assebmly.RegisterFromAssemblies(_assembly)),
-                settings => settings.ServiceId = "OUTBOX");
-
-            _outboxDependencies = outboxDependencies.BuildServiceProvider();
-
-            var inboxDependencies  = new ServiceCollection();
-
-            inboxDependencies.AddLogging();
-
-            inboxDependencies.AddTransactionalBox(
-                builder => builder.AddInbox(
-                    assemblyConfiguraton: assebmly => assebmly.RegisterFromAssemblies(_assembly)),
-                settins => settins.ServiceId = "INBOX");
-
-            _inboxDependencies = inboxDependencies.BuildServiceProvider();
-        }
-
-        [Fact]
-        public async Task Test()
-        {
-            var outboxHostedServices = _outboxDependencies.GetServices<IHostedService>();
+            var outboxHostedServices = outboxDependencies.GetServices<IHostedService>();
 
             foreach (var outboxHostedService in outboxHostedServices)
             {
                 await outboxHostedService.StartAsync(CancellationToken.None);
             }
 
-            var inboxHostedServices = _inboxDependencies.GetServices<IHostedService>();
+            var inboxHostedServices = inboxDependencies.GetServices<IHostedService>();
 
             foreach (var inboxHostedService in inboxHostedServices)
             {
                 await inboxHostedService.StartAsync(CancellationToken.None);
             }
 
-            using (var scope = _outboxDependencies.CreateScope()) 
+            using (var scope = outboxDependencies.CreateScope()) 
             {
-                var outboxMessage = new SendableMessage() { Message  = "Hello" };
+                var outboxMessage = new SeedWork.Outbox.SendableMessage() { Message  = "Hello" };
 
                 var outbox = scope.ServiceProvider.GetRequiredService<IOutbox>();
                 // UoW
                 await outbox.Add(outboxMessage);
             }
 
-            await Task.Delay(5000);
+            await Task.Delay(500);
 
-            // inbox decorate handler end check
+            var verifier = inboxDependencies.GetRequiredService<InboxVerifier>();
+
+            Assert.True(verifier.IsExecuted);
         }
     }
 }
