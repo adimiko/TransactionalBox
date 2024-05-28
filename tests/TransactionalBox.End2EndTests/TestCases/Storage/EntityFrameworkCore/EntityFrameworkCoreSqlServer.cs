@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System.Reflection;
@@ -23,6 +24,10 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
         private MsSqlContainer _inboxContainer;
 
+        private IServiceProvider _outbox;
+
+        private IServiceProvider _inbox;
+
         public EntityFrameworkCoreSqlServer()
         {
             _init = async (ITestOutputHelper output) =>
@@ -42,7 +47,7 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
                     builder => builder.AddOutbox(x => x.UseEntityFramework<OutboxDbContext>(), assemblyConfiguraton: a => a.RegisterFromAssemblies(Assembly)),
                     settings => settings.ServiceId = "OUTBOX");
 
-                var outbox = outboxDependencies.BuildServiceProvider();
+                _outbox = outboxDependencies.BuildServiceProvider();
 
                 var inboxDependencies = new ServiceCollection();
 
@@ -55,23 +60,51 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
                 inboxDependencies.AddSingleton<InboxVerifier>();
 
-                var inbox = inboxDependencies.BuildServiceProvider();
+               _inbox = inboxDependencies.BuildServiceProvider();
 
-                using (var scope = outbox.CreateScope())
+                using (var scope = _outbox.CreateScope())
                 {
                     await scope.ServiceProvider.GetRequiredService<OutboxDbContext>().Database.EnsureCreatedAsync();
                 }
 
-                using (var scope = inbox.CreateScope())
+                using (var scope = _inbox.CreateScope())
                 {
                     await scope.ServiceProvider.GetRequiredService<InboxDbContext>().Database.EnsureCreatedAsync();
                 }
 
-                return new Dependencies(outbox, inbox);
+                var outboxHostedServices = _outbox.GetServices<IHostedService>();
+
+                foreach (var outboxHostedService in outboxHostedServices)
+                {
+                    await outboxHostedService.StartAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+
+                var inboxHostedServices = _inbox.GetServices<IHostedService>();
+
+                foreach (var inboxHostedService in inboxHostedServices)
+                {
+                    await inboxHostedService.StartAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+
+                return new Dependencies(_outbox, _inbox);
             };
 
             _cleanUp = async () =>
             {
+                var outboxHostedServices = _outbox.GetServices<IHostedService>();
+
+                foreach (var outboxHostedService in outboxHostedServices)
+                {
+                    await outboxHostedService.StopAsync(CancellationToken.None).ConfigureAwait(false); ;
+                }
+
+                var inboxHostedServices = _inbox.GetServices<IHostedService>();
+
+                foreach (var inboxHostedService in inboxHostedServices)
+                {
+                    await inboxHostedService.StopAsync(CancellationToken.None).ConfigureAwait(false); ;
+                }
+
                 await Task.WhenAll(_outboxContainer.StopAsync(), _inboxContainer.StopAsync());
             };
         }

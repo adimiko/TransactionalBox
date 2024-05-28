@@ -7,10 +7,9 @@ using TransactionalBox.End2EndTests.TestCases;
 using Xunit;
 using Xunit.Abstractions;
 
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
-
 namespace TransactionalBox.End2EndTests
 {
+    [Collection("Sequential")]
     public sealed class End2EndTests
     {
         private readonly ITestOutputHelper _output;
@@ -33,20 +32,6 @@ namespace TransactionalBox.End2EndTests
             var outboxDependencies = dependencies.OutboxDependecies;
             var inboxDependencies = dependencies.InboxDependecies;
 
-            var outboxHostedServices = outboxDependencies.GetServices<IHostedService>();
-
-            foreach (var outboxHostedService in outboxHostedServices)
-            {
-                await outboxHostedService.StartAsync(CancellationToken.None).ConfigureAwait(false); ;
-            }
-
-            var inboxHostedServices = inboxDependencies.GetServices<IHostedService>();
-
-            foreach (var inboxHostedService in inboxHostedServices)
-            {
-                await inboxHostedService.StartAsync(CancellationToken.None).ConfigureAwait(false); ;
-            }
-
             using (var scope = outboxDependencies.CreateScope()) 
             {
                 var outboxMessage = new SeedWork.Outbox.SendableMessage() { Message  = "Hello" };
@@ -60,7 +45,7 @@ namespace TransactionalBox.End2EndTests
                 }
             }
 
-            await Task.Delay(500).ConfigureAwait(false);
+            await Task.Delay(1000).ConfigureAwait(false);
 
             using (var scope = inboxDependencies.CreateScope())
             {
@@ -68,18 +53,8 @@ namespace TransactionalBox.End2EndTests
 
                 Assert.True(verifier.IsExecuted);
             }
-            /*
-            foreach (var outboxHostedService in outboxHostedServices)
-            {
-                await outboxHostedService.StopAsync(CancellationToken.None).ConfigureAwait(false);
-            }
 
-            foreach (var inboxHostedService in inboxHostedServices)
-            {
-                await inboxHostedService.StopAsync(CancellationToken.None).ConfigureAwait(false);
-            }
-            */
-            await testCase.CleanUp();
+            await testCase.CleanUp().ConfigureAwait(false);
         }
     }
 }
