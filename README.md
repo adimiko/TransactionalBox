@@ -56,7 +56,6 @@ Have fun :smiley:!
 - [x] Get messages from outbox and add them to transport
 - [x] Get a message from transport and add them to the inbox
 - [x] Get a message from inbox and process it
-- [ ] Get messages from inbox and process them
 
 #### Storage
 - [x] InMemory (Default)
@@ -124,6 +123,7 @@ Have fun :smiley:!
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 - [ ] Transport discriminator (one outbox many transport, tagged message)
+- [ ] Hook startup
 - [ ] Inbox based on the header, selects the appropriate algorithm to:
     - [x] Decompression
     - [ ] Deserialization
