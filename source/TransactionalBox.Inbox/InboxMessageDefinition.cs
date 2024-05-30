@@ -2,6 +2,9 @@
 
 namespace TransactionalBox
 {
+    /// <summary>
+    /// Define the inbox message.
+    /// </summary>
     public abstract class InboxMessageDefinition<TInboxMessage> : IInboxMessageDefinition
         where TInboxMessage : InboxMessage, new()
     {

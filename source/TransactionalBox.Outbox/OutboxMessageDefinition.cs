@@ -1,7 +1,11 @@
-﻿using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
+﻿using TransactionalBox.Outbox.Internals.Oubox;
+using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 
 namespace TransactionalBox
 {
+    /// <summary>
+    /// Define the outbox message.
+    /// </summary>
     public abstract class OutboxMessageDefinition<TOutboxMessage> : IOutboxMessageDefinition
         where TOutboxMessage : OutboxMessage
     {
