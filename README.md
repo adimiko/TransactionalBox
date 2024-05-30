@@ -195,7 +195,7 @@ Ensuring the order of messages within a stream insite the service. Messages are 
 
 *e.g. Asynchronous internal communication between Aggregate Roots using domain events in the same service.*
 
-## :medal_sports: Competition '100commitow'
+## :medal_sports: Competition 100commitow
 The project is part of the competition [100 commitow](https://100commitow.pl).
 
 ### Topics
