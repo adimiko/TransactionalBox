@@ -2,7 +2,7 @@
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Deserialization;
 
-namespace TransactionalBox.Inbox.Internals.Extensions
+namespace TransactionalBox
 {
     internal static class ExtensionUseSystemTextJson
     {

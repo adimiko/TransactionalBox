@@ -2,6 +2,6 @@
 {
     internal interface ICleanUpInboxSettings
     {
-        int BatchSize { get; }
+        int MaxBatchSize { get; }
     }
 }

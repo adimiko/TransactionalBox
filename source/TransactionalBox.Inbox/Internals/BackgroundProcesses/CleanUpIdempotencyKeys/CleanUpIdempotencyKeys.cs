@@ -44,13 +44,13 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotenc
 
                     do
                     {
-                        numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.BatchSize, _systemClock.UtcNow).ConfigureAwait(false);
+                        numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.MaxBatchSize, _systemClock.UtcNow).ConfigureAwait(false);
 
                         _logger.CleanedUp(name, id, iteration, numberOfRemovedKeys);
 
                         iteration++;
                     }
-                    while (numberOfRemovedKeys >= _settings.BatchSize);
+                    while (numberOfRemovedKeys >= _settings.MaxBatchSize);
                 }
 
                 await Task.Delay(_settings.Period, _systemClock.TimeProvider, stoppingToken).ConfigureAwait(false);
