@@ -31,13 +31,13 @@ namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.CleanUpOutbox
 
             do
             {
-                numberOfRemovedMessages = await _repository.RemoveProcessedMessages(_settings.BatchSize).ConfigureAwait(false);
+                numberOfRemovedMessages = await _repository.RemoveProcessedMessages(_settings.MaxBatchSize).ConfigureAwait(false);
 
                 _logger.CleanedUp(context.Name, context.Id, iteration, numberOfRemovedMessages);
 
                 iteration++;
             }
-            while (!cancellationToken.IsCancellationRequested && numberOfRemovedMessages >= _settings.BatchSize);
+            while (!cancellationToken.IsCancellationRequested && numberOfRemovedMessages >= _settings.MaxBatchSize);
         }
     }
 }

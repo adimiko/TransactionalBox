@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TransactionalBox
 {
-    public static class ExtensionUseBrotliCompression
+    public static class ExtensionUseBrotli
     {
-        public static void UseBrotliCompression(
+        public static void UseBrotli(
             this IOutboxCompressionConfigurator configurator,
             Action<BrotliCompressionSettings>? settingsConfiguration = null)
         {

@@ -3,11 +3,11 @@ using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Compression;
 using TransactionalBox.Outbox.Internals.Compression.NoCompression;
 
-namespace TransactionalBox.Outbox.Internals.Extensions
+namespace TransactionalBox
 {
-    internal static class ExtensionUseNoCompression
+    public static class ExtensionUseNoCompression
     {
-        internal static void UseNoCompression(this IOutboxCompressionConfigurator configurator)
+        public static void UseNoCompression(this IOutboxCompressionConfigurator configurator)
         {
             var services = configurator.Services;
 

@@ -2,6 +2,6 @@
 {
     internal interface ICleanUpOutboxSettings
     {
-        int BatchSize { get; }
+        int MaxBatchSize { get; }
     }
 }
