@@ -4,7 +4,7 @@ namespace TransactionalBox.Outbox.Settings
 {
     public sealed class CleanUpOutboxSettings : ICleanUpOutboxSettings
     {
-        public int BatchSize { get; set; } = 10000;
+        public int MaxBatchSize { get; set; } = 10000;
 
         public bool IsEnabled { get; set; } = true;
 

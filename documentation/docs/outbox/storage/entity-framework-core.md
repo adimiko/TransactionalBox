@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Entity Framework
+# Entity Framework Core (Relational)
 //TODO UnitOfWork
 
 TransactionalBox is not responsible for configuring Entity Framework.

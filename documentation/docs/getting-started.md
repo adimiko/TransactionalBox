@@ -16,8 +16,6 @@ dotnet add package TransactionalBox.Inbox
 ### Register
 ```csharp
 using TransactionalBox;
-using TransactionalBox.Outbox;
-using TransactionalBox.Inbox;
 ```
 
 ```csharp
@@ -78,7 +76,7 @@ public sealed class ExampleMessage : InboxMessage
 #### Handle message
 
 ```csharp
-internal sealed class ExampleMessageHandler : IInboxMessageHandler<ExampleMessage>
+internal sealed class ExampleMessageHandler : IInboxHandler<ExampleMessage>
 {
     public async Task Handle(ExampleMessage message, IExecutionContext executionContext)
     {

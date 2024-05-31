@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Configurators;
-using TransactionalBox.Outbox.Internals.Extensions;
 
 namespace TransactionalBox.Outbox.Settings
 {

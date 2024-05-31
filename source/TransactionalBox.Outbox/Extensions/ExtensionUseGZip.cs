@@ -7,9 +7,9 @@ using Microsoft.IO;
 
 namespace TransactionalBox
 {
-    public static class ExtensionUseGZipCompression
+    public static class ExtensionUseGZip
     {
-        public static void UseGZipCompression(
+        public static void UseGZip(
             this IOutboxCompressionConfigurator configurator,
             Action<GZipCompressionSettings>? settingsConfiguration = null)
         {

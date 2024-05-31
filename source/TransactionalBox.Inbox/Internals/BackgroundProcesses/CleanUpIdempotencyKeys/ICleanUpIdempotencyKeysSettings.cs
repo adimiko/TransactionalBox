@@ -2,7 +2,7 @@
 {
     internal interface ICleanUpIdempotencyKeysSettings
     {
-        int BatchSize { get; }
+        int MaxBatchSize { get; }
 
         TimeSpan Period { get; }
     }
