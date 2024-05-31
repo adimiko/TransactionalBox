@@ -204,5 +204,5 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 - Concurrency control
 - Scaling and parallel processing (distributed processing)
 - Synchronization primitives
-- Idempotency (message deduplication)
+- Idepotent messages (message deduplication)
 - Retry Pattern
