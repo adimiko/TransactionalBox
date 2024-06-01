@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using TransactionalBox;
 using TransactionalBox.CustomerRegistrations.Database;
+using TransactionalBox.CustomerRegistrations.Messages;
 using TransactionalBox.CustomerRegistrations.Models;
 using TransactionalBox.CustomerRegistrations.Requests;
 
@@ -57,7 +58,8 @@ app.MapPost("/create-customer-registration", async (
 
 app.MapPut("/approve-customer-registration", async (
     ApproveCustomerRegistrationRequest request,
-    CustomerRegistrationDbContext dbContext) =>
+    CustomerRegistrationDbContext dbContext,
+    IOutbox outbox) =>
 {
     var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
 
@@ -68,7 +70,17 @@ app.MapPut("/approve-customer-registration", async (
 
     customerRegistration.IsApproved = true;
 
-    await dbContext.SaveChangesAsync();
+    var commandMessage = new CreateCustomerCommandMessage()
+    {
+        Id = customerRegistration.Id,
+        FirstName = customerRegistration.FirstName,
+        LastName = customerRegistration.LastName,
+        Age = customerRegistration.Age,
+    };
+
+    await outbox.Add(commandMessage);
+
+    await dbContext.SaveChangesAsync(); // outbox added message to dbContext and all operation will be executed in one transaction
 
     return HttpStatusCode.OK;
 });

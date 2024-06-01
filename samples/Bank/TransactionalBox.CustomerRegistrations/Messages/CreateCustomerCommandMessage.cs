@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.CustomerRegistrations.Messages
 {
-    public sealed class CreateCustomerCommand : OutboxMessage
+    public sealed class CreateCustomerCommandMessage : OutboxMessage
     {
         public Guid Id { get; init; }
 
