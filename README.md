@@ -127,7 +127,6 @@ Have fun :smiley:!
 - [ ] Inbox based on the header, selects the appropriate algorithm to:
     - [x] Decompression
     - [ ] Deserialization
-    - [ ] Decryption
     - [ ] Separator
 
 ## :european_castle: Architecture
