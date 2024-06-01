@@ -1,13 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Security.Cryptography;
 using TransactionalBox;
 using TransactionalBox.CustomerRegistrations.Database;
 using TransactionalBox.CustomerRegistrations.Messages;
 using TransactionalBox.CustomerRegistrations.Models;
 using TransactionalBox.CustomerRegistrations.Requests;
 
-var connectionString = "";
-var bootstrapServers = "";
+const string connectionString = "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres";
+const string bootstrapServers = "plaintext://kafka:9092";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,9 +34,19 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        await Task.Delay(RandomNumberGenerator.GetInt32(0, 1000));
+        await scope.ServiceProvider.GetRequiredService<CustomerRegistrationDbContext>().Database.EnsureCreatedAsync();
+    }
+    finally { }
+}
+
 // Controllers
 app.MapPost("/create-customer-registration", async (
-    CreateCustomerRegistrationRequest request,
+    [FromBody] CreateCustomerRegistrationRequest request,
     CustomerRegistrationDbContext dbContext) =>
 {
     var id = Guid.NewGuid();
@@ -53,15 +65,16 @@ app.MapPost("/create-customer-registration", async (
     await dbContext.AddAsync(customerRegistration);
     await dbContext.SaveChangesAsync();
 
-    return Task.FromResult(id);
+    return id;
 });
 
 app.MapPut("/approve-customer-registration", async (
-    ApproveCustomerRegistrationRequest request,
+    [FromBody] ApproveCustomerRegistrationRequest request,
     CustomerRegistrationDbContext dbContext,
     IOutbox outbox,
     HttpContext httpContext) =>
 {
+    var nowUtc = DateTime.UtcNow;
     var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
 
     if (customerRegistration is null)
@@ -70,6 +83,7 @@ app.MapPut("/approve-customer-registration", async (
     }
 
     customerRegistration.IsApproved = true;
+    customerRegistration.UpdatedAtUtc = nowUtc;
 
     var commandMessage = new CreateCustomerCommandMessage()
     {

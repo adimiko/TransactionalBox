@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.CustomerRegistrations.Requests
 {
-    public sealed class CreateCustomerRegistrationRequest
+    public class CreateCustomerRegistrationRequest
     {
         public string FirstName { get; init; }
 

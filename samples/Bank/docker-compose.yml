@@ -1,0 +1,112 @@
+version: '3.4'
+
+networks:
+  customerregistrations-network:
+    driver: bridge
+
+  customers-network:
+    driver: bridge
+
+  elastic:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:
+
+services:
+
+  transactionalbox.customerregistrations: &customerregistrations
+    image: ${DOCKER_REGISTRY-}transactionalboxcustomerregistrations
+    networks:
+      - customerregistrations-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.CustomerRegistrations/Dockerfile
+    links:
+    - customerregistrations.database
+    - kafka
+
+  replicated_customerregistrations:
+    <<: *customerregistrations
+    container_name: replicated_customerregistrations
+
+  customerregistrations.database:
+    image: postgres:14.1-alpine
+    networks:
+      - customerregistrations-network
+    hostname: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+
+  transactionalbox.customers: &customers
+    image: ${DOCKER_REGISTRY-}transactionalboxcustomers
+    networks:
+      - customers-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.Customers/Dockerfile
+    depends_on:
+    - customers.database
+    - kafka
+
+  replicated_customers:
+    <<: *customers
+    container_name: replicated_customers
+
+  customers.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      - customers-network
+    hostname: mssql
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Password123!@#"
+    ports:
+      - 1433:1433
+
+  kafka:
+    image: 'bitnami/kafka:latest'
+    hostname: kafka
+    networks:
+      - customerregistrations-network
+      - customers-network
+    environment:
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.2
+    ports:
+      - "9200:9200"
+    volumes:
+     - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+     - xpack.security.enabled=false
+     - discovery.type=single-node
+    networks:
+      - customerregistrations-network
+      - customers-network
+      - elastic
+        
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.13.2
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic

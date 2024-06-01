@@ -15,6 +15,7 @@ namespace TransactionalBox.CustomerRegistrations.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.AddOutbox();
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerRegistrationDbContext).Assembly);
         }
     }
 }

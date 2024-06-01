@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+const string connectionString = "Server=mssql;Database=msdb;User Id=sa;Password=Password123!@#;TrustServerCertificate=true;";
+const string bootstrapServers = "plaintext://kafka:9092";
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

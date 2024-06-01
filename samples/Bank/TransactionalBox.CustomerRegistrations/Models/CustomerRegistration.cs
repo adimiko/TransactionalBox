@@ -14,6 +14,6 @@
 
         public required DateTime CreatedAtUtc { get; init; }
 
-        public required DateTime UpdatedAtUtc { get; init; }
+        public required DateTime UpdatedAtUtc { get; set; }
     }
 }
