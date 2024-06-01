@@ -1,44 +1,78 @@
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using TransactionalBox;
+using TransactionalBox.CustomerRegistrations.Database;
+using TransactionalBox.CustomerRegistrations.Models;
+using TransactionalBox.CustomerRegistrations.Requests;
+
+var connectionString = "";
+var bootstrapServers = "";
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var services = builder.Services;
+
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
+
+services.AddDbContextPool<CustomerRegistrationDbContext>(x => x.UseNpgsql(connectionString));
+
+services.AddTransactionalBox(x =>
+{
+    x.AddOutbox(
+        storage => storage.UseEntityFramework<CustomerRegistrationDbContext>(),
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
+}, 
+x => x.ServiceId = "CustomerRegistrations");
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
-var summaries = new[]
+// Controllers
+app.MapPost("/create-customer-registration", async (
+    CreateCustomerRegistrationRequest request,
+    CustomerRegistrationDbContext dbContext) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var id = Guid.NewGuid();
+    var nowUtc = DateTime.UtcNow;
 
-app.MapGet("/weatherforecast", () =>
+    var customerRegistration = new CustomerRegistration()
+    {
+        Id = id,
+        FirstName = request.FirstName,
+        LastName = request.LastName,
+        Age = request.Age,
+        CreatedAtUtc = nowUtc,
+        UpdatedAtUtc = nowUtc,
+    };
+
+    await dbContext.AddAsync(customerRegistration);
+    await dbContext.SaveChangesAsync();
+
+    return Task.FromResult(id);
+});
+
+app.MapPut("/approve-customer-registration", async (
+    ApproveCustomerRegistrationRequest request,
+    CustomerRegistrationDbContext dbContext) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
+
+    if (customerRegistration is null)
+    {
+        return HttpStatusCode.NotFound;
+    }
+
+    customerRegistration.IsApproved = true;
+
+    await dbContext.SaveChangesAsync();
+
+    return HttpStatusCode.OK;
+});
+
+app.MapGet("/customer-registrations", async (CustomerRegistrationDbContext dbContext) => await dbContext.CustomerRegistrations.ToListAsync());
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
