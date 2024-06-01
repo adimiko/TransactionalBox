@@ -7,6 +7,9 @@ networks:
   customers-network:
     driver: bridge
 
+  bankaccounts-network:
+    driver: bridge
+
   elastic:
     driver: bridge
 
@@ -68,6 +71,36 @@ services:
       SA_PASSWORD: "Password123!@#"
     ports:
       - 1433:1433
+
+  transactionalbox.bankaccounts: &bankaccounts
+    image: ${DOCKER_REGISTRY-}transactionalboxbankaccounts
+    networks:
+      - bankaccounts-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.BankAccounts/Dockerfile
+    depends_on:
+    - bankaccounts.database
+    - kafka
+
+  replicated_bankaccounts:
+    <<: *bankaccounts
+    container_name: replicated_bankaccounts
+
+  bankaccounts.database:
+    image: mysql
+    hostname: mssql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    networks:
+    - bankaccounts-network
+    ports:
+    - '3306:3306'
+
 
   kafka:
     image: 'bitnami/kafka:latest'
