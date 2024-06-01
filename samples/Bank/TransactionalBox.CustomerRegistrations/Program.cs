@@ -59,7 +59,8 @@ app.MapPost("/create-customer-registration", async (
 app.MapPut("/approve-customer-registration", async (
     ApproveCustomerRegistrationRequest request,
     CustomerRegistrationDbContext dbContext,
-    IOutbox outbox) =>
+    IOutbox outbox,
+    HttpContext httpContext) =>
 {
     var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
 
@@ -78,7 +79,7 @@ app.MapPut("/approve-customer-registration", async (
         Age = customerRegistration.Age,
     };
 
-    await outbox.Add(commandMessage);
+    await outbox.Add(commandMessage, envelope => envelope.CorrelationId = httpContext.TraceIdentifier);
 
     await dbContext.SaveChangesAsync(); // outbox added message to dbContext and all operation will be executed in one transaction
 
