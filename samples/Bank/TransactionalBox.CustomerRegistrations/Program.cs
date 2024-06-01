@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Security.Cryptography;
+using System.Threading;
 using TransactionalBox;
 using TransactionalBox.CustomerRegistrations.Database;
 using TransactionalBox.CustomerRegistrations.Messages;
@@ -72,8 +73,7 @@ app.MapPut("/approve-customer-registration", async (
     [FromBody] ApproveCustomerRegistrationRequest request,
     CustomerRegistrationDbContext dbContext,
     IUnitOfWork uow,
-    IOutbox outbox,
-    HttpContext httpContext) =>
+    IOutbox outbox) =>
 {
     var nowUtc = DateTime.UtcNow;
 
@@ -99,7 +99,6 @@ app.MapPut("/approve-customer-registration", async (
 
         await outbox.Add(commandMessage);
     }
-    // outbox added message to dbContext and all operation will be executed in one transaction
 
     return HttpStatusCode.OK;
 });
