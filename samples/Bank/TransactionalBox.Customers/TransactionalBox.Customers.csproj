@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
     <UserSecretsId>6b456489-9b3e-4df4-9cd4-d04b03067250</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
@@ -12,8 +12,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\source\TransactionalBox.Inbox.EntityFrameworkCore\TransactionalBox.Inbox.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\source\TransactionalBox.Inbox.Kafka\TransactionalBox.Inbox.Kafka.csproj" />
+    <ProjectReference Include="..\..\..\source\TransactionalBox.Outbox.EntityFrameworkCore\TransactionalBox.Outbox.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\source\TransactionalBox.Outbox.Kafka\TransactionalBox.Outbox.Kafka.csproj" />
   </ItemGroup>
 
 </Project>

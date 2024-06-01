@@ -71,31 +71,35 @@ app.MapPost("/create-customer-registration", async (
 app.MapPut("/approve-customer-registration", async (
     [FromBody] ApproveCustomerRegistrationRequest request,
     CustomerRegistrationDbContext dbContext,
+    IUnitOfWork uow,
     IOutbox outbox,
     HttpContext httpContext) =>
 {
     var nowUtc = DateTime.UtcNow;
-    var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
 
-    if (customerRegistration is null)
+    await using (await uow.BeginTransactionAsync())
     {
-        return HttpStatusCode.NotFound;
+        var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
+
+        if (customerRegistration is null)
+        {
+            return HttpStatusCode.NotFound;
+        }
+
+        customerRegistration.IsApproved = true;
+        customerRegistration.UpdatedAtUtc = nowUtc;
+
+        var commandMessage = new CreateCustomerCommandMessage()
+        {
+            Id = customerRegistration.Id,
+            FirstName = customerRegistration.FirstName,
+            LastName = customerRegistration.LastName,
+            Age = customerRegistration.Age,
+        };
+
+        await outbox.Add(commandMessage);
     }
-
-    customerRegistration.IsApproved = true;
-    customerRegistration.UpdatedAtUtc = nowUtc;
-
-    var commandMessage = new CreateCustomerCommandMessage()
-    {
-        Id = customerRegistration.Id,
-        FirstName = customerRegistration.FirstName,
-        LastName = customerRegistration.LastName,
-        Age = customerRegistration.Age,
-    };
-
-    await outbox.Add(commandMessage, envelope => envelope.CorrelationId = httpContext.TraceIdentifier);
-
-    await dbContext.SaveChangesAsync(); // outbox added message to dbContext and all operation will be executed in one transaction
+    // outbox added message to dbContext and all operation will be executed in one transaction
 
     return HttpStatusCode.OK;
 });
