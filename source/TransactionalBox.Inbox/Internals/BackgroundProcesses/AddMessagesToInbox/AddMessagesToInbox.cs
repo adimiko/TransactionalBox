@@ -9,6 +9,7 @@ using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Internals;
+using TransactionalBox.Inbox.Internals.Contexts;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox
 {
@@ -30,6 +31,8 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
 
         private readonly IAddMessagesToInboxLogger _logger;
 
+        private readonly IInboxContext _inboxContext;
+
         public AddMessagesToInbox(
             IServiceProvider serviceProvider,
             IDecompressionFactory decompressionFactory,
@@ -38,7 +41,8 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             ITopicsProvider topicsProvider,
             IAddMessagesToInboxSettings settings,
             IEventHookPublisher eventHookPublisher,
-            IAddMessagesToInboxLogger logger)
+            IAddMessagesToInboxLogger logger,
+            IInboxContext inboxContext)
             : base(logger)
         {
             _serviceProvider = serviceProvider;
@@ -49,6 +53,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             _settings = settings;
             _eventHookPublisher = eventHookPublisher;
             _logger = logger;
+            _inboxContext = inboxContext;
         }
 
         protected override async Task Process(CancellationToken stoppingToken)
@@ -56,6 +61,8 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
             //TODO log per pentla
             await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
             {
+                var service = _inboxContext.Id;
+
                 var decompression = _decompressionFactory.GetDecompression(messagesFromTransport.Compression);
 
                 var decompressedMessagesFromTransport = await decompression.Decompress(messagesFromTransport.Payload).ConfigureAwait(false);
@@ -64,7 +71,13 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
                 {
                     //const string separator = "⸘";
                     //TODO #27
+
                     var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
+
+                    foreach(var inboxMessage in inboxMessages)
+                    {
+                        inboxMessage.OccurredUtc = inboxMessage.OccurredUtc.ToUniversalTime();
+                    }
 
                     var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
 
