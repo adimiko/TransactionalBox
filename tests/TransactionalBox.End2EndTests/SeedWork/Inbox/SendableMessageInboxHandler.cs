@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Inbox.Contexts;
-
-namespace TransactionalBox.End2EndTests.SeedWork.Inbox
+﻿namespace TransactionalBox.End2EndTests.SeedWork.Inbox
 {
     internal sealed class SendableMessageInboxHandler : IInboxHandler<SendableMessage>
     {

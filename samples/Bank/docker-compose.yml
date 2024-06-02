@@ -10,6 +10,9 @@ networks:
   bankaccounts-network:
     driver: bridge
 
+  loans-network:
+    driver: bridge
+
   elastic:
     driver: bridge
 
@@ -101,6 +104,35 @@ services:
     ports:
     - '3306:3306'
 
+  transactionalbox.loans: &loans
+    image: ${DOCKER_REGISTRY-}transactionalboxloans
+    networks:
+      - loans-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.Loans/Dockerfile
+    depends_on:
+    - loans.database
+    - kafka
+
+  replicated_loans:
+    <<: *loans
+    container_name: replicated_loans
+
+  loans.database:
+    image: postgres:14.1-alpine
+    networks:
+      - loans-network
+    hostname: db-loans
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    expose:
+      - "5433"
+    command: -p 5433
+    ports:
+      - '5433:5433'
 
   kafka:
     image: 'bitnami/kafka:latest'
@@ -109,6 +141,7 @@ services:
       - customerregistrations-network
       - customers-network
       - bankaccounts-network
+      - loans-network
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
@@ -131,6 +164,7 @@ services:
       - customerregistrations-network
       - customers-network
       - bankaccounts-network
+      - loans-network
       - elastic
         
 

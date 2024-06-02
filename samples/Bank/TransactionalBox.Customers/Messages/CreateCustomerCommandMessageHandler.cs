@@ -1,6 +1,5 @@
 ﻿using TransactionalBox.Customers.Database;
 using TransactionalBox.Customers.Models;
-using TransactionalBox.Inbox.Contexts;
 
 namespace TransactionalBox.Customers.Messages
 {

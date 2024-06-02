@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Contexts
+﻿namespace TransactionalBox
 {
     public interface IExecutionContext
     {

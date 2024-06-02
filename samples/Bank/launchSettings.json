@@ -6,7 +6,8 @@
       "serviceActions": {
         "transactionalbox.customerregistrations": "StartDebugging",
         "transactionalbox.customers": "StartDebugging",
-        "transactionalbox.bankaccounts": "StartDebugging"
+        "transactionalbox.bankaccounts": "StartDebugging",
+        "transactionalbox.loans": "StartDebugging"
       }
     }
   }

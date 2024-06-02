@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using TransactionalBox.Inbox.Contexts;
 using TransactionalBox.Inbox.Internals.Assemblies.MessageTypes;
 
 namespace TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers

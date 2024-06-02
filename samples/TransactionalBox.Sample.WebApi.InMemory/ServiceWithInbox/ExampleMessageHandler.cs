@@ -1,7 +1,4 @@
-﻿using TransactionalBox.Inbox;
-using TransactionalBox.Inbox.Contexts;
-
-namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithInbox
+﻿namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithInbox
 {
     internal sealed class ExampleMessageHandler : IInboxHandler<ExampleMessage>
     {
