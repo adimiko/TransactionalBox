@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\TransactionalBox.Inbox.EntityFrameworkCore\TransactionalBox.Inbox.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\source\TransactionalBox.Inbox.Kafka\TransactionalBox.Inbox.Kafka.csproj" />
+    <ProjectReference Include="..\Internals\BankLogger\BankLogger.csproj" />
   </ItemGroup>
 
 </Project>

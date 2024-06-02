@@ -2,11 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using TransactionalBox.BankAccounts.Database;
 using TransactionalBox;
 using System.Security.Cryptography;
+using BankLogger;
 
-const string connectionString = "server=mssql;user=root;password=password;database=db";
+const string connectionString = "server=mssql;uid=root;pwd=password;database=db";
 const string bootstrapServers = "plaintext://kafka:9092";
 
 var builder = WebApplication.CreateBuilder(args);
+
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+builder.AddBankLogger(configuration, typeof(BankAccountsDbContext).Assembly);
 
 var services = builder.Services;
 

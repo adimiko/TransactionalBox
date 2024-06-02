@@ -108,6 +108,7 @@ services:
     networks:
       - customerregistrations-network
       - customers-network
+      - bankaccounts-network
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
@@ -129,6 +130,7 @@ services:
     networks:
       - customerregistrations-network
       - customers-network
+      - bankaccounts-network
       - elastic
         
 
