@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Internals;
+using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Internals.SequentialGuid;
 using TransactionalBox.Outbox.Envelopes;
+using TransactionalBox.Outbox.Internals.Hooks.Events;
 using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 using TransactionalBox.Outbox.Internals.Serialization;
 using TransactionalBox.Outbox.Internals.Storage;
@@ -24,6 +26,8 @@ namespace TransactionalBox.Outbox.Internals.Oubox
 
         private readonly ISequentialGuidGenerator _sequentialGuidGenerator;
 
+        private readonly IEventHookPublisher _eventHookPublisher;
+
         public Outbox(
             IServiceContext serviceContext,
             IOutboxStorage outbox,
@@ -31,7 +35,8 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             ISystemClock systemClock,
             ITopicFactory topicFactory,
             IServiceProvider serviceProvider,
-            ISequentialGuidGenerator sequentialGuidGenerator)
+            ISequentialGuidGenerator sequentialGuidGenerator,
+            IEventHookPublisher eventHookPublisher)
         {
             _serviceContext = serviceContext;
             _outboxStorage = outbox;
@@ -40,6 +45,7 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             _topicFactory = topicFactory;
             _serviceProvider = serviceProvider;
             _sequentialGuidGenerator = sequentialGuidGenerator;
+            _eventHookPublisher = eventHookPublisher;
         }
 
         public async Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
@@ -86,6 +92,11 @@ namespace TransactionalBox.Outbox.Internals.Oubox
             };
 
             await _outboxStorage.Add(outboxMessage);
+        }
+
+        public async Task TransactionCommited()
+        {
+            await _eventHookPublisher.PublishAsync<AddedMessagesToOutbox>().ConfigureAwait(false);
         }
 
         //TODO AddRange
