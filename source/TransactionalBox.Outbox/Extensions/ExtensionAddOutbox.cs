@@ -107,8 +107,6 @@ namespace TransactionalBox
 
             services.AddScoped<IOutbox, Outbox.Internals.Oubox.Outbox>();
 
-            services.AddSingleton<ITranactionCommited, TranactionCommited>();
-
             // Loggers
             services.AddSingleton<ICleanUpOutboxLogger, CleanUpOutboxLogger>();
             services.AddSingleton<IAddMessagesToTransportLogger, AddMessagesToTransportLogger>();

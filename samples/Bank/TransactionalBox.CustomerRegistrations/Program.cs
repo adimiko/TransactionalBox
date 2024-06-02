@@ -72,33 +72,33 @@ app.MapPost("/create-customer-registration", async (
 app.MapPut("/approve-customer-registration", async (
     [FromBody] ApproveCustomerRegistrationRequest request,
     CustomerRegistrationDbContext dbContext,
-    IUnitOfWork uow,
     IOutbox outbox) =>
 {
     var nowUtc = DateTime.UtcNow;
 
-    await using (await uow.BeginTransactionAsync())
+    var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
+
+    if (customerRegistration is null)
     {
-        var customerRegistration = await dbContext.CustomerRegistrations.FindAsync(request.Id);
-
-        if (customerRegistration is null)
-        {
-            return HttpStatusCode.NotFound;
-        }
-
-        customerRegistration.IsApproved = true;
-        customerRegistration.UpdatedAtUtc = nowUtc;
-
-        var commandMessage = new CreateCustomerCommandMessage()
-        {
-            Id = customerRegistration.Id,
-            FirstName = customerRegistration.FirstName,
-            LastName = customerRegistration.LastName,
-            Age = customerRegistration.Age,
-        };
-
-        await outbox.Add(commandMessage);
+        return HttpStatusCode.NotFound;
     }
+
+    customerRegistration.IsApproved = true;
+    customerRegistration.UpdatedAtUtc = nowUtc;
+
+    var commandMessage = new CreateCustomerCommandMessage()
+    {
+        Id = customerRegistration.Id,
+        FirstName = customerRegistration.FirstName,
+        LastName = customerRegistration.LastName,
+        Age = customerRegistration.Age,
+    };
+
+    await outbox.Add(commandMessage);
+
+    await dbContext.SaveChangesAsync();
+
+    await outbox.TransactionCommited();
 
     return HttpStatusCode.OK;
 });

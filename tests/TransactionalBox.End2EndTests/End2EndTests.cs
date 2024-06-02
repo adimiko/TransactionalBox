@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using TransactionalBox.End2EndTests.SeedWork.Inbox;
@@ -37,12 +38,11 @@ namespace TransactionalBox.End2EndTests
                 var outboxMessage = new SeedWork.Outbox.SendableMessage() { Message  = "Hello" };
 
                 var outbox = scope.ServiceProvider.GetRequiredService<IOutbox>();
-                var uow = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
 
-                await using (await uow.BeginTransactionAsync().ConfigureAwait(false))
-                {
-                    await outbox.Add(outboxMessage).ConfigureAwait(false);
-                }
+                await outbox.Add(outboxMessage).ConfigureAwait(false);
+                await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                await outbox.TransactionCommited().ConfigureAwait(false);
             }
 
             await Task.Delay(1000).ConfigureAwait(false);

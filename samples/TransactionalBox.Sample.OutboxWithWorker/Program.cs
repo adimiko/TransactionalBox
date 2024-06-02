@@ -74,28 +74,26 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, IUnitOfWork uow) =>
+app.MapPost("/add-message-to-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, ServiceWithOutboxDbContext dbContext) =>
 {
-    await using (await uow.BeginTransactionAsync())
+    for (var i = 0; i < 10; i++)
     {
-        for (var i = 0; i < 10; i++)
-        {
-            await outbox.Add(message);
-        }
+        await outbox.Add(message);
     }
+
+    await dbContext.SaveChangesAsync();
+    await outbox.TransactionCommited();
 });
 
-app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, IUnitOfWork uow) =>
+app.MapPost("/publish-message", async ([FromBody] PublishableMessage message, IOutbox outbox, Microsoft.Extensions.Logging.ILogger<ExampleMessage> logger, ServiceWithOutboxDbContext dbContext) =>
 {
-    var tx = await uow.BeginTransactionAsync();
-
-    await using (await uow.BeginTransactionAsync())
+    for (var i = 0; i < 10; i++)
     {
-        for (var i = 0; i < 10; i++)
-        {
-            await outbox.Add(message);
-        }
+        await outbox.Add(message);
     }
+
+    await dbContext.SaveChangesAsync();
+    await outbox.TransactionCommited();
 });
 
 app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
