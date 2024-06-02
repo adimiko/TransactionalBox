@@ -5,7 +5,9 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "transactionalbox.customerregistrations": "StartDebugging",
-        "transactionalbox.customers": "StartDebugging"
+        "transactionalbox.customers": "StartDebugging",
+        "transactionalbox.bankaccounts": "StartDebugging",
+        "transactionalbox.loans": "StartDebugging"
       }
     }
   }

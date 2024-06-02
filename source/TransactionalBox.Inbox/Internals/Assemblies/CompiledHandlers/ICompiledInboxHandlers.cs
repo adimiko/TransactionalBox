@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Inbox.Contexts;
-
-namespace TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers
+﻿namespace TransactionalBox.Inbox.Internals.Assemblies.CompiledHandlers
 {
     internal interface ICompiledInboxHandlers
     {

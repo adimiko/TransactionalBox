@@ -1,6 +1,5 @@
 ﻿using TransactionalBox.Customers.Database;
 using TransactionalBox.Customers.Models;
-using TransactionalBox.Inbox.Contexts;
 
 namespace TransactionalBox.Customers.Messages
 {
@@ -10,11 +9,15 @@ namespace TransactionalBox.Customers.Messages
 
         private readonly CustomersDbContext _customersDbContext;
 
+        private readonly IUnitOfWork _unitOfWork;
+
         public CreateCustomerCommandMessageHandler(
             IOutbox outbox,
+            IUnitOfWork unitOfWork,
             CustomersDbContext customersDbContext) 
         {
             _outbox = outbox;
+            _unitOfWork = unitOfWork;
             _customersDbContext = customersDbContext;
         }
 
@@ -29,13 +32,13 @@ namespace TransactionalBox.Customers.Messages
                 CreatedAtUtc = DateTime.UtcNow,
             };
 
-            await _customersDbContext.Customers.AddAsync(customer);
-
             var @event = new CreatedCustomerEventMessage(){ Id = message.Id };
 
-            await _outbox.Add(@event, e => e.CorrelationId = executionContext.CorrelationId);
-
-            await _customersDbContext.SaveChangesAsync();
+            await using(await _unitOfWork.BeginTransactionAsync()) 
+            {
+                await _customersDbContext.Customers.AddAsync(customer);
+                await _outbox.Add(@event, e => e.CorrelationId = executionContext.CorrelationId);
+            }
         }
     }
 }

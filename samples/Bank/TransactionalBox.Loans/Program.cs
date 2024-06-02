@@ -1,44 +1,45 @@
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using TransactionalBox.Loans.Database;
+using TransactionalBox;
+
+const string connectionString = "Host=db-loans;Port=5433;Database=postgres;Username=postgres;Password=postgres";
+const string bootstrapServers = "plaintext://kafka:9092";
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var services = builder.Services;
+
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
+
+services.AddDbContextPool<LoansDbContext>(x => x.UseNpgsql(connectionString));
+
+services.AddTransactionalBox(x =>
+{
+    x.AddInbox(
+        storage => storage.UseEntityFramework<LoansDbContext>(),
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        assemblyConfiguraton: a => a.RegisterFromAssemblies(typeof(LoansDbContext).Assembly));
+},
+x => x.ServiceId = "Loans");
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
-var summaries = new[]
+using (var scope = app.Services.CreateScope())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    try
+    {
+        await Task.Delay(RandomNumberGenerator.GetInt32(0, 1000));
+        await scope.ServiceProvider.GetRequiredService<LoansDbContext>().Database.EnsureCreatedAsync();
+    }
+    finally { }
+}
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.MapGet("/loans", async (LoansDbContext dbContext) => await dbContext.Loans.ToListAsync());
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -7,6 +7,12 @@ networks:
   customers-network:
     driver: bridge
 
+  bankaccounts-network:
+    driver: bridge
+
+  loans-network:
+    driver: bridge
+
   elastic:
     driver: bridge
 
@@ -69,12 +75,73 @@ services:
     ports:
       - 1433:1433
 
+  transactionalbox.bankaccounts: &bankaccounts
+    image: ${DOCKER_REGISTRY-}transactionalboxbankaccounts
+    networks:
+      - bankaccounts-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.BankAccounts/Dockerfile
+    depends_on:
+    - bankaccounts.database
+    - kafka
+
+  replicated_bankaccounts:
+    <<: *bankaccounts
+    container_name: replicated_bankaccounts
+
+  bankaccounts.database:
+    image: mysql
+    hostname: mssql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    networks:
+    - bankaccounts-network
+    ports:
+    - '3306:3306'
+
+  transactionalbox.loans: &loans
+    image: ${DOCKER_REGISTRY-}transactionalboxloans
+    networks:
+      - loans-network
+    build:
+      context: .
+      dockerfile: TransactionalBox.Loans/Dockerfile
+    depends_on:
+    - loans.database
+    - kafka
+
+  replicated_loans:
+    <<: *loans
+    container_name: replicated_loans
+
+  loans.database:
+    image: postgres:14.1-alpine
+    networks:
+      - loans-network
+    hostname: db-loans
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    expose:
+      - "5433"
+    command: -p 5433
+    ports:
+      - '5433:5433'
+
   kafka:
     image: 'bitnami/kafka:latest'
     hostname: kafka
     networks:
       - customerregistrations-network
       - customers-network
+      - bankaccounts-network
+      - loans-network
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
@@ -96,6 +163,8 @@ services:
     networks:
       - customerregistrations-network
       - customers-network
+      - bankaccounts-network
+      - loans-network
       - elastic
         
 
