@@ -1,7 +1,4 @@
-﻿using TransactionalBox.Inbox;
-using TransactionalBox.Inbox.Contexts;
-
-namespace TransactionalBox.Sample.InboxWithWorker
+﻿namespace TransactionalBox.Sample.InboxWithWorker
 {
     internal sealed class PublishableMessageHandler : IInboxHandler<PublishableMessage>
     {
