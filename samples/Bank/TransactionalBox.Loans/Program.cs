@@ -19,7 +19,8 @@ services.AddTransactionalBox(x =>
 {
     x.AddInbox(
         storage => storage.UseEntityFramework<LoansDbContext>(),
-        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
+        assemblyConfiguraton: a => a.RegisterFromAssemblies(typeof(LoansDbContext).Assembly));
 },
 x => x.ServiceId = "Loans");
 

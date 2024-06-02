@@ -21,7 +21,7 @@ namespace TransactionalBox.Loans.Messages
                 Amount = 0,
             };
 
-            await _loansDbContext.AddAsync(loan);
+            await _loansDbContext.Loans.AddAsync(loan);
             await _loansDbContext.SaveChangesAsync();
         }
     }

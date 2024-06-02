@@ -2,6 +2,6 @@
 {
     public class CreatedCustomerEventMessage : InboxMessage
     {
-        public Guid Id { get; init; }
+        public Guid Id { get; set; }
     }
 }
