@@ -9,5 +9,7 @@ namespace TransactionalBox
         /// </summary>
         Task Add<TOutboxMessage>(TOutboxMessage message, Action<Envelope>? envelopeConfiguration = null)
             where TOutboxMessage : OutboxMessage;
+
+        Task TransactionCommited();
     }
 }

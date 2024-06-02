@@ -73,17 +73,17 @@ app.UseHttpsRedirection();
 
 
 
-app.MapPost("/send-messages-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, IUnitOfWork uow) =>
+app.MapPost("/send-messages-outbox", async ([FromBody] ExampleMessage message, IOutbox outbox, SampleDbContext sampleDbContext) =>
 {
     var messages = new List<ExampleMessage>();
 
-    await using (await uow.BeginTransactionAsync())
+    for (var i = 0; i < 100; i++)
     {
-        for (var i = 0; i < 100; i++)
-        {
-            await outbox.Add(message);
-        }
+        await outbox.Add(message);
     }
+
+    await sampleDbContext.SaveChangesAsync();
+    await outbox.TransactionCommited();
 });
 
 app.MapGet("/get-messages-from-outbox", async (DbContext dbContext) =>
