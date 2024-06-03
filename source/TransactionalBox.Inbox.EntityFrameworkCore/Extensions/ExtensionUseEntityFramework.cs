@@ -2,7 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Storage;
-using TransactionalBox.Inbox.EntityFrameworkCore.Internals;
+using TransactionalBox.Inbox.Internals.Storage.ContractsToImplement;
+using TransactionalBox.Inbox.EntityFrameworkCore.Internals.ImplementedContracts;
 
 namespace TransactionalBox
 {
