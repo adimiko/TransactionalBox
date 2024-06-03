@@ -2,7 +2,6 @@
 using TransactionalBox.Inbox.Internals.Transport.InMemory;
 using TransactionalBox.Inbox.Internals.Transport;
 using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Internals.Transport.InMemory;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 
 namespace TransactionalBox.Inbox.Internals.Extensions
