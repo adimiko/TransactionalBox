@@ -132,15 +132,16 @@ Have fun :smiley:!
 ## :european_castle: Architecture
 The transactional box consists of two basic components.
 The following diagrams show the basic flow (omits details).
+They are designed to provide a general understanding of how transactional box works.
 
 ### Outbox
-Outbox is responsible for adding messages to the storage, and then getting the messages and adding them to the transport.
+The outbox is responsible for adding messages to the storage and then adding at least once to the transport.
 <div align="center">
     <img src="assets/diagrams/outbox.png">
 </div>
 
 ### Inbox 
-Inbox is responsible for getting messages from transport and adding them to the storage, and then processing messages.
+The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.
 <div align="center">
     <img src="assets/diagrams/inbox.png">
 </div>
