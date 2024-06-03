@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Configurators.Outbox;
+using TransactionalBox.Internals.Outbox.Transport.ContractsToImplement;
 using TransactionalBox.Kafka.Internals.Outbox;
 using TransactionalBox.Kafka.Internals.Outbox.ImplementedContracts;
 using TransactionalBox.Kafka.Settings.Outbox;
-using TransactionalBox.Outbox.Configurators;
-using TransactionalBox.Outbox.Internals.Transport.ContractsToImplement;
 
 namespace TransactionalBox
 {

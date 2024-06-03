@@ -6,8 +6,8 @@ using Testcontainers.PostgreSql;
 using TransactionalBox;
 using TransactionalBox.Sample.WebApi;
 using TransactionalBox.Inbox.Internals.Storage;
-using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Sample.WebApi.OutboxMessages;
+using TransactionalBox.Internals.Outbox.Storage;
 
 
 var postgreSqlContainer = new PostgreSqlBuilder()

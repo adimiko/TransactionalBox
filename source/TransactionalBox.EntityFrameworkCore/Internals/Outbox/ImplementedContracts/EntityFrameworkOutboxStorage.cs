@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Outbox.Internals.Storage;
-using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
+using TransactionalBox.Internals.Outbox.Storage;
+using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
 
 namespace TransactionalBox.EntityFrameworkCore.Internals.Outbox.ImplementedContracts
 {

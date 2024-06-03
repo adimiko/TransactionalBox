@@ -6,8 +6,8 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
-using TransactionalBox.Outbox.Internals.Storage;
 using System.Security.Cryptography;
+using TransactionalBox.Internals.Outbox.Storage;
 
 const string connectionString = "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres";
 const string bootstrapServers = "plaintext://kafka:9092";

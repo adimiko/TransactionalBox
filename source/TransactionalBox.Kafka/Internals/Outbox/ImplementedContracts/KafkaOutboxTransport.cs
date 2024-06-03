@@ -1,8 +1,8 @@
 ﻿using Confluent.Kafka;
 using System.Text;
-using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
-using TransactionalBox.Outbox.Internals.Transport;
-using TransactionalBox.Outbox.Internals.Transport.ContractsToImplement;
+using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
+using TransactionalBox.Internals.Outbox.Transport;
+using TransactionalBox.Internals.Outbox.Transport.ContractsToImplement;
 
 namespace TransactionalBox.Kafka.Internals.Outbox.ImplementedContracts
 {

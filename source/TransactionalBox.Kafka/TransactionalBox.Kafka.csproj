@@ -4,6 +4,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TransactionalBox.Inbox\TransactionalBox.Inbox.csproj" />
-    <ProjectReference Include="..\TransactionalBox.Outbox\TransactionalBox.Outbox.csproj" />
+    <ProjectReference Include="..\TransactionalBox\TransactionalBox.csproj" />
   </ItemGroup>
 </Project>
