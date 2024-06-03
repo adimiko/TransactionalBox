@@ -10,8 +10,7 @@ Example shows in-memory implementation.
 ## Configuration
 ### Install packages
 ```csharp
-dotnet add package TransactionalBox.Outbox
-dotnet add package TransactionalBox.Inbox
+dotnet add package TransactionalBox
 ```
 ### Register
 ```csharp
