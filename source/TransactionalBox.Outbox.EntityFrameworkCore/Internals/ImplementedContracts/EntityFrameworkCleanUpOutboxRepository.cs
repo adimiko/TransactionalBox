@@ -1,8 +1,9 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
-namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
+namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals.ImplementedContracts
 {
     internal sealed class EntityFrameworkCleanUpOutboxRepository : ICleanUpOutboxRepository
     {

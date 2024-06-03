@@ -1,6 +1,5 @@
 ﻿using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Storage.InMemory;
-using TransactionalBox.Outbox.Internals.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 

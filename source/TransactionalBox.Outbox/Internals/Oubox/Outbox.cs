@@ -7,6 +7,7 @@ using TransactionalBox.Outbox.Internals.Hooks.Events;
 using TransactionalBox.Outbox.Internals.OutboxMessageDefinitions;
 using TransactionalBox.Outbox.Internals.Serialization;
 using TransactionalBox.Outbox.Internals.Storage;
+using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
 namespace TransactionalBox.Outbox.Internals.Oubox
 {
