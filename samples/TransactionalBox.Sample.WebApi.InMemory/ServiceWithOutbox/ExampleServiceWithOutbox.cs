@@ -20,6 +20,7 @@ namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
             };
 
             await _outbox.Add(message);
+            await _outbox.TransactionCommited();
         }
     }
 }
