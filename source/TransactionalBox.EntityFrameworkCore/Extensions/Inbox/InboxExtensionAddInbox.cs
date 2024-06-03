@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Internals.DistributedLock.EntityFrameworkCore;
 using TransactionalBox.Inbox.Internals.Storage;
-using TransactionalBox.Inbox.EntityFrameworkCore.Internals.EntityTypeConfigurations;
+using TransactionalBox.EntityFrameworkCore.Internals.Inbox.EntityTypeConfigurations;
 
 namespace TransactionalBox
 {
-    public static class ExtensionAddInbox
+    public static class InboxExtensionAddInbox
     {
         public static void AddInbox(this ModelBuilder modelBuilder)
         {

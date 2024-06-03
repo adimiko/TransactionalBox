@@ -3,11 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Configurators;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Inbox.Internals.Storage.ContractsToImplement;
-using TransactionalBox.Inbox.EntityFrameworkCore.Internals.ImplementedContracts;
+using TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContracts;
 
 namespace TransactionalBox
 {
-    public static class ExtensionUseEntityFramework
+    public static class InboxExtensionUseEntityFramework
     {
         public static void UseEntityFramework<TDbContext>(this IInboxStorageConfigurator storageConfigurator)
             where TDbContext : DbContext

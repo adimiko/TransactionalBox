@@ -3,11 +3,11 @@ using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
-using TransactionalBox.Outbox.EntityFrameworkCore.Internals.ImplementedContracts;
+using TransactionalBox.EntityFrameworkCore.Internals.Outbox.ImplementedContracts;
 
 namespace TransactionalBox
 {
-    public static class ExtensionUseEntityFramework
+    public static class OutboxExtensionUseEntityFramework
     {
         public static void UseEntityFramework<TDbContext>(this IOutboxStorageConfigurator outboxStorageConfigurator)
             where TDbContext : DbContext

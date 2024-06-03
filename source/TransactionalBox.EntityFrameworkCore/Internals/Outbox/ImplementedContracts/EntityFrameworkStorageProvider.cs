@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
-namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals.ImplementedContracts
+namespace TransactionalBox.EntityFrameworkCore.Internals.Outbox.ImplementedContracts
 {
     internal sealed class EntityFrameworkStorageProvider : IStorageProvider
     {

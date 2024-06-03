@@ -5,7 +5,7 @@ using TransactionalBox.Outbox.Internals.Storage;
 using System.Net;
 using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
-namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals.ImplementedContracts
+namespace TransactionalBox.EntityFrameworkCore.Internals.Outbox.ImplementedContracts
 {
     internal sealed class EntityFrameworkAddMessagesToTransportRepository : IAddMessagesToTransportRepository
     {

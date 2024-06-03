@@ -2,7 +2,7 @@
 using TransactionalBox.Outbox.Internals.Storage;
 using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
-namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals.ImplementedContracts
+namespace TransactionalBox.EntityFrameworkCore.Internals.Outbox.ImplementedContracts
 {
     internal sealed class EntityFrameworkOutboxStorage : IOutboxStorage
     {

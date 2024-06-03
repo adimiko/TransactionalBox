@@ -9,8 +9,7 @@
 		<InternalsVisibleTo Include="TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests" />
 		<InternalsVisibleTo Include="TransactionalBox.Inbox" />
 		<InternalsVisibleTo Include="TransactionalBox.Outbox" />
-		<InternalsVisibleTo Include="TransactionalBox.Inbox.EntityFrameworkCore" />
-		<InternalsVisibleTo Include="TransactionalBox.Outbox.EntityFrameworkCore" />
+		<InternalsVisibleTo Include="TransactionalBox.EntityFrameworkCore" />
 	</ItemGroup>
 	
   <ItemGroup>
