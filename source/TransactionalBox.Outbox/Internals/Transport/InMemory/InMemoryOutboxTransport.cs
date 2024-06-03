@@ -1,5 +1,6 @@
 ﻿using TransactionalBox.Internals.Transport.InMemory.Internals;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
+using TransactionalBox.Outbox.Internals.Transport.ContractsToImplement;
 
 namespace TransactionalBox.Outbox.Internals.Transport.InMemory
 {

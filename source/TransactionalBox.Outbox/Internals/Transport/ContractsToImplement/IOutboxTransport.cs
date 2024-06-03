@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 
-namespace TransactionalBox.Outbox.Internals.Transport
+namespace TransactionalBox.Outbox.Internals.Transport.ContractsToImplement
 {
     internal interface IOutboxTransport
     {
