@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Inbox.Internals.Storage;
+using TransactionalBox.Internals.Inbox.Storage;
 
 namespace TransactionalBox.EntityFrameworkCore.Internals.Inbox.EntityTypeConfigurations
 {

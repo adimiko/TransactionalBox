@@ -1,9 +1,9 @@
 ﻿using Confluent.Kafka;
 using System.Runtime.CompilerServices;
 using System.Text;
-using TransactionalBox.Inbox.Internals.Contexts;
-using TransactionalBox.Inbox.Internals.Transport;
-using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
+using TransactionalBox.Internals.Inbox.Contexts;
+using TransactionalBox.Internals.Inbox.Transport;
+using TransactionalBox.Internals.Inbox.Transport.ContractsToImplement;
 
 namespace TransactionalBox.Kafka.Internals.Inbox.ImplementedContracts
 {

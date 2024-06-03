@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka.Admin;
 using Confluent.Kafka;
-using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
+using TransactionalBox.Internals.Inbox.Transport.ContractsToImplement;
 
 namespace TransactionalBox.Kafka.Internals.Inbox.ImplementedContracts
 {

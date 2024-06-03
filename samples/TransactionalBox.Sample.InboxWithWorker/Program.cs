@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using TransactionalBox;
 using TransactionalBox.Sample.InboxWithWorker;
-using TransactionalBox.Inbox.Internals.Storage;
 using System.Reflection;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Events;
 using System.Security.Cryptography;
+using TransactionalBox.Internals.Inbox.Storage;
 
 const string connectionString = "Server=mssql;Database=msdb;User Id=sa;Password=Password123!@#;TrustServerCertificate=true;";
 const string bootstrapServers = "plaintext://kafka:9092";
