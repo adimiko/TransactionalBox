@@ -4,41 +4,42 @@ sidebar_position: 1
 
 # Introduction
 
-Transactional box is an implementation of the outbox and inbox pattern in .NET.
-Ensures eventual consistency when modules need to communicate with each other over the network.
+<div align="center">
+![Logo](assets/rounded-social-logo.png)
+</div>
+
+**Transactional box is an implementation of the outbox and inbox pattern in .NET.**   
+**Ensures reliable network communication (eventual consistency) between services.**
+
+All complexity is taken over by the transactional box and simplifies communication between services to the maximum extent possible.   
+It is designed for a low entry threshold and quick learning.
 
 Examples of problems that occur during network communication:
+-  **Lost message**
 
-- lost messages
-- the same messages were processed again
-- unavailable services
+*Amount was taken from bank account and transfer was never executed.*
+
+- **The same message was processed again**
+
+*Transfer was ordered and amount was debited from bank account twice.*
+
+- **Unavailable service**
+
+*Transfer order attempt fails.*
 
 ## :european_castle: Architecture
-The transactional box consists of four basic components. The following diagrams show the basic flow (omits many details). They are designed to provide a general understanding of how transactional box works.
+The transactional box consists of two basic components.
+The following diagrams show the basic flow (omits details).
+They are designed to provide a general understanding of how transactional box works.
 
 ### Outbox
-Outbox is responsible for adding messages to the storage.
-
+Outbox is responsible for adding messages to the storage, and then getting the messages and adding them to the transport.
 <div align="center">
-![Outbox](assets/diagram-outbox.png)
-</div>
-### Outbox Worker
-Outbox worker is responsible for getting the messages from storage and adding them to the transport.
-
-<div align="center">
-![Outbox Worker](assets/diagram-outbox-worker.png)
-</div>
-
-### Inbox Worker
-Inbox worker is responsible for getting messages from transport and adding them to the storage.
-
-<div align="center">
-![Inbox Worker](assets/diagram-inbox-worker.png)
+![Outbox](assets/outbox.png)
 </div>
 
 ### Inbox 
-Inbox is responsible for processing messages from the storage.
-
+Inbox is responsible for getting messages from transport and adding them to the storage, and then processing messages.
 <div align="center">
-![Inbox](assets/diagram-inbox.png)
+![Inbox](assets/inbox.png)
 </div>
