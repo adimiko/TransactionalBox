@@ -130,31 +130,19 @@ Have fun :smiley:!
     - [ ] Separator
 
 ## :european_castle: Architecture
-The transactional box consists of four basic components.
+The transactional box consists of two basic components.
 The following diagrams show the basic flow (omits details).
 
 ### Outbox
-Outbox is responsible for adding messages to the storage.
+Outbox is responsible for adding messages to the storage, and then getting the messages and adding them to the transport.
 <div align="center">
-    <img src="assets/diagrams/diagram-outbox.png">
-</div>
-
-### Outbox Worker
-Outbox worker is responsible for getting the messages from storage and adding them to the transport.
-<div align="center">
-    <img src="assets/diagrams/diagram-outbox-worker.png">
-</div>
-
-### Inbox Worker
-Inbox worker is responsible for getting messages from transport and adding them to the storage.
-<div align="center">
-    <img src="assets/diagrams/diagram-inbox-worker.png">
+    <img src="assets/diagrams/outbox.png">
 </div>
 
 ### Inbox 
-Inbox is responsible for processing messages from the storage.
+Inbox is responsible for getting messages from transport and adding them to the storage, and then processing messages.
 <div align="center">
-    <img src="assets/diagrams/diagram-inbox.png">
+    <img src="assets/diagrams/inbox.png">
 </div>
 
 ## :world_map: Roadmap
