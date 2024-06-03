@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Inbox.Internals.Storage
+﻿namespace TransactionalBox.Inbox.Internals.Storage.ContractsToImplement
 {
     //TODO Storage interface per job
     internal interface IInboxWorkerStorage

@@ -2,8 +2,9 @@
 using TransactionalBox.Internals.DistributedLock;
 using System.Data;
 using TransactionalBox.Inbox.Internals.Storage;
+using TransactionalBox.Inbox.Internals.Storage.ContractsToImplement;
 
-namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals
+namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals.ImplementedContracts
 {
     internal sealed class EntityFrameworkInboxStorage : IInboxStorage
     {
@@ -13,7 +14,7 @@ namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals
 
         public EntityFrameworkInboxStorage(
             DbContext dbContext,
-            IDistributedLock<InboxDistributedLock> distributedLock) 
+            IDistributedLock<InboxDistributedLock> distributedLock)
         {
             _dbContext = dbContext;
             _distributedLock = distributedLock;
@@ -53,13 +54,13 @@ namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals
                 }
             }
 
-            if (message is not null) 
+            if (message is not null)
             {
                 message.IsProcessed = true;
                 message.LockUtc = null;
                 message.JobId = null;
             }
-            
+
             return message;
         }
     }

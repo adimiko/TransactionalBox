@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
+using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 
 namespace TransactionalBox.Inbox.Internals

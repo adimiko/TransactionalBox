@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Outbox;
-
-namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
+﻿namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
 {
     public sealed class ExampleServiceWithOutbox
     {
@@ -20,6 +18,7 @@ namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
             };
 
             await _outbox.Add(message);
+            await _outbox.TransactionCommited();
         }
     }
 }

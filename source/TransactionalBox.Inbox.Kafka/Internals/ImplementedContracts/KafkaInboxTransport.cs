@@ -4,8 +4,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.Transport;
+using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
 
-namespace TransactionalBox.Inbox.Kafka.Internals
+namespace TransactionalBox.Inbox.Kafka.Internals.ImplementedContracts
 {
     internal sealed class KafkaInboxTransport : IInboxTransport
     {
@@ -15,7 +16,7 @@ namespace TransactionalBox.Inbox.Kafka.Internals
 
         public KafkaInboxTransport(
             IInboxContext inboxWorkerContext,
-            KafkaConsumerConfigFactory configFactory) 
+            KafkaConsumerConfigFactory configFactory)
         {
             _inboxWorkerContext = inboxWorkerContext;
             _configFactory = configFactory;

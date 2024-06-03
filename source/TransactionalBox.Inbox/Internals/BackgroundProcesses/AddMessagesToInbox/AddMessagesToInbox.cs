@@ -6,10 +6,11 @@ using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 using TransactionalBox.Inbox.Internals.Decompression;
 using TransactionalBox.Inbox.Internals.Hooks.Events;
 using TransactionalBox.Inbox.Internals.Storage;
-using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Internals.Transport.Topics;
 using TransactionalBox.Internals;
 using TransactionalBox.Inbox.Internals.Contexts;
+using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
+using TransactionalBox.Inbox.Internals.Storage.ContractsToImplement;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbox
 {
@@ -85,7 +86,7 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
 
                     var result = await storage.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
 
-                    if (result == AddRangeToInboxStorageResult.Success) // result.IsSuccess
+                    if (result == AddRangeToInboxStorageResult.Success) 
                     {
                         await _eventHookPublisher.PublishAsync<AddedMessagesToInbox>().ConfigureAwait(false);
 
@@ -111,7 +112,6 @@ namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.AddMessagesToInbo
                         result = await storage.AddRange(inboxMessages, idempotentMessagesToSave);
                     }
                     while (result == AddRangeToInboxStorageResult.Failure);
-                    //int numberOfInboxMessages = inboxMessages.Count(); maxRetry then throw error
 
                     await _eventHookPublisher.PublishAsync<AddedMessagesToInbox>().ConfigureAwait(false);
                 }

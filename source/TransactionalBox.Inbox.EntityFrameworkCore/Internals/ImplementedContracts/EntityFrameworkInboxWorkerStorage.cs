@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
 using TransactionalBox.Inbox.Internals.Storage;
+using TransactionalBox.Inbox.Internals.Storage.ContractsToImplement;
 
-namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals
+namespace TransactionalBox.Inbox.EntityFrameworkCore.Internals.ImplementedContracts
 {
     //TODO storage per job ?
     internal sealed class EntityFrameworkInboxWorkerStorage : IInboxWorkerStorage

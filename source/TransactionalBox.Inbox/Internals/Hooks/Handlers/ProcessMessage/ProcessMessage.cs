@@ -9,6 +9,7 @@ using TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage.Logger;
 using TransactionalBox.Inbox.Internals.Storage;
 using TransactionalBox.Internals;
 using TransactionalBox.Internals.EventHooks.Contexts;
+using TransactionalBox.Inbox.Internals.Storage.ContractsToImplement;
 
 namespace TransactionalBox.Inbox.Internals.Hooks.Handlers.ProcessMessage
 {

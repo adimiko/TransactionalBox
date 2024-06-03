@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.Base;
 using TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys.Logger;
-using TransactionalBox.Inbox.Internals.Storage;
+using TransactionalBox.Inbox.Internals.Storage.ContractsToImplement;
 using TransactionalBox.Internals;
 
 namespace TransactionalBox.Inbox.Internals.BackgroundProcesses.CleanUpIdempotencyKeys
