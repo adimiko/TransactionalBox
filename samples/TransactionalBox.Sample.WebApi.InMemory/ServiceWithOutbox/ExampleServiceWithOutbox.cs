@@ -1,4 +1,6 @@
-﻿namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
+﻿using TransactionalBox;
+
+namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox
 {
     public sealed class ExampleServiceWithOutbox
     {

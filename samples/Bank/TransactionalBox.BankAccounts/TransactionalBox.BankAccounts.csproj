@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\source\TransactionalBox.Inbox.EntityFrameworkCore\TransactionalBox.Inbox.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\..\..\source\TransactionalBox.Inbox.Kafka\TransactionalBox.Inbox.Kafka.csproj" />
+    <ProjectReference Include="..\..\..\source\TransactionalBox.EntityFrameworkCore\TransactionalBox.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\source\TransactionalBox.Kafka\TransactionalBox.Kafka.csproj" />
+    <ProjectReference Include="..\..\..\source\TransactionalBox\TransactionalBox.csproj" />
     <ProjectReference Include="..\Internals\BankLogger\BankLogger.csproj" />
   </ItemGroup>
 

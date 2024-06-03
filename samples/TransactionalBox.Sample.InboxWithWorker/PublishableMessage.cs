@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Inbox;
-
-namespace TransactionalBox.Sample.InboxWithWorker
+﻿namespace TransactionalBox.Sample.InboxWithWorker
 {
     public class PublishableMessage : InboxMessage
     {

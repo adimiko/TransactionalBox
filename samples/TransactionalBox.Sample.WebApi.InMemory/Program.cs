@@ -1,7 +1,7 @@
 using TransactionalBox;
 using TransactionalBox.Sample.WebApi.InMemory.ServiceWithOutbox;
-using TransactionalBox.Outbox.Internals.Storage.InMemory;
-using TransactionalBox.Inbox.Internals.Storage.InMemory;
+using TransactionalBox.Internals.Outbox.Storage.InMemory;
+using TransactionalBox.Internals.Inbox.Storage.InMemory;
 
 var builder = WebApplication.CreateBuilder(args);
 

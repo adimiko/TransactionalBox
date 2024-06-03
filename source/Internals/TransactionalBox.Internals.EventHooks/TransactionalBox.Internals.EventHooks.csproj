@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<InternalsVisibleTo Include="TransactionalBox.Outbox" />
+		<InternalsVisibleTo Include="TransactionalBox" />
 		<InternalsVisibleTo Include="TransactionalBox.Inbox" />
 	</ItemGroup>
 

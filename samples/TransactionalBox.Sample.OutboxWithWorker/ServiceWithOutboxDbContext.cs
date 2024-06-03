@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Outbox;
 
 namespace TransactionalBox.Sample.OutboxWithWorker
 {

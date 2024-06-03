@@ -1,5 +1,4 @@
-﻿using TransactionalBox.Inbox;
-
+﻿
 namespace TransactionalBox.Sample.InboxWithWorker
 {
     public class ExampleMessage : InboxMessage

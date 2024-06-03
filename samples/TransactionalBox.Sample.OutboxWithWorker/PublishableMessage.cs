@@ -1,6 +1,4 @@
-﻿using TransactionalBox.Outbox;
-
-namespace TransactionalBox.Sample.OutboxWithWorker
+﻿namespace TransactionalBox.Sample.OutboxWithWorker
 {
     public class PublishableMessage : OutboxMessage
     {

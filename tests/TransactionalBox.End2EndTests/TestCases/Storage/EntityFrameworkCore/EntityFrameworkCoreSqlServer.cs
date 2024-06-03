@@ -9,6 +9,7 @@ using Testcontainers.PostgreSql;
 using TransactionalBox.End2EndTests.SeedWork.Inbox;
 using TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore.DbContexts;
 using Xunit.Abstractions;
+using TransactionalBox;
 
 namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 {
