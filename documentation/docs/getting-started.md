@@ -38,7 +38,7 @@ public sealed class ExampleMessage : OutboxMessage
     public int Age { get; init; }
 }
 ```
-#### Add message to outbox (to send)
+#### Add message to outbox
 
 ```csharp
 public sealed class AddMessageToOutbox
@@ -58,7 +58,8 @@ public sealed class AddMessageToOutbox
             Age = 25,
         };
 
-        await _outbox.Send(message, "ServiceName");
+        await _outbox.Add(message);
+        await _outbox.TransactionCommited();
     }
 }
 ```

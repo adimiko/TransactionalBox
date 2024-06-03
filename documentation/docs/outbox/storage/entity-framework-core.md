@@ -3,7 +3,6 @@ sidebar_position: 2
 ---
 
 # Entity Framework Core (Relational)
-//TODO UnitOfWork
 
 TransactionalBox is not responsible for configuring Entity Framework.
 All it needs is to use the already existing `DbContext` and add the model to the `ModelBuilder`.
