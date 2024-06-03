@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 
-namespace TransactionalBox.Outbox.Kafka.Internals
+namespace TransactionalBox.Kafka.Internals.Outbox
 {
     internal sealed class KafkaConfigFactory
     {
@@ -9,14 +9,14 @@ namespace TransactionalBox.Outbox.Kafka.Internals
         private ProducerConfig? _config = null;
 
         public KafkaConfigFactory(
-            IOutboxKafkaSettings outboxWorkerKafkaSettings) 
+            IOutboxKafkaSettings outboxWorkerKafkaSettings)
         {
             _outboxWorkerKafkaSettings = outboxWorkerKafkaSettings;
         }
 
         internal ProducerConfig Create()
         {
-            if (_config is not null) 
+            if (_config is not null)
             {
                 return _config;
             }

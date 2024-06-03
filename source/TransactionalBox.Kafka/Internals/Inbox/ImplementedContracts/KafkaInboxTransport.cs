@@ -1,12 +1,11 @@
 ﻿using Confluent.Kafka;
-using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using TransactionalBox.Inbox.Internals.Contexts;
 using TransactionalBox.Inbox.Internals.Transport;
 using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
 
-namespace TransactionalBox.Inbox.Kafka.Internals.ImplementedContracts
+namespace TransactionalBox.Kafka.Internals.Inbox.ImplementedContracts
 {
     internal sealed class KafkaInboxTransport : IInboxTransport
     {

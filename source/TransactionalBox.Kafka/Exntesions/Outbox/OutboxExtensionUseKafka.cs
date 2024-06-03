@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TransactionalBox.Kafka.Internals.Outbox;
+using TransactionalBox.Kafka.Internals.Outbox.ImplementedContracts;
+using TransactionalBox.Kafka.Settings.Outbox;
 using TransactionalBox.Outbox.Configurators;
 using TransactionalBox.Outbox.Internals.Transport.ContractsToImplement;
-using TransactionalBox.Outbox.Kafka.Internals;
-using TransactionalBox.Outbox.Kafka.Internals.ImplementedContracts;
-using TransactionalBox.Outbox.Kafka.Settings;
 
 namespace TransactionalBox
 {
-    public static class ExtensionUseKafka
+    public static class OutboxExtensionUseKafka
     {
         public static void UseKafka(
             this IOutboxTransportConfigurator outboxWorkerTransportConfigurator,

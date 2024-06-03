@@ -4,7 +4,7 @@ using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.Tr
 using TransactionalBox.Outbox.Internals.Transport;
 using TransactionalBox.Outbox.Internals.Transport.ContractsToImplement;
 
-namespace TransactionalBox.Outbox.Kafka.Internals.ImplementedContracts
+namespace TransactionalBox.Kafka.Internals.Outbox.ImplementedContracts
 {
     internal sealed class KafkaOutboxTransport : IOutboxTransport
     {

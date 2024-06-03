@@ -2,7 +2,7 @@
 using Confluent.Kafka;
 using TransactionalBox.Inbox.Internals.Transport.ContractsToImplement;
 
-namespace TransactionalBox.Inbox.Kafka.Internals.ImplementedContracts
+namespace TransactionalBox.Kafka.Internals.Inbox.ImplementedContracts
 {
     internal sealed class KafkaTransportTopicsCreator : ITransportTopicsCreator
     {

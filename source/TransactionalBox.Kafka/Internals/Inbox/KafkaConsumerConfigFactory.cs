@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using TransactionalBox.Inbox.Internals.Contexts;
 
-namespace TransactionalBox.Inbox.Kafka.Internals
+namespace TransactionalBox.Kafka.Internals.Inbox
 {
     internal sealed class KafkaConsumerConfigFactory
     {
@@ -13,7 +13,7 @@ namespace TransactionalBox.Inbox.Kafka.Internals
 
         public KafkaConsumerConfigFactory(
             IInboxContext inboxWorkerContext,
-            IInboxKafkaSettings inboxWorkerKafkaSettings) 
+            IInboxKafkaSettings inboxWorkerKafkaSettings)
         {
             _inboxWorkerContext = inboxWorkerContext;
             _inboxWorkerKafkaSettings = inboxWorkerKafkaSettings;
@@ -21,7 +21,7 @@ namespace TransactionalBox.Inbox.Kafka.Internals
 
         internal ConsumerConfig Create()
         {
-            if (_config is not null) 
+            if (_config is not null)
             {
                 return _config;
             }

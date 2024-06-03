@@ -23,7 +23,7 @@
     
 	<InternalsVisibleTo Include="TransactionalBox.Internals.Transport.InMemory" />
 	<InternalsVisibleTo Include="TransactionalBox.EntityFrameworkCore" />
-	<InternalsVisibleTo Include="$(AssemblyName).Kafka" />
+	<InternalsVisibleTo Include="TransactionalBox.Kafka" />
 
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
