@@ -2,7 +2,7 @@
 using System.Text;
 using TransactionalBox.Outbox.Internals.Compression;
 using TransactionalBox.Outbox.Internals.Storage;
-using TransactionalBox.Outbox.Internals.Transport;
+using TransactionalBox.Outbox.Internals.Transport.ContractsToImplement;
 
 namespace TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories.Policies
 {

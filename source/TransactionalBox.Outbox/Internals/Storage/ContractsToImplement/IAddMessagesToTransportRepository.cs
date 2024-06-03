@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Outbox.Internals.Storage
+﻿namespace TransactionalBox.Outbox.Internals.Storage.ContractsToImplement
 {
     internal interface IAddMessagesToTransportRepository
     {

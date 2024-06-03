@@ -3,8 +3,9 @@ using System.Data;
 using TransactionalBox.Internals.DistributedLock;
 using TransactionalBox.Outbox.Internals.Storage;
 using System.Net;
+using TransactionalBox.Outbox.Internals.Storage.ContractsToImplement;
 
-namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals
+namespace TransactionalBox.Outbox.EntityFrameworkCore.Internals.ImplementedContracts
 {
     internal sealed class EntityFrameworkAddMessagesToTransportRepository : IAddMessagesToTransportRepository
     {

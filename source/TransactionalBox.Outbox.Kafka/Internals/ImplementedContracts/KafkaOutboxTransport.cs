@@ -2,14 +2,15 @@
 using System.Text;
 using TransactionalBox.Outbox.Internals.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Outbox.Internals.Transport;
+using TransactionalBox.Outbox.Internals.Transport.ContractsToImplement;
 
-namespace TransactionalBox.Outbox.Kafka.Internals
+namespace TransactionalBox.Outbox.Kafka.Internals.ImplementedContracts
 {
     internal sealed class KafkaOutboxTransport : IOutboxTransport
     {
         private readonly KafkaConfigFactory _configFactory;
 
-        public KafkaOutboxTransport(KafkaConfigFactory configFactory) 
+        public KafkaOutboxTransport(KafkaConfigFactory configFactory)
         {
             _configFactory = configFactory;
         }
