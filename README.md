@@ -36,17 +36,26 @@ Examples of problems that occur during network communication:
 
 *Transfer order attempt fails.*
 
-**Benefits:**
-- Easy to use: 
+### Benefits:
+- Easy to use
     - *Quick learning and low entry threshold*
     - *Configured by default to prevent overwhelm for beginners*
     - *Add message to outbox and then appears in inbox handler*
+- Eventual consistency
+    - *Outbox sends a message at least once*
+    - *Inbox deduplicates the message and processes exactly once*
 - Scalability & Fault Tolerance
     - *Retry pattern with delay*
     - *Multiple instances of the same service (distributed processing)*
 - Highly configurable and extendable
-- Increase bandwidth
-- Reduce latency
+    - *Components are configurable via settings*
+    - *Extendable with new transport and storage providers*
+- Reduce latency and increase bandwidth
+    - *Hook processing (instead of interval processing)*
+    - *Compression algorithms*
+    - *Grouping messages by topic and type to transport message (better compression)*
+    - *Adjusting optimal transport message size*
+
 
 ## :clapper: Run Sample
 > [!NOTE]
