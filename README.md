@@ -23,7 +23,7 @@
 </div>
 
 ###### :star: - The star motivates me a lot!   
-Examples of problems that occur during network communication:
+### Examples of network communication problems
 -  **Lost message**
 
 *Amount was taken from bank account and transfer was never executed.*
