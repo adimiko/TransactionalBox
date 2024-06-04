@@ -7,7 +7,7 @@ sidebar_position: 1
 ## Configuration
 ### Install package
 ```csharp
-dotnet add package TransactionalBox.Inbox.Kafka
+dotnet add package TransactionalBox.Kafka
 ```
 
 ### Register

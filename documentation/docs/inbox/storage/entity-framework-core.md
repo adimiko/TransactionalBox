@@ -28,7 +28,7 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.Use...(connectionStrin
 ## Configuration
 ### Install package
 ```csharp
-dotnet add package TransactionalBox.Inbox.EntityFrameworkCore
+dotnet add package TransactionalBox.EntityFrameworkCore
 ```
 
 ### Register entity framework as inbox storage
