@@ -15,6 +15,7 @@ using TransactionalBox.Internals.Outbox.OutboxMessageDefinitions;
 using TransactionalBox.Internals.Outbox.Storage;
 using TransactionalBox.Internals.Outbox.Extensions;
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.Logger;
+using TransactionalBox.Internals.Outbox;
 
 namespace TransactionalBox
 {
@@ -106,6 +107,8 @@ namespace TransactionalBox
             // Loggers
             services.AddSingleton<ICleanUpOutboxLogger, CleanUpOutboxLogger>();
             services.AddSingleton<IAddMessagesToTransportLogger, AddMessagesToTransportLogger>();
+
+            services.AddHostedService<OutboxStartup>();
         }
     }
 }
