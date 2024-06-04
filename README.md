@@ -12,7 +12,7 @@
     |
     <a href="https://www.nuget.org/packages?q=TransactionalBox"><strong>Packages</strong></a>
   </p>
-</div>
+
 
 <div align="center">
 
@@ -23,10 +23,6 @@
 </div>
 
 ###### :star: - The star motivates me a lot!   
-
-All complexity is taken over by the transactional box and simplifies communication between services to the maximum extent possible.   
-It is designed for a low entry threshold and quick learning.
-
 Examples of problems that occur during network communication:
 -  **Lost message**
 
@@ -39,6 +35,18 @@ Examples of problems that occur during network communication:
 - **Unavailable service**
 
 *Transfer order attempt fails.*
+
+**Benefits:**
+- Easy to use: 
+    - *Quick learning and low entry threshold*
+    - *Configured by default to prevent overwhelm for beginners*
+    - *Add message to outbox and then appears in inbox handler*
+- Scalability & Fault Tolerance
+    - *Retry pattern with delay*
+    - *Multiple instances of the same service (distributed processing)*
+- Highly configurable and extendable
+- Increase bandwidth
+- Reduce latency
 
 ## :clapper: Run Sample
 > [!NOTE]
