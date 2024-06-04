@@ -123,7 +123,7 @@ Have fun :smiley:!
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 - [ ] Transport discriminator (one outbox many transport, tagged message)
-- [ ] Hook startup
+- [x] Hook startup (checking if there are messages to be processed after startup)
 - [ ] Inbox based on the header, selects the appropriate algorithm to:
     - [x] Decompression
     - [ ] Deserialization
