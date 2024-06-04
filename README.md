@@ -19,11 +19,12 @@
 [![🚧 - Under Development](https://img.shields.io/badge/🚧-Under_Development-orange)](https://)
 ![Licence - MIT](https://img.shields.io/badge/Licence-MIT-2ea44f)
 [![Linkedin](https://img.shields.io/badge/Linkedin-2ea44f?logo=linkedin)](https://www.linkedin.com/in/adimiko/)
+##### :star: - The star motivates me a lot!   
 
 </div>
 
-###### :star: - The star motivates me a lot!   
-### Examples of network communication problems
+
+### :fire: Examples of network communication problems
 -  **Lost message**
 
 *Amount was taken from bank account and transfer was never executed.*
@@ -36,7 +37,7 @@
 
 *Transfer order attempt fails.*
 
-### Benefits
+### :star2: Benefits
 - Easy to use
     - *Quick learning and low entry threshold*
     - *Configured by default to prevent overwhelm for beginners*
