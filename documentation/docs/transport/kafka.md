@@ -4,12 +4,11 @@ sidebar_position: 1
 
 # Apache Kafka
 
-## Configuration
-### Install package
+## Install package
 ```csharp
 dotnet add package TransactionalBox.Kafka
 ```
-
+## Outbox
 ### Register
 ```csharp
 builder.Services.AddTransactionalBox(x =>
@@ -22,6 +21,7 @@ builder.Services.AddTransactionalBox(x =>
 
 ```
 
+## Inbox
 ### Register
 ```csharp
 builder.Services.AddTransactionalBox(x =>

@@ -10,6 +10,7 @@ InMemory is registered as default storage.
 Intended only for testing and learning.
 :::
 
+## Outbox
 ### Register
 ```csharp
 builder.Services.AddTransactionalBox(x =>
@@ -19,7 +20,7 @@ builder.Services.AddTransactionalBox(x =>
 
 ```
 
-
+## Inbox
 ### Register
 ```csharp
 builder.Services.AddTransactionalBox(x =>
