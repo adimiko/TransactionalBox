@@ -2,19 +2,27 @@
     <img src="assets/rounded-social-logo.png">
 </div>
 
+<h3 align="center">Outbox and Inbox pattern in .NET</h3>
+
+  <p align="center">
+    <i>Ensures reliable network communication (eventual consistency) between services.</i>
+    <br />
+    <br />
+    <a href="https://transactionalbox.com/"><strong>Documentation</strong></a>
+    |
+    <a href="https://www.nuget.org/packages?q=TransactionalBox"><strong>Packages</strong></a>
+  </p>
+</div>
+
 <div align="center">
 
 [![🚧 - Under Development](https://img.shields.io/badge/🚧-Under_Development-orange)](https://)
 ![Licence - MIT](https://img.shields.io/badge/Licence-MIT-2ea44f)
-[![Nugets](https://img.shields.io/badge/Nugets-2ea44f?logo=nuget)](https://www.nuget.org/packages?q=TransactionalBox)
 [![Linkedin](https://img.shields.io/badge/Linkedin-2ea44f?logo=linkedin)](https://www.linkedin.com/in/adimiko/)
 
 </div>
 
 ###### :star: - The star motivates me a lot!   
-
-**Transactional box is an implementation of the outbox and inbox pattern in .NET.**   
-**Ensures reliable network communication (eventual consistency) between services.**
 
 All complexity is taken over by the transactional box and simplifies communication between services to the maximum extent possible.   
 It is designed for a low entry threshold and quick learning.
@@ -31,9 +39,6 @@ Examples of problems that occur during network communication:
 - **Unavailable service**
 
 *Transfer order attempt fails.*
-
-For more information, see the [documentation](https://transactionalbox.com/):book:.  
-Packages are hosted by [nuget.org](https://www.nuget.org/packages?q=TransactionalBox).  
 
 ## :clapper: Run Sample
 > [!NOTE]
