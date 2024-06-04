@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
+using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.Base;
+using TransactionalBox.Internals.Inbox.Hooks.Events;
 using TransactionalBox.Internals.Inbox.Transport.ContractsToImplement;
 using TransactionalBox.Internals.Inbox.Transport.Topics;
 
@@ -13,14 +15,18 @@ namespace TransactionalBox.Internals.Inbox
 
         private readonly IEnumerable<BackgroundProcessBase> _backgroundProcesses;
 
+        private readonly IEventHookPublisher _eventHookPublisher;
+
         public InboxStartup(
             ITopicsProvider topicProvider,
             ITransportTopicsCreator transportTopicsCreator,
-            IEnumerable<BackgroundProcessBase> backgroundProcesses)
+            IEnumerable<BackgroundProcessBase> backgroundProcesses,
+            IEventHookPublisher eventHookPublisher)
         {
             _topicProvider = topicProvider;
             _transportTopicsCreator = transportTopicsCreator;
             _backgroundProcesses = backgroundProcesses;
+            _eventHookPublisher = eventHookPublisher;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -30,13 +36,12 @@ namespace TransactionalBox.Internals.Inbox
             await _transportTopicsCreator.Create(topics).ConfigureAwait(false);
 
             // startup sequence
+            await _eventHookPublisher.PublishAsync<AddedMessagesToInbox>().ConfigureAwait(false);
 
             foreach (var backgroundProcess in _backgroundProcesses)
             {
                 _ = backgroundProcess.ExecuteAsync(stoppingToken);
             }
-
-            //TODO run EventHooks
         }
     }
 }
