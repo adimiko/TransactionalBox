@@ -36,7 +36,7 @@
 
 *Transfer order attempt fails.*
 
-### Benefits:
+### Benefits
 - Easy to use
     - *Quick learning and low entry threshold*
     - *Configured by default to prevent overwhelm for beginners*
