@@ -31,6 +31,29 @@ builder.Services.AddDbContextPool<SampleDbContext>(x => x.Use...(connectionStrin
 dotnet add package TransactionalBox.EntityFrameworkCore
 ```
 
+### Register entity framework as outbox storage
+```csharp
+builder.Services.AddTransactionalBox(x =>
+{
+    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
+});
+
+```
+
+### Add Outbox to ModelBuilder
+```csharp
+public class SampleDbContext : DbContext
+{
+    ...
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.AddOutbox();
+    }
+    ...
+}
+```
+
+
 ### Register entity framework as inbox storage
 ```csharp
 builder.Services.AddTransactionalBox(x =>

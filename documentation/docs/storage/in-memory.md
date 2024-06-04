@@ -18,3 +18,13 @@ builder.Services.AddTransactionalBox(x =>
 });
 
 ```
+
+
+### Register
+```csharp
+builder.Services.AddTransactionalBox(x =>
+{
+    x.AddInbox();
+});
+
+```

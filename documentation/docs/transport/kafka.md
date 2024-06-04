@@ -14,6 +14,18 @@ dotnet add package TransactionalBox.Kafka
 ```csharp
 builder.Services.AddTransactionalBox(x =>
 {
+    x.AddOutbox(
+        storage => ...,
+        transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers)
+    );
+});
+
+```
+
+### Register
+```csharp
+builder.Services.AddTransactionalBox(x =>
+{
     x.AddInbox(
         storage => ...,
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers)

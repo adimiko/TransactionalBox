@@ -1,15 +1,17 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
 
-# General
+# Inbox
 
-The outbox is responsible for adding messages to the storage  and then adding at least once to the transport.
+The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.
+
+
 
 ```csharp
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox(
+    x.AddInbox(
         storage => ...,
         transport => ...,
         settings => ...,
@@ -47,10 +49,10 @@ settings => settings.ServiceId = "ServiceName");
   </tr>
 </table>
 
+
 ## Settings
 
-### Add messages to transport settings
-
+### Add messages to inbox settings
 <table>
   <tr>
     <td><b>Name</b></td>
@@ -58,18 +60,13 @@ settings => settings.ServiceId = "ServiceName");
     <td><b>Default Value</b></td>
   </tr>
   <tr>
-    <td>MaxBatchSize</td>
-    <td>int</td>
-    <td>5000</td>
-  </tr>
-    <tr>
-    <td>LockTimeout</td>
+    <td>DefaultTimeToLiveIdempotencyKey</td>
     <td>TimeSpan</td>
-    <td>10 seconds</td>
+    <td>7 days</td>
   </tr>
 </table>
 
-### Clean up outbox settings
+### Clean up inbox settings
 <table>
   <tr>
     <td><b>Name</b></td>
@@ -81,14 +78,33 @@ settings => settings.ServiceId = "ServiceName");
     <td>int</td>
     <td>10000</td>
   </tr>
-    <tr>
+  <tr>
     <td>IsEnabled</td>
     <td>bool</td>
     <td>true</td>
   </tr>
 </table>
 
-### Configure serialization
+### Clean up idempotency keys settings
+<table>
+  <tr>
+    <td><b>Name</b></td>
+    <td><b>Type</b></td>
+    <td><b>Default Value</b></td>
+  </tr>
+  <tr>
+    <td>MaxBatchSize</td>
+    <td>int</td>
+    <td>10000</td>
+  </tr>
+  <tr>
+    <td>Period</td>
+    <td>TimeSpan</td>
+    <td>1 hour</td>
+  </tr>
+</table>
+
+### Configure deserialization
 
 <table>
   <tr>
@@ -98,26 +114,5 @@ settings => settings.ServiceId = "ServiceName");
   <tr>
     <td>System.Text.Json (Default)</td>
     <td>UseSystemTextJson()</td>
-  </tr>
-</table>
-
-###  Configure compression
-
-<table>
-  <tr>
-    <td><b>Name</b></td>
-    <td><b>Extension</b></td>
-  </tr>
-  <tr>
-    <td>No compression (Default)</td>
-    <td>UseNoCompression()</td>
-  </tr>
-  <tr>
-    <td>Brotli</td>
-    <td>UseBrotli()</td>
-  </tr>
-  <tr>
-    <td>GZip</td>
-    <td>UseGZip()</td>
   </tr>
 </table>
