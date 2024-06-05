@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.End2EndTests.SeedWork.Outbox
 {
-    internal sealed class SendableMessageDefinition : OutboxMessageDefinition<SendableMessage>
+    internal sealed class SendableMessageDefinition : OutboxDefinition<SendableMessage>
     {
         public SendableMessageDefinition() 
         {

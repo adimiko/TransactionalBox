@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Sample.WebApi.InMemory.ServiceWithInbox
 {
-    public sealed class PublishableMessageDefinition : InboxMessageDefinition<PublishableMessage>
+    public sealed class PublishableMessageDefinition : InboxDefinition<PublishableMessage>
     {
         public PublishableMessageDefinition() 
         {
