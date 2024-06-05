@@ -11,11 +11,11 @@ using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.Tr
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories.Policies;
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.CleanUpOutbox;
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.CleanUpOutbox.Logger;
-using TransactionalBox.Internals.Outbox.OutboxMessageDefinitions;
 using TransactionalBox.Internals.Outbox.Storage;
 using TransactionalBox.Internals.Outbox.Extensions;
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.Logger;
 using TransactionalBox.Internals.Outbox;
+using TransactionalBox.Internals.Outbox.OutboxDefinitions;
 
 namespace TransactionalBox
 {
@@ -71,13 +71,13 @@ namespace TransactionalBox
 
             var allTypes = assemblyConfigurator.Assemblies.SelectMany(x => x.GetTypes());
 
-            var outboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(OutboxMessageDefinition<>)).ToList();
+            var outboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(OutboxDefinition<>)).ToList();
 
             foreach (var outboxMessageDefinition in outboxMessageDefinitions)
             {
                 var messageType = outboxMessageDefinition.BaseType.GetGenericArguments()[0];
 
-                services.AddKeyedSingleton(typeof(IOutboxMessageDefinition), messageType, outboxMessageDefinition);
+                services.AddKeyedSingleton(typeof(IOutboxDefinition), messageType, outboxMessageDefinition);
             }
 
             services.AddSingleton<TransportEnvelopeFactory>();

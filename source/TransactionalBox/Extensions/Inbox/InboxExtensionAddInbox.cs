@@ -7,7 +7,6 @@ using TransactionalBox.Internals.Inbox.Assemblies.CompiledHandlers;
 using TransactionalBox.Internals.Inbox.Assemblies.MessageTypes;
 using TransactionalBox.Internals.Inbox.Contexts;
 using TransactionalBox.Internals.Inbox.Decompression;
-using TransactionalBox.Internals.Inbox.InboxMessageDefinitions;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbox;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbox.Logger;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.Base;
@@ -22,6 +21,7 @@ using TransactionalBox.Internals.Inbox.Transport.Topics;
 using TransactionalBox.Configurators.Inbox;
 using TransactionalBox.Settings.Inbox;
 using TransactionalBox.Internals.Inbox.Configurators;
+using TransactionalBox.Internals.Inbox.InboxDefinitions;
 
 namespace TransactionalBox
 {
@@ -92,13 +92,13 @@ namespace TransactionalBox
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
-            var inboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(InboxMessageDefinition<>)).ToList();
+            var inboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(InboxDefinition<>)).ToList();
 
             foreach (var inboxMessageDefinition in inboxMessageDefinitions)
             {
                 var messageType = inboxMessageDefinition.BaseType.GetGenericArguments()[0];
 
-                services.AddKeyedSingleton(typeof(IInboxMessageDefinition), messageType, inboxMessageDefinition);
+                services.AddKeyedSingleton(typeof(IInboxDefinition), messageType, inboxMessageDefinition);
             }
 
             services.AddSingleton<IInboxMessageTypes>(new InboxMessageTypes(inboxMessageHandlerTypes, typeof(IInboxHandler<>)));

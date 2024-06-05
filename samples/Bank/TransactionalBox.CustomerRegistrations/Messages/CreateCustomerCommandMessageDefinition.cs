@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.CustomerRegistrations.Messages
 {
-    internal sealed class CreateCustomerCommandMessageDefinition : OutboxMessageDefinition<CreateCustomerCommandMessage>
+    internal sealed class CreateCustomerCommandMessageDefinition : OutboxDefinition<CreateCustomerCommandMessage>
     {
         public CreateCustomerCommandMessageDefinition() 
         {

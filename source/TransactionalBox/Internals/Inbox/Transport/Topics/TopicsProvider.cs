@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Internals.Inbox.Assemblies.MessageTypes;
-using TransactionalBox.Internals.Inbox.InboxMessageDefinitions;
+using TransactionalBox.Internals.Inbox.InboxDefinitions;
 
 namespace TransactionalBox.Internals.Inbox.Transport.Topics
 {
@@ -18,13 +18,13 @@ namespace TransactionalBox.Internals.Inbox.Transport.Topics
 
             var messageTypes = inboxMessageTypes.MessageTypes;
 
-            var inboxMessageDefinitionDictionary = new Dictionary<Type, IInboxMessageDefinition>();
+            var inboxMessageDefinitionDictionary = new Dictionary<Type, IInboxDefinition>();
 
-            var defaultInboxMessageDefinition = new DefaultInboxMessageDefinition();
+            var defaultInboxMessageDefinition = new DefaultInboxDefinition();
 
             foreach (var messageType in messageTypes)
             {
-                var x = serviceProvider.GetKeyedServices<IInboxMessageDefinition>(messageType);
+                var x = serviceProvider.GetKeyedServices<IInboxDefinition>(messageType);
 
                 //TODO custom Exception
                 var inboxMessageDefinition = x.SingleOrDefault();

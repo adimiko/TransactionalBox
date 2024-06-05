@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Internals.Outbox.Hooks.Events;
-using TransactionalBox.Internals.Outbox.OutboxMessageDefinitions;
+using TransactionalBox.Internals.Outbox.OutboxDefinitions;
 using TransactionalBox.Internals.Outbox.Serialization;
 using TransactionalBox.Internals.Outbox.Storage;
 using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
@@ -63,7 +63,7 @@ namespace TransactionalBox.Internals.Outbox.Oubox
 
             var messageType = message.GetType();
 
-            IOutboxMessageDefinition? outboxMessageDefinition = _serviceProvider.GetKeyedService<IOutboxMessageDefinition>(messageType);
+            IOutboxDefinition? outboxMessageDefinition = _serviceProvider.GetKeyedService<IOutboxDefinition>(messageType);
 
             if (outboxMessageDefinition is null)
             {

@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Sample.WebApi.OutboxMessages
 {
-    internal sealed class ExampleMessageDefinition : OutboxMessageDefinition<ExampleMessage>
+    internal sealed class ExampleMessageDefinition : OutboxDefinition<ExampleMessage>
     {
         public ExampleMessageDefinition() 
         {
