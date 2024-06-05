@@ -72,6 +72,24 @@ Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the 
 
 Have fun :smiley:!
 
+## :european_castle: Architecture
+The transactional box consists of two basic components.
+The following diagrams show the basic flow (omits details).
+They are designed to provide a general understanding of how transactional box works.
+
+### Outbox
+The outbox is responsible for adding messages to the storage and then adding at least once to the transport.
+<div align="center">
+    <img src="assets/diagrams/outbox.png">
+</div>
+
+### Inbox 
+The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.
+<div align="center">
+    <img src="assets/diagrams/inbox.png">
+</div>
+
+
 ## ✨ Features
 #### Actions
 - [x] Add a message to send to the outbox
@@ -151,23 +169,6 @@ Have fun :smiley:!
     - [x] Decompression
     - [ ] Deserialization
     - [ ] Separator
-
-## :european_castle: Architecture
-The transactional box consists of two basic components.
-The following diagrams show the basic flow (omits details).
-They are designed to provide a general understanding of how transactional box works.
-
-### Outbox
-The outbox is responsible for adding messages to the storage and then adding at least once to the transport.
-<div align="center">
-    <img src="assets/diagrams/outbox.png">
-</div>
-
-### Inbox 
-The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.
-<div align="center">
-    <img src="assets/diagrams/inbox.png">
-</div>
 
 ## :world_map: Roadmap
 Name of **TransactionalBox** fits perfectly with the future of the project. It will be possible to use different `transactional boxes`. 
