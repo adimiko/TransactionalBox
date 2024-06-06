@@ -103,13 +103,10 @@ The inbox is responsible for getting messages from the transport and adding them
 - [x] Entity Framework (Relational)
     - [x] Migrations
     - [X] Distributed Lock (Based on atomic write operation, Standalone Package)
-- [ ] MongoDB
 
 #### Transport
 - [x] InMemory (Default)
 - [x] Apache Kafka
-- [ ] RabbitMQ
-- [ ] Iggy
 
 #### Scalability & Fault Tolerance
 - [x] Support for multiple outbox worker instances
@@ -184,8 +181,8 @@ Implementation under the competition.
 Improvements:
 - Code refactor
 - More tests
-- Support for more storage providers (e.g. Marten, RavenDB)
-- Support for more transport providers (e.g. HTTP, gRPC, Azure Service Bus)
+- Support for more storage providers (e.g. MongoDB, Marten)
+- Support for more transport providers (e.g. Iggy, RabbitMq, HTTP, gRPC)
 - Performance optimization
 - Encrypted transport messages
 
