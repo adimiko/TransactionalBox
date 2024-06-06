@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'Easy To Use',
     description: (
       <>
         Designed to be easy to understand.
@@ -12,10 +12,10 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Configurable and Expandable',
+    title: 'Eventual Consistency',
     description: (
       <>
-        Easy to expand and configure
+        Ensures reliable network communication between services.
       </>
     ),
   },
@@ -23,15 +23,23 @@ const FeatureList = [
     title: 'Scalability & Fault Tolerance',
     description: (
       <>
-        Supports multi-instance (distributed processing)
+        Supports multi-instance (distributed processing).
       </>
     ),
   },
   {
-    title: 'Faster Transfer',
+    title: 'Highly Configurable & Extendable',
     description: (
       <>
-        Using algorithms for compression, clustering and adjusting the size of the transport message, you can increase bandwidth and reduce latency.
+        Easy to expand and configure.
+      </>
+    ),
+  },
+  {
+    title: 'Reduce Latency & Increase Bandwidth',
+    description: (
+      <>
+        Using algorithms for compression, grouping and adjusting the size of the transport message, you can increase bandwidth and reduce latency.
       </>
     ),
   },
