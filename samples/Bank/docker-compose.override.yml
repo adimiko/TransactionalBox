@@ -5,11 +5,11 @@ services:
   transactionalbox.customerregistrations:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=1001
+      - ASPNETCORE_HTTPS_PORTS=1000
     ports:
-      - "8080"
-      - "8081"
+      - "1001"
+      - '1000:1000'
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -17,11 +17,11 @@ services:
   transactionalbox.customers:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=2001
+      - ASPNETCORE_HTTPS_PORTS=2000
     ports:
-      - "8080"
-      - "8081"
+      - "2001"
+      - '2000:2000'
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -29,11 +29,11 @@ services:
   transactionalbox.bankaccounts:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=3001
+      - ASPNETCORE_HTTPS_PORTS=3000
     ports:
-      - "8080"
-      - "8081"
+      - "3001"
+      - '3000:3000'
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -41,11 +41,11 @@ services:
   transactionalbox.loans:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=4001
+      - ASPNETCORE_HTTPS_PORTS=4000
     ports:
-      - "8080"
-      - "8081"
+      - "4001"
+      - '4000:4000'
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
