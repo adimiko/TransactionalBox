@@ -62,6 +62,8 @@
 > [!NOTE]
 > Docker is required.
 
+https://github.com/adimiko/TransactionalBox/assets/53557466/e7e82c0a-e17e-4ef1-851e-2aea73297968
+
 Clone this repo and open `TransactionalBox.sln` via Visual Studio 2022. Set the `TransactionalBox.Sample.WebApi` as startup and then run. You should see the following view.
 
 <div align="center">
