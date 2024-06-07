@@ -162,6 +162,7 @@ The inbox is responsible for getting messages from the transport and adding them
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 - [ ] Transport discriminator (one outbox many transport, tagged message)
 - [x] Hook startup (checking if there are messages to be processed after startup)
+- [ ] Encrypted transport messages
 - [ ] Inbox based on the header, selects the appropriate algorithm to:
     - [x] Decompression
     - [ ] Deserialization
@@ -184,7 +185,6 @@ Improvements:
 - Support for more storage providers (e.g. MongoDB, Marten)
 - Support for more transport providers (e.g. Iggy, RabbitMq, HTTP, gRPC)
 - Performance optimization
-- Encrypted transport messages
 
 ### StreamOubox and StreamInbox
 
