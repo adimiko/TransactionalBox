@@ -208,10 +208,11 @@ Ensuring the order of messages within a stream insite the service. Messages are 
 The project is part of the competition [100 commitow](https://100commitow.pl).
 
 ### Topics
+- CAP theorem
 - Distributed lock (prevent race condition)
 - Hook processing
 - Concurrency control
 - Scaling and parallel processing (distributed processing)
 - Synchronization primitives
 - Idepotent messages (message deduplication)
-- Retry Pattern
+- Retry pattern with delay 
