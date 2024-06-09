@@ -21,6 +21,51 @@ builder.Services.AddTransactionalBox(x =>
 settings => settings.ServiceId = "ServiceName");
 ```
 
+### Inbox Message
+```csharp
+public class CreateCustomerCommandMessage : InboxMessage
+{
+    public Guid Id { get; init; }
+
+    public string FirstName { get; init; }
+
+    public string LastName { get; init; }
+
+    public int Age { get; init; }
+}
+```
+
+### Inbox Definition
+:::info
+You do not need to define a inbox definition for each message.   
+Listens by default for incoming messages to the current service (does not listen on events).   
+If you want to listen for events, you need to define the `PublishedBy` property.
+:::
+
+```csharp
+public class CreatedCustomerEventMessageDefinition : InboxDefinition<CreatedCustomerEventMessage>
+{
+    public CreatedCustomerEventMessageDefinition() 
+    {
+        PublishedBy = "Customers";
+    }
+}
+```
+
+### Handling message in inbox handler
+
+```csharp
+public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerEventMessage>
+{
+    ...
+    
+    public async Task Handle(CreatedCustomerEventMessage message, IExecutionContext executionContext)
+    {
+        // Your logic
+    }
+}
+```
+
 ## Storage
 
 <table>
