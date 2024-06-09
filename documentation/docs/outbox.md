@@ -19,6 +19,24 @@ builder.Services.AddTransactionalBox(x =>
 settings => settings.ServiceId = "ServiceName");
 ```
 
+### Outbox Definition
+
+:::info
+You do not need to define a outbox definition for each message.   
+By default, the message will be published because receiver is not indicated.
+:::
+
+```csharp
+internal class CreateCustomerCommandMessageDefinition : OutboxDefinition<CreateCustomerCommandMessage>
+{
+    public CreateCustomerCommandMessageDefinition() 
+    {
+        Receiver = "Customers";
+    }
+}
+
+```
+
 ## Storage
 
 <table>
