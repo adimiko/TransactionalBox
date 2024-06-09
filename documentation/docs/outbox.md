@@ -18,14 +18,26 @@ builder.Services.AddTransactionalBox(x =>
 },
 settings => settings.ServiceId = "ServiceName");
 ```
+### Outbox Message
+
+```csharp
+public class CreateCustomerCommandMessage : OutboxMessage
+{
+    public Guid Id { get; init; }
+
+    public string FirstName { get; init; }
+
+    public string LastName { get; init; }
+
+    public int Age { get; init; }
+}
+```
 
 ### Outbox Definition
-
 :::info
 You do not need to define a outbox definition for each message.   
 By default, the message will be published because receiver is not indicated.
 :::
-
 ```csharp
 internal class CreateCustomerCommandMessageDefinition : OutboxDefinition<CreateCustomerCommandMessage>
 {
@@ -34,6 +46,21 @@ internal class CreateCustomerCommandMessageDefinition : OutboxDefinition<CreateC
         Receiver = "Customers";
     }
 }
+
+```
+
+### Adding a message to the outbox
+
+```csharp
+
+// Add in the same transaction the result of the business operation and message to outbox
+
+await outbox.Add(message);
+
+// Commit transaction
+
+// After transaction is successfully commited, execute the following method
+await outbox.TransactionCommited();
 
 ```
 
