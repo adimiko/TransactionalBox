@@ -54,7 +54,7 @@
 - **Reduce Latency & Increase Bandwidth**
     - *Hook processing (instead of interval processing)*
     - *Compression algorithms*
-    - *Grouping messages by topic and type to transport message (better compression)*
+    - *Grouping messages by type to transport message (better compression)*
     - *Adjusting optimal transport message size*
 
 
