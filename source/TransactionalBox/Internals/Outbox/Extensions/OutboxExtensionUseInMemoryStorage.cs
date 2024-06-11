@@ -2,6 +2,7 @@
 using TransactionalBox.Internals.Outbox.Storage.InMemory;
 using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
 using TransactionalBox.Configurators.Outbox;
+using TransactionalBox.Internals.InternalPackages.KeyedInMemoryLock;
 
 namespace TransactionalBox.Internals.Outbox.Extensions
 {

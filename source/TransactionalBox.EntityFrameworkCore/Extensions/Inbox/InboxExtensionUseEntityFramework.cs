@@ -4,6 +4,8 @@ using TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContracts;
 using TransactionalBox.Configurators.Inbox;
 using TransactionalBox.Internals.Inbox.Storage;
 using TransactionalBox.Internals.Inbox.Storage.ContractsToImplement;
+using TransactionalBox.Internals.InternalPackages.DistributedLock;
+using TransactionalBox.EntityFrameworkCore.Internals.InternalPackages.DistributedLock;
 
 namespace TransactionalBox
 {

@@ -1,4 +1,4 @@
-﻿using TransactionalBox.Internals.KeyedInMemoryLock;
+﻿using TransactionalBox.Internals.InternalPackages.KeyedInMemoryLock;
 using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
 
 namespace TransactionalBox.Internals.Outbox.Storage.InMemory

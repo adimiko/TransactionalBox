@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionalBox.Internals.DistributedLock;
 using System.Data;
 using TransactionalBox.Internals.Inbox.Storage;
 using TransactionalBox.Internals.Inbox.Storage.ContractsToImplement;
+using TransactionalBox.Internals.InternalPackages.DistributedLock;
 
 namespace TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContracts
 {

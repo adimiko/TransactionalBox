@@ -12,21 +12,15 @@
 	
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Kafka" />
-	<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />  
-	<InternalsVisibleTo Include="$(AssemblyName).Inbox" />
+	<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />
+	<InternalsVisibleTo Include="$(AssemblyName).End2EndTests" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.OutboxWithWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
-	  
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\..\tests\Internals\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests.csproj" />
-    <ProjectReference Include="..\..\tests\Internals\TransactionalBox.Internals.KeyedInMemoryLock.Tests\TransactionalBox.Internals.KeyedInMemoryLock.Tests.csproj" />
-    <ProjectReference Include="..\Internals\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Internals\TransactionalBox.Internals.DistributedLock\TransactionalBox.Internals.DistributedLock.csproj" />
     <ProjectReference Include="..\Internals\TransactionalBox.Internals.EventHooks\TransactionalBox.Internals.EventHooks.csproj" />
-    <ProjectReference Include="..\Internals\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj" />
   </ItemGroup>
 </Project>
