@@ -28,6 +28,5 @@
     <ProjectReference Include="..\Internals\TransactionalBox.Internals.DistributedLock\TransactionalBox.Internals.DistributedLock.csproj" />
     <ProjectReference Include="..\Internals\TransactionalBox.Internals.EventHooks\TransactionalBox.Internals.EventHooks.csproj" />
     <ProjectReference Include="..\Internals\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj" />
-    <ProjectReference Include="..\Internals\TransactionalBox.Internals.SequentialGuid\TransactionalBox.Internals.SequentialGuid.csproj" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
-﻿using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
-using TransactionalBox.Internals.SequentialGuid;
+﻿using TransactionalBox.Internals.InternalPackages.SequentialGuid;
+using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
 
 namespace TransactionalBox.Internals.Outbox.Storage
 {

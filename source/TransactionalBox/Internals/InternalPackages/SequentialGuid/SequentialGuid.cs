@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace TransactionalBox.Internals.SequentialGuid.Internals
+namespace TransactionalBox.Internals.InternalPackages.SequentialGuid
 {
     // Based on code from https://github.com/jhtodd/SequentialGuid/tree/master
 

@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Internals.SequentialGuid
+﻿namespace TransactionalBox.Internals.InternalPackages.SequentialGuid
 {
     internal interface ISequentialGuidGenerator
     {
