@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Internals.Transport.InMemory.Internals;
 
-namespace TransactionalBox
+namespace TransactionalBox.Internals.InternalPackages.Transport
 {
     internal static class ExtensionUseInternalInMemoryTransport
     {
