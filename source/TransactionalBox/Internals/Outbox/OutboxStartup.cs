@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
-using TransactionalBox.Internals.EventHooks;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 using TransactionalBox.Internals.Outbox.Hooks.Events;
 
 namespace TransactionalBox.Internals.Outbox

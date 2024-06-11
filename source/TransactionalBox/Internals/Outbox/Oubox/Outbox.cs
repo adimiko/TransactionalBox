@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Internals.EventHooks;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 using TransactionalBox.Internals.InternalPackages.SequentialGuid;
 using TransactionalBox.Internals.Outbox.Hooks.Events;
 using TransactionalBox.Internals.Outbox.OutboxDefinitions;

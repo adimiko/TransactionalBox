@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using TransactionalBox.Internals.EventHooks.Internals.Contexts;
-using TransactionalBox.Internals.EventHooks.Internals.Loggers;
 
-namespace TransactionalBox.Internals.EventHooks.Internals
+namespace TransactionalBox.Internals.InternalPackages.EventHooks
 {
     internal sealed class EventHookLauncher<THook> : IInternalHookListenersLauncher
         where THook : EventHook, new()
@@ -20,7 +17,7 @@ namespace TransactionalBox.Internals.EventHooks.Internals
             EventHookHub<THook> hookHub,
             IServiceScopeFactory serviceScopeFactory,
             IHookListnerLogger<THook> logger,
-            TimeProvider timeProvider) 
+            TimeProvider timeProvider)
         {
             _hookHub = hookHub;
             _serviceScopeFactory = serviceScopeFactory;
@@ -69,7 +66,7 @@ namespace TransactionalBox.Internals.EventHooks.Internals
                                     long msDelay = context.Attempt * 100;
                                     const long maxMsDelay = 3000;
 
-                                    if (msDelay > maxMsDelay) 
+                                    if (msDelay > maxMsDelay)
                                     {
                                         msDelay = maxMsDelay;
                                     }
@@ -85,7 +82,7 @@ namespace TransactionalBox.Internals.EventHooks.Internals
                         }
                     }
                 }
-                catch (Exception exception) 
+                catch (Exception exception)
                 {
                     _logger.UnexpectedException(exception);
                 }

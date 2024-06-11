@@ -15,6 +15,7 @@ using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.Lo
 using TransactionalBox.Internals.Outbox;
 using TransactionalBox.Internals.Outbox.OutboxDefinitions;
 using TransactionalBox.Internals.InternalPackages.SequentialGuid;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox
 {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox.Internals.EventHooks.Internals.Loggers
 {

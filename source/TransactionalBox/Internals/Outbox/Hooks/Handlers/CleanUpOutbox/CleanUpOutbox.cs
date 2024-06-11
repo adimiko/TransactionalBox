@@ -1,5 +1,4 @@
-﻿using TransactionalBox.Internals.EventHooks;
-using TransactionalBox.Internals.EventHooks.Contexts;
+﻿using TransactionalBox.Internals.InternalPackages.EventHooks;
 using TransactionalBox.Internals.Outbox.Hooks.Events;
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.CleanUpOutbox.Logger;
 using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;

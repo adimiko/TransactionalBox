@@ -22,6 +22,7 @@ using TransactionalBox.Configurators.Inbox;
 using TransactionalBox.Settings.Inbox;
 using TransactionalBox.Internals.Inbox.Configurators;
 using TransactionalBox.Internals.Inbox.InboxDefinitions;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox
 {

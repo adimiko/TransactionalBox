@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Internals.EventHooks.Contexts
+﻿namespace TransactionalBox.Internals.InternalPackages.EventHooks
 {
     internal interface IHookExecutionContext
     {

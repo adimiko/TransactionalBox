@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Internals;
 using TransactionalBox.Internals.Inbox.Contexts;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbox.Logger;
@@ -11,6 +10,7 @@ using TransactionalBox.Internals.Inbox.Storage.ContractsToImplement;
 using TransactionalBox.Internals.Inbox.Transport.ContractsToImplement;
 using TransactionalBox.Internals.Inbox.Transport.Topics;
 using TransactionalBox.Internals.Inbox.Decompression;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbox
 {

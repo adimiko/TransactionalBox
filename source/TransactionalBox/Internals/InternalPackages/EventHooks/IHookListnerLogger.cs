@@ -1,4 +1,4 @@
-﻿namespace TransactionalBox.Internals.EventHooks.Internals.Loggers
+﻿namespace TransactionalBox.Internals.InternalPackages.EventHooks
 {
     internal interface IHookListnerLogger<THook>
         where THook : EventHook, new()

@@ -5,6 +5,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" />
     <PackageReference Include="Scrutor" />
@@ -18,9 +19,5 @@
 	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.OutboxWithWorker" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi.InMemory" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <ProjectReference Include="..\Internals\TransactionalBox.Internals.EventHooks\TransactionalBox.Internals.EventHooks.csproj" />
   </ItemGroup>
 </Project>

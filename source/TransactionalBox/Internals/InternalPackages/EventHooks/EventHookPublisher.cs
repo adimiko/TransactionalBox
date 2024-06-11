@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionalBox.Internals.EventHooks.Internals
+namespace TransactionalBox.Internals.InternalPackages.EventHooks
 {
     internal sealed class EventHookPublisher : IEventHookPublisher
     {
@@ -11,7 +11,7 @@ namespace TransactionalBox.Internals.EventHooks.Internals
             _serviceProvider = serviceProvider;
         }
 
-        public async Task PublishAsync<TEventHook>() 
+        public async Task PublishAsync<TEventHook>()
             where TEventHook : EventHook, new()
         {
             var eventHookHub = _serviceProvider.GetService<EventHookHub<TEventHook>>();
