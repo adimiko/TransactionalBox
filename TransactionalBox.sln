@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.EntityFram
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Kafka", "source\TransactionalBox.Kafka\TransactionalBox.Kafka.csproj", "{136F85A2-600B-4831-8AAE-9DA6EFDFAA15}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.EntityFrameworkCore.Tests", "tests\TransactionalBox.EntityFrameworkCore.Tests\TransactionalBox.EntityFrameworkCore.Tests.csproj", "{17598EC2-BEE9-43FD-89A9-CF894660BF78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{136F85A2-600B-4831-8AAE-9DA6EFDFAA15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{136F85A2-600B-4831-8AAE-9DA6EFDFAA15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{136F85A2-600B-4831-8AAE-9DA6EFDFAA15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17598EC2-BEE9-43FD-89A9-CF894660BF78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17598EC2-BEE9-43FD-89A9-CF894660BF78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17598EC2-BEE9-43FD-89A9-CF894660BF78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17598EC2-BEE9-43FD-89A9-CF894660BF78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +144,7 @@ Global
 		{E58031A4-3858-48EF-AFBF-1084B1994A12} = {7D3D4C79-64C4-4A7D-9830-2EC9A958D1EC}
 		{AF0E19A1-6196-40C1-A6EF-1A6E588F57B1} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
 		{136F85A2-600B-4831-8AAE-9DA6EFDFAA15} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
+		{17598EC2-BEE9-43FD-89A9-CF894660BF78} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D01E2B0-80D8-4BCE-BE98-29AC821F4F2B}

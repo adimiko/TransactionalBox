@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransactionalBox.EntityFrameworkCore.Internals.InternalPackages.DistributedLock;
 
-namespace TransactionalBox.End2EndTests.Internals.InternalPackages.DistributedLockEntityFrameworkCore.SeedWork
+namespace TransactionalBox.EntityFrameworkCore.Tests.Internals.InternalPackages.DistributedLock.SeedWork
 {
     public sealed class TestDbContext : DbContext
     {

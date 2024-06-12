@@ -1,6 +1,6 @@
 ﻿using TransactionalBox.Internals.InternalPackages.DistributedLock;
 
-namespace TransactionalBox.End2EndTests.Internals.InternalPackages.DistributedLockEntityFrameworkCore.SeedWork
+namespace TransactionalBox.EntityFrameworkCore.Tests.Internals.InternalPackages.DistributedLock.SeedWork
 {
     internal sealed class TestLock : Lock;
 }
