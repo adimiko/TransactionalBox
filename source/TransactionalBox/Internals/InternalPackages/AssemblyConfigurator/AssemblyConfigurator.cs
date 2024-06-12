@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
-using TransactionalBox.Configurators.Inbox;
+using TransactionalBox.Configurators;
 
-namespace TransactionalBox.Internals.Inbox.Configurators
+namespace TransactionalBox.Internals.InternalPackages.AssemblyConfigurator
 {
-    internal sealed class InboxAssemblyConfigurator : IInboxAssemblyConfigurator
+    internal sealed class AssemblyConfigurator : IAssemblyConfigurator
     {
         private readonly ISet<Assembly> _assemblies = new HashSet<Assembly>();
 

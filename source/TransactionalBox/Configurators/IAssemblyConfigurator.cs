@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 
-namespace TransactionalBox.Configurators.Outbox
+namespace TransactionalBox.Configurators
 {
-    public interface IOutboxAssemblyConfigurator
+    public interface IAssemblyConfigurator
     {
         void RegisterFromAssemblies(Assembly assembly);
 

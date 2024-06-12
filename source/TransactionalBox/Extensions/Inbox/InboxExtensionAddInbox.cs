@@ -23,6 +23,8 @@ using TransactionalBox.Settings.Inbox;
 using TransactionalBox.Internals.Inbox.Configurators;
 using TransactionalBox.Internals.Inbox.InboxDefinitions;
 using TransactionalBox.Internals.InternalPackages.EventHooks;
+using TransactionalBox.Configurators;
+using TransactionalBox.Internals.InternalPackages.AssemblyConfigurator;
 
 namespace TransactionalBox
 {
@@ -33,7 +35,7 @@ namespace TransactionalBox
             Action<IInboxStorageConfigurator>? storageConfiguration = null,
             Action<IInboxTransportConfigurator>? transportConfiguration = null,
             Action<InboxSettings>? settingsConfiguration = null,
-            Action<IInboxAssemblyConfigurator>? assemblyConfiguraton = null)
+            Action<IAssemblyConfigurator>? assemblyConfiguraton = null)
         {
             var services = builder.Services;
 
@@ -72,7 +74,7 @@ namespace TransactionalBox
             settings.ConfigureDelegates(services);
 
             // Assembly
-            var assemblyConfigurator = new InboxAssemblyConfigurator();
+            var assemblyConfigurator = new AssemblyConfigurator();
 
             if (assemblyConfiguraton is not null)
             {
