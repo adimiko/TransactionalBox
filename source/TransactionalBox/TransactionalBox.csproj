@@ -12,8 +12,9 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <InternalsVisibleTo Include="$(AssemblyName).Kafka" />
+	<InternalsVisibleTo Include="$(AssemblyName).Kafka" />
 	<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore" />
+	<InternalsVisibleTo Include="$(AssemblyName).EntityFrameworkCore.Tests" />
 	<InternalsVisibleTo Include="$(AssemblyName).End2EndTests" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.WebApi" />
 	<InternalsVisibleTo Include="TransactionalBox.Sample.InboxWithWorker" />

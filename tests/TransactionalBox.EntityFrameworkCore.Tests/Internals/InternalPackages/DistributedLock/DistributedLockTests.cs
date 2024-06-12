@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
-using TransactionalBox.End2EndTests.Internals.InternalPackages.DistributedLockEntityFrameworkCore.SeedWork;
 using TransactionalBox.EntityFrameworkCore.Internals.InternalPackages.DistributedLock;
+using TransactionalBox.EntityFrameworkCore.Tests.Internals.InternalPackages.DistributedLock.SeedWork;
 using TransactionalBox.Internals.InternalPackages.DistributedLock;
 using TransactionalBox.Internals.InternalPackages.KeyedInMemoryLock;
 using Xunit;
 
-namespace TransactionalBox.End2EndTests.Internals.InternalPackages.DistributedLockEntityFrameworkCore
+namespace TransactionalBox.EntityFrameworkCore.Tests.Internals.InternalPackages.DistributedLock
 {
     public sealed class DistributedLockTests : IAsyncLifetime
     {
