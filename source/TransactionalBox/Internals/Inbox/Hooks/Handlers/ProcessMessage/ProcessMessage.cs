@@ -1,15 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Internals.Inbox.Assemblies.CompiledHandlers;
 using TransactionalBox.Internals.Inbox.Deserialization;
 using TransactionalBox.Internals.Inbox.Hooks.Events;
 using TransactionalBox.Internals;
-using TransactionalBox.Internals.EventHooks.Contexts;
 using TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage.Logger;
 using TransactionalBox.Internals.Inbox.Storage;
 using TransactionalBox.Internals.Inbox.Storage.ContractsToImplement;
 using TransactionalBox.Internals.Inbox.Assemblies.MessageTypes;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage
 {

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TransactionalBox.Builders;
-using TransactionalBox.Internals.SequentialGuid;
-using TransactionalBox.Internals.SequentialGuid.Internals;
 using TransactionalBox.Settings.Outbox;
 using TransactionalBox.Configurators.Outbox;
 using TransactionalBox.Internals.Outbox.Configurators;
@@ -16,6 +14,8 @@ using TransactionalBox.Internals.Outbox.Extensions;
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.Logger;
 using TransactionalBox.Internals.Outbox;
 using TransactionalBox.Internals.Outbox.OutboxDefinitions;
+using TransactionalBox.Internals.InternalPackages.SequentialGuid;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox
 {

@@ -2,6 +2,7 @@
 using TransactionalBox.Internals.Outbox.Transport.ContractsToImplement;
 using TransactionalBox.Internals.Outbox.Transport.InMemory;
 using TransactionalBox.Configurators.Outbox;
+using TransactionalBox.Internals.InternalPackages.Transport;
 
 namespace TransactionalBox.Internals.Outbox.Extensions
 {

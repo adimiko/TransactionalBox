@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Hosting;
-using TransactionalBox.Internals.EventHooks;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.Base;
 using TransactionalBox.Internals.Inbox.Hooks.Events;
 using TransactionalBox.Internals.Inbox.Transport.ContractsToImplement;
 using TransactionalBox.Internals.Inbox.Transport.Topics;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox.Internals.Inbox
 {

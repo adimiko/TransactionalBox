@@ -1,10 +1,9 @@
-﻿using TransactionalBox.Internals.EventHooks;
-using TransactionalBox.Internals.EventHooks.Contexts;
-using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
+﻿using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.TransportMessageFactories;
 using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
 using TransactionalBox.Internals.Outbox.Transport.ContractsToImplement;
 using TransactionalBox.Internals.Outbox.Hooks.Events;
 using TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport.Logger;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
 
 namespace TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTransport
 {

@@ -23,26 +23,6 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "TransactionalBoxWithWorkers
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Sample.WebApi.InMemory", "samples\TransactionalBox.Sample.WebApi.InMemory\TransactionalBox.Sample.WebApi.InMemory.csproj", "{5C2EB157-F976-42F9-8B26-42A50898714C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internals", "Internals", "{9C70A8B9-322F-49D5-AF08-889B6BBB161C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.EventHooks", "source\Internals\TransactionalBox.Internals.EventHooks\TransactionalBox.Internals.EventHooks.csproj", "{891F6713-08CE-4FCF-881C-BBA258C18C72}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.KeyedInMemoryLock", "source\Internals\TransactionalBox.Internals.KeyedInMemoryLock\TransactionalBox.Internals.KeyedInMemoryLock.csproj", "{59EA3E37-092B-4E7C-A14F-CC6FD58709FC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.Transport.InMemory", "source\Internals\TransactionalBox.Internals.Transport.InMemory\TransactionalBox.Internals.Transport.InMemory.csproj", "{876EE663-DA64-460F-91C1-4FC281D17D00}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.DistributedLock.EntityFrameworkCore", "source\Internals\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.csproj", "{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.DistributedLock", "source\Internals\TransactionalBox.Internals.DistributedLock\TransactionalBox.Internals.DistributedLock.csproj", "{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internals", "Internals", "{824310B6-2605-450F-B959-88411A7BD6BE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests", "tests\Internals\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests\TransactionalBox.Internals.DistributedLock.EntityFrameworkCore.Tests.csproj", "{FFA83AFD-4303-4447-99DD-6FEEEB9FC2C4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.KeyedInMemoryLock.Tests", "tests\Internals\TransactionalBox.Internals.KeyedInMemoryLock.Tests\TransactionalBox.Internals.KeyedInMemoryLock.Tests.csproj", "{032F6352-5C69-49AF-9275-28E813254591}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.Internals.SequentialGuid", "source\Internals\TransactionalBox.Internals.SequentialGuid\TransactionalBox.Internals.SequentialGuid.csproj", "{57CFF2F1-FB52-4719-A373-A2171A390FEC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalBox.End2EndTests", "tests\TransactionalBox.End2EndTests\TransactionalBox.End2EndTests.csproj", "{06A55E8C-9D5B-4E12-B64B-EC59690818C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bank", "Bank", "{6BB61EDF-B793-4CD2-94F5-9B11E131845E}"
@@ -99,38 +79,6 @@ Global
 		{5C2EB157-F976-42F9-8B26-42A50898714C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C2EB157-F976-42F9-8B26-42A50898714C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C2EB157-F976-42F9-8B26-42A50898714C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{891F6713-08CE-4FCF-881C-BBA258C18C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{891F6713-08CE-4FCF-881C-BBA258C18C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{891F6713-08CE-4FCF-881C-BBA258C18C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{891F6713-08CE-4FCF-881C-BBA258C18C72}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59EA3E37-092B-4E7C-A14F-CC6FD58709FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59EA3E37-092B-4E7C-A14F-CC6FD58709FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59EA3E37-092B-4E7C-A14F-CC6FD58709FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59EA3E37-092B-4E7C-A14F-CC6FD58709FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{876EE663-DA64-460F-91C1-4FC281D17D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{876EE663-DA64-460F-91C1-4FC281D17D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{876EE663-DA64-460F-91C1-4FC281D17D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{876EE663-DA64-460F-91C1-4FC281D17D00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FFA83AFD-4303-4447-99DD-6FEEEB9FC2C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FFA83AFD-4303-4447-99DD-6FEEEB9FC2C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FFA83AFD-4303-4447-99DD-6FEEEB9FC2C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FFA83AFD-4303-4447-99DD-6FEEEB9FC2C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{032F6352-5C69-49AF-9275-28E813254591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{032F6352-5C69-49AF-9275-28E813254591}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{032F6352-5C69-49AF-9275-28E813254591}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{032F6352-5C69-49AF-9275-28E813254591}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57CFF2F1-FB52-4719-A373-A2171A390FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57CFF2F1-FB52-4719-A373-A2171A390FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57CFF2F1-FB52-4719-A373-A2171A390FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57CFF2F1-FB52-4719-A373-A2171A390FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06A55E8C-9D5B-4E12-B64B-EC59690818C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06A55E8C-9D5B-4E12-B64B-EC59690818C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06A55E8C-9D5B-4E12-B64B-EC59690818C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -179,16 +127,6 @@ Global
 		{26ECF009-798E-4AEA-B8B1-E11FEED33FB0} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{D89EDC24-3316-4A91-8442-6D1ABAFEDEBF} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{5C2EB157-F976-42F9-8B26-42A50898714C} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
-		{9C70A8B9-322F-49D5-AF08-889B6BBB161C} = {8FC46C4A-3C0C-458F-ACF5-F35F728A2988}
-		{891F6713-08CE-4FCF-881C-BBA258C18C72} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
-		{59EA3E37-092B-4E7C-A14F-CC6FD58709FC} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
-		{876EE663-DA64-460F-91C1-4FC281D17D00} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
-		{504D1EFF-49E7-460D-8531-ECC4B43FBBBC} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
-		{2EBB9634-0717-4A5C-9D83-5FC19CC15C80} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
-		{824310B6-2605-450F-B959-88411A7BD6BE} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
-		{FFA83AFD-4303-4447-99DD-6FEEEB9FC2C4} = {824310B6-2605-450F-B959-88411A7BD6BE}
-		{032F6352-5C69-49AF-9275-28E813254591} = {824310B6-2605-450F-B959-88411A7BD6BE}
-		{57CFF2F1-FB52-4719-A373-A2171A390FEC} = {9C70A8B9-322F-49D5-AF08-889B6BBB161C}
 		{06A55E8C-9D5B-4E12-B64B-EC59690818C9} = {6DEFBC37-33F1-4E42-9A7E-2752E9AD3187}
 		{6BB61EDF-B793-4CD2-94F5-9B11E131845E} = {D018E603-5AE9-4B1B-BF33-04EB0B5D6913}
 		{580972A5-B9DC-49B0-8CFB-28412E3FC5C5} = {6BB61EDF-B793-4CD2-94F5-9B11E131845E}

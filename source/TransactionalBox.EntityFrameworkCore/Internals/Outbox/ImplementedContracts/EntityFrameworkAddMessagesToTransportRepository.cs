@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
-using TransactionalBox.Internals.DistributedLock;
+using TransactionalBox.Internals.InternalPackages.DistributedLock;
 using TransactionalBox.Internals.Outbox.Storage;
 using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
 

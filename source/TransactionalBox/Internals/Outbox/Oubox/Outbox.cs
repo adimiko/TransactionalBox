@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TransactionalBox.Internals.EventHooks;
+using TransactionalBox.Internals.InternalPackages.EventHooks;
+using TransactionalBox.Internals.InternalPackages.SequentialGuid;
 using TransactionalBox.Internals.Outbox.Hooks.Events;
 using TransactionalBox.Internals.Outbox.OutboxDefinitions;
 using TransactionalBox.Internals.Outbox.Serialization;
 using TransactionalBox.Internals.Outbox.Storage;
 using TransactionalBox.Internals.Outbox.Storage.ContractsToImplement;
-using TransactionalBox.Internals.SequentialGuid;
 
 namespace TransactionalBox.Internals.Outbox.Oubox
 {
