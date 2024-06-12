@@ -16,6 +16,8 @@ using TransactionalBox.Internals.Outbox;
 using TransactionalBox.Internals.Outbox.OutboxDefinitions;
 using TransactionalBox.Internals.InternalPackages.SequentialGuid;
 using TransactionalBox.Internals.InternalPackages.EventHooks;
+using TransactionalBox.Configurators;
+using TransactionalBox.Internals.InternalPackages.AssemblyConfigurator;
 
 namespace TransactionalBox
 {
@@ -26,7 +28,7 @@ namespace TransactionalBox
             Action<IOutboxStorageConfigurator>? storageConfiguration = null,
             Action<IOutboxTransportConfigurator>? transportConfiguration = null,
             Action<OutboxSettings>? settingsConfiguration = null,
-            Action<IOutboxAssemblyConfigurator>? assemblyConfiguraton = null)
+            Action<IAssemblyConfigurator>? assemblyConfiguraton = null)
         {
             var services = builder.Services;
 
@@ -60,7 +62,7 @@ namespace TransactionalBox
             }
 
             // Assembly
-            var assemblyConfigurator = new OutboxAssemblyConfigurator();
+            var assemblyConfigurator = new AssemblyConfigurator();
 
             if (assemblyConfiguraton is not null)
             {
