@@ -169,26 +169,14 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
     - [x] Multiple processes in the same service
 - [x] Standalone inbox
 - [x] Error handling in background services
-- [ ] Dead messages
 - [x] Hook processing
     - [x] Outbox
     - [x] Inbox
-
-#### Observability
-- [ ] Support for OpenTelemetry
-- [ ] Outbox size
-- [ ] Inbox size
-- [ ] Message failure rate
-- [ ] Message delivery latency
-- [ ] Number of duplicated messages
-- [ ] Message duplication rate
 
 #### Maintenecne
 - [x] Remove processed messages from the outbox
 - [x] Remove processed messages from the inbox
 - [x] Remove expired idempotency keys
-- [ ] Archive processed messages from the outbox
-- [ ] Archive processed messages from the inbox
 - [x] Correlation ID
 
 #### Other
@@ -207,15 +195,7 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
     - [X] No compression (default)
     - [X] Brotli
     - [x] GZip
-- [ ] Message streaming
-- [ ] Package configuration using appsetings.json
-- [ ] Own transport message serialier and deseralizer (with StringBuilder)
 - [x] Idempotent messages
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
-- [ ] Transport discriminator (one outbox many transport, tagged message)
 - [x] Hook startup (checking if there are messages to be processed after startup)
-- [ ] Encrypted transport messages
-- [ ] Inbox based on the header, selects the appropriate algorithm to:
-    - [x] Decompression
-    - [ ] Deserialization
-    - [ ] Separator
+
