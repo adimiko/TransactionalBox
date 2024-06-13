@@ -161,12 +161,8 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 - [x] Apache Kafka
 
 #### Scalability & Fault Tolerance
-- [x] Support for multiple outbox worker instances
-    - [x] Multiple instances of the same service 
-    - [x] Multiple processes in the same service
+- [x] Support for multiple outbox instances
 - [x] Support for multiple inbox instances
-    - [x] Multiple instances of the same service 
-    - [x] Multiple processes in the same service
 - [x] Standalone inbox
 - [x] Error handling in background services
 - [x] Hook processing
