@@ -4,6 +4,8 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
 {
     internal interface IAddMessagesToInboxLogger : IBackgroundProcessBaseLogger
     {
+        void AddedMessagesToInbox(int numberOfMessages);
+
         void DetectedDuplicatedMessages(string ids);
     }
 }
