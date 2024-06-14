@@ -88,6 +88,8 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
 
                     if (result == AddRangeToInboxStorageResult.Success)
                     {
+                        _logger.AddedMessagesToInbox(inboxMessages.Count());
+
                         await _eventHookPublisher.PublishAsync<AddedMessagesToInbox>().ConfigureAwait(false);
 
                         continue;
