@@ -76,6 +76,11 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
+          {
+            href: 'https://www.nuget.org/packages?q=TransactionalBox',
+            label: 'Packages',
+            position: 'right',
+          },
         ],
       },
 
