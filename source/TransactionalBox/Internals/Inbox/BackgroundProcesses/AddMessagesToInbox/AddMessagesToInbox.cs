@@ -103,7 +103,9 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
 
                         var duplicatedIds = inboxMessages.Where(x => existIds.Contains(x.Id)).Select(x => x.Id);
 
-                        //TODO log duplicatedIds as Warning
+                        var ids = string.Join(",", duplicatedIds);
+
+                        _logger.DetectedDuplicatedMessages(ids);
 
                         var inboxMessagesToSave = inboxMessages.Where(x => existIds.Contains(x.Id));
 

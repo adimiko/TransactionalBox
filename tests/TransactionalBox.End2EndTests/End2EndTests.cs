@@ -19,10 +19,6 @@ namespace TransactionalBox.End2EndTests
         {
             _output = output;
         }
-        // TODO Action multiple implementation ef, inmemory, mongodb, transport etc.
-        // TODO multiple test container per test
-        //TODO xunit logger
-
 
         [Theory]
         [ClassData(typeof(Tests))]

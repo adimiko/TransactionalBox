@@ -71,7 +71,6 @@ namespace TransactionalBox.Internals.Outbox.Hooks.Handlers.AddMessagesToTranspor
 
                 var messages = await _repository.GetMarkedMessages(context.Id).ConfigureAwait(false);
 
-                //TODO TransportMessageWrapper
                 var transportEnvelopes = await _factory.Create(messages).ConfigureAwait(false);
 
                 foreach (var transportEnvelope in transportEnvelopes)
