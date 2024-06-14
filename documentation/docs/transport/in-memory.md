@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # InMemory
 :::info
-InMemory is registered as default storage.
+InMemory is registered as default transport.
 :::
 :::warning
 Intended only for testing and learning.
