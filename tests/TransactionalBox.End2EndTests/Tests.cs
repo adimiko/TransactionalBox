@@ -9,7 +9,7 @@ namespace TransactionalBox.End2EndTests
         {
             //yield return new object[] { new EntityFrameworkCoreSqlServer().GetEnd2EndTestCase() };
             yield return new object[] { new EntityFrameworkCorePostgresSql().GetEnd2EndTestCase() };
-            //TODO run without problem 
+            //TODO problem with the enumeration of tests
 
         }
 

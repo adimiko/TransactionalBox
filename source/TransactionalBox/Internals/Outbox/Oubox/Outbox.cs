@@ -83,7 +83,7 @@ namespace TransactionalBox.Internals.Outbox.Oubox
 
             var outboxMessage = new OutboxMessageStorage
             {
-                Id = _sequentialGuidGenerator.Create(), //TODO Sequential GUID #14
+                Id = _sequentialGuidGenerator.Create(),
                 OccurredUtc = metadata.OccurredUtc,
                 IsProcessed = false,
                 Topic = topic,
@@ -97,7 +97,5 @@ namespace TransactionalBox.Internals.Outbox.Oubox
         {
             await _eventHookPublisher.PublishAsync<AddedMessagesToOutbox>().ConfigureAwait(false);
         }
-
-        //TODO AddRange
     }
 }
