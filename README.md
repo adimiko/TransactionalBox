@@ -16,8 +16,8 @@
 
 <div align="center">
     
-![Licence - MIT](https://img.shields.io/badge/Licence-MIT-2ea44f)
-[![Linkedin](https://img.shields.io/badge/Linkedin-2ea44f?logo=linkedin)](https://www.linkedin.com/in/adimiko/)
+[![NuGet Version](https://img.shields.io/nuget/vpre/TransactionalBox)](https://www.nuget.org/packages?q=TransactionalBox)
+
 ##### :star: - The star motivates me a lot!   
 
 </div>
