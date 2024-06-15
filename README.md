@@ -16,6 +16,7 @@
 
 <div align="center">
     
+[![Build & Tests](https://github.com/adimiko/TransactionalBox/actions/workflows/build-and-tests.yaml/badge.svg?branch=main)](https://github.com/adimiko/TransactionalBox/actions/workflows/build-and-tests.yaml)
 [![NuGet Version](https://img.shields.io/nuget/vpre/TransactionalBox)](https://www.nuget.org/packages?q=TransactionalBox)
 
 ##### :star: - The star motivates me a lot!   
