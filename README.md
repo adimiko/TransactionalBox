@@ -194,5 +194,8 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 - [x] Hook startup (checking if there are messages to be processed after startup)
 
+## :balance_scale: License
+This project is under the [MIT License](https://github.com/adimiko/TransactionalBox/blob/main/LICENSE).
+
 ## :radioactive: Disclaimer
 The project is under development and not ready for production use.
