@@ -15,8 +15,7 @@
 
 
 <div align="center">
-
-[![🚧 - Under Development](https://img.shields.io/badge/🚧-Under_Development-orange)](https://)
+    
 ![Licence - MIT](https://img.shields.io/badge/Licence-MIT-2ea44f)
 [![Linkedin](https://img.shields.io/badge/Linkedin-2ea44f?logo=linkedin)](https://www.linkedin.com/in/adimiko/)
 ##### :star: - The star motivates me a lot!   
@@ -195,3 +194,5 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 - [x] Keyed in memory lock (based on SemaphoreSlim and ConcurrentDictionary)
 - [x] Hook startup (checking if there are messages to be processed after startup)
 
+## :radioactive: Disclaimer
+The project is under development and not ready for production use.
