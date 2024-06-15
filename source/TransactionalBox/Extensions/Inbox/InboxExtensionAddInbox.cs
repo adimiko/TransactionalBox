@@ -5,7 +5,6 @@ using TransactionalBox.Internals.Inbox;
 using TransactionalBox.Internals.Inbox.Extensions;
 using TransactionalBox.Internals.Inbox.Assemblies.CompiledHandlers;
 using TransactionalBox.Internals.Inbox.Assemblies.MessageTypes;
-using TransactionalBox.Internals.Inbox.Contexts;
 using TransactionalBox.Internals.Inbox.Decompression;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbox;
 using TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbox.Logger;
@@ -108,8 +107,6 @@ namespace TransactionalBox
             services.AddSingleton<ICompiledInboxHandlers, CompiledInboxHandlers>();
 
             services.AddSingleton<ITopicsProvider, TopicsProvider>();
-
-            services.AddSingleton<IInboxContext, InboxContext>();
 
             // Settings
             services.AddSingleton<IAddMessagesToInboxSettings>(settings.AddMessagesToInboxSettings);
