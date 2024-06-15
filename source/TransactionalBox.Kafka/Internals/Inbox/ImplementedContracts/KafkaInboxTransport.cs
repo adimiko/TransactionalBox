@@ -1,7 +1,6 @@
 ﻿using Confluent.Kafka;
 using System.Runtime.CompilerServices;
 using System.Text;
-using TransactionalBox.Internals.Inbox.Contexts;
 using TransactionalBox.Internals.Inbox.Transport;
 using TransactionalBox.Internals.Inbox.Transport.ContractsToImplement;
 
@@ -9,15 +8,10 @@ namespace TransactionalBox.Kafka.Internals.Inbox.ImplementedContracts
 {
     internal sealed class KafkaInboxTransport : IInboxTransport
     {
-        private readonly IInboxContext _inboxWorkerContext;
-
         private readonly KafkaConsumerConfigFactory _configFactory;
 
-        public KafkaInboxTransport(
-            IInboxContext inboxWorkerContext,
-            KafkaConsumerConfigFactory configFactory)
+        public KafkaInboxTransport(KafkaConsumerConfigFactory configFactory)
         {
-            _inboxWorkerContext = inboxWorkerContext;
             _configFactory = configFactory;
         }
 

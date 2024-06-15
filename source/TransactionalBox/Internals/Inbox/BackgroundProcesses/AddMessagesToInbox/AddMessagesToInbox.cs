@@ -32,7 +32,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
 
         private readonly IAddMessagesToInboxLogger _logger;
 
-        private readonly IInboxContext _inboxContext;
+        private readonly IServiceContext _serviceContext;
 
         public AddMessagesToInbox(
             IServiceProvider serviceProvider,
@@ -43,7 +43,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
             IAddMessagesToInboxSettings settings,
             IEventHookPublisher eventHookPublisher,
             IAddMessagesToInboxLogger logger,
-            IInboxContext inboxContext)
+            IServiceContext serviceContext)
             : base(logger)
         {
             _serviceProvider = serviceProvider;
@@ -54,7 +54,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
             _settings = settings;
             _eventHookPublisher = eventHookPublisher;
             _logger = logger;
-            _inboxContext = inboxContext;
+            _serviceContext = serviceContext;
         }
 
         protected override async Task Process(CancellationToken stoppingToken)
@@ -62,7 +62,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
             //TODO log per pentla
             await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
             {
-                var service = _inboxContext.Id;
+                var service = _serviceContext.Id;
 
                 var decompression = _decompressionFactory.GetDecompression(messagesFromTransport.Compression);
 
