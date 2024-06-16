@@ -69,18 +69,7 @@ namespace TransactionalBox
                 assemblyConfiguraton(assemblyConfigurator);
             }
 
-            var assemblies = assemblyConfigurator.Assemblies;
-
-            var allTypes = assemblyConfigurator.Assemblies.SelectMany(x => x.GetTypes());
-
-            var outboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(OutboxDefinition<>)).ToList();
-
-            foreach (var outboxMessageDefinition in outboxMessageDefinitions)
-            {
-                var messageType = outboxMessageDefinition.BaseType.GetGenericArguments()[0];
-
-                services.AddKeyedSingleton(typeof(IOutboxDefinition), messageType, outboxMessageDefinition);
-            }
+            services.RegisterOutboxMessageDefinitions(assemblyConfigurator);
 
             services.AddSingleton<TransportEnvelopeFactory>();
 
@@ -111,6 +100,22 @@ namespace TransactionalBox
             services.AddSingleton<IAddMessagesToTransportLogger, AddMessagesToTransportLogger>();
 
             services.AddHostedService<OutboxStartup>();
+        }
+
+        private static void RegisterOutboxMessageDefinitions(this IServiceCollection services, AssemblyConfigurator assemblyConfigurator) 
+        {
+            var assemblies = assemblyConfigurator.Assemblies;
+
+            var allTypes = assemblyConfigurator.Assemblies.SelectMany(x => x.GetTypes());
+
+            var outboxMessageDefinitions = allTypes.Where(x => x.BaseType != null && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(OutboxDefinition<>)).ToList();
+
+            foreach (var outboxMessageDefinition in outboxMessageDefinitions)
+            {
+                var messageType = outboxMessageDefinition.BaseType.GetGenericArguments()[0];
+
+                services.AddKeyedSingleton(typeof(IOutboxDefinition), messageType, outboxMessageDefinition);
+            }
         }
     }
 }
