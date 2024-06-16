@@ -22,6 +22,9 @@ settings => settings.ServiceId = "ServiceName");
 ```
 
 ### Inbox Message
+:::info
+Inbox message class name must be unique per service.
+:::
 ```csharp
 public class CreateCustomerCommandMessage : InboxMessage
 {
@@ -53,7 +56,9 @@ public class CreatedCustomerEventMessageDefinition : InboxDefinition<CreatedCust
 ```
 
 ### Handling message in inbox handler
-
+:::info
+Each `InboxMessage` must have a `IInboxHandler` declared.
+:::
 ```csharp
 public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerEventMessage>
 {

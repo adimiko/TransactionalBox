@@ -19,7 +19,9 @@ builder.Services.AddTransactionalBox(x =>
 settings => settings.ServiceId = "ServiceName");
 ```
 ### Outbox Message
-
+:::info
+Outbox message class name must be unique per service.
+:::
 ```csharp
 public class CreateCustomerCommandMessage : OutboxMessage
 {
