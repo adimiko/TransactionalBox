@@ -15,4 +15,5 @@ Clone repo and open `TransactionalBox.sln` via Visual Studio. Set the `Transacti
 ![simple-sample](../assets/simple-sample.png)
 </div>
 
+Don't forget to use break points to learn.   
 Have fun :smiley:!
