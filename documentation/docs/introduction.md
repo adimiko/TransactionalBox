@@ -38,7 +38,7 @@ The outbox is responsible for adding messages to the storage and then adding at 
 ![Outbox](assets/outbox.png)
 </div>
 
- 1. In one transaction you save message to outbox and result of business operation. In this way, you can ensure all or nothing. After correctly transaction commited, execute the `TransactionCommitted` method on `IOutbox`. Then it will run a task to process outbox messages.
+ 1. In one transaction you save message to outbox and result of business operation. In this way, you can ensure all or nothing. After correctly transaction commited, execute the `TransactionCommitted` method on `IOutbox`.
  2. In a separate process, Outbox will get messages and add them to the transport.
 
 ### Inbox 
