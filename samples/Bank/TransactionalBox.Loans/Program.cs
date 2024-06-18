@@ -18,7 +18,7 @@ services.AddDbContextPool<LoansDbContext>(x => x.UseNpgsql(connectionString));
 services.AddTransactionalBox(x =>
 {
     x.AddInbox(
-        storage => storage.UseEntityFramework<LoansDbContext>(),
+        storage => storage.UseEntityFrameworkCore<LoansDbContext>(),
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers),
         assemblyConfiguraton: a => a.RegisterFromAssemblies(typeof(LoansDbContext).Assembly));
 },

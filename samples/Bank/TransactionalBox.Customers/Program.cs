@@ -18,12 +18,12 @@ services.AddDbContextPool<CustomersDbContext>(x => x.UseSqlServer(connectionStri
 services.AddTransactionalBox(x =>
 {
     x.AddOutbox(
-        storage => storage.UseEntityFramework<CustomersDbContext>(),
+        storage => storage.UseEntityFrameworkCore<CustomersDbContext>(),
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers)
     );
 
     x.AddInbox(
-        storage => storage.UseEntityFramework<CustomersDbContext>(),
+        storage => storage.UseEntityFrameworkCore<CustomersDbContext>(),
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers)
     );
 },

@@ -9,9 +9,9 @@ using TransactionalBox.EntityFrameworkCore.Internals.InternalPackages.Distribute
 
 namespace TransactionalBox
 {
-    public static class OutboxExtensionUseEntityFramework
+    public static class OutboxExtensionUseEntityFrameworkCore
     {
-        public static void UseEntityFramework<TDbContext>(this IOutboxStorageConfigurator outboxStorageConfigurator)
+        public static void UseEntityFrameworkCore<TDbContext>(this IOutboxStorageConfigurator outboxStorageConfigurator)
             where TDbContext : DbContext
         {
             var services = outboxStorageConfigurator.Services;

@@ -25,7 +25,7 @@ services.AddDbContextPool<BankAccountsDbContext>(x => x.UseMySql(connectionStrin
 services.AddTransactionalBox(x =>
 {
     x.AddInbox(
-        storage => storage.UseEntityFramework<BankAccountsDbContext>(),
+        storage => storage.UseEntityFrameworkCore<BankAccountsDbContext>(),
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
 },
 x => x.ServiceId = "BankAccounts");
