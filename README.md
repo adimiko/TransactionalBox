@@ -154,7 +154,7 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 - [x] InMemory (Default)
 - [x] Entity Framework (Relational)
     - [x] Migrations
-    - [X] Distributed Lock (Based on atomic write operation, Standalone Package)
+    - [X] Distributed Lock (Based on atomic write operation)
 
 #### Transport
 - [x] InMemory (Default)
