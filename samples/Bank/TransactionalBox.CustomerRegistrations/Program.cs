@@ -24,7 +24,7 @@ services.AddDbContextPool<CustomerRegistrationDbContext>(x => x.UseNpgsql(connec
 services.AddTransactionalBox(x =>
 {
     x.AddOutbox(
-        storage => storage.UseEntityFramework<CustomerRegistrationDbContext>(),
+        storage => storage.UseEntityFrameworkCore<CustomerRegistrationDbContext>(),
         transport => transport.UseKafka(settings => settings.BootstrapServers = bootstrapServers));
 }, 
 x => x.ServiceId = "CustomerRegistrations");

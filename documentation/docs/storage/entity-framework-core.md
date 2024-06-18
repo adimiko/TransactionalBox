@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Entity Framework Core (Relational)
 
-TransactionalBox is not responsible for configuring Entity Framework.
+TransactionalBox is not responsible for configuring Entity Framework Core.
 All it needs is to use the already existing `DbContext` and add the model to the `ModelBuilder`.
 
 Transactional box add messages to your `DbContext`.
@@ -17,7 +17,7 @@ Using `ExecuteUpdate` or `ExecuteDelete` you need to create own transaction.
 
 :::tip
 
-Use `AddDbContexPoll` when configuring Entity Framework.
+Use `AddDbContexPoll` when configuring Entity Framework Core.
 ```csharp
 builder.Services.AddDbContextPool<SampleDbContext>(x => x.Use...(connectionString));
 ```
@@ -29,11 +29,11 @@ dotnet add package TransactionalBox.EntityFrameworkCore
 ```
 
 ## Outbox
-### Register entity framework as outbox storage
+### Register Entity Framework Core as outbox storage
 ```csharp
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddOutbox(storage => storage.UseEntityFramework<SampleDbContext>());
+    x.AddOutbox(storage => storage.UseEntityFrameworkCore<SampleDbContext>());
 });
 
 ```
@@ -52,11 +52,11 @@ public class SampleDbContext : DbContext
 ```
 
 ## Inbox
-### Register entity framework as inbox storage
+### Register Entity Framework Core as inbox storage
 ```csharp
 builder.Services.AddTransactionalBox(x =>
 {
-    x.AddInbox(storage => storage.UseEntityFramework<SampleDbContext>());
+    x.AddInbox(storage => storage.UseEntityFrameworkCore<SampleDbContext>());
 });
 
 ```

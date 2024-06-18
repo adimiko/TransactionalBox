@@ -47,7 +47,7 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
                 outboxDependencies.AddLogging((builder) => builder.AddXUnit(output));
                 outboxDependencies.AddTransactionalBox(
-                    builder => builder.AddOutbox(x => x.UseEntityFramework<OutboxDbContext>(), assemblyConfiguraton: a => a.RegisterFromAssemblies(Assembly)),
+                    builder => builder.AddOutbox(x => x.UseEntityFrameworkCore<OutboxDbContext>(), assemblyConfiguraton: a => a.RegisterFromAssemblies(Assembly)),
                     settings => settings.ServiceId = "OUTBOX");
 
                 _outbox = outboxDependencies.BuildServiceProvider();
@@ -58,7 +58,7 @@ namespace TransactionalBox.End2EndTests.TestCases.Storage.EntityFrameworkCore
 
                 inboxDependencies.AddLogging((builder) => builder.AddXUnit(output));
                 inboxDependencies.AddTransactionalBox(
-                    builder => builder.AddInbox(x => x.UseEntityFramework<InboxDbContext>(), assemblyConfiguraton: a => a.RegisterFromAssemblies(Assembly)),
+                    builder => builder.AddInbox(x => x.UseEntityFrameworkCore<InboxDbContext>(), assemblyConfiguraton: a => a.RegisterFromAssemblies(Assembly)),
                     settins => settins.ServiceId = "INBOX");
 
                 inboxDependencies.AddSingleton<InboxVerifier>();
