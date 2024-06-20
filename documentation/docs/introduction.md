@@ -50,3 +50,12 @@ The inbox is responsible for getting messages from the transport and adding them
 1. Inbox gets messages from transport and adds to storage.
 2. In a separate process, Outbox will get messages and process them.
 3. Then processed messages are clean up.
+
+## Terms
+**`OutboxMessage`** - message that is added to the outbox and then converted to `TransportMessage`.
+
+**`TransportMessage`** - object transporting collections of messages of the same type (created on the basis of `OutboxMessages`). It is sent at least once.
+
+**`InboxMessage`** - created on the basis of `TransportMessage` and stored in the inbox. It is then processed.
+
+**`IdempotentInboxKey`** - incoming message identifier. It is needed for deduplication.
