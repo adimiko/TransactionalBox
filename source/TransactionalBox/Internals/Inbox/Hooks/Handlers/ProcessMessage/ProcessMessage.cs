@@ -73,8 +73,6 @@ namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage
 
                 _inboxMessageTypes.DictionaryMessageTypes.TryGetValue(messageTypeName, out var type);
 
-                // (Error case) TODO what when type does not exist
-
                 Type handlerType = typeof(IInboxHandler<>).MakeGenericType(type);
 
                 var handler = _serviceProvider.GetRequiredService(handlerType);

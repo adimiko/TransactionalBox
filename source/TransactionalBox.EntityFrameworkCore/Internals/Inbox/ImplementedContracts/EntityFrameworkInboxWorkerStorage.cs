@@ -5,7 +5,6 @@ using TransactionalBox.Internals.Inbox.Storage.ContractsToImplement;
 
 namespace TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContracts
 {
-    //TODO storage per job ?
     internal sealed class EntityFrameworkInboxWorkerStorage : IInboxWorkerStorage
     {
         private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
