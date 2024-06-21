@@ -59,7 +59,6 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
 
         protected override async Task Process(CancellationToken stoppingToken)
         {
-            //TODO log per pentla
             await foreach (var messagesFromTransport in _inboxWorkerTransport.GetMessages(_topicsProvider.Topics, stoppingToken).ConfigureAwait(false))
             {
                 var service = _serviceContext.Id;
@@ -70,9 +69,6 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
 
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    //const string separator = "⸘";
-                    //TODO #27
-
                     var inboxMessages = JsonSerializer.Deserialize<IEnumerable<InboxMessageStorage>>(decompressedMessagesFromTransport);
 
                     foreach (var inboxMessage in inboxMessages)

@@ -11,7 +11,7 @@
 
         public IDecompression GetDecompression(string compressionName)
         {
-            //TODO validation
+            //TODO own exception
             var decompression = _decompressions.Single(x => x.Name == compressionName);
 
             return decompression;

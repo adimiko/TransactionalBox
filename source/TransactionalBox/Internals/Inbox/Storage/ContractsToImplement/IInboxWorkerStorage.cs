@@ -1,6 +1,6 @@
 ﻿namespace TransactionalBox.Internals.Inbox.Storage.ContractsToImplement
 {
-    //TODO Storage interface per job
+    //TODO (Refactor) Storage interface per job
     internal interface IInboxWorkerStorage
     {
         Task<IEnumerable<IdempotentInboxKey>> GetExistIdempotentInboxKeysBasedOn(IEnumerable<InboxMessageStorage> messages);

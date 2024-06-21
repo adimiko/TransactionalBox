@@ -2,8 +2,8 @@
 {
     internal interface IServiceContext
     {
-        string Id { get; } //TODO or int ?
+        string Id { get; }
 
-        string InstanceId { get; } //TODO int
+        string InstanceId { get; }
     }
 }
