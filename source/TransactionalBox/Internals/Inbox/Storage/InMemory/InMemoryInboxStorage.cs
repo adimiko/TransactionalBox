@@ -3,7 +3,7 @@ using TransactionalBox.Internals.InternalPackages.KeyedInMemoryLock;
 
 namespace TransactionalBox.Internals.Inbox.Storage.InMemory
 {
-    internal sealed class InMemoryInboxStorage : IInboxStorage, IInboxWorkerStorage, IInboxStorageReadOnly
+    internal sealed class InMemoryInboxStorage : IAddMessagesToInboxRepository, ICleanUpIdempotencyKeysRepository, ICleanUpInboxRepository, IProcessMessageRepository, IInboxStorageReadOnly
     {
         private static readonly List<InboxMessageStorage> _inboxMessages = new List<InboxMessageStorage>();
 

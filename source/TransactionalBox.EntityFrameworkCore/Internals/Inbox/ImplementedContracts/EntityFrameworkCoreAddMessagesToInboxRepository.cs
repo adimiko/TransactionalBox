@@ -5,7 +5,7 @@ using TransactionalBox.Internals.Inbox.Storage.ContractsToImplement;
 
 namespace TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContracts
 {
-    internal sealed class EntityFrameworkInboxWorkerStorage : IInboxWorkerStorage
+    internal sealed class EntityFrameworkCoreAddMessagesToInboxRepository : IAddMessagesToInboxRepository
     {
         private const IsolationLevel _isolationLevel = IsolationLevel.ReadCommitted;
 
@@ -15,7 +15,7 @@ namespace TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContra
 
         private readonly DbSet<IdempotentInboxKey> _idempotentInboxKeys;
 
-        public EntityFrameworkInboxWorkerStorage(DbContext dbContext)
+        public EntityFrameworkCoreAddMessagesToInboxRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
             _inboxMessages = dbContext.Set<InboxMessageStorage>();
@@ -60,42 +60,6 @@ namespace TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContra
             {//TODO maybe Result.Success or Failure(sqlProblem or duplicate message)
                 return AddRangeToInboxStorageResult.Failure;
             }
-        }
-
-        public async Task<int> RemoveProcessedMessages(int batchSize)
-        {
-            int numberOfDeletedRows;
-
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel).ConfigureAwait(false))
-            {
-                numberOfDeletedRows = await _inboxMessages
-                    .Where(x => x.IsProcessed)
-                    .Take(batchSize)
-                    .ExecuteDeleteAsync()
-                    .ConfigureAwait(false);
-
-                await transaction.CommitAsync().ConfigureAwait(false);
-            }
-
-            return numberOfDeletedRows;
-        }
-
-        public async Task<int> RemoveExpiredIdempotencyKeys(int batchSize, DateTime nowUtc)
-        {
-            int numberOfDeletedRows;
-
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync(_isolationLevel).ConfigureAwait(false))
-            {
-                numberOfDeletedRows = await _idempotentInboxKeys
-                    .Where(x => x.ExpirationUtc <= nowUtc)
-                    .Take(batchSize)
-                    .ExecuteDeleteAsync()
-                    .ConfigureAwait(false);
-
-                await transaction.CommitAsync().ConfigureAwait(false);
-            }
-
-            return numberOfDeletedRows;
         }
     }
 }

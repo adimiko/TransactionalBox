@@ -76,11 +76,11 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
                         inboxMessage.OccurredUtc = inboxMessage.OccurredUtc.ToUniversalTime();
                     }
 
-                    var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
+                    var repo = scope.ServiceProvider.GetRequiredService<IAddMessagesToInboxRepository>();
 
                     var idempotentMessages = inboxMessages.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
 
-                    var result = await storage.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
+                    var result = await repo.AddRange(inboxMessages, idempotentMessages).ConfigureAwait(false);
 
                     if (result == AddRangeToInboxStorageResult.Success)
                     {
@@ -95,7 +95,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
                     {
                         var duplicatedInboxKeys = new List<DuplicatedInboxKey>();
 
-                        var existIdempotentInboxKeys = await storage.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
+                        var existIdempotentInboxKeys = await repo.GetExistIdempotentInboxKeysBasedOn(inboxMessages).ConfigureAwait(false);
 
                         var existIds = existIdempotentInboxKeys.Select(x => x.Id);
 
@@ -109,7 +109,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.AddMessagesToInbo
 
                         var idempotentMessagesToSave = inboxMessagesToSave.Select(x => new IdempotentInboxKey(x.Id, _settings.DefaultTimeToLiveIdempotencyKey, _systemClock.TimeProvider));
 
-                        result = await storage.AddRange(inboxMessages, idempotentMessagesToSave);
+                        result = await repo.AddRange(inboxMessages, idempotentMessagesToSave);
                     }
                     while (result == AddRangeToInboxStorageResult.Failure);
 
