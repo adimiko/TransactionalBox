@@ -34,7 +34,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.CleanUpIdempotenc
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    var storage = scope.ServiceProvider.GetRequiredService<IInboxWorkerStorage>();
+                    var repo = scope.ServiceProvider.GetRequiredService<ICleanUpIdempotencyKeysRepository>();
 
                     var id = Guid.NewGuid();
                     var name = typeof(CleanUpIdempotencyKeys).Name;
@@ -43,7 +43,7 @@ namespace TransactionalBox.Internals.Inbox.BackgroundProcesses.CleanUpIdempotenc
 
                     do
                     {
-                        numberOfRemovedKeys = await storage.RemoveExpiredIdempotencyKeys(_settings.MaxBatchSize, _systemClock.UtcNow).ConfigureAwait(false);
+                        numberOfRemovedKeys = await repo.RemoveExpiredIdempotencyKeys(_settings.MaxBatchSize, _systemClock.UtcNow).ConfigureAwait(false);
 
                         _logger.CleanedUp(name, id, iteration, numberOfRemovedKeys);
 

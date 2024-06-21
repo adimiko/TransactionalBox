@@ -7,18 +7,18 @@ namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.CleanUpInbox
 {
     internal sealed class CleanUpInbox : IEventHookHandler<ProcessedMessageFromInbox>
     {
-        private readonly IInboxWorkerStorage _storage;
+        private readonly ICleanUpInboxRepository _repo;
 
         private readonly ICleanUpInboxSettings _settings;
 
         private readonly ICleanUpInboxLogger _logger;
 
         public CleanUpInbox(
-            IInboxWorkerStorage storage,
+            ICleanUpInboxRepository repo,
             ICleanUpInboxSettings settings,
             ICleanUpInboxLogger logger)
         {
-            _storage = storage;
+            _repo = repo;
             _settings = settings;
             _logger = logger;
         }
@@ -30,7 +30,7 @@ namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.CleanUpInbox
 
             do
             {
-                numberOfRemovedMessages = await _storage.RemoveProcessedMessages(_settings.MaxBatchSize).ConfigureAwait(false);
+                numberOfRemovedMessages = await _repo.RemoveProcessedMessages(_settings.MaxBatchSize).ConfigureAwait(false);
 
                 _logger.CleanedUp(context.Name, context.Id, iteration, numberOfRemovedMessages);
 

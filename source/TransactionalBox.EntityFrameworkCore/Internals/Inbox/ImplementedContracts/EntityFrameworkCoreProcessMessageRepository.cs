@@ -6,13 +6,13 @@ using TransactionalBox.Internals.InternalPackages.DistributedLock;
 
 namespace TransactionalBox.EntityFrameworkCore.Internals.Inbox.ImplementedContracts
 {
-    internal sealed class EntityFrameworkInboxStorage : IInboxStorage
+    internal class EntityFrameworkCoreProcessMessageRepository : IProcessMessageRepository
     {
         private readonly DbContext _dbContext;
 
         private readonly IDistributedLock<InboxDistributedLock> _distributedLock;
 
-        public EntityFrameworkInboxStorage(
+        public EntityFrameworkCoreProcessMessageRepository(
             DbContext dbContext,
             IDistributedLock<InboxDistributedLock> distributedLock)
         {

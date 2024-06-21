@@ -17,8 +17,10 @@ namespace TransactionalBox
             var services = storageConfigurator.Services;
 
             services.AddScoped<DbContext>(x => x.GetRequiredService<TDbContext>());
-            services.AddScoped<IInboxStorage, EntityFrameworkInboxStorage>();
-            services.AddScoped<IInboxWorkerStorage, EntityFrameworkInboxWorkerStorage>();
+            services.AddScoped<IAddMessagesToInboxRepository, EntityFrameworkCoreAddMessagesToInboxRepository>();
+            services.AddScoped<ICleanUpIdempotencyKeysRepository, EntityFrameworkCoreCleanUpIdempotencyKeysRepository>();
+            services.AddScoped<IProcessMessageRepository, EntityFrameworkCoreProcessMessageRepository>();
+            services.AddScoped<ICleanUpInboxRepository, EntityFrameworkCoreCleanUpInboxRepository>();
 
             services.AddDistributedLock<InboxDistributedLock>(x => x.UseEntityFrameworkCore<TDbContext>());
         }

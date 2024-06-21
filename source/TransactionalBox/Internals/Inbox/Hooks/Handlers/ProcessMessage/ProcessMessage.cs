@@ -3,7 +3,6 @@ using System.Text.Json;
 using TransactionalBox.Internals.Inbox.Assemblies.CompiledHandlers;
 using TransactionalBox.Internals.Inbox.Deserialization;
 using TransactionalBox.Internals.Inbox.Hooks.Events;
-using TransactionalBox.Internals;
 using TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage.Logger;
 using TransactionalBox.Internals.Inbox.Storage;
 using TransactionalBox.Internals.Inbox.Storage.ContractsToImplement;
@@ -18,7 +17,7 @@ namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage
 
         private readonly ICompiledInboxHandlers _compiledInboxHandlers;
 
-        private readonly IInboxStorage _inboxStorage;
+        private readonly IProcessMessageRepository _repo;
 
         private readonly IInboxDeserializer _deserializer;
 
@@ -33,7 +32,7 @@ namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage
         public ProcessMessage(
             IServiceProvider serviceProvider,
             ICompiledInboxHandlers compiledInboxHandlers,
-            IInboxStorage inboxStorage,
+            IProcessMessageRepository repo,
             IInboxDeserializer deserializer,
             IInboxMessageTypes inboxMessageTypes,
             ISystemClock systemClock,
@@ -42,7 +41,7 @@ namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage
         {
             _serviceProvider = serviceProvider;
             _compiledInboxHandlers = compiledInboxHandlers;
-            _inboxStorage = inboxStorage;
+            _repo = repo;
             _deserializer = deserializer;
             _inboxMessageTypes = inboxMessageTypes;
             _systemClock = systemClock;
@@ -61,7 +60,7 @@ namespace TransactionalBox.Internals.Inbox.Hooks.Handlers.ProcessMessage
 
             do
             {
-                inboxMessage = await _inboxStorage.GetMessage(context.Id, context.Name, _systemClock.TimeProvider, TimeSpan.FromSeconds(3)).ConfigureAwait(false);
+                inboxMessage = await _repo.GetMessage(context.Id, context.Name, _systemClock.TimeProvider, TimeSpan.FromSeconds(3)).ConfigureAwait(false);
 
                 if (inboxMessage is null)
                 {

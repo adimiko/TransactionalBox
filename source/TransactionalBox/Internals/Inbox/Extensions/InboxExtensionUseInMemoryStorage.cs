@@ -13,8 +13,10 @@ namespace TransactionalBox.Internals.Inbox.Extensions
             var services = configurator.Services;
 
             services.AddKeyedInMemoryLock();
-            services.AddSingleton<IInboxStorage, InMemoryInboxStorage>();
-            services.AddSingleton<IInboxWorkerStorage, InMemoryInboxStorage>();
+            services.AddSingleton<IAddMessagesToInboxRepository, InMemoryInboxStorage>();
+            services.AddSingleton<ICleanUpIdempotencyKeysRepository, InMemoryInboxStorage>();
+            services.AddSingleton<ICleanUpInboxRepository, InMemoryInboxStorage>();
+            services.AddSingleton<IProcessMessageRepository, InMemoryInboxStorage>();
             services.AddSingleton<IInboxStorageReadOnly, InMemoryInboxStorage>();
         }
     }
