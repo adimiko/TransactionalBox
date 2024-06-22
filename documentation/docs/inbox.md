@@ -6,6 +6,10 @@ sidebar_position: 4
 
 The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.
 
+:::tip
+You can run inbox as a standalone service. You add reference to shared assemblies, but deploy as separate services.
+This way, processing in inbox does not affect the performance of your service.
+:::
 
 
 ```csharp
