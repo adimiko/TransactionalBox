@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.1.1">
 <title data-rh="true">Introduction | Transactional Box</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://transactionalbox.com/img/social-logo.png"><meta data-rh="true" name="twitter:image" content="https://transactionalbox.com/img/social-logo.png"><meta data-rh="true" property="og:url" content="https://transactionalbox.com/docs/introduction"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Introduction | Transactional Box"><meta data-rh="true" name="description" content="Logo"><meta data-rh="true" property="og:description" content="Logo"><link data-rh="true" rel="icon" href="/img/logo.png"><link data-rh="true" rel="canonical" href="https://transactionalbox.com/docs/introduction"><link data-rh="true" rel="alternate" href="https://transactionalbox.com/docs/introduction" hreflang="en"><link data-rh="true" rel="alternate" href="https://transactionalbox.com/docs/introduction" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.2f92ae11.css">
-<script src="/assets/js/runtime~main.6718768f.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.f8bfd2ff.js" defer="defer"></script>
 <script src="/assets/js/main.1c357cd1.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -37,13 +37,14 @@ They are designed to provide a general understanding of how transactional box wo
 <ol>
 <li>In one transaction you save message to outbox and result of business operation. In this way, you can ensure all or nothing. After correctly transaction commited, execute the <code>TransactionCommitted</code> method on <code>IOutbox</code>.</li>
 <li>In a separate process, Outbox will get messages and add them to the transport.</li>
+<li>Then processed messages are clean up.</li>
 </ol>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="inbox">Inbox<a href="#inbox" class="hash-link" aria-label="Direct link to Inbox" title="Direct link to Inbox">​</a></h3>
 <p>The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.</p>
 <div align="center"><p><img decoding="async" loading="lazy" alt="Inbox" src="/assets/images/inbox-5630c7c0088ce6d371a5ed785954435c.png" width="1782" height="668" class="img_ev3q"></p></div>
 <ol>
 <li>Inbox gets messages from transport and adds to storage.</li>
-<li>In a separate process, Outbox will get messages and process them.</li>
+<li>In a separate process, Inbox will get messages and process them.</li>
 <li>Then processed messages are clean up.</li>
 </ol>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="terms">Terms<a href="#terms" class="hash-link" aria-label="Direct link to Terms" title="Direct link to Terms">​</a></h2>
