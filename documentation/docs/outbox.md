@@ -103,16 +103,19 @@ await outbox.TransactionCommited();
     <td><b>Name</b></td>
     <td><b>Type</b></td>
     <td><b>Default Value</b></td>
+    <td><b>Description</b></td>
   </tr>
   <tr>
     <td>MaxBatchSize</td>
     <td>int</td>
     <td>5000</td>
+    <td>Maximum number of processing messages per job.</td>
   </tr>
     <tr>
     <td>LockTimeout</td>
     <td>TimeSpan</td>
     <td>10 seconds</td>
+    <td>Time to live for message blocking.</td>
   </tr>
 </table>
 
@@ -122,16 +125,19 @@ await outbox.TransactionCommited();
     <td><b>Name</b></td>
     <td><b>Type</b></td>
     <td><b>Default Value</b></td>
+    <td><b>Description</b></td>
   </tr>
   <tr>
     <td>MaxBatchSize</td>
     <td>int</td>
     <td>10000</td>
+    <td>Maximum number of messages to clean up per job.</td>
   </tr>
     <tr>
     <td>IsEnabled</td>
     <td>bool</td>
     <td>true</td>
+    <td>Value responsible for whether the cleaning process is enabled.</td>
   </tr>
 </table>
 
