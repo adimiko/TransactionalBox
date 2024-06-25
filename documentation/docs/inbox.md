@@ -112,11 +112,13 @@ public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerE
     <td><b>Name</b></td>
     <td><b>Type</b></td>
     <td><b>Default Value</b></td>
+    <td><b>Description</b></td>
   </tr>
   <tr>
     <td>DefaultTimeToLiveIdempotencyKey</td>
     <td>TimeSpan</td>
     <td>7 days</td>
+    <td>Default time to live idempotency key. After the time expires, the key will be removed.</td>
   </tr>
 </table>
 
@@ -126,16 +128,19 @@ public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerE
     <td><b>Name</b></td>
     <td><b>Type</b></td>
     <td><b>Default Value</b></td>
+    <td><b>Description</b></td>
   </tr>
   <tr>
     <td>MaxBatchSize</td>
     <td>int</td>
     <td>10000</td>
+    <td>Maximum number of messages to clean up per job.</td>
   </tr>
   <tr>
     <td>IsEnabled</td>
     <td>bool</td>
     <td>true</td>
+    <td>Value responsible for whether the cleaning process is enabled.</td>
   </tr>
 </table>
 
@@ -145,16 +150,19 @@ public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerE
     <td><b>Name</b></td>
     <td><b>Type</b></td>
     <td><b>Default Value</b></td>
+    <td><b>Description</b></td>
   </tr>
   <tr>
     <td>MaxBatchSize</td>
     <td>int</td>
     <td>10000</td>
+    <td>Maximum number of idepotency keys to clean up per job.</td>
   </tr>
   <tr>
     <td>Period</td>
     <td>TimeSpan</td>
     <td>1 hour</td>
+    <td>Time interval between cleaning idepotency keys.</td>
   </tr>
 </table>
 
