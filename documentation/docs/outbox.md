@@ -96,7 +96,7 @@ await outbox.TransactionCommited();
 
 ## Settings
 
-### Add messages to transport settings
+### AddMessagesToTransportSettings
 
 <table>
   <tr>
@@ -119,7 +119,7 @@ await outbox.TransactionCommited();
   </tr>
 </table>
 
-### Clean up outbox settings
+### CleanUpOutboxSettings
 <table>
   <tr>
     <td><b>Name</b></td>
@@ -141,7 +141,7 @@ await outbox.TransactionCommited();
   </tr>
 </table>
 
-### Configure serialization
+### ConfigureSerialization
 
 <table>
   <tr>
@@ -154,7 +154,7 @@ await outbox.TransactionCommited();
   </tr>
 </table>
 
-###  Configure compression
+### ConfigureCompression
 
 <table>
   <tr>
