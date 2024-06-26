@@ -106,7 +106,7 @@ public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerE
 
 ## Settings
 
-### Add messages to inbox settings
+### AddMessagesToInboxSettings
 <table>
   <tr>
     <td><b>Name</b></td>
@@ -122,7 +122,7 @@ public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerE
   </tr>
 </table>
 
-### Clean up inbox settings
+### CleanUpInboxSettings
 <table>
   <tr>
     <td><b>Name</b></td>
@@ -144,7 +144,7 @@ public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerE
   </tr>
 </table>
 
-### Clean up idempotency keys settings
+### CleanUpIdempotencyKeysSettings
 <table>
   <tr>
     <td><b>Name</b></td>
@@ -166,7 +166,7 @@ public class CreatedCustomerEventMessageHandler : IInboxHandler<CreatedCustomerE
   </tr>
 </table>
 
-### Configure deserialization
+### ConfigureDeserialization
 
 <table>
   <tr>
