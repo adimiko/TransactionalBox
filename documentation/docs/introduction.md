@@ -33,17 +33,27 @@ The following diagrams show the basic flow (omits details).
 They are designed to provide a general understanding of how transactional box works.
 
 ### Outbox
+:::info
 The outbox is responsible for adding messages to the storage and then adding at least once to the transport.
+:::
 <div align="center">
-![Outbox](assets/outbox.png)
+![AddToOutbox](assets/AddToOutbox.png)
 </div>
 
-1. In one transaction you save message to outbox and result of business operation. In this way, you can ensure all or nothing. After correctly transaction commited, execute the `TransactionCommitted` method on `IOutbox`.
-2. In a separate process, Outbox will get messages and add them to the transport.
+In one transaction you save message to outbox and result of business operation. In this way, you can ensure all or nothing. After correctly transaction commited, execute the `TransactionCommitted` method on `IOutbox`.
+
+<div align="center">
+![AddToOutbox](assets/AddToTransport.png)
+</div>
+
+1. In a separate process, Outbox gets messages.
+2. Then add them to the transport.
 3. Then processed messages are clean up.
 
 ### Inbox 
+:::info
 The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.
+:::
 <div align="center">
 ![Inbox](assets/inbox.png)
 </div>
