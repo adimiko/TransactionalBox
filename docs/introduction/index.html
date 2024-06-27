@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.1.1">
 <title data-rh="true">Introduction | Transactional Box</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://transactionalbox.com/img/social-logo.png"><meta data-rh="true" name="twitter:image" content="https://transactionalbox.com/img/social-logo.png"><meta data-rh="true" property="og:url" content="https://transactionalbox.com/docs/introduction"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Introduction | Transactional Box"><meta data-rh="true" name="description" content="Logo"><meta data-rh="true" property="og:description" content="Logo"><link data-rh="true" rel="icon" href="/img/logo.png"><link data-rh="true" rel="canonical" href="https://transactionalbox.com/docs/introduction"><link data-rh="true" rel="alternate" href="https://transactionalbox.com/docs/introduction" hreflang="en"><link data-rh="true" rel="alternate" href="https://transactionalbox.com/docs/introduction" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.2f92ae11.css">
-<script src="/assets/js/runtime~main.77017fdd.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.eba5012d.js" defer="defer"></script>
 <script src="/assets/js/main.1c357cd1.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -32,15 +32,17 @@
 The following diagrams show the basic flow (omits details).
 They are designed to provide a general understanding of how transactional box works.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="outbox">Outbox<a href="#outbox" class="hash-link" aria-label="Direct link to Outbox" title="Direct link to Outbox">​</a></h3>
-<p>The outbox is responsible for adding messages to the storage and then adding at least once to the transport.</p>
-<div align="center"><p><img decoding="async" loading="lazy" alt="Outbox" src="/assets/images/outbox-b817581e75b0f7fb7f37275b25b2e033.png" width="1698" height="668" class="img_ev3q"></p></div>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>The outbox is responsible for adding messages to the storage and then adding at least once to the transport.</p></div></div>
+<div align="center"><p><img decoding="async" loading="lazy" alt="AddToOutbox" src="/assets/images/AddToOutbox-b622001d4a28560e925edbccb89ca7ca.png" width="557" height="392" class="img_ev3q"></p></div>
+<p>In one transaction you save message to outbox and result of business operation. In this way, you can ensure all or nothing. After correctly transaction commited, execute the <code>TransactionCommitted</code> method on <code>IOutbox</code>.</p>
+<div align="center"><p><img decoding="async" loading="lazy" alt="AddToOutbox" src="/assets/images/AddToTransport-600dab548845244449bfbf95a86de9cc.png" width="597" height="347" class="img_ev3q"></p></div>
 <ol>
-<li>In one transaction you save message to outbox and result of business operation. In this way, you can ensure all or nothing. After correctly transaction commited, execute the <code>TransactionCommitted</code> method on <code>IOutbox</code>.</li>
-<li>In a separate process, Outbox will get messages and add them to the transport.</li>
+<li>In a separate process, Outbox gets messages.</li>
+<li>Then add them to the transport.</li>
 <li>Then processed messages are clean up.</li>
 </ol>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="inbox">Inbox<a href="#inbox" class="hash-link" aria-label="Direct link to Inbox" title="Direct link to Inbox">​</a></h3>
-<p>The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>The inbox is responsible for getting messages from the transport and adding them to the storage, and then processes these messages.</p></div></div>
 <div align="center"><p><img decoding="async" loading="lazy" alt="Inbox" src="/assets/images/inbox-5630c7c0088ce6d371a5ed785954435c.png" width="1782" height="668" class="img_ev3q"></p></div>
 <ol>
 <li>Inbox gets messages from transport and adds to storage.</li>
