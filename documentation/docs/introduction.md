@@ -46,9 +46,7 @@ In one transaction you save message to outbox and result of business operation. 
 ![AddToOutbox](assets/AddToTransport.png)
 </div>
 
-1. In a separate process, Outbox gets messages.
-2. Then add them to the transport.
-3. Then processed messages are clean up.
+After hook, outbox marks and gets messages from storage. Then adds them to the transport and marks as processed.
 
 ### Inbox 
 :::info
