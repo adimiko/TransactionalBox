@@ -199,7 +199,7 @@ The project is part of the competition [100 commitow](https://100commitow.pl).
 If you would like to contribute to this project, check out [CONTRIBUTING](https://github.com/adimiko/TransactionalBox/blob/main/CONTRIBUTING.md) file. 
 
 ## :balance_scale: License
-This project is under the [MIT License](https://github.com/adimiko/TransactionalBox/blob/main/LICENSE).
+This project is under the [GNU General Public License v3.0](https://github.com/adimiko/TransactionalBox/blob/main/LICENSE).
 
 ## :radioactive: Disclaimer
 The project is under development and not ready for production use.
