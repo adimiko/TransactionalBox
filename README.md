@@ -133,11 +133,6 @@ Ensuring the order of messages within a stream insite the service. Messages are 
 ## :medal_sports: Competition 100commitow
 The project is part of the competition [100 commitow](https://100commitow.pl).
 
-1. At the beginning, the project was created as a PoC (Proof-of-Concept)
-2. When idea was clear, I delivered a working solution as part of the '100 commitow' competition.
-3. Currently, I'm working on the documentation and ADRs (write-up of decisions made). (Now)
-4. Then delivering production version of project. (Future)
-
 ### Topics
 - Distributed lock (prevent race condition)
 - Hook processing
