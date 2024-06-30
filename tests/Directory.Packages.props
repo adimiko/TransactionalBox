@@ -8,7 +8,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-    <PackageVersion Include="Testcontainers.Kafka" Version="3.8.0" />
+    <PackageVersion Include="Testcontainers.Kafka" Version="3.9.0" />
     <PackageVersion Include="Testcontainers.MsSql" Version="3.8.0" />
     <PackageVersion Include="Testcontainers.MySql" Version="3.8.0" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="3.8.0" />
