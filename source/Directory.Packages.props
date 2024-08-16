@@ -15,7 +15,7 @@
     <PackageVersion Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.7" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
-    <PackageVersion Include="Confluent.Kafka" Version="2.4.0" />
+    <PackageVersion Include="Confluent.Kafka" Version="2.5.2" />
     <PackageVersion Include="Scrutor" Version="4.2.2" />
   </ItemGroup>
 </Project>
