@@ -1,11 +1,11 @@
 ﻿namespace TransactionalBox.Internals.InternalPackages.KeyedInMemoryLock
 {
-    internal sealed class LockInstance : ILockInstance
+    internal readonly struct LockInstance : ILockInstance
     {
-        private readonly SemaphoreSlim _semaphoreSlim;
+        private readonly IDisposable _instance;
 
-        internal LockInstance(SemaphoreSlim semaphoreSlim) => _semaphoreSlim = semaphoreSlim;
+        internal LockInstance(IDisposable instance) => _instance = instance;
 
-        public void Dispose() => _semaphoreSlim.Release();
+        public void Dispose() => _instance.Dispose();
     }
 }
